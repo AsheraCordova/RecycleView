@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="com.ashera.recycleview"
+        version="1.0">
+
+  <name>CordovaRecycleViewPlugin Plugin</name>
+
+  <engines>
+    <engine name="cordova" version=">=3.4.0"/>
+  </engines>
+  
+  
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="CordovaRecycleViewPlugin">
+        <param name="android-package" value="com.ashera.recycleview.CordovaRecycleViewPlugin"/>
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+	<framework src="core.gradle" custom="true" type="gradleReference" />
+   	 <!-- start src -->
+     <source-file src="src/com/ashera/recycleview/CordovaRecycleViewPlugin.java" target-dir="src/com/ashera/recycleview"/>
+     <source-file src="src/com/ashera/recycleview/InsetItemDecoration.java" target-dir="src/com/ashera/recycleview"/>
+     <source-file src="src/com/ashera/recycleview/RecyclerViewImpl.java" target-dir="src/com/ashera/recycleview"/>
+     <source-file src="src/com/ashera/recycleview/RecycleViewPlugin.java" target-dir="src/com/ashera/recycleview"/>
+     <source-file src="src/com/xwray/groupie/AsyncDiffUtil.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/DiffCallback.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/DiffTask.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/ExpandableGroup.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/ExpandableItem.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/Group.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/GroupAdapter.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/GroupDataObserver.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/GroupieAdapter.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/GroupieViewHolder.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/GroupUtils.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/Item.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/NestedGroup.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/OnAsyncUpdateListener.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/OnItemClickListener.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/OnItemLongClickListener.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/Section.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/SpanSizeProvider.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/TouchCallback.java" target-dir="src/com/xwray/groupie"/>
+     <source-file src="src/com/xwray/groupie/UpdatingGroup.java" target-dir="src/com/xwray/groupie"/>
+     <!-- src end -->
+     <!-- start res -->
+
+     <!-- res end -->
+     <!-- start tsc -->
+     <source-file src="tsc/src/android/widget/RecyclerViewImpl.ts" target-dir="tsc/src/android/widget"/>
+     <source-file src="tsc/src/app/GroupieBuilder.ts" target-dir="tsc/src/app"/>
+     <!-- tsc end -->
+  </platform>
+
+
+</plugin>

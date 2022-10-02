@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="com.ashera.recycleview.ios"
+        version="1.0">
+
+  <name>CordovaRecycleViewPlugin Plugin</name>
+
+  <engines>
+    <engine name="cordova" version=">=3.4.0"/>
+  </engines>
+  
+  <platform name="ios">
+    <config-file target="config.xml" parent="/widget">
+      <feature name="CordovaRecycleViewPlugin">
+        	<param name="ios-package" value="CordovaRecycleViewPlugin" />
+         	<param name="onload" value="true" />
+      </feature>
+    </config-file>
+
+   	 <!-- start ios -->
+     <header-file src="ios/src/CordovaRecycleViewPlugin.h" target-dir="RecycleViewPlugin/ios/src"/>
+     <source-file src="ios/src/CordovaRecycleViewPlugin.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
+     <header-file src="ios/src/CustomUICollectionViewCell.h" target-dir="RecycleViewPlugin/ios/src"/>
+     <source-file src="ios/src/CustomUICollectionViewCell.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
+     <header-file src="ios/src/InsetItemDecoration.h" target-dir="RecycleViewPlugin/ios/src"/>
+     <source-file src="ios/src/InsetItemDecoration.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
+     <header-file src="ios/src/RecyclerViewImpl.h" target-dir="RecycleViewPlugin/ios/src"/>
+     <source-file src="ios/src/RecyclerViewImpl.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
+     <header-file src="ios/src/RecycleViewPlugin.h" target-dir="RecycleViewPlugin/ios/src"/>
+     <source-file src="ios/src/RecycleViewPlugin.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
+     <!-- ios end -->
+     <!-- start tsc -->
+     <source-file src="tsc/src/ios/widget/RecyclerViewImpl.ts" target-dir="tsc/src/ios/widget"/>
+     <!-- tsc end -->
+     <!-- start AndroidXRecyclerView -->
+     <header-file src="library/AndroidXRecyclerView/src/AdapterHelper.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/AdapterHelper.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/AdapterListUpdateCallback.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/AdapterListUpdateCallback.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/AsyncDiffUtil.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/AsyncDiffUtil.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/BatchingListUpdateCallback.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/BatchingListUpdateCallback.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/ChildHelper.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/ChildHelper.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/DiffCallback.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/DiffCallback.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/DiffTask.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/DiffTask.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/DiffUtil.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/DiffUtil.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/ExpandableGroup.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/ExpandableGroup.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/ExpandableItem.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/ExpandableItem.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/GapWorker.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/GapWorker.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/GridLayoutManager.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/GridLayoutManager.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/GroupAdapter.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/GroupAdapter.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/GroupDataObserver.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/GroupDataObserver.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/GroupieAdapter.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/GroupieAdapter.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/GroupieViewHolder.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/GroupieViewHolder.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/GroupUtils.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/GroupUtils.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/Item.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/Item.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/ItemTouchHelper.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/ItemTouchHelper.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/LayoutState.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/LayoutState.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/LinearLayoutManager.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/LinearLayoutManager.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/ListUpdateCallback.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/ListUpdateCallback.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/NestedGroup.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/NestedGroup.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/OnAsyncUpdateListener.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/OnAsyncUpdateListener.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/OnItemClickListener.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/OnItemClickListener.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/OnItemLongClickListener.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/OnItemLongClickListener.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/OpReorderer.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/OpReorderer.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/OrientationHelper.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/OrientationHelper.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/RecyclerView.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/RecyclerView.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/RVContainerHelpers.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/RVContainerHelpers.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/RVGroup.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/RVGroup.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/ScrollbarHelper.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/ScrollbarHelper.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/Section.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/Section.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/SimpleArrayMap.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/SimpleArrayMap.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/SpanSizeProvider.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/SpanSizeProvider.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/StaggeredGridLayoutManager.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/StaggeredGridLayoutManager.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/TouchCallback.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/TouchCallback.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/UpdatingGroup.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/UpdatingGroup.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/ViewBoundsCheck.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/ViewBoundsCheck.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/ViewInfoStore.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/ViewInfoStore.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <!-- AndroidXRecyclerView end -->
+  </platform>
+  
+
+
+</plugin>

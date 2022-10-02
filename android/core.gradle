@@ -1,0 +1,9 @@
+repositories {
+    mavenLocal();
+    google();
+    jcenter();
+}
+
+dependencies {
+	implementation group: 'androidx.recyclerview', name: 'recyclerview', version: '1.1.0'
+}
