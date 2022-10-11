@@ -159,7 +159,7 @@
      <!-- AndroidXRecyclerView end -->
   </platform>
   <platform name="browser">
-  	<config-file target="res/xml/config.xml" parent="/*">
+  	<config-file target="config.xml" parent="/*">
       <feature name="CordovaRecycleViewPlugin">
         <param name="android-package" value="com.ashera.recycleview.CordovaRecycleViewPlugin"/>
         <param name="onload" value="true" />
