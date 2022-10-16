@@ -767,7 +767,7 @@ return isReverseLayout();			}
 			}
 			
 			// any custom adjustment per platform
-			setCustomHandleScroll(dpos, range, offset, extent);
+			setCustomHandleScroll(dpos, range, offset, extent);			
 		} finally {
 			fragment.enableRemeasure();	
 		}
@@ -2494,8 +2494,8 @@ public class RecyclerViewCommandParamsBuilder extends com.ashera.layout.ViewGrou
 	
 	private void setCustomHandleScroll(int dpos, int range, int offset, int extent) {
     	updateContentSizeOfScrolledProvider(range);
-
     	setSelection(offset, offset, scrollProvider);
+    	adjustScrollOffsetWhenEdgeReached(dpos);
 	}
 	
 	private int setSelection(int percoffset, int offset, Object view) {
@@ -2646,5 +2646,33 @@ public class RecyclerViewCommandParamsBuilder extends com.ashera.layout.ViewGrou
 			return 0;
 		}
 		return (int) maxVal;
+	}
+	
+	void adjustScrollOffsetWhenEdgeReached(int dpos) {
+		if (dpos > 0) {
+			if (isHorizontal()) {
+				if (!recyclerView.canScrollHorizontally(1)) {
+					System.out.println("reached end");
+					stopScrollEnd(uiView);
+				}
+			} else {
+				if (!recyclerView.canScrollVertically(1)) {
+					System.out.println("reached bottom");
+					stopScrollEnd(uiView);
+				}
+			}
+		} else {
+			if (isHorizontal()) {
+				if (!recyclerView.canScrollHorizontally(-1)) {
+					System.out.println("reached start");
+					stopScrollStart(uiView);
+				}
+			} else {
+				if (!recyclerView.canScrollVertically(-1)) {
+					System.out.println("reached top");
+					stopScrollStart(uiView);
+				}
+			}
+		}
 	}
 }

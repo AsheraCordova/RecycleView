@@ -150,6 +150,10 @@
 
 - (void)invalidateChildIfRequiredWithASIWidget:(id<ASIWidget>)childWidget;
 
+#pragma mark Package-Private
+
+- (void)adjustScrollOffsetWhenEdgeReachedWithInt:(jint)dpos;
+
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl)
@@ -794,6 +798,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setBackgroundTintWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setBackgroundWithNSString:(NSString *)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setChildXmlWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setClickableWithBoolean:(jboolean)arg0;
 
