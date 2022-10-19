@@ -767,7 +767,7 @@ return isReverseLayout();			}
 			}
 			
 			// any custom adjustment per platform
-			setCustomHandleScroll(dpos, range, offset, extent);			
+			setCustomHandleScroll(dpos, range, offset, extent);
 		} finally {
 			fragment.enableRemeasure();	
 		}
