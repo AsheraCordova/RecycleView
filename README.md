@@ -29,7 +29,9 @@ layout                | Layout xml file.  See section Configuring Recycler View.
 The Recycler View in android requires an adpater being configured with view holder pattern being core of its implementation. Ashera provides a generic implementation of the view holder pattern. Hence recycler view can be written by configuring a few attributes.
 
 Also 2 types of adapter has been provided:
+
 ListAdapter - a very basic adapter implementation for simple list and list with header and footer.
+
 GroupieAdapter - an adapter based on https://github.com/lisawray/groupie. 
 
 The following snippet uses a basic adapter:
