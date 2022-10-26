@@ -191,4 +191,4 @@ xml/recyclerview_groupie.xml
     </section>
 </layout>
 ``` 
-The groupie adapter consists of sections which can contains another section, item, header ad footer. This type of configuration helps to create complex layout using recycler view.
+The groupie adapter consists of sections which can contain another section, item, header ad footer. This type of configuration helps to create complex layout using recycler view.
