@@ -2011,6 +2011,10 @@ public java.util.Map<String, Object> getOnScrolledEventObj(RecyclerView recycler
     obj.put("fragmentId", w.getFragment().getFragmentId());
     obj.put("actionUrl", w.getFragment().getActionUrl());
     
+    if (w.getComponentId() != null) {
+    	obj.put("componentId", w.getComponentId());
+    }
+    
     PluginInvoker.putJSONSafeObjectIntoMap(obj, "id", w.getId());
      
         PluginInvoker.putJSONSafeObjectIntoMap(obj, "dx", dx);
@@ -2030,6 +2034,10 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
     obj.put("eventType", "scrollstatechange");
     obj.put("fragmentId", w.getFragment().getFragmentId());
     obj.put("actionUrl", w.getFragment().getActionUrl());
+    
+    if (w.getComponentId() != null) {
+    	obj.put("componentId", w.getComponentId());
+    }
     
     PluginInvoker.putJSONSafeObjectIntoMap(obj, "id", w.getId());
      
