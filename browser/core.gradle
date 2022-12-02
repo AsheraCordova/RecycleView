@@ -8,7 +8,7 @@ dependencies {
 	def project_version = '1.0.0';
 	
 	//recycler view
-	implementation "com.ashera:SWTAndroidXRecyclerView:${project_version}"
+	implementation "com.ashera:AndroidXJRecyclerView:${project_version}"
 	implementation "com.ashera:WebRecycleViewPlugin:${project_version}"
     
 }

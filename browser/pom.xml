@@ -28,7 +28,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.ashera</groupId>
-			<artifactId>SWTAndroidXRecyclerView</artifactId>
+			<artifactId>AndroidXJRecyclerView</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
