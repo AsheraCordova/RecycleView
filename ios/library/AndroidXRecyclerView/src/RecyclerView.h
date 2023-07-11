@@ -52,7 +52,6 @@
 @class IOSIntArray;
 @class JavaUtilArrayList;
 @protocol ADXRecyclerView_RecyclerListener;
-@protocol JavaLangRunnable;
 @protocol JavaUtilList;
 
 @interface ADXRecyclerView : ADViewGroup {
@@ -146,6 +145,10 @@
 
 - (jint)getScrollState;
 
+- (jint)getScrollX;
+
+- (jint)getScrollY;
+
 - (jboolean)hasPendingAdapterUpdates;
 
 - (jboolean)isComputingLayout;
@@ -157,8 +160,6 @@
 - (void)onChildAttachedToWindowWithADView:(ADView *)child;
 
 - (void)onChildDetachedFromWindowWithADView:(ADView *)child;
-
-- (void)postWithJavaLangRunnable:(id<JavaLangRunnable>)runnable;
 
 - (void)registerObserverWithADXRecyclerView_AdapterDataObserver:(ADXRecyclerView_AdapterDataObserver *)observer;
 

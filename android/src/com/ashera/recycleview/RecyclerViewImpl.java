@@ -96,7 +96,7 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 
 	@Override
 	public IWidget newInstance() {
-		return new RecyclerViewImpl();
+		return new RecyclerViewImpl(groupName, localName);
 	}
 	
 	@SuppressLint("NewApi")
@@ -247,11 +247,6 @@ Context context = (Context) fragment.getRootActivity();
 		public RecyclerViewExt(Context context) {
 			super(context);
 			
-			
-			
-			
-			
-			
 		}
 		
 		@Override
@@ -363,12 +358,11 @@ Context context = (Context) fragment.getRootActivity();
         	ViewImpl.drawableStateChanged(RecyclerViewImpl.this);
         }
 	}
-	
-	public void updateMeasuredDimension(int width, int height) {
-		((RecyclerViewExt) recyclerView).updateMeasuredDimension(width, height);
+	@Override
+	public Class getViewClass() {
+		return RecyclerViewExt.class;
 	}
 	
-
 	@SuppressLint("NewApi")
 	@Override
 	public void setAttribute(WidgetAttribute key, String strValue, Object objValue, ILifeCycleDecorator decorator) {
@@ -1914,7 +1908,7 @@ public class RecyclerViewCommandParamsBuilder extends com.ashera.layout.ViewGrou
 			public void onClick(View arg0) {
 				recyclerView.requestLayout();
 				expandableGroup.setExpanded(!expandableGroup.isExpanded());
-				widget.setAttribute(WidgetFactory.getAttribute(widget.getLocalName(), "selected"), expandableGroup.isExpanded(), true);
+				widget.setAttribute("selected", expandableGroup.isExpanded(), true);
 				fragment.remeasure();
 			}
 		}
@@ -1946,8 +1940,8 @@ public class RecyclerViewCommandParamsBuilder extends com.ashera.layout.ViewGrou
 					if (!onClickId.equals(widget.getId())) {
 						onClickWidget  =  widget.findWidgetById(onClickId);
 					}
-					onClickWidget.setAttribute(WidgetFactory.getAttribute(widget.getLocalName(), "onClick"), new ExpandableClickListener(position, onClickWidget), true);
-					onClickWidget.setAttribute(WidgetFactory.getAttribute(widget.getLocalName(), "selected"), this.expandableGroup.isExpanded(), true);
+					onClickWidget.setAttribute("onClick", new ExpandableClickListener(position, onClickWidget), true);
+					onClickWidget.setAttribute("selected", this.expandableGroup.isExpanded(), true);
 				}
 				
 				

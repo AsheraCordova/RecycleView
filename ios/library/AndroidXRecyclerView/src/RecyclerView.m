@@ -121,10 +121,6 @@
 
 - (void)resetFocusInfo;
 
-- (jint)getScrollY;
-
-- (jint)getScrollX;
-
 - (void)onScrollChangedWithInt:(jint)scrollX
                        withInt:(jint)scrollY
                        withInt:(jint)i
@@ -214,10 +210,6 @@ __attribute__((unused)) static void ADXRecyclerView_saveFocusInfo(ADXRecyclerVie
 __attribute__((unused)) static void ADXRecyclerView_recoverFocusFromState(ADXRecyclerView *self);
 
 __attribute__((unused)) static void ADXRecyclerView_resetFocusInfo(ADXRecyclerView *self);
-
-__attribute__((unused)) static jint ADXRecyclerView_getScrollY(ADXRecyclerView *self);
-
-__attribute__((unused)) static jint ADXRecyclerView_getScrollX(ADXRecyclerView *self);
 
 __attribute__((unused)) static void ADXRecyclerView_onScrollChangedWithInt_withInt_withInt_withInt_(ADXRecyclerView *self, jint scrollX, jint scrollY, jint i, jint j);
 
@@ -1448,8 +1440,8 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 - (void)dispatchOnScrolledWithInt:(jint)hresult
                           withInt:(jint)vresult {
   mDispatchScrollCounter_++;
-  jint scrollX = ADXRecyclerView_getScrollX(self);
-  jint scrollY = ADXRecyclerView_getScrollY(self);
+  jint scrollX = [self getScrollX];
+  jint scrollY = [self getScrollY];
   ADXRecyclerView_onScrollChangedWithInt_withInt_withInt_withInt_(self, scrollX, scrollY, scrollX - hresult, scrollY - vresult);
   ADXRecyclerView_onScrolledWithInt_withInt_(self, hresult, vresult);
   if (mScrollListener_ != nil) {
@@ -1597,11 +1589,11 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (jint)getScrollY {
-  return ADXRecyclerView_getScrollY(self);
+  return 0;
 }
 
 - (jint)getScrollX {
-  return ADXRecyclerView_getScrollX(self);
+  return 0;
 }
 
 - (void)onScrollChangedWithInt:(jint)scrollX
@@ -1622,9 +1614,6 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 - (jboolean)isAccessibilityEnabled {
   return false;
-}
-
-- (void)postWithJavaLangRunnable:(id<JavaLangRunnable>)runnable {
 }
 
 - (jlong)getDrawingTime {
@@ -1784,19 +1773,18 @@ J2OBJC_IGNORE_DESIGNATED_END
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
-    { NULL, "I", 0x2, -1, -1, -1, -1, -1, -1 },
-    { NULL, "I", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, 79, 80, -1, -1, -1, -1 },
     { NULL, "V", 0x2, 81, 16, -1, -1, -1, -1 },
     { NULL, "V", 0x10, 82, 83, -1, -1, -1, -1 },
     { NULL, "Z", 0x0, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 84, 85, -1, -1, -1, -1 },
     { NULL, "J", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 86, 87, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 84, 85, -1, -1, -1, -1 },
     { NULL, "Z", 0x4, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 88, 16, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 89, 90, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 86, 16, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 87, 88, -1, -1, -1, -1 },
     { NULL, "I", 0x0, -1, -1, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
@@ -1904,17 +1892,16 @@ J2OBJC_IGNORE_DESIGNATED_END
   methods[99].selector = @selector(onScrolledWithInt:withInt:);
   methods[100].selector = @selector(fillRemainingScrollValuesWithADXRecyclerView_State:);
   methods[101].selector = @selector(isAccessibilityEnabled);
-  methods[102].selector = @selector(postWithJavaLangRunnable:);
-  methods[103].selector = @selector(getDrawingTime);
-  methods[104].selector = @selector(stopScroll);
-  methods[105].selector = @selector(registerObserverWithADXRecyclerView_AdapterDataObserver:);
-  methods[106].selector = @selector(awakenScrollBars);
-  methods[107].selector = @selector(considerReleasingGlowsOnScrollWithInt:withInt:);
-  methods[108].selector = @selector(pullGlowsWithFloat:withFloat:withFloat:withFloat:);
-  methods[109].selector = @selector(getOverScrollMode);
+  methods[102].selector = @selector(getDrawingTime);
+  methods[103].selector = @selector(stopScroll);
+  methods[104].selector = @selector(registerObserverWithADXRecyclerView_AdapterDataObserver:);
+  methods[105].selector = @selector(awakenScrollBars);
+  methods[106].selector = @selector(considerReleasingGlowsOnScrollWithInt:withInt:);
+  methods[107].selector = @selector(pullGlowsWithFloat:withFloat:withFloat:withFloat:);
+  methods[108].selector = @selector(getOverScrollMode);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
-    { "TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 91, -1, -1 },
+    { "TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 89, -1, -1 },
     { "DEBUG", "Z", .constantValue.asBOOL = ADXRecyclerView_DEBUG, 0x18, -1, -1, -1, -1 },
     { "VERBOSE_TRACING", "Z", .constantValue.asBOOL = ADXRecyclerView_VERBOSE_TRACING, 0x18, -1, -1, -1, -1 },
     { "FORCE_INVALIDATE_DISPLAY_LIST", "Z", .constantValue.asBOOL = ADXRecyclerView_FORCE_INVALIDATE_DISPLAY_LIST, 0x18, -1, -1, -1, -1 },
@@ -1933,14 +1920,14 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "TOUCH_SLOP_PAGING", "I", .constantValue.asInt = ADXRecyclerView_TOUCH_SLOP_PAGING, 0x19, -1, -1, -1, -1 },
     { "UNDEFINED_DURATION", "I", .constantValue.asInt = ADXRecyclerView_UNDEFINED_DURATION, 0x19, -1, -1, -1, -1 },
     { "MAX_SCROLL_DURATION", "I", .constantValue.asInt = ADXRecyclerView_MAX_SCROLL_DURATION, 0x18, -1, -1, -1, -1 },
-    { "TRACE_SCROLL_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 92, -1, -1 },
-    { "TRACE_ON_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 93, -1, -1 },
-    { "TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 94, -1, -1 },
-    { "TRACE_HANDLE_ADAPTER_UPDATES_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 95, -1, -1 },
-    { "TRACE_BIND_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 96, -1, -1 },
-    { "TRACE_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 97, -1, -1 },
-    { "TRACE_NESTED_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 98, -1, -1 },
-    { "TRACE_CREATE_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 99, -1, -1 },
+    { "TRACE_SCROLL_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 90, -1, -1 },
+    { "TRACE_ON_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 91, -1, -1 },
+    { "TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 92, -1, -1 },
+    { "TRACE_HANDLE_ADAPTER_UPDATES_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 93, -1, -1 },
+    { "TRACE_BIND_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 94, -1, -1 },
+    { "TRACE_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 95, -1, -1 },
+    { "TRACE_NESTED_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 96, -1, -1 },
+    { "TRACE_CREATE_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 97, -1, -1 },
     { "mObserver_", "LADXRecyclerView_RecyclerViewDataObserver;", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mRecycler_", "LADXRecyclerView_Recycler;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
     { "mAdapterHelper_", "LADXAdapterHelper;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
@@ -1952,8 +1939,8 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "mAdapter_", "LADXRecyclerView_Adapter;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mLayout_", "LADXRecyclerView_LayoutManager;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mRecyclerListener_", "LADXRecyclerView_RecyclerListener;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
-    { "mRecyclerListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x10, -1, -1, 100, -1 },
-    { "mItemDecorations_", "LJavaUtilArrayList;", .constantValue.asLong = 0, 0x10, -1, -1, 101, -1 },
+    { "mRecyclerListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x10, -1, -1, 98, -1 },
+    { "mItemDecorations_", "LJavaUtilArrayList;", .constantValue.asLong = 0, 0x10, -1, -1, 99, -1 },
     { "mIsAttached_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mHasFixedSize_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mEnableFastScroller_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
@@ -1964,7 +1951,7 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "mIgnoreMotionEventTillDown_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mEatenAccessibilityChangeFlags_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mAdapterUpdateDuringMeasure_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
-    { "mOnChildAttachStateListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 102, -1 },
+    { "mOnChildAttachStateListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 100, -1 },
     { "mDataSetHasChangedAfterLayout_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mDispatchItemsChangedEvent_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mLayoutOrScrollCounter_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -1980,14 +1967,14 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "mInitialTouchY_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mLastTouchX_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mLastTouchY_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "mTouchSlop_RecyclerView_", "I", .constantValue.asLong = 0, 0x2, 103, -1, -1, -1 },
+    { "mTouchSlop_RecyclerView_", "I", .constantValue.asLong = 0, 0x2, 101, -1, -1, -1 },
     { "mMinFlingVelocity_", "I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mMaxFlingVelocity_", "I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mPreserveFocusAfterLayout_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mPrefetchRegistry_", "LADXGapWorker_LayoutPrefetchRegistryImpl;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mState_", "LADXRecyclerView_State;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
     { "mScrollListener_", "LADXRecyclerView_OnScrollListener;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "mScrollListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 104, -1 },
+    { "mScrollListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 102, -1 },
     { "mItemsAddedOrRemoved_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mItemsChanged_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mPostedAnimatorRunner_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
@@ -2005,8 +1992,8 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "TYPE_TOUCH", "I", .constantValue.asInt = ADXRecyclerView_TYPE_TOUCH, 0x19, -1, -1, -1, -1 },
     { "mItemAnimator_", "LADXRecyclerView_ItemAnimator;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "setAdapter", "LADXRecyclerView_Adapter;", "setAdapterInternal", "LADXRecyclerView_Adapter;ZZ", "setLayoutManager", "LADXRecyclerView_LayoutManager;", "addAnimatingView", "LADXRecyclerView_ViewHolder;", "addItemDecoration", "LADXRecyclerView_ItemDecoration;I", "LADXRecyclerView_ItemDecoration;", "setOnScrollListener", "LADXRecyclerView_OnScrollListener;", "scrollToPosition", "I", "scrollBy", "II", "scrollStep", "II[I", "scrollByInternal", "IILADView_MotionEvent;I", "stopInterceptRequestLayout", "Z", "suppressLayout", "setLayoutFrozen", "assertInLayoutOrScroll", "LNSString;", "assertNotInLayoutOrScroll", "onMeasure", "defaultOnMeasure", "onExitLayoutOrScroll", "handleMissingPreInfoForChangeError", "JLADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "recordAnimationInfoIfBouncedHiddenView", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "findMinMaxChildLayoutPositions", "[I", "didChildRangeChange", "removeDetachedView", "LADView;Z", "getChangedHolderKey", "animateAppearance", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "animateDisappearance", "animateChange", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;ZZ", "onLayout", "ZIIII", "offsetPositionRecordsForMove", "offsetPositionRecordsForInsert", "offsetPositionRecordsForRemove", "IIZ", "viewRangeUpdate", "IILNSObject;", "canReuseUpdatedViewHolder", "processDataSetCompletelyChanged", "getChildViewHolder", "LADView;", "findContainingItemView", "getChildViewHolderInt", "findViewHolderForPosition", "IZ", "offsetChildrenVertical", "onChildAttachedToWindow", "onChildDetachedFromWindow", "offsetChildrenHorizontal", "getDecoratedBoundsWithMarginsInt", "LADView;LADRect;", "getItemDecorInsetsForChild", "dispatchOnScrolled", "findNestedRecyclerView", "clearNestedRecyclerViewIfNotNested", "dispatchChildDetached", "dispatchChildAttached", "getAdapterPositionInRecyclerView", "dispatchNestedScroll", "IIII[I", "IIII[II", "IIII[II[I", "onScrollChanged", "IIII", "onScrolled", "fillRemainingScrollValues", "LADXRecyclerView_State;", "post", "LJavaLangRunnable;", "registerObserver", "LADXRecyclerView_AdapterDataObserver;", "considerReleasingGlowsOnScroll", "pullGlows", "FFFF", &ADXRecyclerView_TAG, &ADXRecyclerView_TRACE_SCROLL_TAG, &ADXRecyclerView_TRACE_ON_LAYOUT_TAG, &ADXRecyclerView_TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG, &ADXRecyclerView_TRACE_HANDLE_ADAPTER_UPDATES_TAG, &ADXRecyclerView_TRACE_BIND_VIEW_TAG, &ADXRecyclerView_TRACE_PREFETCH_TAG, &ADXRecyclerView_TRACE_NESTED_PREFETCH_TAG, &ADXRecyclerView_TRACE_CREATE_VIEW_TAG, "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$RecyclerListener;>;", "Ljava/util/ArrayList<Landroidx/recyclerview/widget/RecyclerView$ItemDecoration;>;", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnChildAttachStateChangeListener;>;", "mTouchSlop", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnScrollListener;>;", "LADXRecyclerView_RecyclerViewDataObserver;LADXRecyclerView_RecycledViewPool;LADXRecyclerView_Recycler;LADXRecyclerView_ViewCacheExtension;LADXRecyclerView_Adapter;LADXRecyclerView_LayoutManager;LADXRecyclerView_ItemDecoration;LADXRecyclerView_OnScrollListener;LADXRecyclerView_RecyclerListener;LADXRecyclerView_OnChildAttachStateChangeListener;LADXRecyclerView_ViewHolder;LADXRecyclerView_LayoutParams;LADXRecyclerView_AdapterDataObserver;LADXRecyclerView_AdapterDataObservable;LADXRecyclerView_State;LADXRecyclerView_ItemAnimator;LADXRecyclerView_SavedState;LADXRecyclerView_Observable;LADXRecyclerView_MotionEventCompat;LADXRecyclerView_InputDevice;LADXRecyclerView_NestedScrollingChildHelper;" };
-  static const J2ObjcClassInfo _ADXRecyclerView = { "RecyclerView", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 110, 90, -1, 105, -1, -1, -1 };
+  static const void *ptrTable[] = { "setAdapter", "LADXRecyclerView_Adapter;", "setAdapterInternal", "LADXRecyclerView_Adapter;ZZ", "setLayoutManager", "LADXRecyclerView_LayoutManager;", "addAnimatingView", "LADXRecyclerView_ViewHolder;", "addItemDecoration", "LADXRecyclerView_ItemDecoration;I", "LADXRecyclerView_ItemDecoration;", "setOnScrollListener", "LADXRecyclerView_OnScrollListener;", "scrollToPosition", "I", "scrollBy", "II", "scrollStep", "II[I", "scrollByInternal", "IILADView_MotionEvent;I", "stopInterceptRequestLayout", "Z", "suppressLayout", "setLayoutFrozen", "assertInLayoutOrScroll", "LNSString;", "assertNotInLayoutOrScroll", "onMeasure", "defaultOnMeasure", "onExitLayoutOrScroll", "handleMissingPreInfoForChangeError", "JLADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "recordAnimationInfoIfBouncedHiddenView", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "findMinMaxChildLayoutPositions", "[I", "didChildRangeChange", "removeDetachedView", "LADView;Z", "getChangedHolderKey", "animateAppearance", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "animateDisappearance", "animateChange", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;ZZ", "onLayout", "ZIIII", "offsetPositionRecordsForMove", "offsetPositionRecordsForInsert", "offsetPositionRecordsForRemove", "IIZ", "viewRangeUpdate", "IILNSObject;", "canReuseUpdatedViewHolder", "processDataSetCompletelyChanged", "getChildViewHolder", "LADView;", "findContainingItemView", "getChildViewHolderInt", "findViewHolderForPosition", "IZ", "offsetChildrenVertical", "onChildAttachedToWindow", "onChildDetachedFromWindow", "offsetChildrenHorizontal", "getDecoratedBoundsWithMarginsInt", "LADView;LADRect;", "getItemDecorInsetsForChild", "dispatchOnScrolled", "findNestedRecyclerView", "clearNestedRecyclerViewIfNotNested", "dispatchChildDetached", "dispatchChildAttached", "getAdapterPositionInRecyclerView", "dispatchNestedScroll", "IIII[I", "IIII[II", "IIII[II[I", "onScrollChanged", "IIII", "onScrolled", "fillRemainingScrollValues", "LADXRecyclerView_State;", "registerObserver", "LADXRecyclerView_AdapterDataObserver;", "considerReleasingGlowsOnScroll", "pullGlows", "FFFF", &ADXRecyclerView_TAG, &ADXRecyclerView_TRACE_SCROLL_TAG, &ADXRecyclerView_TRACE_ON_LAYOUT_TAG, &ADXRecyclerView_TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG, &ADXRecyclerView_TRACE_HANDLE_ADAPTER_UPDATES_TAG, &ADXRecyclerView_TRACE_BIND_VIEW_TAG, &ADXRecyclerView_TRACE_PREFETCH_TAG, &ADXRecyclerView_TRACE_NESTED_PREFETCH_TAG, &ADXRecyclerView_TRACE_CREATE_VIEW_TAG, "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$RecyclerListener;>;", "Ljava/util/ArrayList<Landroidx/recyclerview/widget/RecyclerView$ItemDecoration;>;", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnChildAttachStateChangeListener;>;", "mTouchSlop", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnScrollListener;>;", "LADXRecyclerView_RecyclerViewDataObserver;LADXRecyclerView_RecycledViewPool;LADXRecyclerView_Recycler;LADXRecyclerView_ViewCacheExtension;LADXRecyclerView_Adapter;LADXRecyclerView_LayoutManager;LADXRecyclerView_ItemDecoration;LADXRecyclerView_OnScrollListener;LADXRecyclerView_RecyclerListener;LADXRecyclerView_OnChildAttachStateChangeListener;LADXRecyclerView_ViewHolder;LADXRecyclerView_LayoutParams;LADXRecyclerView_AdapterDataObserver;LADXRecyclerView_AdapterDataObservable;LADXRecyclerView_State;LADXRecyclerView_ItemAnimator;LADXRecyclerView_SavedState;LADXRecyclerView_Observable;LADXRecyclerView_MotionEventCompat;LADXRecyclerView_InputDevice;LADXRecyclerView_NestedScrollingChildHelper;" };
+  static const J2ObjcClassInfo _ADXRecyclerView = { "RecyclerView", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 109, 90, -1, 103, -1, -1, -1 };
   return &_ADXRecyclerView;
 }
 
@@ -2445,14 +2432,6 @@ void ADXRecyclerView_recoverFocusFromState(ADXRecyclerView *self) {
 }
 
 void ADXRecyclerView_resetFocusInfo(ADXRecyclerView *self) {
-}
-
-jint ADXRecyclerView_getScrollY(ADXRecyclerView *self) {
-  return 0;
-}
-
-jint ADXRecyclerView_getScrollX(ADXRecyclerView *self) {
-  return 0;
 }
 
 void ADXRecyclerView_onScrollChangedWithInt_withInt_withInt_withInt_(ADXRecyclerView *self, jint scrollX, jint scrollY, jint i, jint j) {

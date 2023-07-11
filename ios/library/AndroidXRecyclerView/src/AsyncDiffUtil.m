@@ -4,10 +4,14 @@
 //
 
 #include "AsyncDiffUtil.h"
+#include "AsyncTask.h"
 #include "DiffTask.h"
 #include "DiffUtil.h"
+#include "IOSClass.h"
+#include "IOSObjectArray.h"
 #include "J2ObjC_source.h"
 #include "OnAsyncUpdateListener.h"
+#include "java/lang/Void.h"
 #include "java/util/Collection.h"
 
 @protocol JavaUtilCollection;
@@ -54,7 +58,7 @@ J2OBJC_FIELD_SETTER(ADXAsyncDiffUtil, groups_, id<JavaUtilCollection>)
                                 withBoolean:(jboolean)detectMoves {
   JreStrongAssign(&groups_, newGroups);
   jint runGeneration = ++maxScheduledGeneration_;
-  [create_ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(self, diffUtilCallback, runGeneration, detectMoves, onAsyncUpdateListener) execute];
+  [create_ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(self, diffUtilCallback, runGeneration, detectMoves, onAsyncUpdateListener) executeWithNSObjectArray:[IOSObjectArray arrayWithLength:0 type:JavaLangVoid_class_()]];
 }
 
 - (void)dealloc {

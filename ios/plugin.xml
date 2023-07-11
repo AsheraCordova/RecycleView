@@ -91,16 +91,12 @@
      <source-file src="library/AndroidXRecyclerView/src/OrientationHelper.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/RecyclerView.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
      <source-file src="library/AndroidXRecyclerView/src/RecyclerView.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
-     <header-file src="library/AndroidXRecyclerView/src/RVContainerHelpers.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
-     <source-file src="library/AndroidXRecyclerView/src/RVContainerHelpers.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/RVGroup.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
      <source-file src="library/AndroidXRecyclerView/src/RVGroup.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/ScrollbarHelper.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
      <source-file src="library/AndroidXRecyclerView/src/ScrollbarHelper.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/Section.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
      <source-file src="library/AndroidXRecyclerView/src/Section.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
-     <header-file src="library/AndroidXRecyclerView/src/SimpleArrayMap.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
-     <source-file src="library/AndroidXRecyclerView/src/SimpleArrayMap.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/SpanSizeProvider.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
      <source-file src="library/AndroidXRecyclerView/src/SpanSizeProvider.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/StaggeredGridLayoutManager.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>

@@ -37,6 +37,7 @@
 @class ASRecyclerViewImpl_RecyclerViewParamsBean;
 @class ASRecyclerViewImpl_SectionHolder;
 @class ASWidgetAttribute;
+@class IOSClass;
 @protocol ASIFragment;
 @protocol ASILifeCycleDecorator;
 @protocol ASIWidget;
@@ -101,6 +102,8 @@
 
 - (id)getPluginWithNSString:(NSString *)plugin;
 
+- (IOSClass *)getViewClass;
+
 - (void)invalidate;
 
 - (jboolean)isHorizontal;
@@ -134,10 +137,9 @@
 - (void)setItemViewParamsWithASIWidget:(id<ASIWidget>)widget
                             withADView:(ADView *)itemView;
 
-- (void)updateContentSizeOfScrolledProviderWithInt:(jint)range;
+- (void)setVisibleWithBoolean:(jboolean)b;
 
-- (void)updateMeasuredDimensionWithInt:(jint)width
-                               withInt:(jint)height;
+- (void)updateContentSizeOfScrolledProviderWithInt:(jint)range;
 
 #pragma mark Protected
 
@@ -245,8 +247,11 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
 #define INCLUDE_ASIMaxDimension 1
 #include "IMaxDimension.h"
 
+@class ADRect;
+@class ADView;
 @class ASRecyclerViewImpl;
 @class ASWidgetAttribute;
+@class IOSIntArray;
 @class IOSObjectArray;
 @protocol ASIWidget;
 @protocol JavaUtilList;
@@ -264,11 +269,17 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
 
 - (id)getAttributeWithASWidgetAttribute:(ASWidgetAttribute *)widgetAttribute;
 
+- (void)getLocationOnScreenWithIntArray:(IOSIntArray *)appScreenLocation;
+
 - (jint)getMaxHeight;
 
 - (jint)getMaxWidth;
 
 - (id<JavaUtilList>)getMethods;
+
+- (void)getWindowVisibleDisplayFrameWithADRect:(ADRect *)displayFrame;
+
+- (ADView *)inflateViewWithNSString:(NSString *)layout;
 
 - (void)initialized OBJC_METHOD_FAMILY_NONE;
 
@@ -281,6 +292,10 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
 - (void)onMeasureWithInt:(jint)widthMeasureSpec
                  withInt:(jint)heightMeasureSpec;
 
+- (void)remeasure;
+
+- (void)removeFromParent;
+
 - (void)setAttributeWithASWidgetAttribute:(ASWidgetAttribute *)widgetAttribute
                              withNSString:(NSString *)strValue
                                    withId:(id)objValue;
@@ -288,6 +303,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
 - (void)setMaxHeightWithInt:(jint)height;
 
 - (void)setMaxWidthWithInt:(jint)width;
+
+- (void)setMyAttributeWithNSString:(NSString *)name
+                            withId:(id)value;
 
 - (void)setVisibilityWithInt:(jint)visibility;
 
@@ -923,6 +941,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setMinWidthWithNSString:(NSString *)arg0;
 
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setModelDescPathWithNSString:(NSString *)arg0;
+
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setModelForWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setModelIdPathWithNSString:(NSString *)arg0;
@@ -955,9 +975,13 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnScrollStateChangeWithNSString:(NSString *)value;
 
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnSwipedWithNSString:(NSString *)arg0;
+
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnTouchWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOrientationWithNSString:(NSString *)value;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOutsideTouchableWithBoolean:(jboolean)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setPaddingBottomWithNSString:(NSString *)arg0;
 
@@ -1140,6 +1164,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetMinHeight;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetMinWidth;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetModelDescPath;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetModelIdPath;
 

@@ -39,11 +39,6 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 	public void loadAttributes(String localName) {
 		ViewGroupImpl.register(localName);
 
-		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("swtIncrement").withType("int"));
-		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("onScrollStateChange").withType("string"));
-		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("onScrolled").withType("string"));
-		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("headerDisabled").withType("boolean").withOrder(-1));
-		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("footerDisabled").withType("boolean").withOrder(-1));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("layoutManager").withType("string"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("viewHolderIds").withType("array").withArrayType("string"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("spanCount").withType("int").withOrder(-1));
@@ -57,6 +52,11 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("scrollToEnd").withType("boolean"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("scrollToTop").withType("boolean"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("scrollToPosition").withType("int"));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("swtIncrement").withType("int"));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("onScrollStateChange").withType("string"));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("onScrolled").withType("string"));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("headerDisabled").withType("boolean").withOrder(-1));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("footerDisabled").withType("boolean").withOrder(-1));
 	WidgetFactory.registerConstructorAttribute(localName, new WidgetAttribute.Builder().withName("orientation").withType("orientation"));
 	
 	}
@@ -73,7 +73,7 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 
 	@Override
 	public IWidget newInstance() {
-		return new RecyclerViewImpl();
+		return new RecyclerViewImpl(groupName, localName);
 	}
 	
 	@SuppressLint("NewApi")
@@ -194,12 +194,7 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 		}
 
 		public RecyclerViewExt() {
-			
-			
-			
-			
 			super();
-			
 			
 		}
 		
@@ -288,7 +283,46 @@ public class RecyclerViewImpl extends BaseHasWidgets {
         	super.drawableStateChanged();
         	ViewImpl.drawableStateChanged(RecyclerViewImpl.this);
         }
-		@Override
+        private Map<String, IWidget> templates;
+    	@Override
+    	public r.android.view.View inflateView(java.lang.String layout) {
+    		if (templates == null) {
+    			templates = new java.util.HashMap<String, IWidget>();
+    		}
+    		IWidget template = templates.get(layout);
+    		if (template == null) {
+    			template = (IWidget) quickConvert(layout, "template");
+    			templates.put(layout, template);
+    		}
+    		IWidget widget = template.loadLazyWidgets(RecyclerViewImpl.this.getParent());
+    		return (View) widget.asWidget();
+    	}        
+        
+    	@Override
+		public void remeasure() {
+			getFragment().remeasure();
+		}
+    	
+        @Override
+		public void removeFromParent() {
+        	RecyclerViewImpl.this.getParent().remove(RecyclerViewImpl.this);
+		}
+        @Override
+        public void getLocationOnScreen(int[] appScreenLocation) {
+        	org.eclipse.swt.widgets.Control control = (org.eclipse.swt.widgets.Control) asNativeWidget();
+			appScreenLocation[0] = control.toDisplay(0, 0).x;
+        	appScreenLocation[1] = control.toDisplay(0, 0).y;
+        }
+        @Override
+        public void getWindowVisibleDisplayFrame(r.android.graphics.Rect displayFrame){
+        	org.eclipse.swt.widgets.Shell shell = ((org.eclipse.swt.widgets.Control)asNativeWidget()).getShell();
+        	displayFrame.left = shell.toDisplay(0, 0).x ;
+			displayFrame.top = shell.getShell().toDisplay(0, 0).y ;
+        	displayFrame.bottom = displayFrame.top + shell.getClientArea().height;
+        	displayFrame.right = displayFrame.left + shell.getBounds().width;
+        	
+        }
+        @Override
 		public void offsetTopAndBottom(int offset) {
 			super.offsetTopAndBottom(offset);
 			ViewImpl.nativeMakeFrame(asNativeWidget(), getLeft(), getTop(), getRight(), getBottom());
@@ -298,6 +332,10 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 			super.offsetLeftAndRight(offset);
 			ViewImpl.nativeMakeFrame(asNativeWidget(), getLeft(), getTop(), getRight(), getBottom());
 		}
+		@Override
+		public void setMyAttribute(String name, Object value) {
+			RecyclerViewImpl.this.setAttribute(name, value, true);
+		}
         @Override
         public void setVisibility(int visibility) {
             super.setVisibility(visibility);
@@ -305,63 +343,17 @@ public class RecyclerViewImpl extends BaseHasWidgets {
             
         }
 	}
-	
-	public void updateMeasuredDimension(int width, int height) {
-		((RecyclerViewExt) recyclerView).updateMeasuredDimension(width, height);
+	@Override
+	public Class getViewClass() {
+		return RecyclerViewExt.class;
 	}
 	
-
 	@SuppressLint("NewApi")
 	@Override
 	public void setAttribute(WidgetAttribute key, String strValue, Object objValue, ILifeCycleDecorator decorator) {
 		ViewGroupImpl.setAttribute(this, key, strValue, objValue, decorator);
 		Object nativeWidget = asNativeWidget();
 		switch (key.getAttributeName()) {
-			case "swtIncrement": {
-
-
-		setScrollBarIncrement(objValue);
-
-
-
-			}
-			break;
-			case "onScrollStateChange": {
-
-
-		 setOnScrollStateChange(key, strValue, objValue, decorator);
-
-
-
-			}
-			break;
-			case "onScrolled": {
-
-
-		 setOnScroll(key, strValue, objValue, decorator);
-
-
-
-			}
-			break;
-			case "headerDisabled": {
-
-
-		 setHeaderDisabled(objValue);
-
-
-
-			}
-			break;
-			case "footerDisabled": {
-
-
-		 setFooterDisabled(objValue);
-
-
-
-			}
-			break;
 			case "layoutManager": {
 
 
@@ -548,6 +540,51 @@ if (objValue instanceof java.util.List) {
 
 
 		 scrollToPosition(objValue);
+
+
+
+			}
+			break;
+			case "swtIncrement": {
+
+
+		setScrollBarIncrement(objValue);
+
+
+
+			}
+			break;
+			case "onScrollStateChange": {
+
+
+		 setOnScrollStateChange(key, strValue, objValue, decorator);
+
+
+
+			}
+			break;
+			case "onScrolled": {
+
+
+		 setOnScroll(key, strValue, objValue, decorator);
+
+
+
+			}
+			break;
+			case "headerDisabled": {
+
+
+		 setHeaderDisabled(objValue);
+
+
+
+			}
+			break;
+			case "footerDisabled": {
+
+
+		 setFooterDisabled(objValue);
 
 
 
@@ -1253,7 +1290,7 @@ return isReverseLayout();			}
 			public void onClick(View arg0) {
 				recyclerView.requestLayout();
 				expandableGroup.setExpanded(!expandableGroup.isExpanded());
-				widget.setAttribute(WidgetFactory.getAttribute(widget.getLocalName(), "selected"), expandableGroup.isExpanded(), true);
+				widget.setAttribute("selected", expandableGroup.isExpanded(), true);
 				fragment.remeasure();
 			}
 		}
@@ -1285,8 +1322,8 @@ return isReverseLayout();			}
 					if (!onClickId.equals(widget.getId())) {
 						onClickWidget  =  widget.findWidgetById(onClickId);
 					}
-					onClickWidget.setAttribute(WidgetFactory.getAttribute(widget.getLocalName(), "onClick"), new ExpandableClickListener(position, onClickWidget), true);
-					onClickWidget.setAttribute(WidgetFactory.getAttribute(widget.getLocalName(), "selected"), this.expandableGroup.isExpanded(), true);
+					onClickWidget.setAttribute("onClick", new ExpandableClickListener(position, onClickWidget), true);
+					onClickWidget.setAttribute("selected", this.expandableGroup.isExpanded(), true);
 				}
 				
 				
@@ -1884,46 +1921,6 @@ public  class RecyclerViewCommandBuilder extends com.ashera.layout.ViewGroupImpl
 		executeCommand(command, null, IWidget.COMMAND_EXEC_GETTER_METHOD);
 return this;	}
 
-public RecyclerViewCommandBuilder setSwtIncrement(int value) {
-	Map<String, Object> attrs = initCommand("swtIncrement");
-	attrs.put("type", "attribute");
-	attrs.put("setter", true);
-	attrs.put("orderSet", ++orderSet);
-
-	attrs.put("value", value);
-return this;}
-public RecyclerViewCommandBuilder setOnScrollStateChange(String value) {
-	Map<String, Object> attrs = initCommand("onScrollStateChange");
-	attrs.put("type", "attribute");
-	attrs.put("setter", true);
-	attrs.put("orderSet", ++orderSet);
-
-	attrs.put("value", value);
-return this;}
-public RecyclerViewCommandBuilder setOnScrolled(String value) {
-	Map<String, Object> attrs = initCommand("onScrolled");
-	attrs.put("type", "attribute");
-	attrs.put("setter", true);
-	attrs.put("orderSet", ++orderSet);
-
-	attrs.put("value", value);
-return this;}
-public RecyclerViewCommandBuilder setHeaderDisabled(boolean value) {
-	Map<String, Object> attrs = initCommand("headerDisabled");
-	attrs.put("type", "attribute");
-	attrs.put("setter", true);
-	attrs.put("orderSet", ++orderSet);
-
-	attrs.put("value", value);
-return this;}
-public RecyclerViewCommandBuilder setFooterDisabled(boolean value) {
-	Map<String, Object> attrs = initCommand("footerDisabled");
-	attrs.put("type", "attribute");
-	attrs.put("setter", true);
-	attrs.put("orderSet", ++orderSet);
-
-	attrs.put("value", value);
-return this;}
 public RecyclerViewCommandBuilder setLayoutManager(String value) {
 	Map<String, Object> attrs = initCommand("layoutManager");
 	attrs.put("type", "attribute");
@@ -2061,31 +2058,51 @@ public RecyclerViewCommandBuilder scrollToPosition(int value) {
 
 	attrs.put("value", value);
 return this;}
+public RecyclerViewCommandBuilder setSwtIncrement(int value) {
+	Map<String, Object> attrs = initCommand("swtIncrement");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
+public RecyclerViewCommandBuilder setOnScrollStateChange(String value) {
+	Map<String, Object> attrs = initCommand("onScrollStateChange");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
+public RecyclerViewCommandBuilder setOnScrolled(String value) {
+	Map<String, Object> attrs = initCommand("onScrolled");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
+public RecyclerViewCommandBuilder setHeaderDisabled(boolean value) {
+	Map<String, Object> attrs = initCommand("headerDisabled");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
+public RecyclerViewCommandBuilder setFooterDisabled(boolean value) {
+	Map<String, Object> attrs = initCommand("footerDisabled");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
 }
 public class RecyclerViewBean extends com.ashera.layout.ViewGroupImpl.ViewGroupBean{
 		public RecyclerViewBean() {
 			super(RecyclerViewImpl.this);
 		}
-public void setSwtIncrement(int value) {
-	getBuilder().reset().setSwtIncrement(value).execute(true);
-}
-
-public void setOnScrollStateChange(String value) {
-	getBuilder().reset().setOnScrollStateChange(value).execute(true);
-}
-
-public void setOnScrolled(String value) {
-	getBuilder().reset().setOnScrolled(value).execute(true);
-}
-
-public void setHeaderDisabled(boolean value) {
-	getBuilder().reset().setHeaderDisabled(value).execute(true);
-}
-
-public void setFooterDisabled(boolean value) {
-	getBuilder().reset().setFooterDisabled(value).execute(true);
-}
-
 public void setLayoutManager(String value) {
 	getBuilder().reset().setLayoutManager(value).execute(true);
 }
@@ -2153,6 +2170,26 @@ public void scrollToTop(boolean value) {
 
 public void scrollToPosition(int value) {
 	getBuilder().reset().scrollToPosition(value).execute(true);
+}
+
+public void setSwtIncrement(int value) {
+	getBuilder().reset().setSwtIncrement(value).execute(true);
+}
+
+public void setOnScrollStateChange(String value) {
+	getBuilder().reset().setOnScrollStateChange(value).execute(true);
+}
+
+public void setOnScrolled(String value) {
+	getBuilder().reset().setOnScrolled(value).execute(true);
+}
+
+public void setHeaderDisabled(boolean value) {
+	getBuilder().reset().setHeaderDisabled(value).execute(true);
+}
+
+public void setFooterDisabled(boolean value) {
+	getBuilder().reset().setFooterDisabled(value).execute(true);
 }
 
 }

@@ -18,11 +18,6 @@ import { ScopedObject } from '../../app/ScopedObject';
 
 
 
-
-
-
-
-
 export class RecyclerViewImpl_addSectionItem {
 @Expose({ name: "sectionId" })
 sectionId!:string;
@@ -59,6 +54,11 @@ item!:any;
 
 
 
+
+
+
+
+
 import {ViewGroupImpl_LayoutParams} from './ViewGroupImpl';
 
 // end - imports
@@ -67,21 +67,6 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 	//start - body
 	static initialize() {
     }	
-	@Type(() => CommandAttr)
-	@Expose({ name: "swtIncrement" })
-	swtIncrement!:CommandAttr<number>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "onScrollStateChange" })
-	onScrollStateChange!:CommandAttr<string>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "onScrolled" })
-	onScrolled!:CommandAttr<string>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "headerDisabled" })
-	headerDisabled!:CommandAttr<boolean>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "footerDisabled" })
-	footerDisabled!:CommandAttr<boolean>| undefined;
 	@Type(() => CommandAttr)
 	@Expose({ name: "layoutManager" })
 	layoutManager!:CommandAttr<string>| undefined;
@@ -121,17 +106,27 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 	@Type(() => CommandAttr)
 	@Expose({ name: "scrollToPosition" })
 	scrollToPosition_!:CommandAttr<number>| undefined;
+	@Type(() => CommandAttr)
+	@Expose({ name: "swtIncrement" })
+	swtIncrement!:CommandAttr<number>| undefined;
+	@Type(() => CommandAttr)
+	@Expose({ name: "onScrollStateChange" })
+	onScrollStateChange!:CommandAttr<string>| undefined;
+	@Type(() => CommandAttr)
+	@Expose({ name: "onScrolled" })
+	onScrolled!:CommandAttr<string>| undefined;
+	@Type(() => CommandAttr)
+	@Expose({ name: "headerDisabled" })
+	headerDisabled!:CommandAttr<boolean>| undefined;
+	@Type(() => CommandAttr)
+	@Expose({ name: "footerDisabled" })
+	footerDisabled!:CommandAttr<boolean>| undefined;
 
 	@Exclude()
 	protected thisPointer: T;	
 	protected abstract getThisPointer(): T;
 	reset() : T {	
 		super.reset();
-		this.swtIncrement = undefined;
-		this.onScrollStateChange = undefined;
-		this.onScrolled = undefined;
-		this.headerDisabled = undefined;
-		this.footerDisabled = undefined;
 		this.layoutManager = undefined;
 		this.viewHolderIds = undefined;
 		this.spanCount = undefined;
@@ -145,6 +140,11 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 		this.scrollToEnd_ = undefined;
 		this.scrollToTop_ = undefined;
 		this.scrollToPosition_ = undefined;
+		this.swtIncrement = undefined;
+		this.onScrollStateChange = undefined;
+		this.onScrolled = undefined;
+		this.headerDisabled = undefined;
+		this.footerDisabled = undefined;
 		return this.thisPointer;
 	}
 	constructor(id: string, path: string[], event:  string) {
@@ -152,76 +152,6 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 		this.thisPointer = this.getThisPointer();
 	}
 	
-
-	public setSwtIncrement(value : number) : T {
-		this.resetIfRequired();
-		if (this.swtIncrement == null || this.swtIncrement == undefined) {
-			this.swtIncrement = new CommandAttr<number>();
-		}
-		
-		this.swtIncrement.setSetter(true);
-		this.swtIncrement.setValue(value);
-		this.orderSet++;
-		this.swtIncrement.setOrderSet(this.orderSet);
-		return this.thisPointer;
-	}
-		
-
-	public setOnScrollStateChange(value : string) : T {
-		this.resetIfRequired();
-		if (this.onScrollStateChange == null || this.onScrollStateChange == undefined) {
-			this.onScrollStateChange = new CommandAttr<string>();
-		}
-		
-		this.onScrollStateChange.setSetter(true);
-		this.onScrollStateChange.setValue(value);
-		this.orderSet++;
-		this.onScrollStateChange.setOrderSet(this.orderSet);
-		return this.thisPointer;
-	}
-		
-
-	public setOnScrolled(value : string) : T {
-		this.resetIfRequired();
-		if (this.onScrolled == null || this.onScrolled == undefined) {
-			this.onScrolled = new CommandAttr<string>();
-		}
-		
-		this.onScrolled.setSetter(true);
-		this.onScrolled.setValue(value);
-		this.orderSet++;
-		this.onScrolled.setOrderSet(this.orderSet);
-		return this.thisPointer;
-	}
-		
-
-	public setHeaderDisabled(value : boolean) : T {
-		this.resetIfRequired();
-		if (this.headerDisabled == null || this.headerDisabled == undefined) {
-			this.headerDisabled = new CommandAttr<boolean>();
-		}
-		
-		this.headerDisabled.setSetter(true);
-		this.headerDisabled.setValue(value);
-		this.orderSet++;
-		this.headerDisabled.setOrderSet(this.orderSet);
-		return this.thisPointer;
-	}
-		
-
-	public setFooterDisabled(value : boolean) : T {
-		this.resetIfRequired();
-		if (this.footerDisabled == null || this.footerDisabled == undefined) {
-			this.footerDisabled = new CommandAttr<boolean>();
-		}
-		
-		this.footerDisabled.setSetter(true);
-		this.footerDisabled.setValue(value);
-		this.orderSet++;
-		this.footerDisabled.setOrderSet(this.orderSet);
-		return this.thisPointer;
-	}
-		
 
 	public setLayoutManager(value : string) : T {
 		this.resetIfRequired();
@@ -441,6 +371,76 @@ item : any) : T {
 		this.scrollToPosition_.setValue(value);
 		this.orderSet++;
 		this.scrollToPosition_.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setSwtIncrement(value : number) : T {
+		this.resetIfRequired();
+		if (this.swtIncrement == null || this.swtIncrement == undefined) {
+			this.swtIncrement = new CommandAttr<number>();
+		}
+		
+		this.swtIncrement.setSetter(true);
+		this.swtIncrement.setValue(value);
+		this.orderSet++;
+		this.swtIncrement.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setOnScrollStateChange(value : string) : T {
+		this.resetIfRequired();
+		if (this.onScrollStateChange == null || this.onScrollStateChange == undefined) {
+			this.onScrollStateChange = new CommandAttr<string>();
+		}
+		
+		this.onScrollStateChange.setSetter(true);
+		this.onScrollStateChange.setValue(value);
+		this.orderSet++;
+		this.onScrollStateChange.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setOnScrolled(value : string) : T {
+		this.resetIfRequired();
+		if (this.onScrolled == null || this.onScrolled == undefined) {
+			this.onScrolled = new CommandAttr<string>();
+		}
+		
+		this.onScrolled.setSetter(true);
+		this.onScrolled.setValue(value);
+		this.orderSet++;
+		this.onScrolled.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setHeaderDisabled(value : boolean) : T {
+		this.resetIfRequired();
+		if (this.headerDisabled == null || this.headerDisabled == undefined) {
+			this.headerDisabled = new CommandAttr<boolean>();
+		}
+		
+		this.headerDisabled.setSetter(true);
+		this.headerDisabled.setValue(value);
+		this.orderSet++;
+		this.headerDisabled.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setFooterDisabled(value : boolean) : T {
+		this.resetIfRequired();
+		if (this.footerDisabled == null || this.footerDisabled == undefined) {
+			this.footerDisabled = new CommandAttr<boolean>();
+		}
+		
+		this.footerDisabled.setSetter(true);
+		this.footerDisabled.setValue(value);
+		this.orderSet++;
+		this.footerDisabled.setOrderSet(this.orderSet);
 		return this.thisPointer;
 	}
 		
