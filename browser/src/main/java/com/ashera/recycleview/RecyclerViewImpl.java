@@ -358,6 +358,31 @@ public class RecyclerViewImpl extends BaseHasWidgets {
             ((HTMLElement)asNativeWidget()).getStyle().setProperty("display", visibility != View.VISIBLE ? "none" : "block");
             
         }
+        
+        	public void state0() {
+        		ViewImpl.state(RecyclerViewImpl.this, 0);
+        	}
+        	public void state1() {
+        		ViewImpl.state(RecyclerViewImpl.this, 1);
+        	}
+        	public void state2() {
+        		ViewImpl.state(RecyclerViewImpl.this, 2);
+        	}
+        	public void state3() {
+        		ViewImpl.state(RecyclerViewImpl.this, 3);
+        	}
+        	public void state4() {
+        		ViewImpl.state(RecyclerViewImpl.this, 4);
+        	}
+                        
+        public void stateYes() {
+        	ViewImpl.stateYes(RecyclerViewImpl.this);
+        	
+        }
+        
+        public void stateNo() {
+        	ViewImpl.stateNo(RecyclerViewImpl.this);
+        }
 	}
 	@Override
 	public Class getViewClass() {
@@ -965,7 +990,7 @@ return isReverseLayout();			}
 			if (headerTemplate != null && !headerDisabled) {
 				position = position - 1;
 			}
-			return IdGenerator.getId(ids.get(position));
+			return (int) quickConvert(ids.get(position), "id");
 		}
 		
 		@Override
@@ -1618,7 +1643,7 @@ return isReverseLayout();			}
 
 		@Override
 		public int getLayout() {
-			return IdGenerator.getId(layout);
+			return (int) quickConvert(layout, "id");
 		}
 
 		public IWidget getTemplate() {
@@ -1845,7 +1870,7 @@ return isReverseLayout();			}
 						String path = PluginInvoker.getString(itemConfig.get("@idPath"));
 						com.ashera.model.ModelExpressionParser.ModelFromScopeHolder modelFromScopeHolder = com.ashera.model.ModelExpressionParser.parseModelFromScope(path);
 						int itemCount = sectionHolder.section.getItemCount();
-						int layoutId =  IdGenerator.getId(PluginInvoker.getString(itemConfig.get("@layout")));
+						int layoutId =  (int) quickConvert(PluginInvoker.getString(itemConfig.get("@layout")), "id");
 						ArrayList<com.xwray.groupie.Item<GroupieViewHolder>> items = new ArrayList<>();
 						for (int i = itemCount - 1; i >= 0; i--) {
 							com.xwray.groupie.Item<GroupieViewHolder> item = sectionHolder.section.getItem(i);
@@ -1971,14 +1996,10 @@ public void onScrollStateChanged (RecyclerView recyclerView,
 	    String commandType = (String)obj.get(EventExpressionParser.KEY_COMMAND_TYPE);
 		switch (commandType) {
 		case "+":
-		case ":":
 		    if (EventCommandFactory.hasCommand(commandName)) {
 		    	 EventCommandFactory.getCommand(commandName).executeCommand(w, obj, recyclerView,newState);
 		    }
-		    if (commandType.equals(":")) {
-		    	return;
-		    }
-			
+
 			break;
 		default:
 			break;
@@ -1991,7 +2012,7 @@ public void onScrollStateChanged (RecyclerView recyclerView,
 		if (w.getModelUiToPojoEventIds() != null) {
 			com.ashera.layout.ViewImpl.refreshUiFromModel(w, w.getModelUiToPojoEventIds(), true);
 		}
-		if (strValue != null && !strValue.isEmpty()) {
+		if (strValue != null && !strValue.isEmpty() && !strValue.trim().startsWith("+")) {
 		    com.ashera.core.IActivity activity = (com.ashera.core.IActivity)w.getFragment().getRootActivity();
 		    activity.sendEventMessage(obj);
 		}
@@ -2012,14 +2033,10 @@ public void onScrolled (RecyclerView recyclerView,
 	    String commandType = (String)obj.get(EventExpressionParser.KEY_COMMAND_TYPE);
 		switch (commandType) {
 		case "+":
-		case ":":
 		    if (EventCommandFactory.hasCommand(commandName)) {
 		    	 EventCommandFactory.getCommand(commandName).executeCommand(w, obj, recyclerView,dx,dy);
 		    }
-		    if (commandType.equals(":")) {
-		    	return;
-		    }
-			
+
 			break;
 		default:
 			break;
@@ -2032,7 +2049,7 @@ public void onScrolled (RecyclerView recyclerView,
 		if (w.getModelUiToPojoEventIds() != null) {
 			com.ashera.layout.ViewImpl.refreshUiFromModel(w, w.getModelUiToPojoEventIds(), true);
 		}
-		if (strValue != null && !strValue.isEmpty()) {
+		if (strValue != null && !strValue.isEmpty() && !strValue.trim().startsWith("+")) {
 		    com.ashera.core.IActivity activity = (com.ashera.core.IActivity)w.getFragment().getRootActivity();
 		    activity.sendEventMessage(obj);
 		}
@@ -2093,7 +2110,7 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 	public void setId(String id){
 		if (id != null && !id.equals("")){
 			super.setId(id);
-			recyclerView.setId(IdGenerator.getId(id));
+			recyclerView.setId((int) quickConvert(id, "id"));
 		}
 	}
 	
