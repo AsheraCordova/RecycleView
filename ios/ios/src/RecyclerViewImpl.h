@@ -309,6 +309,16 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
 - (void)setMyAttributeWithNSString:(NSString *)name
                             withId:(id)value;
 
+- (void)setState0WithId:(id)value;
+
+- (void)setState1WithId:(id)value;
+
+- (void)setState2WithId:(id)value;
+
+- (void)setState3WithId:(id)value;
+
+- (void)setState4WithId:(id)value;
+
 - (void)setVisibilityWithInt:(jint)visibility;
 
 - (void)state0;
@@ -787,6 +797,10 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
                                                                  withNSString:(NSString *)itemConfigId
                                                                        withId:(id)item;
 
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)animatorXmlWithNSString:(NSString *)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)endAnimator;
+
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)executeWithBoolean:(jboolean)setter;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)invalidate;
@@ -848,6 +862,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setCustomErrorMessageValuesWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setDuplicateParentStateWithBoolean:(jboolean)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setElevationWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setEnabledWithBoolean:(jboolean)arg0;
 
@@ -975,6 +991,14 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setModelUiToPojoWithNSString:(NSString *)arg0;
 
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnAnimationCancelWithNSString:(NSString *)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnAnimationEndWithNSString:(NSString *)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnAnimationRepeatWithNSString:(NSString *)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnAnimationStartWithNSString:(NSString *)arg0;
+
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnChildViewAddedWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnChildViewRemovedWithNSString:(NSString *)arg0;
@@ -1074,6 +1098,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setVisibilityWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setZIndexWithInt:(jint)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)startAnimator;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetAddStatesFromChildren;
 
