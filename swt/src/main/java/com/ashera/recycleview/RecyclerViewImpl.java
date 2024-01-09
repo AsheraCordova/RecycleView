@@ -93,7 +93,7 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 		return recyclerView;
 	}
 
-	
+
 	private void nativeRemoveView(IWidget widget) {
 		r.android.animation.LayoutTransition layoutTransition = recyclerView.getLayoutTransition();
 		if (layoutTransition != null && (

@@ -140,18 +140,7 @@ Context context = (Context) fragment.getRootActivity();
 		return recyclerView;
 	}
 
-	
-	private void nativeRemoveView(IWidget widget) {
-		r.android.animation.LayoutTransition layoutTransition = recyclerView.getLayoutTransition();
-		if (layoutTransition != null && (
-				layoutTransition.isTransitionTypeEnabled(r.android.animation.LayoutTransition.CHANGE_DISAPPEARING) ||
-				layoutTransition.isTransitionTypeEnabled(r.android.animation.LayoutTransition.DISAPPEARING)
-				)) {
-			addToBufferedRunnables(() -> ViewGroupImpl.nativeRemoveView(widget));          
-		} else {
-			ViewGroupImpl.nativeRemoveView(widget);
-		}
-	}
+
 	
 	@Override
 	public void add(IWidget w, int index) {
