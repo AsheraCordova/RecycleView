@@ -12,6 +12,7 @@
 #include "IOSPrimitiveArray.h"
 #include "J2ObjC_source.h"
 #include "Log.h"
+#include "MotionEvent.h"
 #include "Parcelable.h"
 #include "Rect.h"
 #include "RectF.h"
@@ -764,7 +765,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   jboolean canScrollHorizontal = [mLayout_ canScrollHorizontally];
   jboolean canScrollVertical = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollVertically];
   if (canScrollHorizontal || canScrollVertical) {
-    [self scrollByInternalWithInt:canScrollHorizontal ? x : 0 withInt:canScrollVertical ? y : 0 withADView_MotionEvent:nil withInt:ADXRecyclerView_TYPE_TOUCH];
+    [self scrollByInternalWithInt:canScrollHorizontal ? x : 0 withInt:canScrollVertical ? y : 0 withADMotionEvent:nil withInt:ADXRecyclerView_TYPE_TOUCH];
   }
 }
 
@@ -833,7 +834,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 
 - (jboolean)scrollByInternalWithInt:(jint)x
                             withInt:(jint)y
-             withADView_MotionEvent:(ADView_MotionEvent *)ev
+                  withADMotionEvent:(ADMotionEvent *)ev
                             withInt:(jint)type {
   jint unconsumedX = 0;
   jint unconsumedY = 0;
@@ -863,7 +864,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   *IOSIntArray_GetRef(nil_chk(mNestedOffsets_), 0) += IOSIntArray_Get(mScrollOffset_, 0);
   *IOSIntArray_GetRef(mNestedOffsets_, 1) += IOSIntArray_Get(mScrollOffset_, 1);
   if ([self getOverScrollMode] != ADView_OVER_SCROLL_NEVER) {
-    if (ev != nil && !ADXRecyclerView_MotionEventCompat_isFromSourceWithADView_MotionEvent_withInt_(ev, ADXRecyclerView_InputDevice_SOURCE_MOUSE)) {
+    if (ev != nil && !ADXRecyclerView_MotionEventCompat_isFromSourceWithADMotionEvent_withInt_(ev, ADXRecyclerView_InputDevice_SOURCE_MOUSE)) {
       ADXRecyclerView_pullGlowsWithFloat_withFloat_withFloat_withFloat_(self, [ev getX], unconsumedX, [ev getY], unconsumedY);
     }
     [self considerReleasingGlowsOnScrollWithInt:x withInt:y];
@@ -1810,7 +1811,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   methods[17].selector = @selector(scrollStepWithInt:withInt:withIntArray:);
   methods[18].selector = @selector(consumePendingUpdateOperations);
   methods[19].selector = @selector(hasUpdatedView);
-  methods[20].selector = @selector(scrollByInternalWithInt:withInt:withADView_MotionEvent:withInt:);
+  methods[20].selector = @selector(scrollByInternalWithInt:withInt:withADMotionEvent:withInt:);
   methods[21].selector = @selector(computeHorizontalScrollOffset);
   methods[22].selector = @selector(computeHorizontalScrollExtent);
   methods[23].selector = @selector(computeHorizontalScrollRange);
@@ -1992,7 +1993,7 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "TYPE_TOUCH", "I", .constantValue.asInt = ADXRecyclerView_TYPE_TOUCH, 0x19, -1, -1, -1, -1 },
     { "mItemAnimator_", "LADXRecyclerView_ItemAnimator;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "setAdapter", "LADXRecyclerView_Adapter;", "setAdapterInternal", "LADXRecyclerView_Adapter;ZZ", "setLayoutManager", "LADXRecyclerView_LayoutManager;", "addAnimatingView", "LADXRecyclerView_ViewHolder;", "addItemDecoration", "LADXRecyclerView_ItemDecoration;I", "LADXRecyclerView_ItemDecoration;", "setOnScrollListener", "LADXRecyclerView_OnScrollListener;", "scrollToPosition", "I", "scrollBy", "II", "scrollStep", "II[I", "scrollByInternal", "IILADView_MotionEvent;I", "stopInterceptRequestLayout", "Z", "suppressLayout", "setLayoutFrozen", "assertInLayoutOrScroll", "LNSString;", "assertNotInLayoutOrScroll", "onMeasure", "defaultOnMeasure", "onExitLayoutOrScroll", "handleMissingPreInfoForChangeError", "JLADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "recordAnimationInfoIfBouncedHiddenView", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "findMinMaxChildLayoutPositions", "[I", "didChildRangeChange", "removeDetachedView", "LADView;Z", "getChangedHolderKey", "animateAppearance", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "animateDisappearance", "animateChange", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;ZZ", "onLayout", "ZIIII", "offsetPositionRecordsForMove", "offsetPositionRecordsForInsert", "offsetPositionRecordsForRemove", "IIZ", "viewRangeUpdate", "IILNSObject;", "canReuseUpdatedViewHolder", "processDataSetCompletelyChanged", "getChildViewHolder", "LADView;", "findContainingItemView", "getChildViewHolderInt", "findViewHolderForPosition", "IZ", "offsetChildrenVertical", "onChildAttachedToWindow", "onChildDetachedFromWindow", "offsetChildrenHorizontal", "getDecoratedBoundsWithMarginsInt", "LADView;LADRect;", "getItemDecorInsetsForChild", "dispatchOnScrolled", "findNestedRecyclerView", "clearNestedRecyclerViewIfNotNested", "dispatchChildDetached", "dispatchChildAttached", "getAdapterPositionInRecyclerView", "dispatchNestedScroll", "IIII[I", "IIII[II", "IIII[II[I", "onScrollChanged", "IIII", "onScrolled", "fillRemainingScrollValues", "LADXRecyclerView_State;", "registerObserver", "LADXRecyclerView_AdapterDataObserver;", "considerReleasingGlowsOnScroll", "pullGlows", "FFFF", &ADXRecyclerView_TAG, &ADXRecyclerView_TRACE_SCROLL_TAG, &ADXRecyclerView_TRACE_ON_LAYOUT_TAG, &ADXRecyclerView_TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG, &ADXRecyclerView_TRACE_HANDLE_ADAPTER_UPDATES_TAG, &ADXRecyclerView_TRACE_BIND_VIEW_TAG, &ADXRecyclerView_TRACE_PREFETCH_TAG, &ADXRecyclerView_TRACE_NESTED_PREFETCH_TAG, &ADXRecyclerView_TRACE_CREATE_VIEW_TAG, "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$RecyclerListener;>;", "Ljava/util/ArrayList<Landroidx/recyclerview/widget/RecyclerView$ItemDecoration;>;", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnChildAttachStateChangeListener;>;", "mTouchSlop", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnScrollListener;>;", "LADXRecyclerView_RecyclerViewDataObserver;LADXRecyclerView_RecycledViewPool;LADXRecyclerView_Recycler;LADXRecyclerView_ViewCacheExtension;LADXRecyclerView_Adapter;LADXRecyclerView_LayoutManager;LADXRecyclerView_ItemDecoration;LADXRecyclerView_OnScrollListener;LADXRecyclerView_RecyclerListener;LADXRecyclerView_OnChildAttachStateChangeListener;LADXRecyclerView_ViewHolder;LADXRecyclerView_LayoutParams;LADXRecyclerView_AdapterDataObserver;LADXRecyclerView_AdapterDataObservable;LADXRecyclerView_State;LADXRecyclerView_ItemAnimator;LADXRecyclerView_SavedState;LADXRecyclerView_Observable;LADXRecyclerView_MotionEventCompat;LADXRecyclerView_InputDevice;LADXRecyclerView_NestedScrollingChildHelper;" };
+  static const void *ptrTable[] = { "setAdapter", "LADXRecyclerView_Adapter;", "setAdapterInternal", "LADXRecyclerView_Adapter;ZZ", "setLayoutManager", "LADXRecyclerView_LayoutManager;", "addAnimatingView", "LADXRecyclerView_ViewHolder;", "addItemDecoration", "LADXRecyclerView_ItemDecoration;I", "LADXRecyclerView_ItemDecoration;", "setOnScrollListener", "LADXRecyclerView_OnScrollListener;", "scrollToPosition", "I", "scrollBy", "II", "scrollStep", "II[I", "scrollByInternal", "IILADMotionEvent;I", "stopInterceptRequestLayout", "Z", "suppressLayout", "setLayoutFrozen", "assertInLayoutOrScroll", "LNSString;", "assertNotInLayoutOrScroll", "onMeasure", "defaultOnMeasure", "onExitLayoutOrScroll", "handleMissingPreInfoForChangeError", "JLADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "recordAnimationInfoIfBouncedHiddenView", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "findMinMaxChildLayoutPositions", "[I", "didChildRangeChange", "removeDetachedView", "LADView;Z", "getChangedHolderKey", "animateAppearance", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "animateDisappearance", "animateChange", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;ZZ", "onLayout", "ZIIII", "offsetPositionRecordsForMove", "offsetPositionRecordsForInsert", "offsetPositionRecordsForRemove", "IIZ", "viewRangeUpdate", "IILNSObject;", "canReuseUpdatedViewHolder", "processDataSetCompletelyChanged", "getChildViewHolder", "LADView;", "findContainingItemView", "getChildViewHolderInt", "findViewHolderForPosition", "IZ", "offsetChildrenVertical", "onChildAttachedToWindow", "onChildDetachedFromWindow", "offsetChildrenHorizontal", "getDecoratedBoundsWithMarginsInt", "LADView;LADRect;", "getItemDecorInsetsForChild", "dispatchOnScrolled", "findNestedRecyclerView", "clearNestedRecyclerViewIfNotNested", "dispatchChildDetached", "dispatchChildAttached", "getAdapterPositionInRecyclerView", "dispatchNestedScroll", "IIII[I", "IIII[II", "IIII[II[I", "onScrollChanged", "IIII", "onScrolled", "fillRemainingScrollValues", "LADXRecyclerView_State;", "registerObserver", "LADXRecyclerView_AdapterDataObserver;", "considerReleasingGlowsOnScroll", "pullGlows", "FFFF", &ADXRecyclerView_TAG, &ADXRecyclerView_TRACE_SCROLL_TAG, &ADXRecyclerView_TRACE_ON_LAYOUT_TAG, &ADXRecyclerView_TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG, &ADXRecyclerView_TRACE_HANDLE_ADAPTER_UPDATES_TAG, &ADXRecyclerView_TRACE_BIND_VIEW_TAG, &ADXRecyclerView_TRACE_PREFETCH_TAG, &ADXRecyclerView_TRACE_NESTED_PREFETCH_TAG, &ADXRecyclerView_TRACE_CREATE_VIEW_TAG, "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$RecyclerListener;>;", "Ljava/util/ArrayList<Landroidx/recyclerview/widget/RecyclerView$ItemDecoration;>;", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnChildAttachStateChangeListener;>;", "mTouchSlop", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnScrollListener;>;", "LADXRecyclerView_RecyclerViewDataObserver;LADXRecyclerView_RecycledViewPool;LADXRecyclerView_Recycler;LADXRecyclerView_ViewCacheExtension;LADXRecyclerView_Adapter;LADXRecyclerView_LayoutManager;LADXRecyclerView_ItemDecoration;LADXRecyclerView_OnScrollListener;LADXRecyclerView_RecyclerListener;LADXRecyclerView_OnChildAttachStateChangeListener;LADXRecyclerView_ViewHolder;LADXRecyclerView_LayoutParams;LADXRecyclerView_AdapterDataObserver;LADXRecyclerView_AdapterDataObservable;LADXRecyclerView_State;LADXRecyclerView_ItemAnimator;LADXRecyclerView_SavedState;LADXRecyclerView_Observable;LADXRecyclerView_MotionEventCompat;LADXRecyclerView_InputDevice;LADXRecyclerView_NestedScrollingChildHelper;" };
   static const J2ObjcClassInfo _ADXRecyclerView = { "RecyclerView", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 109, 90, -1, 103, -1, -1, -1 };
   return &_ADXRecyclerView;
 }
@@ -7536,9 +7537,9 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-+ (jboolean)isFromSourceWithADView_MotionEvent:(ADView_MotionEvent *)ev
-                                       withInt:(jint)source {
-  return ADXRecyclerView_MotionEventCompat_isFromSourceWithADView_MotionEvent_withInt_(ev, source);
++ (jboolean)isFromSourceWithADMotionEvent:(ADMotionEvent *)ev
+                                  withInt:(jint)source {
+  return ADXRecyclerView_MotionEventCompat_isFromSourceWithADMotionEvent_withInt_(ev, source);
 }
 
 + (const J2ObjcClassInfo *)__metadata {
@@ -7550,9 +7551,9 @@ J2OBJC_IGNORE_DESIGNATED_END
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
   #pragma clang diagnostic ignored "-Wundeclared-selector"
   methods[0].selector = @selector(init);
-  methods[1].selector = @selector(isFromSourceWithADView_MotionEvent:withInt:);
+  methods[1].selector = @selector(isFromSourceWithADMotionEvent:withInt:);
   #pragma clang diagnostic pop
-  static const void *ptrTable[] = { "isFromSource", "LADView_MotionEvent;I", "LADXRecyclerView;" };
+  static const void *ptrTable[] = { "isFromSource", "LADMotionEvent;I", "LADXRecyclerView;" };
   static const J2ObjcClassInfo _ADXRecyclerView_MotionEventCompat = { "MotionEventCompat", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8, 2, 0, 2, -1, -1, -1, -1 };
   return &_ADXRecyclerView_MotionEventCompat;
 }
@@ -7571,7 +7572,7 @@ ADXRecyclerView_MotionEventCompat *create_ADXRecyclerView_MotionEventCompat_init
   J2OBJC_CREATE_IMPL(ADXRecyclerView_MotionEventCompat, init)
 }
 
-jboolean ADXRecyclerView_MotionEventCompat_isFromSourceWithADView_MotionEvent_withInt_(ADView_MotionEvent *ev, jint source) {
+jboolean ADXRecyclerView_MotionEventCompat_isFromSourceWithADMotionEvent_withInt_(ADMotionEvent *ev, jint source) {
   ADXRecyclerView_MotionEventCompat_initialize();
   return false;
 }

@@ -29,10 +29,10 @@
 #define INCLUDE_ADViewGroup 1
 #include "ViewGroup.h"
 
+@class ADMotionEvent;
 @class ADRect;
 @class ADRectF;
 @class ADView;
-@class ADView_MotionEvent;
 @class ADXAdapterHelper;
 @class ADXChildHelper;
 @class ADXGapWorker_LayoutPrefetchRegistryImpl;
@@ -298,7 +298,7 @@
 
 - (jboolean)scrollByInternalWithInt:(jint)x
                             withInt:(jint)y
-             withADView_MotionEvent:(ADView_MotionEvent *)ev
+                  withADMotionEvent:(ADMotionEvent *)ev
                             withInt:(jint)type;
 
 - (void)scrollStepWithInt:(jint)dx
@@ -2083,14 +2083,14 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_SavedState)
 #if !defined (ADXRecyclerView_MotionEventCompat_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_MotionEventCompat))
 #define ADXRecyclerView_MotionEventCompat_
 
-@class ADView_MotionEvent;
+@class ADMotionEvent;
 
 @interface ADXRecyclerView_MotionEventCompat : NSObject
 
 #pragma mark Public
 
-+ (jboolean)isFromSourceWithADView_MotionEvent:(ADView_MotionEvent *)ev
-                                       withInt:(jint)source;
++ (jboolean)isFromSourceWithADMotionEvent:(ADMotionEvent *)ev
+                                  withInt:(jint)source;
 
 #pragma mark Package-Private
 
@@ -2106,7 +2106,7 @@ FOUNDATION_EXPORT ADXRecyclerView_MotionEventCompat *new_ADXRecyclerView_MotionE
 
 FOUNDATION_EXPORT ADXRecyclerView_MotionEventCompat *create_ADXRecyclerView_MotionEventCompat_init(void);
 
-FOUNDATION_EXPORT jboolean ADXRecyclerView_MotionEventCompat_isFromSourceWithADView_MotionEvent_withInt_(ADView_MotionEvent *ev, jint source);
+FOUNDATION_EXPORT jboolean ADXRecyclerView_MotionEventCompat_isFromSourceWithADMotionEvent_withInt_(ADMotionEvent *ev, jint source);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_MotionEventCompat)
 

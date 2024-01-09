@@ -94,6 +94,18 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 	}
 
 	
+	private void nativeRemoveView(IWidget widget) {
+		r.android.animation.LayoutTransition layoutTransition = recyclerView.getLayoutTransition();
+		if (layoutTransition != null && (
+				layoutTransition.isTransitionTypeEnabled(r.android.animation.LayoutTransition.CHANGE_DISAPPEARING) ||
+				layoutTransition.isTransitionTypeEnabled(r.android.animation.LayoutTransition.DISAPPEARING)
+				)) {
+			addToBufferedRunnables(() -> ViewGroupImpl.nativeRemoveView(widget));          
+		} else {
+			ViewGroupImpl.nativeRemoveView(widget);
+		}
+	}
+	
 	@Override
 	public void add(IWidget w, int index) {
 		if (index != -2) {
@@ -405,6 +417,12 @@ public class RecyclerViewImpl extends BaseHasWidgets {
         public void stateNo() {
         	ViewImpl.stateNo(RecyclerViewImpl.this);
         }
+     
+		@Override
+		public void endViewTransition(r.android.view.View view) {
+			super.endViewTransition(view);
+			runBufferedRunnables();
+		}
 	}
 	@Override
 	public Class getViewClass() {
