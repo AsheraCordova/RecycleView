@@ -70,6 +70,7 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("layout").withType("string").withOrder(100));
 		ConverterFactory.register("androidx.recyclerview.widget.RecyclerView.orientation", new Orientation());
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("orientation").withType("androidx.recyclerview.widget.RecyclerView.orientation").withOrder(-1));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("nestedScrollingEnabled").withType("boolean"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("addSectionItem").withType("object"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("removeSectionItem").withType("object"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("removeAllItems").withType("object"));
@@ -581,6 +582,15 @@ Context context = (Context) fragment.getRootActivity();
 
 			}
 			break;
+			case "nestedScrollingEnabled": {
+
+
+		recyclerView.setNestedScrollingEnabled((boolean)objValue);
+
+
+
+			}
+			break;
 			case "addSectionItem": {
 		if (objValue instanceof Map) {
 			Map<String, Object> data = ((Map<String, Object>) objValue);
@@ -771,6 +781,8 @@ if (objValue instanceof java.util.List) {
 		switch (key.getAttributeName()) {
 			case "orientation": {
 return getOrientation();			}
+			case "nestedScrollingEnabled": {
+return recyclerView.isNestedScrollingEnabled();			}
 			case "reverseLayout": {
 return isReverseLayout();			}
 		}
@@ -1201,6 +1213,25 @@ public RecyclerViewCommandBuilder setOrientation(String value) {
 
 	attrs.put("value", value);
 return this;}
+public RecyclerViewCommandBuilder tryGetNestedScrollingEnabled() {
+	Map<String, Object> attrs = initCommand("nestedScrollingEnabled");
+	attrs.put("type", "attribute");
+	attrs.put("getter", true);
+	attrs.put("orderGet", ++orderGet);
+return this;}
+
+public Object isNestedScrollingEnabled() {
+	Map<String, Object> attrs = initCommand("nestedScrollingEnabled");
+	return attrs.get("commandReturnValue");
+}
+public RecyclerViewCommandBuilder setNestedScrollingEnabled(boolean value) {
+	Map<String, Object> attrs = initCommand("nestedScrollingEnabled");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
 public RecyclerViewCommandBuilder addSectionItem(String sectionId,
 String itemConfigId,
 Object item) {
@@ -1360,6 +1391,13 @@ public Object getOrientation() {
 }
 public void setOrientation(String value) {
 	getBuilder().reset().setOrientation(value).execute(true);
+}
+
+public Object isNestedScrollingEnabled() {
+	return getBuilder().reset().tryGetNestedScrollingEnabled().execute(false).isNestedScrollingEnabled(); 
+}
+public void setNestedScrollingEnabled(boolean value) {
+	getBuilder().reset().setNestedScrollingEnabled(value).execute(true);
 }
 
 public void addSectionItem(String sectionId,

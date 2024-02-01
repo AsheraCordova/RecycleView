@@ -73,6 +73,7 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("viewHolderIds").withType("array").withArrayType("string"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("spanCount").withType("int").withOrder(-1));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("layout").withType("string").withOrder(100));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("nestedScrollingEnabled").withType("boolean"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("addSectionItem").withType("object"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("removeSectionItem").withType("object"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("removeAllItems").withType("object"));
@@ -88,6 +89,7 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("onScrolled").withType("string"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("headerDisabled").withType("boolean").withOrder(-1));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("footerDisabled").withType("boolean").withOrder(-1));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("nestedScrollStopDelay").withType("int"));
 	
 	}
 	
@@ -349,7 +351,9 @@ public class RecyclerViewImpl extends BaseHasWidgets {
         
     	@Override
 		public void remeasure() {
-			getFragment().remeasure();
+    		if (getFragment() != null) {
+    			getFragment().remeasure();
+    		}
 		}
     	
         @Override
@@ -498,6 +502,15 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 
 
 		 setLayout(objValue);
+
+
+
+			}
+			break;
+			case "nestedScrollingEnabled": {
+
+
+		recyclerView.setNestedScrollingEnabled((boolean)objValue);
 
 
 
@@ -703,6 +716,15 @@ if (objValue instanceof java.util.List) {
 
 			}
 			break;
+			case "nestedScrollStopDelay": {
+
+
+		setNestedScrollStopDelay((int) objValue);
+
+
+
+			}
+			break;
 		default:
 			break;
 		}
@@ -718,6 +740,8 @@ if (objValue instanceof java.util.List) {
 		}
 		Object nativeWidget = asNativeWidget();
 		switch (key.getAttributeName()) {
+			case "nestedScrollingEnabled": {
+return recyclerView.isNestedScrollingEnabled();			}
 			case "reverseLayout": {
 return isReverseLayout();			}
 		}
@@ -828,10 +852,14 @@ return isReverseLayout();			}
 
 	private Object scrollProvider;
 	private int scrollBarIncrement = 20;
+	private int nestedScrollStopDelay = 700;
 	private int oldScrollPos = 0;
 	private int prevRange = -1;
+	private long lastScrollEvent;
 	enum ScrollProviderType {READ_ONLY, DRAGABBLE}
 	private ScrollProviderType scrollProviderType = ScrollProviderType.DRAGABBLE;
+	private r.android.os.Handler nestedScrollHandler = new r.android.os.Handler();
+	
 	private void initScrollBars() {
 	}
 	
@@ -839,9 +867,24 @@ return isReverseLayout();			}
 		scrollBarIncrement = (int) objValue;
 	}
 	
+	
+	private void setNestedScrollStopDelay(int delay) {
+		nestedScrollStopDelay = delay;
+		
+	}
 	private void handleScroll() {
 		try {
 			fragment.disableRemeasure();
+			nestedScrollHandler.removeCallbacksAndMessages(null);
+			long currentTime = System.currentTimeMillis();
+			
+			if (currentTime - lastScrollEvent >= nestedScrollStopDelay) {
+				recyclerView.startNestedScroll();	
+			}
+			nestedScrollHandler.postDelayed(() -> {
+				recyclerView.stopNestedScroll();
+			}, nestedScrollStopDelay);
+			lastScrollEvent = System.currentTimeMillis();
 			// get range/offset/extent
 			int range = getRange();
 			int offset = getOffset();
@@ -863,6 +906,8 @@ return isReverseLayout();			}
 					dpos = -(scrollBarIncrement * 1000);
 				}
 			}
+
+			dpos = recyclerView.dispatchNestedPreScroll(dpos);
 			
 			// scroll the recycler view
 			if (isHorizontal()) {
@@ -2211,6 +2256,25 @@ public RecyclerViewCommandBuilder setLayout(String value) {
 
 	attrs.put("value", value);
 return this;}
+public RecyclerViewCommandBuilder tryGetNestedScrollingEnabled() {
+	Map<String, Object> attrs = initCommand("nestedScrollingEnabled");
+	attrs.put("type", "attribute");
+	attrs.put("getter", true);
+	attrs.put("orderGet", ++orderGet);
+return this;}
+
+public Object isNestedScrollingEnabled() {
+	Map<String, Object> attrs = initCommand("nestedScrollingEnabled");
+	return attrs.get("commandReturnValue");
+}
+public RecyclerViewCommandBuilder setNestedScrollingEnabled(boolean value) {
+	Map<String, Object> attrs = initCommand("nestedScrollingEnabled");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
 public RecyclerViewCommandBuilder addSectionItem(String sectionId,
 String itemConfigId,
 Object item) {
@@ -2356,6 +2420,14 @@ public RecyclerViewCommandBuilder setFooterDisabled(boolean value) {
 
 	attrs.put("value", value);
 return this;}
+public RecyclerViewCommandBuilder setNestedScrollStopDelay(int value) {
+	Map<String, Object> attrs = initCommand("nestedScrollStopDelay");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
 }
 public class RecyclerViewBean extends com.ashera.layout.ViewGroupImpl.ViewGroupBean{
 		public RecyclerViewBean() {
@@ -2375,6 +2447,13 @@ public void setSpanCount(int value) {
 
 public void setLayout(String value) {
 	getBuilder().reset().setLayout(value).execute(true);
+}
+
+public Object isNestedScrollingEnabled() {
+	return getBuilder().reset().tryGetNestedScrollingEnabled().execute(false).isNestedScrollingEnabled(); 
+}
+public void setNestedScrollingEnabled(boolean value) {
+	getBuilder().reset().setNestedScrollingEnabled(value).execute(true);
 }
 
 public void addSectionItem(String sectionId,
@@ -2450,6 +2529,10 @@ public void setFooterDisabled(boolean value) {
 	getBuilder().reset().setFooterDisabled(value).execute(true);
 }
 
+public void setNestedScrollStopDelay(int value) {
+	getBuilder().reset().setNestedScrollStopDelay(value).execute(true);
+}
+
 }
 
 
@@ -2483,8 +2566,11 @@ public class RecyclerViewCommandParamsBuilder extends com.ashera.layout.ViewGrou
 
 	//end - body
 	private Object recyclerWrapperView;
-	int oldScrollY = 0;
-	int oldScrollX = 0;
+	private int oldScrollY = 0;
+	private int oldScrollX = 0;
+	private boolean overScrollTop = false;
+	private int oldOverScroll = 0;
+	private int overScrollDpos = 0;
 
 	private void nativeCreate(Map<String, Object> params) {
 		scrollProviderType = ScrollProviderType.READ_ONLY;
@@ -2498,6 +2584,54 @@ public class RecyclerViewCommandParamsBuilder extends com.ashera.layout.ViewGrou
 		
 		scrollProvider = nativescrollViewCreate(true, false, false);
 		ViewGroupImpl.nativeAddView(recyclerWrapperView, scrollProvider);
+		
+		ViewImpl.addPanListener(this, uiView, new ViewImpl.PanCallBack() {
+			
+			@Override
+			public void handlePanStart(IWidget widget, Object eventWidget, int x, int y) {
+				if (isHorizontal()) {
+					oldOverScroll = x;
+				} else {
+					oldOverScroll = y;	
+				}
+				
+				overScrollDpos = 0;
+			}
+
+			@Override
+			public void handlePanDrag(IWidget widget, Object eventWidget, int x, int y) {
+				int selection = getSelection();
+				
+				if (selection == 0) {
+					overScrollTop = true;
+					
+					if (isHorizontal()) {
+						overScrollDpos = oldOverScroll - x;
+					} else {
+						overScrollDpos = oldOverScroll - y;	
+					}
+					if (isHorizontal()) {
+						recyclerView.scrollBy((int) Math.ceil(overScrollDpos), 0);
+					} else {
+						recyclerView.scrollBy(0, (int) Math.ceil(overScrollDpos));
+					}
+					
+				} else {
+					overScrollTop = false;
+				}
+				
+				if (isHorizontal()) {
+					oldOverScroll = x;
+				} else {
+					oldOverScroll = y;	
+				}
+			}
+
+			@Override
+			public void handlePanEnd(IWidget widget, Object eventWidget, int x, int y) {
+			}
+			
+		});
 	}
     public native Object createView()/*-[
 		ASUIView* uiView = [ASUIView new];
@@ -2515,6 +2649,7 @@ public class RecyclerViewCommandParamsBuilder extends com.ashera.layout.ViewGrou
 	    uiView.delaysContentTouches=YES;
 	    uiView.infiniteScroll=infiniteScroll;
 	    uiView.userInteractionEnabled=userInteractionEnabled;
+	    uiView.shouldRecognizeSimultaneouslyWithGestureRecognizer = YES;
 	    uiView.bounces = NO;
 	    return uiView;
 	]-*/;
@@ -2541,9 +2676,9 @@ public class RecyclerViewCommandParamsBuilder extends com.ashera.layout.ViewGrou
 		    handleScroll();	
 		}
 
-
+		
 		/*-[
-	 	- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+			- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   			[self onscrollWithInt:scrollView.contentOffset.x withInt:scrollView.contentOffset.y];
 		}
 		]-*/
@@ -2769,7 +2904,7 @@ public class RecyclerViewCommandParamsBuilder extends com.ashera.layout.ViewGrou
 	}
 	
 	void adjustScrollOffsetWhenEdgeReached(int dpos) {
-		if (dpos > 0) {
+		if (dpos >= 0) {
 			if (isHorizontal()) {
 				if (!recyclerView.canScrollHorizontally(1)) {
 					System.out.println("reached end");
@@ -2794,5 +2929,5 @@ public class RecyclerViewCommandParamsBuilder extends com.ashera.layout.ViewGrou
 				}
 			}
 		}
-	}
+	}	
 }

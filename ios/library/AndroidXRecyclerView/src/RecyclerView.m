@@ -13,6 +13,7 @@
 #include "J2ObjC_source.h"
 #include "Log.h"
 #include "MotionEvent.h"
+#include "NestedScrollingChildHelper.h"
 #include "Parcelable.h"
 #include "Rect.h"
 #include "RectF.h"
@@ -66,7 +67,7 @@
   ADXRecyclerView_OnScrollListener *mScrollListener_;
   id<JavaUtilList> mScrollListeners_;
   IOSIntArray *mMinMaxLayoutPositions_;
-  ADXRecyclerView_NestedScrollingChildHelper *mScrollingChildHelper_;
+  ADXNestedScrollingChildHelper *mScrollingChildHelper_;
   IOSIntArray *mScrollOffset_;
   IOSIntArray *mNestedOffsets_;
   id<JavaLangRunnable> mItemAnimatorRunner_;
@@ -110,7 +111,7 @@
                                         withBoolean:(jboolean)oldHolderDisappearing
                                         withBoolean:(jboolean)newHolderDisappearing;
 
-- (ADXRecyclerView_NestedScrollingChildHelper *)getScrollingChildHelper;
+- (ADXNestedScrollingChildHelper *)getScrollingChildHelper;
 
 - (void)dispatchContentChangedIfNecessary;
 
@@ -142,7 +143,7 @@ J2OBJC_FIELD_SETTER(ADXRecyclerView, mOnChildAttachStateListeners_, id<JavaUtilL
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mScrollListener_, ADXRecyclerView_OnScrollListener *)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mScrollListeners_, id<JavaUtilList>)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mMinMaxLayoutPositions_, IOSIntArray *)
-J2OBJC_FIELD_SETTER(ADXRecyclerView, mScrollingChildHelper_, ADXRecyclerView_NestedScrollingChildHelper *)
+J2OBJC_FIELD_SETTER(ADXRecyclerView, mScrollingChildHelper_, ADXNestedScrollingChildHelper *)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mScrollOffset_, IOSIntArray *)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mNestedOffsets_, IOSIntArray *)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mItemAnimatorRunner_, id<JavaLangRunnable>)
@@ -200,7 +201,7 @@ __attribute__((unused)) static void ADXRecyclerView_animateChangeWithADXRecycler
 
 __attribute__((unused)) static void ADXRecyclerView_dispatchNestedScrollWithInt_withInt_withInt_withInt_withIntArray_withInt_withIntArray_(ADXRecyclerView *self, jint dxConsumed, jint dyConsumed, jint dxUnconsumed, jint dyUnconsumed, IOSIntArray *offsetInWindow, jint type, IOSIntArray *consumed);
 
-__attribute__((unused)) static ADXRecyclerView_NestedScrollingChildHelper *ADXRecyclerView_getScrollingChildHelper(ADXRecyclerView *self);
+__attribute__((unused)) static ADXNestedScrollingChildHelper *ADXRecyclerView_getScrollingChildHelper(ADXRecyclerView *self);
 
 __attribute__((unused)) static void ADXRecyclerView_dispatchContentChangedIfNecessary(ADXRecyclerView *self);
 
@@ -1525,12 +1526,45 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   return [((ADXAdapterHelper *) nil_chk(mAdapterHelper_)) applyPendingUpdatesToPositionWithInt:viewHolder->mPosition_];
 }
 
+- (void)setNestedScrollingEnabledWithBoolean:(jboolean)enabled {
+  [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) setNestedScrollingEnabledWithBoolean:enabled];
+}
+
+- (jboolean)isNestedScrollingEnabled {
+  return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) isNestedScrollingEnabled];
+}
+
+- (jboolean)startNestedScrollWithInt:(jint)axes {
+  return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) startNestedScrollWithInt:axes];
+}
+
+- (jboolean)startNestedScrollWithInt:(jint)axes
+                             withInt:(jint)type {
+  return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) startNestedScrollWithInt:axes withInt:type];
+}
+
+- (void)stopNestedScroll {
+  [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) stopNestedScroll];
+}
+
+- (void)stopNestedScrollWithInt:(jint)type {
+  [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) stopNestedScrollWithInt:type];
+}
+
+- (jboolean)hasNestedScrollingParent {
+  return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) hasNestedScrollingParent];
+}
+
+- (jboolean)hasNestedScrollingParentWithInt:(jint)type {
+  return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) hasNestedScrollingParentWithInt:type];
+}
+
 - (jboolean)dispatchNestedScrollWithInt:(jint)dxConsumed
                                 withInt:(jint)dyConsumed
                                 withInt:(jint)dxUnconsumed
                                 withInt:(jint)dyUnconsumed
                            withIntArray:(IOSIntArray *)offsetInWindow {
-  return [((ADXRecyclerView_NestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedScrollWithInt:dxConsumed withInt:dyConsumed withInt:dxUnconsumed withInt:dyUnconsumed withIntArray:offsetInWindow];
+  return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedScrollWithInt:dxConsumed withInt:dyConsumed withInt:dxUnconsumed withInt:dyUnconsumed withIntArray:offsetInWindow];
 }
 
 - (jboolean)dispatchNestedScrollWithInt:(jint)dxConsumed
@@ -1539,7 +1573,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
                                 withInt:(jint)dyUnconsumed
                            withIntArray:(IOSIntArray *)offsetInWindow
                                 withInt:(jint)type {
-  return [((ADXRecyclerView_NestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedScrollWithInt:dxConsumed withInt:dyConsumed withInt:dxUnconsumed withInt:dyUnconsumed withIntArray:offsetInWindow withInt:type];
+  return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedScrollWithInt:dxConsumed withInt:dyConsumed withInt:dxUnconsumed withInt:dyUnconsumed withIntArray:offsetInWindow withInt:type];
 }
 
 - (void)dispatchNestedScrollWithInt:(jint)dxConsumed
@@ -1552,8 +1586,47 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   ADXRecyclerView_dispatchNestedScrollWithInt_withInt_withInt_withInt_withIntArray_withInt_withIntArray_(self, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow, type, consumed);
 }
 
-- (ADXRecyclerView_NestedScrollingChildHelper *)getScrollingChildHelper {
+- (jboolean)dispatchNestedPreScrollWithInt:(jint)dx
+                                   withInt:(jint)dy
+                              withIntArray:(IOSIntArray *)consumed
+                              withIntArray:(IOSIntArray *)offsetInWindow {
+  return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedPreScrollWithInt:dx withInt:dy withIntArray:consumed withIntArray:offsetInWindow];
+}
+
+- (jboolean)dispatchNestedPreScrollWithInt:(jint)dx
+                                   withInt:(jint)dy
+                              withIntArray:(IOSIntArray *)consumed
+                              withIntArray:(IOSIntArray *)offsetInWindow
+                                   withInt:(jint)type {
+  return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedPreScrollWithInt:dx withInt:dy withIntArray:consumed withIntArray:offsetInWindow withInt:type];
+}
+
+- (jboolean)dispatchNestedFlingWithFloat:(jfloat)velocityX
+                               withFloat:(jfloat)velocityY
+                             withBoolean:(jboolean)consumed {
+  return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedFlingWithFloat:velocityX withFloat:velocityY withBoolean:consumed];
+}
+
+- (jboolean)dispatchNestedPreFlingWithFloat:(jfloat)velocityX
+                                  withFloat:(jfloat)velocityY {
+  return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedPreFlingWithFloat:velocityX withFloat:velocityY];
+}
+
+- (ADXNestedScrollingChildHelper *)getScrollingChildHelper {
   return ADXRecyclerView_getScrollingChildHelper(self);
+}
+
+- (void)startNestedScroll {
+  jboolean canScrollHorizontally = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollHorizontally];
+  jboolean canScrollVertically = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollVertically];
+  jint nestedScrollAxis = ADXViewCompat_SCROLL_AXIS_NONE;
+  if (canScrollHorizontally) {
+    nestedScrollAxis |= ADXViewCompat_SCROLL_AXIS_HORIZONTAL;
+  }
+  if (canScrollVertically) {
+    nestedScrollAxis |= ADXViewCompat_SCROLL_AXIS_VERTICAL;
+  }
+  [self startNestedScrollWithInt:nestedScrollAxis withInt:ADXRecyclerView_TYPE_TOUCH];
 }
 
 J2OBJC_IGNORE_DESIGNATED_BEGIN
@@ -1622,6 +1695,22 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (void)stopScroll {
+}
+
+- (jint)dispatchNestedPreScrollWithInt:(jint)dpos {
+  *IOSIntArray_GetRef(nil_chk(mReusableIntPair_), 0) = 0;
+  *IOSIntArray_GetRef(mReusableIntPair_, 1) = 0;
+  jboolean canScrollHorizontally = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollHorizontally];
+  jboolean canScrollVertically = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollVertically];
+  if ([self dispatchNestedPreScrollWithInt:canScrollHorizontally ? dpos : 0 withInt:canScrollVertically ? dpos : 0 withIntArray:mReusableIntPair_ withIntArray:mScrollOffset_ withInt:ADXRecyclerView_TYPE_TOUCH]) {
+    if (canScrollHorizontally) {
+      dpos -= IOSIntArray_Get(mReusableIntPair_, 0);
+    }
+    if (canScrollVertically) {
+      dpos -= IOSIntArray_Get(mReusableIntPair_, 1);
+    }
+  }
+  return dpos;
 }
 
 - (void)registerObserverWithADXRecyclerView_AdapterDataObserver:(ADXRecyclerView_AdapterDataObserver *)observer {
@@ -1762,10 +1851,23 @@ J2OBJC_IGNORE_DESIGNATED_END
     { NULL, "V", 0x0, 72, 57, -1, -1, -1, -1 },
     { NULL, "V", 0x0, 73, 57, -1, -1, -1, -1 },
     { NULL, "I", 0x0, 74, 7, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 75, 76, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 75, 77, -1, -1, -1, -1 },
-    { NULL, "V", 0x11, 75, 78, -1, -1, -1, -1 },
-    { NULL, "LADXRecyclerView_NestedScrollingChildHelper;", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 75, 22, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 76, 14, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 76, 16, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 77, 14, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 78, 14, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 79, 80, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 79, 81, -1, -1, -1, -1 },
+    { NULL, "V", 0x11, 79, 82, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 83, 84, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 83, 85, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 86, 87, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 88, 89, -1, -1, -1, -1 },
+    { NULL, "LADXNestedScrollingChildHelper;", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, NULL, 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
@@ -1776,16 +1878,17 @@ J2OBJC_IGNORE_DESIGNATED_END
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 79, 80, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 81, 16, -1, -1, -1, -1 },
-    { NULL, "V", 0x10, 82, 83, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 90, 91, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 92, 16, -1, -1, -1, -1 },
+    { NULL, "V", 0x10, 93, 94, -1, -1, -1, -1 },
     { NULL, "Z", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "J", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 84, 85, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 83, 14, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 95, 96, -1, -1, -1, -1 },
     { NULL, "Z", 0x4, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 86, 16, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 87, 88, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 97, 16, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 98, 99, -1, -1, -1, -1 },
     { NULL, "I", 0x0, -1, -1, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
@@ -1875,34 +1978,48 @@ J2OBJC_IGNORE_DESIGNATED_END
   methods[81].selector = @selector(dispatchChildDetachedWithADView:);
   methods[82].selector = @selector(dispatchChildAttachedWithADView:);
   methods[83].selector = @selector(getAdapterPositionInRecyclerViewWithADXRecyclerView_ViewHolder:);
-  methods[84].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:);
-  methods[85].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:withInt:);
-  methods[86].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:withInt:withIntArray:);
-  methods[87].selector = @selector(getScrollingChildHelper);
-  methods[88].selector = @selector(init);
-  methods[89].selector = @selector(dispatchPendingImportantForAccessibilityChanges);
-  methods[90].selector = @selector(dispatchContentChangedIfNecessary);
-  methods[91].selector = @selector(predictiveItemAnimationsEnabled);
-  methods[92].selector = @selector(saveFocusInfo);
-  methods[93].selector = @selector(postAnimationRunner);
-  methods[94].selector = @selector(recoverFocusFromState);
-  methods[95].selector = @selector(resetFocusInfo);
-  methods[96].selector = @selector(getScrollY);
-  methods[97].selector = @selector(getScrollX);
-  methods[98].selector = @selector(onScrollChangedWithInt:withInt:withInt:withInt:);
-  methods[99].selector = @selector(onScrolledWithInt:withInt:);
-  methods[100].selector = @selector(fillRemainingScrollValuesWithADXRecyclerView_State:);
-  methods[101].selector = @selector(isAccessibilityEnabled);
-  methods[102].selector = @selector(getDrawingTime);
-  methods[103].selector = @selector(stopScroll);
-  methods[104].selector = @selector(registerObserverWithADXRecyclerView_AdapterDataObserver:);
-  methods[105].selector = @selector(awakenScrollBars);
-  methods[106].selector = @selector(considerReleasingGlowsOnScrollWithInt:withInt:);
-  methods[107].selector = @selector(pullGlowsWithFloat:withFloat:withFloat:withFloat:);
-  methods[108].selector = @selector(getOverScrollMode);
+  methods[84].selector = @selector(setNestedScrollingEnabledWithBoolean:);
+  methods[85].selector = @selector(isNestedScrollingEnabled);
+  methods[86].selector = @selector(startNestedScrollWithInt:);
+  methods[87].selector = @selector(startNestedScrollWithInt:withInt:);
+  methods[88].selector = @selector(stopNestedScroll);
+  methods[89].selector = @selector(stopNestedScrollWithInt:);
+  methods[90].selector = @selector(hasNestedScrollingParent);
+  methods[91].selector = @selector(hasNestedScrollingParentWithInt:);
+  methods[92].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:);
+  methods[93].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:withInt:);
+  methods[94].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:withInt:withIntArray:);
+  methods[95].selector = @selector(dispatchNestedPreScrollWithInt:withInt:withIntArray:withIntArray:);
+  methods[96].selector = @selector(dispatchNestedPreScrollWithInt:withInt:withIntArray:withIntArray:withInt:);
+  methods[97].selector = @selector(dispatchNestedFlingWithFloat:withFloat:withBoolean:);
+  methods[98].selector = @selector(dispatchNestedPreFlingWithFloat:withFloat:);
+  methods[99].selector = @selector(getScrollingChildHelper);
+  methods[100].selector = @selector(startNestedScroll);
+  methods[101].selector = @selector(init);
+  methods[102].selector = @selector(dispatchPendingImportantForAccessibilityChanges);
+  methods[103].selector = @selector(dispatchContentChangedIfNecessary);
+  methods[104].selector = @selector(predictiveItemAnimationsEnabled);
+  methods[105].selector = @selector(saveFocusInfo);
+  methods[106].selector = @selector(postAnimationRunner);
+  methods[107].selector = @selector(recoverFocusFromState);
+  methods[108].selector = @selector(resetFocusInfo);
+  methods[109].selector = @selector(getScrollY);
+  methods[110].selector = @selector(getScrollX);
+  methods[111].selector = @selector(onScrollChangedWithInt:withInt:withInt:withInt:);
+  methods[112].selector = @selector(onScrolledWithInt:withInt:);
+  methods[113].selector = @selector(fillRemainingScrollValuesWithADXRecyclerView_State:);
+  methods[114].selector = @selector(isAccessibilityEnabled);
+  methods[115].selector = @selector(getDrawingTime);
+  methods[116].selector = @selector(stopScroll);
+  methods[117].selector = @selector(dispatchNestedPreScrollWithInt:);
+  methods[118].selector = @selector(registerObserverWithADXRecyclerView_AdapterDataObserver:);
+  methods[119].selector = @selector(awakenScrollBars);
+  methods[120].selector = @selector(considerReleasingGlowsOnScrollWithInt:withInt:);
+  methods[121].selector = @selector(pullGlowsWithFloat:withFloat:withFloat:withFloat:);
+  methods[122].selector = @selector(getOverScrollMode);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
-    { "TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 89, -1, -1 },
+    { "TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 100, -1, -1 },
     { "DEBUG", "Z", .constantValue.asBOOL = ADXRecyclerView_DEBUG, 0x18, -1, -1, -1, -1 },
     { "VERBOSE_TRACING", "Z", .constantValue.asBOOL = ADXRecyclerView_VERBOSE_TRACING, 0x18, -1, -1, -1, -1 },
     { "FORCE_INVALIDATE_DISPLAY_LIST", "Z", .constantValue.asBOOL = ADXRecyclerView_FORCE_INVALIDATE_DISPLAY_LIST, 0x18, -1, -1, -1, -1 },
@@ -1921,14 +2038,14 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "TOUCH_SLOP_PAGING", "I", .constantValue.asInt = ADXRecyclerView_TOUCH_SLOP_PAGING, 0x19, -1, -1, -1, -1 },
     { "UNDEFINED_DURATION", "I", .constantValue.asInt = ADXRecyclerView_UNDEFINED_DURATION, 0x19, -1, -1, -1, -1 },
     { "MAX_SCROLL_DURATION", "I", .constantValue.asInt = ADXRecyclerView_MAX_SCROLL_DURATION, 0x18, -1, -1, -1, -1 },
-    { "TRACE_SCROLL_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 90, -1, -1 },
-    { "TRACE_ON_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 91, -1, -1 },
-    { "TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 92, -1, -1 },
-    { "TRACE_HANDLE_ADAPTER_UPDATES_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 93, -1, -1 },
-    { "TRACE_BIND_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 94, -1, -1 },
-    { "TRACE_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 95, -1, -1 },
-    { "TRACE_NESTED_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 96, -1, -1 },
-    { "TRACE_CREATE_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 97, -1, -1 },
+    { "TRACE_SCROLL_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 101, -1, -1 },
+    { "TRACE_ON_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 102, -1, -1 },
+    { "TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 103, -1, -1 },
+    { "TRACE_HANDLE_ADAPTER_UPDATES_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 104, -1, -1 },
+    { "TRACE_BIND_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 105, -1, -1 },
+    { "TRACE_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 106, -1, -1 },
+    { "TRACE_NESTED_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 107, -1, -1 },
+    { "TRACE_CREATE_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 108, -1, -1 },
     { "mObserver_", "LADXRecyclerView_RecyclerViewDataObserver;", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mRecycler_", "LADXRecyclerView_Recycler;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
     { "mAdapterHelper_", "LADXAdapterHelper;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
@@ -1940,8 +2057,8 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "mAdapter_", "LADXRecyclerView_Adapter;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mLayout_", "LADXRecyclerView_LayoutManager;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mRecyclerListener_", "LADXRecyclerView_RecyclerListener;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
-    { "mRecyclerListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x10, -1, -1, 98, -1 },
-    { "mItemDecorations_", "LJavaUtilArrayList;", .constantValue.asLong = 0, 0x10, -1, -1, 99, -1 },
+    { "mRecyclerListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x10, -1, -1, 109, -1 },
+    { "mItemDecorations_", "LJavaUtilArrayList;", .constantValue.asLong = 0, 0x10, -1, -1, 110, -1 },
     { "mIsAttached_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mHasFixedSize_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mEnableFastScroller_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
@@ -1952,7 +2069,7 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "mIgnoreMotionEventTillDown_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mEatenAccessibilityChangeFlags_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mAdapterUpdateDuringMeasure_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
-    { "mOnChildAttachStateListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 100, -1 },
+    { "mOnChildAttachStateListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 111, -1 },
     { "mDataSetHasChangedAfterLayout_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mDispatchItemsChangedEvent_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mLayoutOrScrollCounter_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -1968,19 +2085,19 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "mInitialTouchY_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mLastTouchX_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mLastTouchY_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "mTouchSlop_RecyclerView_", "I", .constantValue.asLong = 0, 0x2, 101, -1, -1, -1 },
+    { "mTouchSlop_RecyclerView_", "I", .constantValue.asLong = 0, 0x2, 112, -1, -1, -1 },
     { "mMinFlingVelocity_", "I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mMaxFlingVelocity_", "I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mPreserveFocusAfterLayout_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mPrefetchRegistry_", "LADXGapWorker_LayoutPrefetchRegistryImpl;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mState_", "LADXRecyclerView_State;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
     { "mScrollListener_", "LADXRecyclerView_OnScrollListener;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "mScrollListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 102, -1 },
+    { "mScrollListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 113, -1 },
     { "mItemsAddedOrRemoved_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mItemsChanged_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mPostedAnimatorRunner_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mMinMaxLayoutPositions_", "[I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
-    { "mScrollingChildHelper_", "LADXRecyclerView_NestedScrollingChildHelper;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mScrollingChildHelper_", "LADXNestedScrollingChildHelper;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mScrollOffset_", "[I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mNestedOffsets_", "[I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mReusableIntPair_", "[I", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
@@ -1993,8 +2110,8 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "TYPE_TOUCH", "I", .constantValue.asInt = ADXRecyclerView_TYPE_TOUCH, 0x19, -1, -1, -1, -1 },
     { "mItemAnimator_", "LADXRecyclerView_ItemAnimator;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "setAdapter", "LADXRecyclerView_Adapter;", "setAdapterInternal", "LADXRecyclerView_Adapter;ZZ", "setLayoutManager", "LADXRecyclerView_LayoutManager;", "addAnimatingView", "LADXRecyclerView_ViewHolder;", "addItemDecoration", "LADXRecyclerView_ItemDecoration;I", "LADXRecyclerView_ItemDecoration;", "setOnScrollListener", "LADXRecyclerView_OnScrollListener;", "scrollToPosition", "I", "scrollBy", "II", "scrollStep", "II[I", "scrollByInternal", "IILADMotionEvent;I", "stopInterceptRequestLayout", "Z", "suppressLayout", "setLayoutFrozen", "assertInLayoutOrScroll", "LNSString;", "assertNotInLayoutOrScroll", "onMeasure", "defaultOnMeasure", "onExitLayoutOrScroll", "handleMissingPreInfoForChangeError", "JLADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "recordAnimationInfoIfBouncedHiddenView", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "findMinMaxChildLayoutPositions", "[I", "didChildRangeChange", "removeDetachedView", "LADView;Z", "getChangedHolderKey", "animateAppearance", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "animateDisappearance", "animateChange", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;ZZ", "onLayout", "ZIIII", "offsetPositionRecordsForMove", "offsetPositionRecordsForInsert", "offsetPositionRecordsForRemove", "IIZ", "viewRangeUpdate", "IILNSObject;", "canReuseUpdatedViewHolder", "processDataSetCompletelyChanged", "getChildViewHolder", "LADView;", "findContainingItemView", "getChildViewHolderInt", "findViewHolderForPosition", "IZ", "offsetChildrenVertical", "onChildAttachedToWindow", "onChildDetachedFromWindow", "offsetChildrenHorizontal", "getDecoratedBoundsWithMarginsInt", "LADView;LADRect;", "getItemDecorInsetsForChild", "dispatchOnScrolled", "findNestedRecyclerView", "clearNestedRecyclerViewIfNotNested", "dispatchChildDetached", "dispatchChildAttached", "getAdapterPositionInRecyclerView", "dispatchNestedScroll", "IIII[I", "IIII[II", "IIII[II[I", "onScrollChanged", "IIII", "onScrolled", "fillRemainingScrollValues", "LADXRecyclerView_State;", "registerObserver", "LADXRecyclerView_AdapterDataObserver;", "considerReleasingGlowsOnScroll", "pullGlows", "FFFF", &ADXRecyclerView_TAG, &ADXRecyclerView_TRACE_SCROLL_TAG, &ADXRecyclerView_TRACE_ON_LAYOUT_TAG, &ADXRecyclerView_TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG, &ADXRecyclerView_TRACE_HANDLE_ADAPTER_UPDATES_TAG, &ADXRecyclerView_TRACE_BIND_VIEW_TAG, &ADXRecyclerView_TRACE_PREFETCH_TAG, &ADXRecyclerView_TRACE_NESTED_PREFETCH_TAG, &ADXRecyclerView_TRACE_CREATE_VIEW_TAG, "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$RecyclerListener;>;", "Ljava/util/ArrayList<Landroidx/recyclerview/widget/RecyclerView$ItemDecoration;>;", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnChildAttachStateChangeListener;>;", "mTouchSlop", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnScrollListener;>;", "LADXRecyclerView_RecyclerViewDataObserver;LADXRecyclerView_RecycledViewPool;LADXRecyclerView_Recycler;LADXRecyclerView_ViewCacheExtension;LADXRecyclerView_Adapter;LADXRecyclerView_LayoutManager;LADXRecyclerView_ItemDecoration;LADXRecyclerView_OnScrollListener;LADXRecyclerView_RecyclerListener;LADXRecyclerView_OnChildAttachStateChangeListener;LADXRecyclerView_ViewHolder;LADXRecyclerView_LayoutParams;LADXRecyclerView_AdapterDataObserver;LADXRecyclerView_AdapterDataObservable;LADXRecyclerView_State;LADXRecyclerView_ItemAnimator;LADXRecyclerView_SavedState;LADXRecyclerView_Observable;LADXRecyclerView_MotionEventCompat;LADXRecyclerView_InputDevice;LADXRecyclerView_NestedScrollingChildHelper;" };
-  static const J2ObjcClassInfo _ADXRecyclerView = { "RecyclerView", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 109, 90, -1, 103, -1, -1, -1 };
+  static const void *ptrTable[] = { "setAdapter", "LADXRecyclerView_Adapter;", "setAdapterInternal", "LADXRecyclerView_Adapter;ZZ", "setLayoutManager", "LADXRecyclerView_LayoutManager;", "addAnimatingView", "LADXRecyclerView_ViewHolder;", "addItemDecoration", "LADXRecyclerView_ItemDecoration;I", "LADXRecyclerView_ItemDecoration;", "setOnScrollListener", "LADXRecyclerView_OnScrollListener;", "scrollToPosition", "I", "scrollBy", "II", "scrollStep", "II[I", "scrollByInternal", "IILADMotionEvent;I", "stopInterceptRequestLayout", "Z", "suppressLayout", "setLayoutFrozen", "assertInLayoutOrScroll", "LNSString;", "assertNotInLayoutOrScroll", "onMeasure", "defaultOnMeasure", "onExitLayoutOrScroll", "handleMissingPreInfoForChangeError", "JLADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "recordAnimationInfoIfBouncedHiddenView", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "findMinMaxChildLayoutPositions", "[I", "didChildRangeChange", "removeDetachedView", "LADView;Z", "getChangedHolderKey", "animateAppearance", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "animateDisappearance", "animateChange", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;ZZ", "onLayout", "ZIIII", "offsetPositionRecordsForMove", "offsetPositionRecordsForInsert", "offsetPositionRecordsForRemove", "IIZ", "viewRangeUpdate", "IILNSObject;", "canReuseUpdatedViewHolder", "processDataSetCompletelyChanged", "getChildViewHolder", "LADView;", "findContainingItemView", "getChildViewHolderInt", "findViewHolderForPosition", "IZ", "offsetChildrenVertical", "onChildAttachedToWindow", "onChildDetachedFromWindow", "offsetChildrenHorizontal", "getDecoratedBoundsWithMarginsInt", "LADView;LADRect;", "getItemDecorInsetsForChild", "dispatchOnScrolled", "findNestedRecyclerView", "clearNestedRecyclerViewIfNotNested", "dispatchChildDetached", "dispatchChildAttached", "getAdapterPositionInRecyclerView", "setNestedScrollingEnabled", "startNestedScroll", "stopNestedScroll", "hasNestedScrollingParent", "dispatchNestedScroll", "IIII[I", "IIII[II", "IIII[II[I", "dispatchNestedPreScroll", "II[I[I", "II[I[II", "dispatchNestedFling", "FFZ", "dispatchNestedPreFling", "FF", "onScrollChanged", "IIII", "onScrolled", "fillRemainingScrollValues", "LADXRecyclerView_State;", "registerObserver", "LADXRecyclerView_AdapterDataObserver;", "considerReleasingGlowsOnScroll", "pullGlows", "FFFF", &ADXRecyclerView_TAG, &ADXRecyclerView_TRACE_SCROLL_TAG, &ADXRecyclerView_TRACE_ON_LAYOUT_TAG, &ADXRecyclerView_TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG, &ADXRecyclerView_TRACE_HANDLE_ADAPTER_UPDATES_TAG, &ADXRecyclerView_TRACE_BIND_VIEW_TAG, &ADXRecyclerView_TRACE_PREFETCH_TAG, &ADXRecyclerView_TRACE_NESTED_PREFETCH_TAG, &ADXRecyclerView_TRACE_CREATE_VIEW_TAG, "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$RecyclerListener;>;", "Ljava/util/ArrayList<Landroidx/recyclerview/widget/RecyclerView$ItemDecoration;>;", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnChildAttachStateChangeListener;>;", "mTouchSlop", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnScrollListener;>;", "LADXRecyclerView_RecyclerViewDataObserver;LADXRecyclerView_RecycledViewPool;LADXRecyclerView_Recycler;LADXRecyclerView_ViewCacheExtension;LADXRecyclerView_Adapter;LADXRecyclerView_LayoutManager;LADXRecyclerView_ItemDecoration;LADXRecyclerView_OnScrollListener;LADXRecyclerView_RecyclerListener;LADXRecyclerView_OnChildAttachStateChangeListener;LADXRecyclerView_ViewHolder;LADXRecyclerView_LayoutParams;LADXRecyclerView_AdapterDataObserver;LADXRecyclerView_AdapterDataObservable;LADXRecyclerView_State;LADXRecyclerView_ItemAnimator;LADXRecyclerView_SavedState;LADXRecyclerView_Observable;LADXRecyclerView_MotionEventCompat;LADXRecyclerView_InputDevice;" };
+  static const J2ObjcClassInfo _ADXRecyclerView = { "RecyclerView", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 123, 90, -1, 114, -1, -1, -1 };
   return &_ADXRecyclerView;
 }
 
@@ -2365,12 +2482,12 @@ void ADXRecyclerView_clearNestedRecyclerViewIfNotNestedWithADXRecyclerView_ViewH
 }
 
 void ADXRecyclerView_dispatchNestedScrollWithInt_withInt_withInt_withInt_withIntArray_withInt_withIntArray_(ADXRecyclerView *self, jint dxConsumed, jint dyConsumed, jint dxUnconsumed, jint dyUnconsumed, IOSIntArray *offsetInWindow, jint type, IOSIntArray *consumed) {
-  [((ADXRecyclerView_NestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedScrollWithInt:dxConsumed withInt:dyConsumed withInt:dxUnconsumed withInt:dyUnconsumed withIntArray:offsetInWindow withInt:type withIntArray:consumed];
+  [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedScrollWithInt:dxConsumed withInt:dyConsumed withInt:dxUnconsumed withInt:dyUnconsumed withIntArray:offsetInWindow withInt:type withIntArray:consumed];
 }
 
-ADXRecyclerView_NestedScrollingChildHelper *ADXRecyclerView_getScrollingChildHelper(ADXRecyclerView *self) {
+ADXNestedScrollingChildHelper *ADXRecyclerView_getScrollingChildHelper(ADXRecyclerView *self) {
   if (self->mScrollingChildHelper_ == nil) {
-    JreStrongAssignAndConsume(&self->mScrollingChildHelper_, new_ADXRecyclerView_NestedScrollingChildHelper_initWithADView_(self));
+    JreStrongAssignAndConsume(&self->mScrollingChildHelper_, new_ADXNestedScrollingChildHelper_initWithADView_(self));
   }
   return self->mScrollingChildHelper_;
 }
@@ -2409,6 +2526,7 @@ void ADXRecyclerView_init(ADXRecyclerView *self) {
   self->mMinFlingVelocity_ = 0;
   [self initAdapterManager];
   ADXRecyclerView_initChildrenHelper(self);
+  [self setNestedScrollingEnabledWithBoolean:true];
 }
 
 ADXRecyclerView *new_ADXRecyclerView_init() {
@@ -7620,72 +7738,3 @@ ADXRecyclerView_InputDevice *create_ADXRecyclerView_InputDevice_init() {
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_InputDevice)
-
-@implementation ADXRecyclerView_NestedScrollingChildHelper
-
-- (instancetype)initWithADView:(ADView *)view {
-  ADXRecyclerView_NestedScrollingChildHelper_initWithADView_(self, view);
-  return self;
-}
-
-- (jboolean)dispatchNestedScrollWithInt:(jint)dxConsumed
-                                withInt:(jint)dyConsumed
-                                withInt:(jint)dxUnconsumed
-                                withInt:(jint)dyUnconsumed
-                           withIntArray:(IOSIntArray *)offsetInWindow {
-  return false;
-}
-
-- (void)dispatchNestedScrollWithInt:(jint)dxConsumed
-                            withInt:(jint)dyConsumed
-                            withInt:(jint)dxUnconsumed
-                            withInt:(jint)dyUnconsumed
-                       withIntArray:(IOSIntArray *)offsetInWindow
-                            withInt:(jint)type
-                       withIntArray:(IOSIntArray *)consumed {
-}
-
-- (jboolean)dispatchNestedScrollWithInt:(jint)dxConsumed
-                                withInt:(jint)dyConsumed
-                                withInt:(jint)dxUnconsumed
-                                withInt:(jint)dyUnconsumed
-                           withIntArray:(IOSIntArray *)offsetInWindow
-                                withInt:(jint)type {
-  return false;
-}
-
-+ (const J2ObjcClassInfo *)__metadata {
-  static J2ObjcMethodInfo methods[] = {
-    { NULL, NULL, 0x1, -1, 0, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 1, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 1, 3, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 1, 4, -1, -1, -1, -1 },
-  };
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
-  #pragma clang diagnostic ignored "-Wundeclared-selector"
-  methods[0].selector = @selector(initWithADView:);
-  methods[1].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:);
-  methods[2].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:withInt:withIntArray:);
-  methods[3].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:withInt:);
-  #pragma clang diagnostic pop
-  static const void *ptrTable[] = { "LADView;", "dispatchNestedScroll", "IIII[I", "IIII[II[I", "IIII[II", "LADXRecyclerView;" };
-  static const J2ObjcClassInfo _ADXRecyclerView_NestedScrollingChildHelper = { "NestedScrollingChildHelper", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8, 4, 0, 5, -1, -1, -1, -1 };
-  return &_ADXRecyclerView_NestedScrollingChildHelper;
-}
-
-@end
-
-void ADXRecyclerView_NestedScrollingChildHelper_initWithADView_(ADXRecyclerView_NestedScrollingChildHelper *self, ADView *view) {
-  NSObject_init(self);
-}
-
-ADXRecyclerView_NestedScrollingChildHelper *new_ADXRecyclerView_NestedScrollingChildHelper_initWithADView_(ADView *view) {
-  J2OBJC_NEW_IMPL(ADXRecyclerView_NestedScrollingChildHelper, initWithADView_, view)
-}
-
-ADXRecyclerView_NestedScrollingChildHelper *create_ADXRecyclerView_NestedScrollingChildHelper_initWithADView_(ADView *view) {
-  J2OBJC_CREATE_IMPL(ADXRecyclerView_NestedScrollingChildHelper, initWithADView_, view)
-}
-
-J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_NestedScrollingChildHelper)

@@ -25,6 +25,7 @@ import { ScopedObject } from '../../app/ScopedObject';
 
 
 
+
 export class RecyclerViewImpl_addSectionItem {
 @Expose({ name: "sectionId" })
 sectionId!:string;
@@ -95,6 +96,9 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 	@Expose({ name: "orientation" })
 	orientation!:CommandAttr<Orientation>| undefined;
 	@Type(() => CommandAttr)
+	@Expose({ name: "nestedScrollingEnabled" })
+	nestedScrollingEnabled!:CommandAttr<boolean>| undefined;
+	@Type(() => CommandAttr)
 	@Expose({ name: "addSectionItem" })
 	addSectionItem_!:CommandAttr<RecyclerViewImpl_addSectionItem>| undefined;
 	@Type(() => CommandAttr)
@@ -141,6 +145,7 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 		this.spanCount = undefined;
 		this.layout = undefined;
 		this.orientation = undefined;
+		this.nestedScrollingEnabled = undefined;
 		this.addSectionItem_ = undefined;
 		this.removeSectionItem_ = undefined;
 		this.removeAllItems_ = undefined;
@@ -286,6 +291,38 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 		this.orientation.setValue(value);
 		this.orderSet++;
 		this.orientation.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public tryGetNestedScrollingEnabled() : T {
+		this.resetIfRequired();
+		if (this.nestedScrollingEnabled == null || this.nestedScrollingEnabled == undefined) {
+			this.nestedScrollingEnabled = new CommandAttr<boolean>()
+		}
+		
+		this.nestedScrollingEnabled.setGetter(true);
+		this.orderGet++;
+		this.nestedScrollingEnabled.setOrderGet(this.orderGet);
+		return this.thisPointer;
+	}
+	
+	public isNestedScrollingEnabled() : boolean {
+		if (this.nestedScrollingEnabled == null || this.nestedScrollingEnabled == undefined) {
+			this.nestedScrollingEnabled = new CommandAttr<boolean>();
+		}
+		return this.nestedScrollingEnabled.getCommandReturnValue();
+	}
+	public setNestedScrollingEnabled(value : boolean) : T {
+		this.resetIfRequired();
+		if (this.nestedScrollingEnabled == null || this.nestedScrollingEnabled == undefined) {
+			this.nestedScrollingEnabled = new CommandAttr<boolean>();
+		}
+		
+		this.nestedScrollingEnabled.setSetter(true);
+		this.nestedScrollingEnabled.setValue(value);
+		this.orderSet++;
+		this.nestedScrollingEnabled.setOrderSet(this.orderSet);
 		return this.thisPointer;
 	}
 		

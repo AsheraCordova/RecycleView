@@ -21,6 +21,7 @@ import { ScopedObject } from '../../app/ScopedObject';
 
 
 
+
 export class RecyclerViewImpl_addSectionItem {
 @Expose({ name: "sectionId" })
 sectionId!:string;
@@ -61,6 +62,7 @@ item!:any;
 
 
 
+
 import {ViewGroupImpl_LayoutParams} from './ViewGroupImpl';
 
 // end - imports
@@ -81,6 +83,9 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 	@Type(() => CommandAttr)
 	@Expose({ name: "layout" })
 	layout!:CommandAttr<string>| undefined;
+	@Type(() => CommandAttr)
+	@Expose({ name: "nestedScrollingEnabled" })
+	nestedScrollingEnabled!:CommandAttr<boolean>| undefined;
 	@Type(() => CommandAttr)
 	@Expose({ name: "addSectionItem" })
 	addSectionItem_!:CommandAttr<RecyclerViewImpl_addSectionItem>| undefined;
@@ -123,6 +128,9 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 	@Type(() => CommandAttr)
 	@Expose({ name: "footerDisabled" })
 	footerDisabled!:CommandAttr<boolean>| undefined;
+	@Type(() => CommandAttr)
+	@Expose({ name: "nestedScrollStopDelay" })
+	nestedScrollStopDelay!:CommandAttr<number>| undefined;
 
 	@Exclude()
 	protected thisPointer: T;	
@@ -133,6 +141,7 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 		this.viewHolderIds = undefined;
 		this.spanCount = undefined;
 		this.layout = undefined;
+		this.nestedScrollingEnabled = undefined;
 		this.addSectionItem_ = undefined;
 		this.removeSectionItem_ = undefined;
 		this.removeAllItems_ = undefined;
@@ -147,6 +156,7 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 		this.onScrolled = undefined;
 		this.headerDisabled = undefined;
 		this.footerDisabled = undefined;
+		this.nestedScrollStopDelay = undefined;
 		return this.thisPointer;
 	}
 	constructor(id: string, path: string[], event:  string) {
@@ -207,6 +217,38 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 		this.layout.setValue(value);
 		this.orderSet++;
 		this.layout.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public tryGetNestedScrollingEnabled() : T {
+		this.resetIfRequired();
+		if (this.nestedScrollingEnabled == null || this.nestedScrollingEnabled == undefined) {
+			this.nestedScrollingEnabled = new CommandAttr<boolean>()
+		}
+		
+		this.nestedScrollingEnabled.setGetter(true);
+		this.orderGet++;
+		this.nestedScrollingEnabled.setOrderGet(this.orderGet);
+		return this.thisPointer;
+	}
+	
+	public isNestedScrollingEnabled() : boolean {
+		if (this.nestedScrollingEnabled == null || this.nestedScrollingEnabled == undefined) {
+			this.nestedScrollingEnabled = new CommandAttr<boolean>();
+		}
+		return this.nestedScrollingEnabled.getCommandReturnValue();
+	}
+	public setNestedScrollingEnabled(value : boolean) : T {
+		this.resetIfRequired();
+		if (this.nestedScrollingEnabled == null || this.nestedScrollingEnabled == undefined) {
+			this.nestedScrollingEnabled = new CommandAttr<boolean>();
+		}
+		
+		this.nestedScrollingEnabled.setSetter(true);
+		this.nestedScrollingEnabled.setValue(value);
+		this.orderSet++;
+		this.nestedScrollingEnabled.setOrderSet(this.orderSet);
 		return this.thisPointer;
 	}
 		
@@ -443,6 +485,20 @@ item : any) : T {
 		this.footerDisabled.setValue(value);
 		this.orderSet++;
 		this.footerDisabled.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setNestedScrollStopDelay(value : number) : T {
+		this.resetIfRequired();
+		if (this.nestedScrollStopDelay == null || this.nestedScrollStopDelay == undefined) {
+			this.nestedScrollStopDelay = new CommandAttr<number>();
+		}
+		
+		this.nestedScrollStopDelay.setSetter(true);
+		this.nestedScrollStopDelay.setValue(value);
+		this.orderSet++;
+		this.nestedScrollStopDelay.setOrderSet(this.orderSet);
 		return this.thisPointer;
 	}
 		

@@ -47,8 +47,6 @@
 @interface ASRecyclerViewImpl : ASBaseHasWidgets {
  @public
   id<JavaUtilMap> layout_;
-  jint oldScrollY_;
-  jint oldScrollX_;
 }
 @property id uiView;
 
@@ -807,6 +805,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)invalidate;
 
+- (id)isNestedScrollingEnabled;
+
 - (id)isReverseLayout;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)notifyDataSetChangedWithBoolean:(jboolean)arg0;
@@ -837,6 +837,10 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setAlphaWithFloat:(jfloat)arg0;
 
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setAnimateLayoutChangesWithBoolean:(jboolean)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setAnimateParentHierarchyWithBoolean:(jboolean)arg0;
+
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setAsDragSourceWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setAttributeUnderTestWithNSString:(NSString *)arg0;
@@ -848,6 +852,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setBackgroundTintWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setBackgroundWithNSString:(NSString *)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setBottomWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setChildXmlWithNSString:(NSString *)arg0;
 
@@ -963,6 +969,12 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setLayoutModeWithNSString:(NSString *)arg0;
 
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setLayoutTransitionDurationWithInt:(jint)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setLayoutTransitionWithNSString:(NSString *)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setLeftWithNSString:(NSString *)arg0;
+
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setListitemWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setLongClickableWithBoolean:(jboolean)arg0;
@@ -992,6 +1004,10 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setModelUiToPojoEventIdsWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setModelUiToPojoWithNSString:(NSString *)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setNestedScrollingEnabledWithBoolean:(jboolean)value;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setNestedScrollStopDelayWithInt:(jint)value;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnAnimationCancelWithNSString:(NSString *)arg0;
 
@@ -1045,6 +1061,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setReverseLayoutWithBoolean:(jboolean)value;
 
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setRightWithNSString:(NSString *)arg0;
+
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setRotationWithFloat:(jfloat)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setRotationXWithFloat:(jfloat)arg0;
@@ -1066,6 +1084,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setTextAlignmentWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setTextDirectionWithNSString:(NSString *)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setTopWithNSString:(NSString *)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setTransformPivotXWithNSString:(NSString *)arg0;
 
@@ -1112,6 +1132,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetBackgroundTint;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetBackgroundTintMode;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetBottom;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetClickable;
 
@@ -1199,6 +1221,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetLayoutMode;
 
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetLeft;
+
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetLongClickable;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetMaxHeight;
@@ -1221,6 +1245,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetModelUiToPojo;
 
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetNestedScrollingEnabled;
+
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetPaddingBottom;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetPaddingEnd;
@@ -1234,6 +1260,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetPaddingTop;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetReverseLayout;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetRight;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetRotation;
 
@@ -1250,6 +1278,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetTextAlignment;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetTextDirection;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetTop;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetTransformPivotX;
 
@@ -1313,6 +1343,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_RecyclerViewCommandBuilder)
                       withNSString:(NSString *)itemConfigId
                             withId:(id)item;
 
+- (id)isNestedScrollingEnabled;
+
 - (id)isReverseLayout;
 
 - (void)removeAllItemsWithNSString:(NSString *)sectionId;
@@ -1334,6 +1366,10 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_RecyclerViewCommandBuilder)
 - (void)setLayoutWithNSString:(NSString *)value;
 
 - (void)setLayoutManagerWithNSString:(NSString *)value;
+
+- (void)setNestedScrollingEnabledWithBoolean:(jboolean)value;
+
+- (void)setNestedScrollStopDelayWithInt:(jint)value;
 
 - (void)setOnScrolledWithNSString:(NSString *)value;
 

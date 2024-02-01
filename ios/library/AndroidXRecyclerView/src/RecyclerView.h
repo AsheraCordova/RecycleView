@@ -29,6 +29,18 @@
 #define INCLUDE_ADViewGroup 1
 #include "ViewGroup.h"
 
+#define RESTRICT_ScrollingView 1
+#define INCLUDE_ADXScrollingView 1
+#include "ScrollingView.h"
+
+#define RESTRICT_NestedScrollingChild2 1
+#define INCLUDE_ADXNestedScrollingChild2 1
+#include "NestedScrollingChild2.h"
+
+#define RESTRICT_NestedScrollingChild3 1
+#define INCLUDE_ADXNestedScrollingChild3 1
+#include "NestedScrollingChild3.h"
+
 @class ADMotionEvent;
 @class ADRect;
 @class ADRectF;
@@ -54,7 +66,7 @@
 @protocol ADXRecyclerView_RecyclerListener;
 @protocol JavaUtilList;
 
-@interface ADXRecyclerView : ADViewGroup {
+@interface ADXRecyclerView : ADViewGroup < ADXScrollingView, ADXNestedScrollingChild2, ADXNestedScrollingChild3 > {
  @public
   ADXRecyclerView_Recycler *mRecycler_;
   ADXAdapterHelper *mAdapterHelper_;
@@ -108,6 +120,26 @@
 
 - (jint)computeVerticalScrollRange;
 
+- (jboolean)dispatchNestedFlingWithFloat:(jfloat)velocityX
+                               withFloat:(jfloat)velocityY
+                             withBoolean:(jboolean)consumed;
+
+- (jboolean)dispatchNestedPreFlingWithFloat:(jfloat)velocityX
+                                  withFloat:(jfloat)velocityY;
+
+- (jint)dispatchNestedPreScrollWithInt:(jint)dpos;
+
+- (jboolean)dispatchNestedPreScrollWithInt:(jint)dx
+                                   withInt:(jint)dy
+                              withIntArray:(IOSIntArray *)consumed
+                              withIntArray:(IOSIntArray *)offsetInWindow;
+
+- (jboolean)dispatchNestedPreScrollWithInt:(jint)dx
+                                   withInt:(jint)dy
+                              withIntArray:(IOSIntArray *)consumed
+                              withIntArray:(IOSIntArray *)offsetInWindow
+                                   withInt:(jint)type;
+
 - (jboolean)dispatchNestedScrollWithInt:(jint)dxConsumed
                                 withInt:(jint)dyConsumed
                                 withInt:(jint)dxUnconsumed
@@ -149,9 +181,15 @@
 
 - (jint)getScrollY;
 
+- (jboolean)hasNestedScrollingParent;
+
+- (jboolean)hasNestedScrollingParentWithInt:(jint)type;
+
 - (jboolean)hasPendingAdapterUpdates;
 
 - (jboolean)isComputingLayout;
+
+- (jboolean)isNestedScrollingEnabled;
 
 - (void)offsetChildrenHorizontalWithInt:(jint)dx;
 
@@ -174,7 +212,20 @@
 
 - (void)setLayoutManagerWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)layout;
 
+- (void)setNestedScrollingEnabledWithBoolean:(jboolean)enabled;
+
 - (void)setOnScrollListenerWithADXRecyclerView_OnScrollListener:(ADXRecyclerView_OnScrollListener *)listener;
+
+- (void)startNestedScroll;
+
+- (jboolean)startNestedScrollWithInt:(jint)axes;
+
+- (jboolean)startNestedScrollWithInt:(jint)axes
+                             withInt:(jint)type;
+
+- (void)stopNestedScroll;
+
+- (void)stopNestedScrollWithInt:(jint)type;
 
 - (void)stopScroll;
 
@@ -2136,57 +2187,6 @@ FOUNDATION_EXPORT ADXRecyclerView_InputDevice *new_ADXRecyclerView_InputDevice_i
 FOUNDATION_EXPORT ADXRecyclerView_InputDevice *create_ADXRecyclerView_InputDevice_init(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_InputDevice)
-
-#endif
-
-#if !defined (ADXRecyclerView_NestedScrollingChildHelper_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_NestedScrollingChildHelper))
-#define ADXRecyclerView_NestedScrollingChildHelper_
-
-@class ADView;
-@class IOSIntArray;
-
-@interface ADXRecyclerView_NestedScrollingChildHelper : NSObject
-
-#pragma mark Public
-
-- (instancetype)initWithADView:(ADView *)view;
-
-- (jboolean)dispatchNestedScrollWithInt:(jint)dxConsumed
-                                withInt:(jint)dyConsumed
-                                withInt:(jint)dxUnconsumed
-                                withInt:(jint)dyUnconsumed
-                           withIntArray:(IOSIntArray *)offsetInWindow;
-
-- (jboolean)dispatchNestedScrollWithInt:(jint)dxConsumed
-                                withInt:(jint)dyConsumed
-                                withInt:(jint)dxUnconsumed
-                                withInt:(jint)dyUnconsumed
-                           withIntArray:(IOSIntArray *)offsetInWindow
-                                withInt:(jint)type;
-
-- (void)dispatchNestedScrollWithInt:(jint)dxConsumed
-                            withInt:(jint)dyConsumed
-                            withInt:(jint)dxUnconsumed
-                            withInt:(jint)dyUnconsumed
-                       withIntArray:(IOSIntArray *)offsetInWindow
-                            withInt:(jint)type
-                       withIntArray:(IOSIntArray *)consumed;
-
-// Disallowed inherited constructors, do not use.
-
-- (instancetype)init NS_UNAVAILABLE;
-
-@end
-
-J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_NestedScrollingChildHelper)
-
-FOUNDATION_EXPORT void ADXRecyclerView_NestedScrollingChildHelper_initWithADView_(ADXRecyclerView_NestedScrollingChildHelper *self, ADView *view);
-
-FOUNDATION_EXPORT ADXRecyclerView_NestedScrollingChildHelper *new_ADXRecyclerView_NestedScrollingChildHelper_initWithADView_(ADView *view) NS_RETURNS_RETAINED;
-
-FOUNDATION_EXPORT ADXRecyclerView_NestedScrollingChildHelper *create_ADXRecyclerView_NestedScrollingChildHelper_initWithADView_(ADView *view);
-
-J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_NestedScrollingChildHelper)
 
 #endif
 
