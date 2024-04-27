@@ -13,6 +13,7 @@ import {MotionEvent} from '../../app/MotionEvent';
 import {DragEvent} from '../../app/DragEvent';
 import {KeyEvent} from '../../app/KeyEvent';
 import { ScopedObject } from '../../app/ScopedObject';
+import { Mixin, decorate } from 'ts-mixer';
 
 
 
@@ -20,35 +21,44 @@ import { ScopedObject } from '../../app/ScopedObject';
 
 
 export class RecyclerViewImpl_addSectionItem {
-@Expose({ name: "sectionId" })
+@decorate(Expose({ name: "sectionId" }))
 sectionId!:string;
-@Expose({ name: "itemConfigId" })
+@decorate(Expose({ name: "itemConfigId" }))
 itemConfigId!:string;
-@Expose({ name: "item" })
+@decorate(Expose({ name: "item" }))
 item!:any;
 }
 export class RecyclerViewImpl_removeSectionItem {
-@Expose({ name: "sectionId" })
+@decorate(Expose({ name: "sectionId" }))
 sectionId!:string;
-@Expose({ name: "itemConfigId" })
+@decorate(Expose({ name: "itemConfigId" }))
 itemConfigId!:string;
-@Expose({ name: "itemId" })
+@decorate(Expose({ name: "itemId" }))
 itemId!:string;
 }
 export class RecyclerViewImpl_removeAllItems {
-@Expose({ name: "sectionId" })
+@decorate(Expose({ name: "sectionId" }))
 sectionId!:string;
+@decorate(Expose({ name: "itemConfigId" }))
+itemConfigId!:string;
 }
 export class RecyclerViewImpl_updateSectionItem {
-@Expose({ name: "sectionId" })
+@decorate(Expose({ name: "sectionId" }))
 sectionId!:string;
-@Expose({ name: "itemConfigId" })
+@decorate(Expose({ name: "itemConfigId" }))
 itemConfigId!:string;
-@Expose({ name: "itemId" })
+@decorate(Expose({ name: "itemId" }))
 itemId!:string;
-@Expose({ name: "item" })
+@decorate(Expose({ name: "item" }))
 item!:any;
 }
+
+
+
+
+
+
+
 
 
 
@@ -69,68 +79,89 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 	//start - body
 	static initialize() {
     }	
-	@Type(() => CommandAttr)
-	@Expose({ name: "layoutManager" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "layoutManager" }))
 	layoutManager!:CommandAttr<string>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "viewHolderIds" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "viewHolderIds" }))
 	viewHolderIds!:CommandAttr<string>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "spanCount" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "spanCount" }))
 	spanCount!:CommandAttr<number>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "layout" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "layout" }))
 	layout!:CommandAttr<string>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "nestedScrollingEnabled" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "nestedScrollingEnabled" }))
 	nestedScrollingEnabled!:CommandAttr<boolean>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "addSectionItem" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "addSectionItem" }))
 	addSectionItem_!:CommandAttr<RecyclerViewImpl_addSectionItem>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "removeSectionItem" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "removeSectionItem" }))
 	removeSectionItem_!:CommandAttr<RecyclerViewImpl_removeSectionItem>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "removeAllItems" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "removeAllItems" }))
 	removeAllItems_!:CommandAttr<RecyclerViewImpl_removeAllItems>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "updateSectionItem" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "updateSectionItem" }))
 	updateSectionItem_!:CommandAttr<RecyclerViewImpl_updateSectionItem>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "stackFromEnd" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "stackFromEnd" }))
 	stackFromEnd!:CommandAttr<boolean>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "reverseLayout" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "reverseLayout" }))
 	reverseLayout!:CommandAttr<boolean>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "scrollToEnd" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "scrollToEnd" }))
 	scrollToEnd_!:CommandAttr<boolean>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "scrollToTop" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "scrollToTop" }))
 	scrollToTop_!:CommandAttr<boolean>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "scrollToPosition" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "scrollToPosition" }))
 	scrollToPosition_!:CommandAttr<number>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "swtIncrement" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "filter" }))
+	filter_!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "filterDelay" }))
+	filterDelay!:CommandAttr<number>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "filterId" }))
+	filterId!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "filterItemPath" }))
+	filterItemPath!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "filterSectionPath" }))
+	filterSectionPath!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "filterQueryStorePath" }))
+	filterQueryStorePath!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "filterQueryGetPath" }))
+	filterQueryGetPath!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "swtIncrement" }))
 	swtIncrement!:CommandAttr<number>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "nestedScrollStopDelay" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "nestedScrollStopDelay" }))
 	nestedScrollStopDelay!:CommandAttr<number>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "onScrollStateChange" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "onScrollStateChange" }))
 	onScrollStateChange!:CommandAttr<string>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "onScrolled" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "onScrolled" }))
 	onScrolled!:CommandAttr<string>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "headerDisabled" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "headerDisabled" }))
 	headerDisabled!:CommandAttr<boolean>| undefined;
-	@Type(() => CommandAttr)
-	@Expose({ name: "footerDisabled" })
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "footerDisabled" }))
 	footerDisabled!:CommandAttr<boolean>| undefined;
 
-	@Exclude()
+	@decorate(Exclude())
 	protected thisPointer: T;	
 	protected abstract getThisPointer(): T;
 	reset() : T {	
@@ -149,6 +180,13 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 		this.scrollToEnd_ = undefined;
 		this.scrollToTop_ = undefined;
 		this.scrollToPosition_ = undefined;
+		this.filter_ = undefined;
+		this.filterDelay = undefined;
+		this.filterId = undefined;
+		this.filterItemPath = undefined;
+		this.filterSectionPath = undefined;
+		this.filterQueryStorePath = undefined;
+		this.filterQueryGetPath = undefined;
 		this.swtIncrement = undefined;
 		this.nestedScrollStopDelay = undefined;
 		this.onScrollStateChange = undefined;
@@ -291,7 +329,8 @@ itemId : string) : T {
 	}
 		
 
-	public removeAllItems(sectionId : string) : T {
+	public removeAllItems(sectionId : string,
+itemConfigId : string) : T {
 		this.resetIfRequired();
 		if (this.removeAllItems_ == null || this.removeAllItems_ == undefined) {
 			this.removeAllItems_ = new CommandAttr<RecyclerViewImpl_removeAllItems>();
@@ -299,6 +338,7 @@ itemId : string) : T {
 		
 		let wrapper:RecyclerViewImpl_removeAllItems = new RecyclerViewImpl_removeAllItems();
 		wrapper.sectionId = sectionId;
+		wrapper.itemConfigId = itemConfigId;
 		this.removeAllItems_.setSetter(true);
 		this.removeAllItems_.setValue(wrapper);	
 		this.orderSet++;
@@ -413,6 +453,104 @@ item : any) : T {
 		this.scrollToPosition_.setValue(value);
 		this.orderSet++;
 		this.scrollToPosition_.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public filter(value : string) : T {
+		this.resetIfRequired();
+		if (this.filter_ == null || this.filter_ == undefined) {
+			this.filter_ = new CommandAttr<string>();
+		}
+		
+		this.filter_.setSetter(true);
+		this.filter_.setValue(value);
+		this.orderSet++;
+		this.filter_.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setFilterDelay(value : number) : T {
+		this.resetIfRequired();
+		if (this.filterDelay == null || this.filterDelay == undefined) {
+			this.filterDelay = new CommandAttr<number>();
+		}
+		
+		this.filterDelay.setSetter(true);
+		this.filterDelay.setValue(value);
+		this.orderSet++;
+		this.filterDelay.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setFilterId(value : string) : T {
+		this.resetIfRequired();
+		if (this.filterId == null || this.filterId == undefined) {
+			this.filterId = new CommandAttr<string>();
+		}
+		
+		this.filterId.setSetter(true);
+		this.filterId.setValue(value);
+		this.orderSet++;
+		this.filterId.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setFilterItemPath(value : string) : T {
+		this.resetIfRequired();
+		if (this.filterItemPath == null || this.filterItemPath == undefined) {
+			this.filterItemPath = new CommandAttr<string>();
+		}
+		
+		this.filterItemPath.setSetter(true);
+		this.filterItemPath.setValue(value);
+		this.orderSet++;
+		this.filterItemPath.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setFilterSectionPath(value : string) : T {
+		this.resetIfRequired();
+		if (this.filterSectionPath == null || this.filterSectionPath == undefined) {
+			this.filterSectionPath = new CommandAttr<string>();
+		}
+		
+		this.filterSectionPath.setSetter(true);
+		this.filterSectionPath.setValue(value);
+		this.orderSet++;
+		this.filterSectionPath.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setFilterQueryStorePath(value : string) : T {
+		this.resetIfRequired();
+		if (this.filterQueryStorePath == null || this.filterQueryStorePath == undefined) {
+			this.filterQueryStorePath = new CommandAttr<string>();
+		}
+		
+		this.filterQueryStorePath.setSetter(true);
+		this.filterQueryStorePath.setValue(value);
+		this.orderSet++;
+		this.filterQueryStorePath.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setFilterQueryGetPath(value : string) : T {
+		this.resetIfRequired();
+		if (this.filterQueryGetPath == null || this.filterQueryGetPath == undefined) {
+			this.filterQueryGetPath = new CommandAttr<string>();
+		}
+		
+		this.filterQueryGetPath.setSetter(true);
+		this.filterQueryGetPath.setValue(value);
+		this.orderSet++;
+		this.filterQueryGetPath.setOrderSet(this.orderSet);
 		return this.thisPointer;
 	}
 		

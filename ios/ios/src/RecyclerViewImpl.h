@@ -148,6 +148,8 @@
 
 - (void)clearModel;
 
+- (jboolean)filterDataWithId:(id)model;
+
 - (void)invalidateChildIfRequiredWithASIWidget:(id<ASIWidget>)childWidget;
 
 #pragma mark Package-Private
@@ -803,6 +805,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)executeWithBoolean:(jboolean)setter;
 
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)filterWithNSString:(NSString *)value;
+
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)invalidate;
 
 - (id)isNestedScrollingEnabled;
@@ -813,7 +817,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)refreshUiFromModelWithNSString:(NSString *)arg0;
 
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)removeAllItemsWithNSString:(NSString *)sectionId;
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)removeAllItemsWithNSString:(NSString *)sectionId
+                                                                 withNSString:(NSString *)itemConfigId;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)removeModelAtIndexWithInt:(jint)arg0;
 
@@ -876,6 +881,18 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setEnabledWithBoolean:(jboolean)arg0;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setErrorStyleWithNSString:(NSString *)arg0;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterDelayWithInt:(jint)value;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterIdWithNSString:(NSString *)value;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterItemPathWithNSString:(NSString *)value;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterQueryGetPathWithNSString:(NSString *)value;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterQueryStorePathWithNSString:(NSString *)value;
+
+- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterSectionPathWithNSString:(NSString *)value;
 
 - (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFocusableWithBoolean:(jboolean)arg0;
 
@@ -1343,11 +1360,14 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_RecyclerViewCommandBuilder)
                       withNSString:(NSString *)itemConfigId
                             withId:(id)item;
 
+- (void)filterWithNSString:(NSString *)value;
+
 - (id)isNestedScrollingEnabled;
 
 - (id)isReverseLayout;
 
-- (void)removeAllItemsWithNSString:(NSString *)sectionId;
+- (void)removeAllItemsWithNSString:(NSString *)sectionId
+                      withNSString:(NSString *)itemConfigId;
 
 - (void)removeSectionItemWithNSString:(NSString *)sectionId
                          withNSString:(NSString *)itemConfigId
@@ -1358,6 +1378,18 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_RecyclerViewCommandBuilder)
 - (void)scrollToPositionWithInt:(jint)value;
 
 - (void)scrollToTopWithBoolean:(jboolean)value;
+
+- (void)setFilterDelayWithInt:(jint)value;
+
+- (void)setFilterIdWithNSString:(NSString *)value;
+
+- (void)setFilterItemPathWithNSString:(NSString *)value;
+
+- (void)setFilterQueryGetPathWithNSString:(NSString *)value;
+
+- (void)setFilterQueryStorePathWithNSString:(NSString *)value;
+
+- (void)setFilterSectionPathWithNSString:(NSString *)value;
 
 - (void)setFooterDisabledWithBoolean:(jboolean)value;
 

@@ -83,6 +83,13 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("scrollToEnd").withType("boolean"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("scrollToTop").withType("boolean"));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("scrollToPosition").withType("int"));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("filter").withType("string"));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("filterDelay").withType("int").withOrder(-10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("filterId").withType("string").withOrder(-10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("filterItemPath").withType("array").withOrder(-10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("filterSectionPath").withType("array").withOrder(-10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("filterQueryStorePath").withType("string").withOrder(-10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("filterQueryGetPath").withType("string").withOrder(-10));
 		ConverterFactory.register("androidx.recyclerview.widget.RecyclerView.orientation", new Orientation());
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("orientation").withType("androidx.recyclerview.widget.RecyclerView.orientation").withOrder(-1));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("onScrollStateChange").withType("string"));
@@ -468,7 +475,7 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 	@SuppressLint("NewApi")
 	@Override
 	public void setAttribute(WidgetAttribute key, String strValue, Object objValue, ILifeCycleDecorator decorator) {
-		ViewGroupImpl.setAttribute(this, key, strValue, objValue, decorator);
+				ViewGroupImpl.setAttribute(this, key, strValue, objValue, decorator);
 		Object nativeWidget = asNativeWidget();
 		switch (key.getAttributeName()) {
 			case "layoutManager": {
@@ -576,9 +583,10 @@ if (objValue instanceof java.util.List) {
 		if (objValue instanceof Map) {
 			Map<String, Object> data = ((Map<String, Object>) objValue);
 		Object sectionId = quickConvert(data.get("sectionId"), "string");
+		Object itemConfigId = quickConvert(data.get("itemConfigId"), "string");
 
 
-		 removeAllItems((String) sectionId);
+		 removeAllItems((String) sectionId, (String)itemConfigId);
 
 
 }
@@ -587,9 +595,10 @@ if (objValue instanceof java.util.List) {
 	for (Object object : list) {
 		Map<String, Object> data = PluginInvoker.getMap(object);
 		Object sectionId = quickConvert(data.get("sectionId"), "string");
+		Object itemConfigId = quickConvert(data.get("itemConfigId"), "string");
 
 
-		 removeAllItems((String) sectionId);
+		 removeAllItems((String) sectionId, (String)itemConfigId);
 
 
 	}
@@ -666,6 +675,69 @@ if (objValue instanceof java.util.List) {
 
 
 		 scrollToPosition(objValue);
+
+
+
+			}
+			break;
+			case "filter": {
+
+
+		 filter(objValue);
+
+
+
+			}
+			break;
+			case "filterDelay": {
+
+
+		 setFilterDelay(objValue);
+
+
+
+			}
+			break;
+			case "filterId": {
+
+
+		 setFilterId(objValue);
+
+
+
+			}
+			break;
+			case "filterItemPath": {
+
+
+		 setFilterItemPath(objValue);
+
+
+
+			}
+			break;
+			case "filterSectionPath": {
+
+
+		 setFilterSectionItemPath(objValue);
+
+
+
+			}
+			break;
+			case "filterQueryStorePath": {
+
+
+		 setFilterQueryStorePath(objValue);
+
+
+
+			}
+			break;
+			case "filterQueryGetPath": {
+
+
+		 setFilterQueryGetPath(objValue);
 
 
 
@@ -1320,10 +1392,9 @@ return isReverseLayout();			}
 		// groupie case
 		if (layout.get("@adapter").equals("groupie")) {
 			if (layout.containsKey("section")) {
-				GroupieAdapter groupieAdapter = new GroupieAdapter();
+				GroupieAdapter groupieAdapter = createGroupieAdapter();
+				
 				adapter = groupieAdapter;
-				adapter.setHasStableIds(true);
-				groupieAdapter.setSpanCount(spanCount);
 				recyclerView.setAdapter(adapter);
 
 				if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
@@ -1334,6 +1405,13 @@ return isReverseLayout();			}
 				createSections(groupieAdapter);
 			}
 		}
+	}
+
+	private GroupieAdapter createGroupieAdapter() {
+		GroupieAdapter groupieAdapter = new GroupieAdapter();
+		groupieAdapter.setHasStableIds(true);
+		groupieAdapter.setSpanCount(spanCount);
+		return groupieAdapter;
 	}
 
 	private void createSections(GroupieAdapter groupieAdapter) {
@@ -1363,9 +1441,12 @@ return isReverseLayout();			}
 					if (obj != null) {
 						for (Object model: PluginInvoker.getList(obj)) {
 							model = changeModelDataType(modelLoopHolder.dataType, model);
-							com.ashera.model.LoopParam loopParam = new com.ashera.model.LoopParam();
-							storeModelToScope(modelLoopHolder.varName, modelLoopHolder.varScope, model, loopParam);
-							addSection(group, sectionMap, loopParam);
+							
+							if (filterData(model, this.filterSectionPaths)) {
+								com.ashera.model.LoopParam loopParam = new com.ashera.model.LoopParam();
+								storeModelToScope(modelLoopHolder.varName, modelLoopHolder.varScope, model, loopParam);
+								addSection(group, sectionMap, loopParam);
+							}
 						}
 					}
 				}
@@ -1501,6 +1582,7 @@ return isReverseLayout();			}
 
 			//let x in . from y->intent into view as pathmap
 			Object obj = null;
+			// add item to existing section list
 			if (myitem == null) {
 				obj = getModelFromScope(modelLoopHolder.key, modelLoopHolder.varSource, pLoopParam);
 				obj = getModelByPath(modelLoopHolder.varPath, obj);
@@ -1514,12 +1596,15 @@ return isReverseLayout();			}
 				if (list != null) {
 					for (Object model: list) {
 						model = changeModelDataType(modelLoopHolder.dataType, model);
-						com.ashera.model.LoopParam loopParam = new com.ashera.model.LoopParam();
-						storeModelToScope(modelLoopHolder.varName, modelLoopHolder.varScope, model, loopParam);
-						GenericItem item = new GenericItem(layout.toString(), template, loopParam, viewHolderIds);
-						item.setNumberOfColums(numberOfColumns);
-						item.setMargin(margin);
-						section.add(item);
+						
+						if (filterData(model)) {
+							com.ashera.model.LoopParam loopParam = new com.ashera.model.LoopParam();
+							storeModelToScope(modelLoopHolder.varName, modelLoopHolder.varScope, model, loopParam);
+							GenericItem item = new GenericItem(layout.toString(), template, loopParam, viewHolderIds);
+							item.setNumberOfColums(numberOfColumns);
+							item.setMargin(margin);
+							section.add(item);
+						}
 					}
 				} else {
 					Map<String, Object> map = PluginInvoker.getMap(obj);
@@ -1814,10 +1899,30 @@ return isReverseLayout();			}
 					}
 					notifyDataSetChanged(sectionHolder);
 				} else {
+					if (itemConfig.containsKey("@modelFor")) {
+						List<Object> list = getModelChildItems(itemConfig, sectionHolder.loopParam);
+						if (list != null) {
+							list.addAll((List) item);
+						}
+					}
+					
+
 					createItem(sectionHolder.section, itemConfig, sectionHolder.loopParam, item);
 				}
 			}
 		}
+	}
+
+	private List<Object> getModelChildItems(Map<String, Object> itemConfig, com.ashera.model.LoopParam loopParam) {
+		String modelFor = PluginInvoker.getString(itemConfig.get("@modelFor"));
+		com.ashera.model.ModelExpressionParser.ModelLoopHolder modelLoopHolder = com.ashera.model.ModelExpressionParser
+				.parseModelLoopExpression(modelFor);
+
+		Object obj = null;
+		obj = getModelFromScope(modelLoopHolder.key, modelLoopHolder.varSource, loopParam);
+		obj = getModelByPath(modelLoopHolder.varPath, obj);
+		List<Object> list = PluginInvoker.getList(obj);
+		return list;
 	}
 
 	private void notifyDataSetChanged(SectionHolder sectionHolder) {
@@ -1868,7 +1973,10 @@ return isReverseLayout();			}
 					if (itemConfig.containsKey("@idPath")) { 
 						String path = PluginInvoker.getString(itemConfig.get("@idPath"));
 						com.ashera.model.ModelExpressionParser.ModelFromScopeHolder modelFromScopeHolder = com.ashera.model.ModelExpressionParser.parseModelFromScope(path);
-						
+						if (itemConfig.containsKey("@modelFor")) {
+							List<Object> list = getModelChildItems(itemConfig, sectionHolder.loopParam);
+							syncObjectRemoveSectionItem(itemId, modelFromScopeHolder.varPath, list);
+						}						
 						for (int i = itemCount - 1; i >= 0; i--) {
 							com.xwray.groupie.Item<GroupieViewHolder> item = sectionHolder.section.getItem(i);
 							if (item instanceof GenericItem) {
@@ -1884,9 +1992,32 @@ return isReverseLayout();			}
 			}
 		}
 	}
+
+
+	private void syncObjectRemoveSectionItem(String itemId, String idPath, List<Object> list) {
+		for (int j = list.size() - 1; j >= 0; j--) {
+			Object model = list.get(j);
+			Object id =  getModelByPath(idPath, model);
+			if (itemId.equals(id)) {
+				list.remove(model);
+			}
+		}
+	}
+	
+	private void syncObjectUpdateSectionItem(String itemId, String idPath, List<Object> list, Object item) {
+		for (int j = list.size() - 1; j >= 0; j--) {
+			Object model = list.get(j);
+			Object id =  getModelByPath(idPath, model);
+			if (itemId.equals(id)) {
+				list.set(j, item);
+			}
+		}
+	}
+
 	
 	
-	private void removeAllItems(String sectionId) {
+	
+	private void removeAllItems(String sectionId, String myitemConfigId) {
 		if (adapter instanceof GroupieAdapter) {
 			if (sectionMap != null) {
 				SectionHolder sectionHolder = sectionMap.get(sectionId);
@@ -1908,6 +2039,11 @@ return isReverseLayout();			}
 						}
 					}
 				} else {
+					Map<String, Object> itemConfig = this.itemConfigMap.get(myitemConfigId);
+					if (itemConfig.containsKey("@modelFor")) {
+						List<Object> list = getModelChildItems(itemConfig, sectionHolder.loopParam);
+						list.clear();
+					}
 					sectionHolder.section.clear();
 				}
 			}
@@ -1941,6 +2077,12 @@ return isReverseLayout();			}
 					if (itemConfig.containsKey("@idPath")) { 
 						String path = PluginInvoker.getString(itemConfig.get("@idPath"));
 						com.ashera.model.ModelExpressionParser.ModelFromScopeHolder modelFromScopeHolder = com.ashera.model.ModelExpressionParser.parseModelFromScope(path);
+						
+						if (itemConfig.containsKey("@modelFor")) {
+							List<Object> list = getModelChildItems(itemConfig, sectionHolder.loopParam);
+							syncObjectUpdateSectionItem(itemId, modelFromScopeHolder.varPath, list, newData);
+						}
+						
 						int itemCount = sectionHolder.section.getItemCount();
 						int layoutId =  (int) quickConvert(PluginInvoker.getString(itemConfig.get("@layout")), "id");
 						ArrayList<com.xwray.groupie.Item<GroupieViewHolder>> items = new ArrayList<>();
@@ -2039,11 +2181,98 @@ return isReverseLayout();			}
 		super.applyModelToWidget();
 		
 		if (adapter instanceof GroupieAdapter) {
+			widgets.clear();
 			((GroupieAdapter) adapter).clear();
+			recyclerView.setAdapter(adapter);
 			createSections((GroupieAdapter) adapter);
 		}
 	}
 	
+
+	
+	private String query;
+	private int filterDelay = 100;
+	private r.android.os.Handler handler;
+	private void filter(Object query) {
+		this.query = (String) query;
+		
+		if (filterQuerySetPath != null) {
+			storeModelToScope(filterQuerySetPath.varName, filterQuerySetPath.varScope, query);
+		}
+
+		if (handler == null) {
+			handler = new r.android.os.Handler(); 
+		} else {
+			handler.removeCallbacks(null);
+		}
+		handler.postDelayed(() -> {
+			notifyDataSetChanged();
+			getFragment().remeasure();
+		}, filterDelay);
+	}
+	
+	
+	
+	private void setFilterDelay(Object objValue) {
+		this.filterDelay = (int) objValue;
+		
+	}
+	
+	private String filterId = FilterFactory.DEFAULT_FILTER;
+	private void setFilterId(Object objValue) {
+		filterId = (String) objValue;
+	}
+	
+	@Override
+	protected boolean filterData(Object model) {
+		return filterData(model, filterItemPaths);
+	}
+
+	private boolean filterData(Object model, String[] paths) {
+		if (filterQueryGetPath != null) {
+			this.query = (String) getModelFromScope(filterQueryGetPath.varName, filterQueryGetPath.varScope);
+		}
+		if (this.query == null || paths == null) {
+			return true;
+		}
+		
+		for (String path : paths) {
+			Object modelVal = getModelByPath(path, model);
+			IFilter filter = FilterFactory.get(filterId);
+	        if (filter == null) {
+	        	filter = FilterFactory.get(FilterFactory.DEFAULT_FILTER);
+	        }
+			if (filter.filter(PluginInvoker.getString(modelVal), query)) {
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
+	
+	private String[] filterSectionPaths;
+	private String[] filterItemPaths; 
+	private void setFilterSectionItemPath(Object objValue) {
+		filterSectionPaths = (String[]) objValue;
+	} 
+
+	private void setFilterItemPath(Object objValue) {
+		filterItemPaths = (String[]) objValue;		
+	}
+	
+	private com.ashera.model.ModelExpressionParser.ModelVarScopeHolder filterQuerySetPath;	
+	private com.ashera.model.ModelExpressionParser.ModelVarScopeHolder filterQueryGetPath;
+	private void setFilterQueryGetPath(Object objValue) {
+		filterQueryGetPath = com.ashera.model.ModelExpressionParser.parseModelVarScope((String) objValue);
+		
+	}
+
+	private void setFilterQueryStorePath(Object objValue) {
+		filterQuerySetPath = com.ashera.model.ModelExpressionParser.parseModelVarScope((String) objValue);
+		
+	}
+		
 
 	@SuppressLint("NewApi")
 private static class OnScrollListener extends RecyclerView.OnScrollListener implements com.ashera.widget.IListener{
@@ -2303,7 +2532,8 @@ String itemId) {
 	wrapper.put("itemId", itemId);
 	attrs.put("value", wrapper);
 return this;}
-public RecyclerViewCommandBuilder removeAllItems(String sectionId) {
+public RecyclerViewCommandBuilder removeAllItems(String sectionId,
+String itemConfigId) {
 	Map<String, Object> attrs = initCommand("removeAllItems");
 	attrs.put("type", "attribute");
 	attrs.put("setter", true);
@@ -2311,6 +2541,7 @@ public RecyclerViewCommandBuilder removeAllItems(String sectionId) {
 
 	Map<String, Object> wrapper = new HashMap<>();
 	wrapper.put("sectionId", sectionId);
+	wrapper.put("itemConfigId", itemConfigId);
 	attrs.put("value", wrapper);
 return this;}
 public RecyclerViewCommandBuilder updateSectionItem(String sectionId,
@@ -2374,6 +2605,62 @@ public RecyclerViewCommandBuilder scrollToTop(boolean value) {
 return this;}
 public RecyclerViewCommandBuilder scrollToPosition(int value) {
 	Map<String, Object> attrs = initCommand("scrollToPosition");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
+public RecyclerViewCommandBuilder filter(String value) {
+	Map<String, Object> attrs = initCommand("filter");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
+public RecyclerViewCommandBuilder setFilterDelay(int value) {
+	Map<String, Object> attrs = initCommand("filterDelay");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
+public RecyclerViewCommandBuilder setFilterId(String value) {
+	Map<String, Object> attrs = initCommand("filterId");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
+public RecyclerViewCommandBuilder setFilterItemPath(String value) {
+	Map<String, Object> attrs = initCommand("filterItemPath");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
+public RecyclerViewCommandBuilder setFilterSectionPath(String value) {
+	Map<String, Object> attrs = initCommand("filterSectionPath");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
+public RecyclerViewCommandBuilder setFilterQueryStorePath(String value) {
+	Map<String, Object> attrs = initCommand("filterQueryStorePath");
+	attrs.put("type", "attribute");
+	attrs.put("setter", true);
+	attrs.put("orderSet", ++orderSet);
+
+	attrs.put("value", value);
+return this;}
+public RecyclerViewCommandBuilder setFilterQueryGetPath(String value) {
+	Map<String, Object> attrs = initCommand("filterQueryGetPath");
 	attrs.put("type", "attribute");
 	attrs.put("setter", true);
 	attrs.put("orderSet", ++orderSet);
@@ -2472,8 +2759,10 @@ itemConfigId,
 itemId).execute(true);
 }
 
-public void removeAllItems(String sectionId) {
-	getBuilder().reset().removeAllItems(sectionId).execute(true);
+public void removeAllItems(String sectionId,
+String itemConfigId) {
+	getBuilder().reset().removeAllItems(sectionId,
+itemConfigId).execute(true);
 }
 
 public void updateSectionItem(String sectionId,
@@ -2507,6 +2796,34 @@ public void scrollToTop(boolean value) {
 
 public void scrollToPosition(int value) {
 	getBuilder().reset().scrollToPosition(value).execute(true);
+}
+
+public void filter(String value) {
+	getBuilder().reset().filter(value).execute(true);
+}
+
+public void setFilterDelay(int value) {
+	getBuilder().reset().setFilterDelay(value).execute(true);
+}
+
+public void setFilterId(String value) {
+	getBuilder().reset().setFilterId(value).execute(true);
+}
+
+public void setFilterItemPath(String value) {
+	getBuilder().reset().setFilterItemPath(value).execute(true);
+}
+
+public void setFilterSectionPath(String value) {
+	getBuilder().reset().setFilterSectionPath(value).execute(true);
+}
+
+public void setFilterQueryStorePath(String value) {
+	getBuilder().reset().setFilterQueryStorePath(value).execute(true);
+}
+
+public void setFilterQueryGetPath(String value) {
+	getBuilder().reset().setFilterQueryGetPath(value).execute(true);
 }
 
 public void setOrientation(String value) {
