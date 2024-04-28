@@ -30,6 +30,13 @@ viewHolderIds         | Comma separated list of ids which will be used to refres
 headerDisabled        | When true, header is hidden.
 footerDisabled        | When true, footer is hidden.
 layout                | Layout xml file.  See section Configuring Recycler View.
+filter				  | Method to filter the data presented in recycler view.				
+filterDelay 	 	  | Delay before which filter will not be triggered. Default is 100ms.  	 	 	 	 	 	 	 	 	 	 	 	 	 
+filterId 	 	 	  | The id of the filter. Custom filters can be created by using FilterFatory.register(LowerCasePrefixFilter.class.getName(), new LowerCasePrefixFilter());	 	 	 	 	 	 	 	 	 	 	 	 	 
+filterItemPath 	 	  |	Mandatory for filter to work. The path on the model object on which filter will be applied to the items.
+filterSectionPath     | Applicable only for groupie adapters. The path on the model object on which filter will be applied to section header items. 	 	 	 	 	 	 	 	 	 	 	 	 	 
+filterQueryGetPath 	  |	Applicable only for groupie adapters. Groupie adapter can have child recycler views. The query of the filter will be passed to the child recycler views using filterQueryGetPath and filterQuerySetPath.   	 	 	 	 	 	 	 	 	 	 	 	 	 	 
+filterQueryStorePath  |	Applicable only for groupie adapters. Groupie adapter can have child recycler views. The query of the filter will be passed to the child recycler views using filterQueryGetPath and filterQuerySetPath. 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 
 
 ## Configuring Recycler View
 The Recycler View in android requires an adpater being configured with view holder pattern being core of its implementation. Ashera provides a generic implementation of the view holder pattern. Hence recycler view can be written by configuring a few attributes.
@@ -197,4 +204,4 @@ xml/recyclerview_groupie.xml
     </section>
 </layout>
 ``` 
-The groupie adapter consists of sections which can contain another section, item, header ad footer. This type of configuration helps to create complex layout using recycler view.
+The groupie adapter consists of sections which can contain another section, item, header and footer. This type of configuration helps to create complex layout using recycler view.
