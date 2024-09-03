@@ -229,6 +229,7 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 	public class RecyclerViewExt extends androidx.recyclerview.widget.RecyclerView implements ILifeCycleDecorator, com.ashera.widget.IMaxDimension{
 		private MeasureEvent measureFinished = new MeasureEvent();
 		private OnLayoutEvent onLayoutEvent = new OnLayoutEvent();
+		private List<IWidget> overlays;
 		public IWidget getWidget() {
 			return RecyclerViewImpl.this;
 		}
@@ -280,10 +281,13 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 		protected void onLayout(boolean changed, int l, int t, int r, int b) {
 			super.onLayout(changed, l, t, r, b);
 			ViewImpl.setDrawableBounds(RecyclerViewImpl.this, l, t, r, b);
+			if (!isOverlay()) {
 			ViewImpl.nativeMakeFrame(asNativeWidget(), l, t, r, b);
 			nativeMakeFrameForChildWidget(l, t, r, b);
+			}
 			replayBufferedEvents();
 	        ViewImpl.redrawDrawables(RecyclerViewImpl.this);
+	        overlays = ViewImpl.drawOverlay(RecyclerViewImpl.this, overlays);
 			
 			IWidgetLifeCycleListener listener = (IWidgetLifeCycleListener) getListener();
 			if (listener != null) {
@@ -412,7 +416,7 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 				setState4(value);
 				return;
 			}
-			RecyclerViewImpl.this.setAttribute(name, value, true);
+			RecyclerViewImpl.this.setAttribute(name, value, !(value instanceof String));
 		}
         @Override
         public void setVisibility(int visibility) {
