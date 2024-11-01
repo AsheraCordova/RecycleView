@@ -370,7 +370,9 @@ Context context = (Context) fragment.getRootActivity();
         @Override
         public void drawableStateChanged() {
         	super.drawableStateChanged();
-        	ViewImpl.drawableStateChanged(RecyclerViewImpl.this);
+        	if (!isWidgetDisposed()) {
+        		ViewImpl.drawableStateChanged(RecyclerViewImpl.this);
+        	}
         }
         
     	public void setState0(float value) {
@@ -508,6 +510,7 @@ Context context = (Context) fragment.getRootActivity();
         	ViewImpl.stateNo(RecyclerViewImpl.this);
         }
      
+	
 	}
 	@Override
 	public Class getViewClass() {
