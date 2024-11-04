@@ -3881,7 +3881,11 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
   if (this$0_->headerTemplate_ != nil && !this$0_->headerDisabled_) {
     position = position - 1;
   }
-  return [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([this$0_ quickConvertWithId:[((id<JavaUtilList>) nil_chk(this$0_->ids_)) getWithInt:position] withNSString:@"id"], [JavaLangInteger class]))) intValue];
+  id id_ = [this$0_ quickConvertWithId:[((id<JavaUtilList>) nil_chk(this$0_->ids_)) getWithInt:position] withNSString:@"id"];
+  if (id_ == nil) {
+    id_ = JavaLangInteger_valueOfWithInt_(0);
+  }
+  return [(JavaLangInteger *) cast_chk(id_, [JavaLangInteger class]) intValue];
 }
 
 - (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_ViewHolder *)holder {
@@ -4641,7 +4645,9 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
     }
     if (strValue_ != nil && ![strValue_ java_isEmpty] && ![((NSString *) nil_chk([((NSString *) nil_chk(strValue_)) java_trim])) java_hasPrefix:@"+"]) {
       id<ASIActivity> activity = [((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getRootActivity];
-      [((id<ASIActivity>) nil_chk(activity)) sendEventMessageWithJavaUtilMap:obj];
+      if (activity != nil) {
+        [activity sendEventMessageWithJavaUtilMap:obj];
+      }
     }
   }
   return;
@@ -4673,7 +4679,9 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
     }
     if (strValue_ != nil && ![strValue_ java_isEmpty] && ![((NSString *) nil_chk([((NSString *) nil_chk(strValue_)) java_trim])) java_hasPrefix:@"+"]) {
       id<ASIActivity> activity = [((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getRootActivity];
-      [((id<ASIActivity>) nil_chk(activity)) sendEventMessageWithJavaUtilMap:obj];
+      if (activity != nil) {
+        [activity sendEventMessageWithJavaUtilMap:obj];
+      }
     }
   }
   return;

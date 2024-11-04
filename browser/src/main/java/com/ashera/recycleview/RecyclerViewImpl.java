@@ -1171,7 +1171,11 @@ return isReverseLayout();			}
 			if (headerTemplate != null && !headerDisabled) {
 				position = position - 1;
 			}
-			return (int) quickConvert(ids.get(position), "id");
+			Object id = quickConvert(ids.get(position), "id");
+			if (id == null) {
+				id = 0;
+			}
+			return (int) id;
 		}
 		
 		@Override
@@ -2352,7 +2356,9 @@ public void onScrollStateChanged (RecyclerView recyclerView,
 		}
 		if (strValue != null && !strValue.isEmpty() && !strValue.trim().startsWith("+")) {
 		    com.ashera.core.IActivity activity = (com.ashera.core.IActivity)w.getFragment().getRootActivity();
-		    activity.sendEventMessage(obj);
+		    if (activity != null) {
+		    	activity.sendEventMessage(obj);
+		    }
 		}
 	}
     return;
@@ -2389,7 +2395,9 @@ public void onScrolled (RecyclerView recyclerView,
 		}
 		if (strValue != null && !strValue.isEmpty() && !strValue.trim().startsWith("+")) {
 		    com.ashera.core.IActivity activity = (com.ashera.core.IActivity)w.getFragment().getRootActivity();
-		    activity.sendEventMessage(obj);
+		    if (activity != null) {
+		    	activity.sendEventMessage(obj);
+		    }
 		}
 	}
     return;
