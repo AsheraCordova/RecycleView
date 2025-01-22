@@ -19,7 +19,6 @@
 #include "Handler.h"
 #include "HasWidgets.h"
 #include "IActivity.h"
-#include "IAttributable.h"
 #include "IConverter.h"
 #include "IFilter.h"
 #include "IFragment.h"
@@ -116,10 +115,6 @@
   IOSObjectArray *filterItemPaths_;
   ASModelExpressionParser_ModelVarScopeHolder *filterQuerySetPath_;
   ASModelExpressionParser_ModelVarScopeHolder *filterQueryGetPath_;
-  ASRecyclerViewImpl_RecyclerViewCommandBuilder *builder_;
-  ASRecyclerViewImpl_RecyclerViewBean *bean_;
-  ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder *paramsBuilder_;
-  ASRecyclerViewImpl_RecyclerViewParamsBean *paramsBean_;
   id recyclerWrapperView_;
   jint oldScrollY_;
   jint oldScrollX_;
@@ -376,10 +371,6 @@ J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, filterSectionPaths_, IOSObjectArray *)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, filterItemPaths_, IOSObjectArray *)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, filterQuerySetPath_, ASModelExpressionParser_ModelVarScopeHolder *)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, filterQueryGetPath_, ASModelExpressionParser_ModelVarScopeHolder *)
-J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, builder_, ASRecyclerViewImpl_RecyclerViewCommandBuilder *)
-J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, bean_, ASRecyclerViewImpl_RecyclerViewBean *)
-J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, paramsBuilder_, ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder *)
-J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, paramsBean_, ASRecyclerViewImpl_RecyclerViewParamsBean *)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, recyclerWrapperView_, id)
 
 __attribute__((unused)) static void ASRecyclerViewImpl_setWidgetOnNativeClass(ASRecyclerViewImpl *self);
@@ -751,20 +742,6 @@ __attribute__((unused)) static ASRecyclerViewImpl_OnScrollListener *new_ASRecycl
 __attribute__((unused)) static ASRecyclerViewImpl_OnScrollListener *create_ASRecyclerViewImpl_OnScrollListener_initWithASIWidget_withNSString_withNSString_(id<ASIWidget> w, NSString *strValue, NSString *action);
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_OnScrollListener)
-
-@interface ASRecyclerViewImpl_RecyclerViewCommandBuilder () {
- @public
-  ASRecyclerViewImpl *this$0_;
-}
-
-@end
-
-@interface ASRecyclerViewImpl_RecyclerViewBean () {
- @public
-  ASRecyclerViewImpl *this$0_;
-}
-
-@end
 
 @interface ASRecyclerViewImpl_3 : NSObject < ASViewImpl_PanCallBack > {
  @public
@@ -1643,38 +1620,6 @@ J2OBJC_IGNORE_DESIGNATED_END
   [((ADView *) nil_chk(((ADView *) cast_chk([self asWidget], [ADView class])))) setVisibilityWithInt:b ? ADView_VISIBLE : ADView_GONE];
 }
 
-- (id)getPluginWithNSString:(NSString *)plugin {
-  return [((id<ASIAttributable>) nil_chk(ASWidgetFactory_getAttributableWithNSString_(plugin))) newInstanceWithASIWidget:self];
-}
-
-- (ASRecyclerViewImpl_RecyclerViewBean *)getBean {
-  if (bean_ == nil) {
-    bean_ = new_ASRecyclerViewImpl_RecyclerViewBean_initWithASRecyclerViewImpl_(self);
-  }
-  return bean_;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)getBuilder {
-  if (builder_ == nil) {
-    builder_ = new_ASRecyclerViewImpl_RecyclerViewCommandBuilder_initWithASRecyclerViewImpl_(self);
-  }
-  return builder_;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewParamsBean *)getParamsBean {
-  if (paramsBean_ == nil) {
-    paramsBean_ = new_ASRecyclerViewImpl_RecyclerViewParamsBean_initWithASRecyclerViewImpl_(self);
-  }
-  return paramsBean_;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder *)getParamsBuilder {
-  if (paramsBuilder_ == nil) {
-    paramsBuilder_ = new_ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder_initWithASRecyclerViewImpl_(self);
-  }
-  return paramsBuilder_;
-}
-
 - (void)nativeCreateWithJavaUtilMap:(id<JavaUtilMap>)params {
   ASRecyclerViewImpl_nativeCreateWithJavaUtilMap_(self, params);
 }
@@ -1956,42 +1901,37 @@ J2OBJC_IGNORE_DESIGNATED_END
     { NULL, "V", 0x2, 98, 25, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 99, 1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 100, 101, -1, -1, -1, -1 },
-    { NULL, "LNSObject;", 0x1, 102, 1, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewBean;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewParamsBean;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandParamsBuilder;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 103, 37, -1, 38, -1, -1 },
+    { NULL, "V", 0x2, 102, 37, -1, 38, -1, -1 },
     { NULL, "LNSObject;", 0x101, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LNSObject;", 0x101, 104, 105, -1, -1, -1, -1 },
+    { NULL, "LNSObject;", 0x101, 103, 104, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 105, 25, -1, -1, -1, -1 },
     { NULL, "V", 0x102, 106, 25, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 107, 25, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 108, 109, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 110, 111, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 112, 18, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 107, 108, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 109, 110, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 111, 18, -1, -1, -1, -1 },
     { NULL, "V", 0x102, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x102, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 113, 33, -1, -1, -1, -1 },
-    { NULL, "I", 0x2, 114, 115, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 116, 109, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 117, 109, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 118, 27, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 112, 33, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 113, 114, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 115, 108, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 116, 108, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 117, 27, -1, -1, -1, -1 },
     { NULL, "I", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x2, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 119, 25, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 120, 109, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 121, 109, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 118, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 119, 108, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 120, 108, -1, -1, -1, -1 },
+    { NULL, "I", 0x102, 121, 25, -1, -1, -1, -1 },
     { NULL, "I", 0x102, 122, 25, -1, -1, -1, -1 },
     { NULL, "I", 0x102, 123, 25, -1, -1, -1, -1 },
     { NULL, "I", 0x102, 124, 25, -1, -1, -1, -1 },
-    { NULL, "I", 0x102, 125, 25, -1, -1, -1, -1 },
     { NULL, "I", 0x2, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 126, 27, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 127, 128, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 129, 27, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 108, 27, -1, -1, -1, -1 },
-    { NULL, "I", 0x2, 130, 131, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 132, 27, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 125, 27, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 126, 127, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 128, 27, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 107, 27, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 129, 130, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 131, 27, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
@@ -2084,47 +2024,42 @@ J2OBJC_IGNORE_DESIGNATED_END
   methods[85].selector = @selector(setFilterQueryStorePathWithId:);
   methods[86].selector = @selector(setIdWithNSString:);
   methods[87].selector = @selector(setVisibleWithBoolean:);
-  methods[88].selector = @selector(getPluginWithNSString:);
-  methods[89].selector = @selector(getBean);
-  methods[90].selector = @selector(getBuilder);
-  methods[91].selector = @selector(getParamsBean);
-  methods[92].selector = @selector(getParamsBuilder);
-  methods[93].selector = @selector(nativeCreateWithJavaUtilMap:);
-  methods[94].selector = @selector(createView);
-  methods[95].selector = @selector(nativescrollViewCreateWithBoolean:withBoolean:withBoolean:);
-  methods[96].selector = @selector(stopScrollEndWithId:);
-  methods[97].selector = @selector(stopScrollStartWithId:);
-  methods[98].selector = @selector(updateContentSizeWithInt:withId:);
-  methods[99].selector = @selector(applyTransformWithId:withId:);
-  methods[100].selector = @selector(postSetAttributeWithASWidgetAttribute:withNSString:withId:withASILifeCycleDecorator:);
-  methods[101].selector = @selector(showVerticalScrollBar);
-  methods[102].selector = @selector(showHorizontalScrollBar);
-  methods[103].selector = @selector(setCustomHandleScrollWithInt:withInt:withInt:withInt:);
-  methods[104].selector = @selector(setSelectionWithInt:withInt:withId:);
-  methods[105].selector = @selector(setContentSizeWidthWithInt:withId:);
-  methods[106].selector = @selector(setContentSizeHeightWithInt:withId:);
-  methods[107].selector = @selector(setMaximumWithInt:);
-  methods[108].selector = @selector(getMaximum);
-  methods[109].selector = @selector(getSelection);
-  methods[110].selector = @selector(flashScrollIndicatorsWithId:);
-  methods[111].selector = @selector(setContentOffsetXWithInt:withId:);
-  methods[112].selector = @selector(setContentOffsetYWithInt:withId:);
-  methods[113].selector = @selector(getContentOffsetXWithId:);
-  methods[114].selector = @selector(getContentOffsetYWithId:);
-  methods[115].selector = @selector(getContentHeightWithId:);
-  methods[116].selector = @selector(getContentWidthWithId:);
-  methods[117].selector = @selector(getThumbWidth);
-  methods[118].selector = @selector(setMinimumWithInt:);
-  methods[119].selector = @selector(setCustomMakeFrameForChildWidgetWithInt:withInt:withInt:withInt:withInt:withInt:);
-  methods[120].selector = @selector(updateContentSizeOfScrolledProviderWithInt:);
-  methods[121].selector = @selector(updateContentSizeWithInt:);
-  methods[122].selector = @selector(getScrollBarMaxWithId:withFloat:);
-  methods[123].selector = @selector(adjustScrollOffsetWhenEdgeReachedWithInt:);
+  methods[88].selector = @selector(nativeCreateWithJavaUtilMap:);
+  methods[89].selector = @selector(createView);
+  methods[90].selector = @selector(nativescrollViewCreateWithBoolean:withBoolean:withBoolean:);
+  methods[91].selector = @selector(stopScrollEndWithId:);
+  methods[92].selector = @selector(stopScrollStartWithId:);
+  methods[93].selector = @selector(updateContentSizeWithInt:withId:);
+  methods[94].selector = @selector(applyTransformWithId:withId:);
+  methods[95].selector = @selector(postSetAttributeWithASWidgetAttribute:withNSString:withId:withASILifeCycleDecorator:);
+  methods[96].selector = @selector(showVerticalScrollBar);
+  methods[97].selector = @selector(showHorizontalScrollBar);
+  methods[98].selector = @selector(setCustomHandleScrollWithInt:withInt:withInt:withInt:);
+  methods[99].selector = @selector(setSelectionWithInt:withInt:withId:);
+  methods[100].selector = @selector(setContentSizeWidthWithInt:withId:);
+  methods[101].selector = @selector(setContentSizeHeightWithInt:withId:);
+  methods[102].selector = @selector(setMaximumWithInt:);
+  methods[103].selector = @selector(getMaximum);
+  methods[104].selector = @selector(getSelection);
+  methods[105].selector = @selector(flashScrollIndicatorsWithId:);
+  methods[106].selector = @selector(setContentOffsetXWithInt:withId:);
+  methods[107].selector = @selector(setContentOffsetYWithInt:withId:);
+  methods[108].selector = @selector(getContentOffsetXWithId:);
+  methods[109].selector = @selector(getContentOffsetYWithId:);
+  methods[110].selector = @selector(getContentHeightWithId:);
+  methods[111].selector = @selector(getContentWidthWithId:);
+  methods[112].selector = @selector(getThumbWidth);
+  methods[113].selector = @selector(setMinimumWithInt:);
+  methods[114].selector = @selector(setCustomMakeFrameForChildWidgetWithInt:withInt:withInt:withInt:withInt:withInt:);
+  methods[115].selector = @selector(updateContentSizeOfScrolledProviderWithInt:);
+  methods[116].selector = @selector(updateContentSizeWithInt:);
+  methods[117].selector = @selector(getScrollBarMaxWithId:withFloat:);
+  methods[118].selector = @selector(adjustScrollOffsetWhenEdgeReachedWithInt:);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
     { "uiView_", "LNSObject;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "LOCAL_NAME", "LNSString;", .constantValue.asLong = 0, 0x19, -1, 133, -1, -1 },
-    { "GROUP_NAME", "LNSString;", .constantValue.asLong = 0, 0x19, -1, 134, -1, -1 },
+    { "LOCAL_NAME", "LNSString;", .constantValue.asLong = 0, 0x19, -1, 132, -1, -1 },
+    { "GROUP_NAME", "LNSString;", .constantValue.asLong = 0, 0x19, -1, 133, -1, -1 },
     { "recyclerView_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "disableUpdate_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "scrollProvider_", "LNSObject;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -2135,17 +2070,17 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "lastScrollEvent_", "J", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "scrollProviderType_", "LASRecyclerViewImpl_ScrollProviderType;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "nestedScrollHandler_", "LADHandler;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "adapter_", "LADXRecyclerView_Adapter;", .constantValue.asLong = 0, 0x2, -1, -1, 135, -1 },
+    { "adapter_", "LADXRecyclerView_Adapter;", .constantValue.asLong = 0, 0x2, -1, -1, 134, -1 },
     { "headerTemplate_", "LASIWidget;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "footerTemplate_", "LASIWidget;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "viewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 136, -1 },
-    { "headerViewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 136, -1 },
-    { "footerViewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 136, -1 },
-    { "layout_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x0, -1, -1, 137, -1 },
+    { "viewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 135, -1 },
+    { "headerViewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 135, -1 },
+    { "footerViewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 135, -1 },
+    { "layout_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x0, -1, -1, 136, -1 },
     { "spanCount_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "orientation_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "sectionMap_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 138, -1 },
-    { "itemConfigMap_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 139, -1 },
+    { "sectionMap_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 137, -1 },
+    { "itemConfigMap_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 138, -1 },
     { "headerDisabled_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "footerDisabled_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "query_", "LNSString;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -2156,10 +2091,6 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "filterItemPaths_", "[LNSString;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "filterQuerySetPath_", "LASModelExpressionParser_ModelVarScopeHolder;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "filterQueryGetPath_", "LASModelExpressionParser_ModelVarScopeHolder;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "builder_", "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "bean_", "LASRecyclerViewImpl_RecyclerViewBean;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "paramsBuilder_", "LASRecyclerViewImpl_RecyclerViewCommandParamsBuilder;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "paramsBean_", "LASRecyclerViewImpl_RecyclerViewParamsBean;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "recyclerWrapperView_", "LNSObject;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "oldScrollY_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "oldScrollX_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -2167,8 +2098,8 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "oldOverScroll_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "overScrollDpos_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "loadAttributes", "LNSString;", "LNSString;LNSString;", "create", "LASIFragment;LJavaUtilMap;", "(Lcom/ashera/core/IFragment;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "nativeRemoveView", "LASIWidget;", "add", "LASIWidget;I", "createLayoutParams", "LADView;", "getLayoutParams", "setChildAttribute", "LASIWidget;LASWidgetAttribute;LNSString;LNSObject;", "getChildAttribute", "LASIWidget;LASWidgetAttribute;", "setAttribute", "LASWidgetAttribute;LNSString;LNSObject;LASILifeCycleDecorator;", "getAttribute", "LASWidgetAttribute;LASILifeCycleDecorator;", "checkIosVersion", "addObject", "LASLoopParam;LNSString;ILNSString;", "addAllModel", "LNSObject;", "remove", "I", "setScrollBarIncrement", "setNestedScrollStopDelay", "getScrollBarDimen", "II", "nativeMakeFrameForChildWidget", "IIII", "setOnScroll", "setOnScrollStateChange", "nativeCreateRecycleView", "LJavaUtilMap;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "setLayoutManager", "setViewHolderIds", "setSpanCount", "setOrientation", "setLayout", "createSections", "LASRecyclerViewImpl_GroupieAdapter;", "LNSObject;LNSObject;LASLoopParam;", "createExpandable", "LJavaUtilMap;LADXSection;LASLoopParam;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/xwray/groupie/Section;Lcom/ashera/model/LoopParam;)V", "addSection", "createItems", "createItem", "LADXSection;LJavaUtilMap;LASLoopParam;LNSObject;", "(Lcom/xwray/groupie/Section;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/ashera/model/LoopParam;Ljava/lang/Object;)V", "createFooter", "LASLoopParam;LADXSection;LJavaUtilMap;", "(Lcom/ashera/model/LoopParam;Lcom/xwray/groupie/Section;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "createHeader", "setItemViewParams", "LASIWidget;LADView;", "addSectionItem", "LNSString;LNSString;LNSObject;", "getModelChildItems", "LJavaUtilMap;LASLoopParam;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/ashera/model/LoopParam;)Ljava/util/List<Ljava/lang/Object;>;", "notifyDataSetChanged", "LASRecyclerViewImpl_SectionHolder;", "getChildItems", "LASRecyclerViewImpl_SectionHolder;LJavaUtilMap;", "(Lcom/ashera/recycleview/RecyclerViewImpl$SectionHolder;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)Ljava/util/List<Ljava/lang/Object;>;", "removeSectionItem", "LNSString;LNSString;LNSString;", "syncObjectRemoveSectionItem", "LNSString;LNSString;LJavaUtilList;", "(Ljava/lang/String;Ljava/lang/String;Ljava/util/List<Ljava/lang/Object;>;)V", "syncObjectUpdateSectionItem", "LNSString;LNSString;LJavaUtilList;LNSObject;", "(Ljava/lang/String;Ljava/lang/String;Ljava/util/List<Ljava/lang/Object;>;Ljava/lang/Object;)V", "removeAllItems", "updateSectionItem", "LNSString;LNSString;LNSString;LNSObject;", "scrollToPosition", "scrollToTop", "scrollToEnd", "setStackFromBottom", "setReverseLayout", "invalidateChildIfRequired", "setFooterDisabled", "setHeaderDisabled", "filter", "setFilterDelay", "setFilterId", "filterData", "LNSObject;[LNSString;", "setFilterSectionItemPath", "setFilterItemPath", "setFilterQueryGetPath", "setFilterQueryStorePath", "setId", "setVisible", "Z", "getPlugin", "nativeCreate", "nativescrollViewCreate", "ZZZ", "stopScrollEnd", "stopScrollStart", "updateContentSize", "ILNSObject;", "applyTransform", "LNSObject;LNSObject;", "postSetAttribute", "setCustomHandleScroll", "setSelection", "IILNSObject;", "setContentSizeWidth", "setContentSizeHeight", "setMaximum", "flashScrollIndicators", "setContentOffsetX", "setContentOffsetY", "getContentOffsetX", "getContentOffsetY", "getContentHeight", "getContentWidth", "setMinimum", "setCustomMakeFrameForChildWidget", "IIIIII", "updateContentSizeOfScrolledProvider", "getScrollBarMax", "LNSObject;F", "adjustScrollOffsetWhenEdgeReached", &ASRecyclerViewImpl_LOCAL_NAME, &ASRecyclerViewImpl_GROUP_NAME, "Landroidx/recyclerview/widget/RecyclerView$Adapter<+Landroidx/recyclerview/widget/RecyclerView$ViewHolder;>;", "Ljava/util/List<Ljava/lang/String;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "Ljava/util/Map<Ljava/lang/String;Lcom/ashera/recycleview/RecyclerViewImpl$SectionHolder;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;>;", "LASRecyclerViewImpl_Orientation;LASRecyclerViewImpl_RecyclerViewExt;LASRecyclerViewImpl_ScrollProviderType;LASRecyclerViewImpl_ListAdapter;LASRecyclerViewImpl_ViewHolder;LASRecyclerViewImpl_SectionHolder;LASRecyclerViewImpl_GenericExpandableItem;LASRecyclerViewImpl_GenericItem;LASRecyclerViewImpl_GroupieAdapter;LASRecyclerViewImpl_GroupieViewHolder;LASRecyclerViewImpl_OnScrollListener;LASRecyclerViewImpl_RecyclerViewCommandBuilder;LASRecyclerViewImpl_RecyclerViewBean;LASRecyclerViewImpl_RecyclerViewParamsBean;LASRecyclerViewImpl_RecyclerViewCommandParamsBuilder;LASRecyclerViewImpl_UIScrollViewDelegate;" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl = { "RecyclerViewImpl", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 124, 44, -1, 140, -1, -1, -1 };
+  static const void *ptrTable[] = { "loadAttributes", "LNSString;", "LNSString;LNSString;", "create", "LASIFragment;LJavaUtilMap;", "(Lcom/ashera/core/IFragment;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "nativeRemoveView", "LASIWidget;", "add", "LASIWidget;I", "createLayoutParams", "LADView;", "getLayoutParams", "setChildAttribute", "LASIWidget;LASWidgetAttribute;LNSString;LNSObject;", "getChildAttribute", "LASIWidget;LASWidgetAttribute;", "setAttribute", "LASWidgetAttribute;LNSString;LNSObject;LASILifeCycleDecorator;", "getAttribute", "LASWidgetAttribute;LASILifeCycleDecorator;", "checkIosVersion", "addObject", "LASLoopParam;LNSString;ILNSString;", "addAllModel", "LNSObject;", "remove", "I", "setScrollBarIncrement", "setNestedScrollStopDelay", "getScrollBarDimen", "II", "nativeMakeFrameForChildWidget", "IIII", "setOnScroll", "setOnScrollStateChange", "nativeCreateRecycleView", "LJavaUtilMap;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "setLayoutManager", "setViewHolderIds", "setSpanCount", "setOrientation", "setLayout", "createSections", "LASRecyclerViewImpl_GroupieAdapter;", "LNSObject;LNSObject;LASLoopParam;", "createExpandable", "LJavaUtilMap;LADXSection;LASLoopParam;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/xwray/groupie/Section;Lcom/ashera/model/LoopParam;)V", "addSection", "createItems", "createItem", "LADXSection;LJavaUtilMap;LASLoopParam;LNSObject;", "(Lcom/xwray/groupie/Section;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/ashera/model/LoopParam;Ljava/lang/Object;)V", "createFooter", "LASLoopParam;LADXSection;LJavaUtilMap;", "(Lcom/ashera/model/LoopParam;Lcom/xwray/groupie/Section;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "createHeader", "setItemViewParams", "LASIWidget;LADView;", "addSectionItem", "LNSString;LNSString;LNSObject;", "getModelChildItems", "LJavaUtilMap;LASLoopParam;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/ashera/model/LoopParam;)Ljava/util/List<Ljava/lang/Object;>;", "notifyDataSetChanged", "LASRecyclerViewImpl_SectionHolder;", "getChildItems", "LASRecyclerViewImpl_SectionHolder;LJavaUtilMap;", "(Lcom/ashera/recycleview/RecyclerViewImpl$SectionHolder;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)Ljava/util/List<Ljava/lang/Object;>;", "removeSectionItem", "LNSString;LNSString;LNSString;", "syncObjectRemoveSectionItem", "LNSString;LNSString;LJavaUtilList;", "(Ljava/lang/String;Ljava/lang/String;Ljava/util/List<Ljava/lang/Object;>;)V", "syncObjectUpdateSectionItem", "LNSString;LNSString;LJavaUtilList;LNSObject;", "(Ljava/lang/String;Ljava/lang/String;Ljava/util/List<Ljava/lang/Object;>;Ljava/lang/Object;)V", "removeAllItems", "updateSectionItem", "LNSString;LNSString;LNSString;LNSObject;", "scrollToPosition", "scrollToTop", "scrollToEnd", "setStackFromBottom", "setReverseLayout", "invalidateChildIfRequired", "setFooterDisabled", "setHeaderDisabled", "filter", "setFilterDelay", "setFilterId", "filterData", "LNSObject;[LNSString;", "setFilterSectionItemPath", "setFilterItemPath", "setFilterQueryGetPath", "setFilterQueryStorePath", "setId", "setVisible", "Z", "nativeCreate", "nativescrollViewCreate", "ZZZ", "stopScrollEnd", "stopScrollStart", "updateContentSize", "ILNSObject;", "applyTransform", "LNSObject;LNSObject;", "postSetAttribute", "setCustomHandleScroll", "setSelection", "IILNSObject;", "setContentSizeWidth", "setContentSizeHeight", "setMaximum", "flashScrollIndicators", "setContentOffsetX", "setContentOffsetY", "getContentOffsetX", "getContentOffsetY", "getContentHeight", "getContentWidth", "setMinimum", "setCustomMakeFrameForChildWidget", "IIIIII", "updateContentSizeOfScrolledProvider", "getScrollBarMax", "LNSObject;F", "adjustScrollOffsetWhenEdgeReached", &ASRecyclerViewImpl_LOCAL_NAME, &ASRecyclerViewImpl_GROUP_NAME, "Landroidx/recyclerview/widget/RecyclerView$Adapter<+Landroidx/recyclerview/widget/RecyclerView$ViewHolder;>;", "Ljava/util/List<Ljava/lang/String;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "Ljava/util/Map<Ljava/lang/String;Lcom/ashera/recycleview/RecyclerViewImpl$SectionHolder;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;>;", "LASRecyclerViewImpl_Orientation;LASRecyclerViewImpl_RecyclerViewExt;LASRecyclerViewImpl_ScrollProviderType;LASRecyclerViewImpl_ListAdapter;LASRecyclerViewImpl_ViewHolder;LASRecyclerViewImpl_SectionHolder;LASRecyclerViewImpl_GenericExpandableItem;LASRecyclerViewImpl_GenericItem;LASRecyclerViewImpl_GroupieAdapter;LASRecyclerViewImpl_GroupieViewHolder;LASRecyclerViewImpl_OnScrollListener;LASRecyclerViewImpl_UIScrollViewDelegate;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl = { "RecyclerViewImpl", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 119, 40, -1, 139, -1, -1, -1 };
   return &_ASRecyclerViewImpl;
 }
 
@@ -4787,710 +4718,6 @@ ASRecyclerViewImpl_OnScrollListener *create_ASRecyclerViewImpl_OnScrollListener_
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_OnScrollListener)
-
-@implementation ASRecyclerViewImpl_RecyclerViewCommandBuilder
-
-- (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$ {
-  ASRecyclerViewImpl_RecyclerViewCommandBuilder_initWithASRecyclerViewImpl_(self, outer$);
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)executeWithBoolean:(jboolean)setter {
-  if (setter) {
-    [this$0_ executeCommandWithJavaUtilMap:command_ withASIWidget_CommandCallBack:nil withInt:ASIWidget_COMMAND_EXEC_SETTER_METHOD];
-    [((id<ASIFragment>) nil_chk([this$0_ getFragment])) remeasure];
-  }
-  [this$0_ executeCommandWithJavaUtilMap:command_ withASIWidget_CommandCallBack:nil withInt:ASIWidget_COMMAND_EXEC_GETTER_METHOD];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setLayoutManagerWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"layoutManager"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setViewHolderIdsWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"viewHolderIds"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setSpanCountWithInt:(jint)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"spanCount"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:JavaLangInteger_valueOfWithInt_(value)];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setLayoutWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"layout"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetNestedScrollingEnabled {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"nestedScrollingEnabled"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"getter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderGet" withId:JavaLangInteger_valueOfWithInt_(++orderGet_)];
-  return self;
-}
-
-- (id)isNestedScrollingEnabled {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"nestedScrollingEnabled"];
-  return [((id<JavaUtilMap>) nil_chk(attrs)) getWithId:@"commandReturnValue"];
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setNestedScrollingEnabledWithBoolean:(jboolean)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"nestedScrollingEnabled"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:JavaLangBoolean_valueOfWithBoolean_(value)];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)addSectionItemWithNSString:(NSString *)sectionId
-                                                                 withNSString:(NSString *)itemConfigId
-                                                                       withId:(id)item {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"addSectionItem"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  id<JavaUtilMap> wrapper = new_JavaUtilHashMap_init();
-  (void) [wrapper putWithId:@"sectionId" withId:sectionId];
-  (void) [wrapper putWithId:@"itemConfigId" withId:itemConfigId];
-  (void) [wrapper putWithId:@"item" withId:item];
-  (void) [attrs putWithId:@"value" withId:wrapper];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)removeSectionItemWithNSString:(NSString *)sectionId
-                                                                    withNSString:(NSString *)itemConfigId
-                                                                    withNSString:(NSString *)itemId {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"removeSectionItem"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  id<JavaUtilMap> wrapper = new_JavaUtilHashMap_init();
-  (void) [wrapper putWithId:@"sectionId" withId:sectionId];
-  (void) [wrapper putWithId:@"itemConfigId" withId:itemConfigId];
-  (void) [wrapper putWithId:@"itemId" withId:itemId];
-  (void) [attrs putWithId:@"value" withId:wrapper];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)removeAllItemsWithNSString:(NSString *)sectionId
-                                                                 withNSString:(NSString *)itemConfigId {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"removeAllItems"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  id<JavaUtilMap> wrapper = new_JavaUtilHashMap_init();
-  (void) [wrapper putWithId:@"sectionId" withId:sectionId];
-  (void) [wrapper putWithId:@"itemConfigId" withId:itemConfigId];
-  (void) [attrs putWithId:@"value" withId:wrapper];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)updateSectionItemWithNSString:(NSString *)sectionId
-                                                                    withNSString:(NSString *)itemConfigId
-                                                                    withNSString:(NSString *)itemId
-                                                                          withId:(id)item {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"updateSectionItem"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  id<JavaUtilMap> wrapper = new_JavaUtilHashMap_init();
-  (void) [wrapper putWithId:@"sectionId" withId:sectionId];
-  (void) [wrapper putWithId:@"itemConfigId" withId:itemConfigId];
-  (void) [wrapper putWithId:@"itemId" withId:itemId];
-  (void) [wrapper putWithId:@"item" withId:item];
-  (void) [attrs putWithId:@"value" withId:wrapper];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setStackFromEndWithBoolean:(jboolean)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"stackFromEnd"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:JavaLangBoolean_valueOfWithBoolean_(value)];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)tryGetReverseLayout {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"reverseLayout"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"getter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderGet" withId:JavaLangInteger_valueOfWithInt_(++orderGet_)];
-  return self;
-}
-
-- (id)isReverseLayout {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"reverseLayout"];
-  return [((id<JavaUtilMap>) nil_chk(attrs)) getWithId:@"commandReturnValue"];
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setReverseLayoutWithBoolean:(jboolean)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"reverseLayout"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:JavaLangBoolean_valueOfWithBoolean_(value)];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)scrollToEndWithBoolean:(jboolean)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"scrollToEnd"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:JavaLangBoolean_valueOfWithBoolean_(value)];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)scrollToTopWithBoolean:(jboolean)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"scrollToTop"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:JavaLangBoolean_valueOfWithBoolean_(value)];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)scrollToPositionWithInt:(jint)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"scrollToPosition"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:JavaLangInteger_valueOfWithInt_(value)];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)filterWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"filter"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterDelayWithInt:(jint)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"filterDelay"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:JavaLangInteger_valueOfWithInt_(value)];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterIdWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"filterId"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterItemPathWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"filterItemPath"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterSectionPathWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"filterSectionPath"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterQueryStorePathWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"filterQueryStorePath"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFilterQueryGetPathWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"filterQueryGetPath"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOrientationWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"orientation"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnScrollStateChangeWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"onScrollStateChange"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setOnScrolledWithNSString:(NSString *)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"onScrolled"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:value];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setHeaderDisabledWithBoolean:(jboolean)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"headerDisabled"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:JavaLangBoolean_valueOfWithBoolean_(value)];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setFooterDisabledWithBoolean:(jboolean)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"footerDisabled"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:JavaLangBoolean_valueOfWithBoolean_(value)];
-  return self;
-}
-
-- (ASRecyclerViewImpl_RecyclerViewCommandBuilder *)setNestedScrollStopDelayWithInt:(jint)value {
-  id<JavaUtilMap> attrs = [self initCommandWithNSString:@"nestedScrollStopDelay"];
-  (void) [((id<JavaUtilMap>) nil_chk(attrs)) putWithId:@"type" withId:@"attribute"];
-  (void) [attrs putWithId:@"setter" withId:JavaLangBoolean_valueOfWithBoolean_(true)];
-  (void) [attrs putWithId:@"orderSet" withId:JavaLangInteger_valueOfWithInt_(++orderSet_)];
-  (void) [attrs putWithId:@"value" withId:JavaLangInteger_valueOfWithInt_(value)];
-  return self;
-}
-
-+ (const J2ObjcClassInfo *)__metadata {
-  static J2ObjcMethodInfo methods[] = {
-    { NULL, NULL, 0x1, -1, 0, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 1, 2, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 3, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 5, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 6, 7, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 8, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LNSObject;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 9, 2, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 10, 11, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 12, 13, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 14, 15, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 16, 17, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 18, 2, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LNSObject;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 19, 2, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 20, 2, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 21, 2, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 22, 7, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 23, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 24, 7, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 25, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 26, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 27, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 28, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 29, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 30, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 31, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 32, 4, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 33, 2, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 34, 2, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_RecyclerViewCommandBuilder;", 0x1, 35, 7, -1, -1, -1, -1 },
-  };
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
-  #pragma clang diagnostic ignored "-Wundeclared-selector"
-  methods[0].selector = @selector(initWithASRecyclerViewImpl:);
-  methods[1].selector = @selector(executeWithBoolean:);
-  methods[2].selector = @selector(setLayoutManagerWithNSString:);
-  methods[3].selector = @selector(setViewHolderIdsWithNSString:);
-  methods[4].selector = @selector(setSpanCountWithInt:);
-  methods[5].selector = @selector(setLayoutWithNSString:);
-  methods[6].selector = @selector(tryGetNestedScrollingEnabled);
-  methods[7].selector = @selector(isNestedScrollingEnabled);
-  methods[8].selector = @selector(setNestedScrollingEnabledWithBoolean:);
-  methods[9].selector = @selector(addSectionItemWithNSString:withNSString:withId:);
-  methods[10].selector = @selector(removeSectionItemWithNSString:withNSString:withNSString:);
-  methods[11].selector = @selector(removeAllItemsWithNSString:withNSString:);
-  methods[12].selector = @selector(updateSectionItemWithNSString:withNSString:withNSString:withId:);
-  methods[13].selector = @selector(setStackFromEndWithBoolean:);
-  methods[14].selector = @selector(tryGetReverseLayout);
-  methods[15].selector = @selector(isReverseLayout);
-  methods[16].selector = @selector(setReverseLayoutWithBoolean:);
-  methods[17].selector = @selector(scrollToEndWithBoolean:);
-  methods[18].selector = @selector(scrollToTopWithBoolean:);
-  methods[19].selector = @selector(scrollToPositionWithInt:);
-  methods[20].selector = @selector(filterWithNSString:);
-  methods[21].selector = @selector(setFilterDelayWithInt:);
-  methods[22].selector = @selector(setFilterIdWithNSString:);
-  methods[23].selector = @selector(setFilterItemPathWithNSString:);
-  methods[24].selector = @selector(setFilterSectionPathWithNSString:);
-  methods[25].selector = @selector(setFilterQueryStorePathWithNSString:);
-  methods[26].selector = @selector(setFilterQueryGetPathWithNSString:);
-  methods[27].selector = @selector(setOrientationWithNSString:);
-  methods[28].selector = @selector(setOnScrollStateChangeWithNSString:);
-  methods[29].selector = @selector(setOnScrolledWithNSString:);
-  methods[30].selector = @selector(setHeaderDisabledWithBoolean:);
-  methods[31].selector = @selector(setFooterDisabledWithBoolean:);
-  methods[32].selector = @selector(setNestedScrollStopDelayWithInt:);
-  #pragma clang diagnostic pop
-  static const J2ObjcFieldInfo fields[] = {
-    { "this$0_", "LASRecyclerViewImpl;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
-  };
-  static const void *ptrTable[] = { "LASRecyclerViewImpl;", "execute", "Z", "setLayoutManager", "LNSString;", "setViewHolderIds", "setSpanCount", "I", "setLayout", "setNestedScrollingEnabled", "addSectionItem", "LNSString;LNSString;LNSObject;", "removeSectionItem", "LNSString;LNSString;LNSString;", "removeAllItems", "LNSString;LNSString;", "updateSectionItem", "LNSString;LNSString;LNSString;LNSObject;", "setStackFromEnd", "setReverseLayout", "scrollToEnd", "scrollToTop", "scrollToPosition", "filter", "setFilterDelay", "setFilterId", "setFilterItemPath", "setFilterSectionPath", "setFilterQueryStorePath", "setFilterQueryGetPath", "setOrientation", "setOnScrollStateChange", "setOnScrolled", "setHeaderDisabled", "setFooterDisabled", "setNestedScrollStopDelay", "Lcom/ashera/layout/ViewGroupImpl$ViewGroupCommandBuilder<Lcom/ashera/recycleview/RecyclerViewImpl$RecyclerViewCommandBuilder;>;" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl_RecyclerViewCommandBuilder = { "RecyclerViewCommandBuilder", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 33, 1, 0, -1, -1, 36, -1 };
-  return &_ASRecyclerViewImpl_RecyclerViewCommandBuilder;
-}
-
-@end
-
-void ASRecyclerViewImpl_RecyclerViewCommandBuilder_initWithASRecyclerViewImpl_(ASRecyclerViewImpl_RecyclerViewCommandBuilder *self, ASRecyclerViewImpl *outer$) {
-  self->this$0_ = outer$;
-  ASViewGroupImpl_ViewGroupCommandBuilder_init(self);
-}
-
-ASRecyclerViewImpl_RecyclerViewCommandBuilder *new_ASRecyclerViewImpl_RecyclerViewCommandBuilder_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$) {
-  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_RecyclerViewCommandBuilder, initWithASRecyclerViewImpl_, outer$)
-}
-
-ASRecyclerViewImpl_RecyclerViewCommandBuilder *create_ASRecyclerViewImpl_RecyclerViewCommandBuilder_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$) {
-  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_RecyclerViewCommandBuilder, initWithASRecyclerViewImpl_, outer$)
-}
-
-J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_RecyclerViewCommandBuilder)
-
-@implementation ASRecyclerViewImpl_RecyclerViewBean
-
-- (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$ {
-  ASRecyclerViewImpl_RecyclerViewBean_initWithASRecyclerViewImpl_(self, outer$);
-  return self;
-}
-
-- (void)setLayoutManagerWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setLayoutManagerWithNSString:value])) executeWithBoolean:true];
-}
-
-- (void)setViewHolderIdsWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setViewHolderIdsWithNSString:value])) executeWithBoolean:true];
-}
-
-- (void)setSpanCountWithInt:(jint)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setSpanCountWithInt:value])) executeWithBoolean:true];
-}
-
-- (void)setLayoutWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setLayoutWithNSString:value])) executeWithBoolean:true];
-}
-
-- (id)isNestedScrollingEnabled {
-  return [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) tryGetNestedScrollingEnabled])) executeWithBoolean:false])) isNestedScrollingEnabled];
-}
-
-- (void)setNestedScrollingEnabledWithBoolean:(jboolean)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setNestedScrollingEnabledWithBoolean:value])) executeWithBoolean:true];
-}
-
-- (void)addSectionItemWithNSString:(NSString *)sectionId
-                      withNSString:(NSString *)itemConfigId
-                            withId:(id)item {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) addSectionItemWithNSString:sectionId withNSString:itemConfigId withId:item])) executeWithBoolean:true];
-}
-
-- (void)removeSectionItemWithNSString:(NSString *)sectionId
-                         withNSString:(NSString *)itemConfigId
-                         withNSString:(NSString *)itemId {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) removeSectionItemWithNSString:sectionId withNSString:itemConfigId withNSString:itemId])) executeWithBoolean:true];
-}
-
-- (void)removeAllItemsWithNSString:(NSString *)sectionId
-                      withNSString:(NSString *)itemConfigId {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) removeAllItemsWithNSString:sectionId withNSString:itemConfigId])) executeWithBoolean:true];
-}
-
-- (void)updateSectionItemWithNSString:(NSString *)sectionId
-                         withNSString:(NSString *)itemConfigId
-                         withNSString:(NSString *)itemId
-                               withId:(id)item {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) updateSectionItemWithNSString:sectionId withNSString:itemConfigId withNSString:itemId withId:item])) executeWithBoolean:true];
-}
-
-- (void)setStackFromEndWithBoolean:(jboolean)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setStackFromEndWithBoolean:value])) executeWithBoolean:true];
-}
-
-- (id)isReverseLayout {
-  return [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) tryGetReverseLayout])) executeWithBoolean:false])) isReverseLayout];
-}
-
-- (void)setReverseLayoutWithBoolean:(jboolean)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setReverseLayoutWithBoolean:value])) executeWithBoolean:true];
-}
-
-- (void)scrollToEndWithBoolean:(jboolean)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) scrollToEndWithBoolean:value])) executeWithBoolean:true];
-}
-
-- (void)scrollToTopWithBoolean:(jboolean)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) scrollToTopWithBoolean:value])) executeWithBoolean:true];
-}
-
-- (void)scrollToPositionWithInt:(jint)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) scrollToPositionWithInt:value])) executeWithBoolean:true];
-}
-
-- (void)filterWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) filterWithNSString:value])) executeWithBoolean:true];
-}
-
-- (void)setFilterDelayWithInt:(jint)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setFilterDelayWithInt:value])) executeWithBoolean:true];
-}
-
-- (void)setFilterIdWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setFilterIdWithNSString:value])) executeWithBoolean:true];
-}
-
-- (void)setFilterItemPathWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setFilterItemPathWithNSString:value])) executeWithBoolean:true];
-}
-
-- (void)setFilterSectionPathWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setFilterSectionPathWithNSString:value])) executeWithBoolean:true];
-}
-
-- (void)setFilterQueryStorePathWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setFilterQueryStorePathWithNSString:value])) executeWithBoolean:true];
-}
-
-- (void)setFilterQueryGetPathWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setFilterQueryGetPathWithNSString:value])) executeWithBoolean:true];
-}
-
-- (void)setOrientationWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setOrientationWithNSString:value])) executeWithBoolean:true];
-}
-
-- (void)setOnScrollStateChangeWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setOnScrollStateChangeWithNSString:value])) executeWithBoolean:true];
-}
-
-- (void)setOnScrolledWithNSString:(NSString *)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setOnScrolledWithNSString:value])) executeWithBoolean:true];
-}
-
-- (void)setHeaderDisabledWithBoolean:(jboolean)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setHeaderDisabledWithBoolean:value])) executeWithBoolean:true];
-}
-
-- (void)setFooterDisabledWithBoolean:(jboolean)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setFooterDisabledWithBoolean:value])) executeWithBoolean:true];
-}
-
-- (void)setNestedScrollStopDelayWithInt:(jint)value {
-  (void) [((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([((ASRecyclerViewImpl_RecyclerViewCommandBuilder *) nil_chk([this$0_ getBuilder])) reset])) setNestedScrollStopDelayWithInt:value])) executeWithBoolean:true];
-}
-
-+ (const J2ObjcClassInfo *)__metadata {
-  static J2ObjcMethodInfo methods[] = {
-    { NULL, NULL, 0x1, -1, 0, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 1, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 3, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 4, 5, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 6, 2, -1, -1, -1, -1 },
-    { NULL, "LNSObject;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 7, 8, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 9, 10, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 11, 12, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 13, 14, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 15, 16, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 17, 8, -1, -1, -1, -1 },
-    { NULL, "LNSObject;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 18, 8, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 19, 8, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 20, 8, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 21, 5, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 22, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 23, 5, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 24, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 25, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 26, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 27, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 28, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 29, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 30, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 31, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 32, 8, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 33, 8, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 34, 5, -1, -1, -1, -1 },
-  };
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
-  #pragma clang diagnostic ignored "-Wundeclared-selector"
-  methods[0].selector = @selector(initWithASRecyclerViewImpl:);
-  methods[1].selector = @selector(setLayoutManagerWithNSString:);
-  methods[2].selector = @selector(setViewHolderIdsWithNSString:);
-  methods[3].selector = @selector(setSpanCountWithInt:);
-  methods[4].selector = @selector(setLayoutWithNSString:);
-  methods[5].selector = @selector(isNestedScrollingEnabled);
-  methods[6].selector = @selector(setNestedScrollingEnabledWithBoolean:);
-  methods[7].selector = @selector(addSectionItemWithNSString:withNSString:withId:);
-  methods[8].selector = @selector(removeSectionItemWithNSString:withNSString:withNSString:);
-  methods[9].selector = @selector(removeAllItemsWithNSString:withNSString:);
-  methods[10].selector = @selector(updateSectionItemWithNSString:withNSString:withNSString:withId:);
-  methods[11].selector = @selector(setStackFromEndWithBoolean:);
-  methods[12].selector = @selector(isReverseLayout);
-  methods[13].selector = @selector(setReverseLayoutWithBoolean:);
-  methods[14].selector = @selector(scrollToEndWithBoolean:);
-  methods[15].selector = @selector(scrollToTopWithBoolean:);
-  methods[16].selector = @selector(scrollToPositionWithInt:);
-  methods[17].selector = @selector(filterWithNSString:);
-  methods[18].selector = @selector(setFilterDelayWithInt:);
-  methods[19].selector = @selector(setFilterIdWithNSString:);
-  methods[20].selector = @selector(setFilterItemPathWithNSString:);
-  methods[21].selector = @selector(setFilterSectionPathWithNSString:);
-  methods[22].selector = @selector(setFilterQueryStorePathWithNSString:);
-  methods[23].selector = @selector(setFilterQueryGetPathWithNSString:);
-  methods[24].selector = @selector(setOrientationWithNSString:);
-  methods[25].selector = @selector(setOnScrollStateChangeWithNSString:);
-  methods[26].selector = @selector(setOnScrolledWithNSString:);
-  methods[27].selector = @selector(setHeaderDisabledWithBoolean:);
-  methods[28].selector = @selector(setFooterDisabledWithBoolean:);
-  methods[29].selector = @selector(setNestedScrollStopDelayWithInt:);
-  #pragma clang diagnostic pop
-  static const J2ObjcFieldInfo fields[] = {
-    { "this$0_", "LASRecyclerViewImpl;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
-  };
-  static const void *ptrTable[] = { "LASRecyclerViewImpl;", "setLayoutManager", "LNSString;", "setViewHolderIds", "setSpanCount", "I", "setLayout", "setNestedScrollingEnabled", "Z", "addSectionItem", "LNSString;LNSString;LNSObject;", "removeSectionItem", "LNSString;LNSString;LNSString;", "removeAllItems", "LNSString;LNSString;", "updateSectionItem", "LNSString;LNSString;LNSString;LNSObject;", "setStackFromEnd", "setReverseLayout", "scrollToEnd", "scrollToTop", "scrollToPosition", "filter", "setFilterDelay", "setFilterId", "setFilterItemPath", "setFilterSectionPath", "setFilterQueryStorePath", "setFilterQueryGetPath", "setOrientation", "setOnScrollStateChange", "setOnScrolled", "setHeaderDisabled", "setFooterDisabled", "setNestedScrollStopDelay" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl_RecyclerViewBean = { "RecyclerViewBean", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 30, 1, 0, -1, -1, -1, -1 };
-  return &_ASRecyclerViewImpl_RecyclerViewBean;
-}
-
-@end
-
-void ASRecyclerViewImpl_RecyclerViewBean_initWithASRecyclerViewImpl_(ASRecyclerViewImpl_RecyclerViewBean *self, ASRecyclerViewImpl *outer$) {
-  self->this$0_ = outer$;
-  ASViewGroupImpl_ViewGroupBean_initWithASIWidget_(self, outer$);
-}
-
-ASRecyclerViewImpl_RecyclerViewBean *new_ASRecyclerViewImpl_RecyclerViewBean_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$) {
-  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_RecyclerViewBean, initWithASRecyclerViewImpl_, outer$)
-}
-
-ASRecyclerViewImpl_RecyclerViewBean *create_ASRecyclerViewImpl_RecyclerViewBean_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$) {
-  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_RecyclerViewBean, initWithASRecyclerViewImpl_, outer$)
-}
-
-J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_RecyclerViewBean)
-
-@implementation ASRecyclerViewImpl_RecyclerViewParamsBean
-
-- (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$ {
-  ASRecyclerViewImpl_RecyclerViewParamsBean_initWithASRecyclerViewImpl_(self, outer$);
-  return self;
-}
-
-+ (const J2ObjcClassInfo *)__metadata {
-  static J2ObjcMethodInfo methods[] = {
-    { NULL, NULL, 0x1, -1, 0, -1, -1, -1, -1 },
-  };
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
-  #pragma clang diagnostic ignored "-Wundeclared-selector"
-  methods[0].selector = @selector(initWithASRecyclerViewImpl:);
-  #pragma clang diagnostic pop
-  static const void *ptrTable[] = { "LASRecyclerViewImpl;" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl_RecyclerViewParamsBean = { "RecyclerViewParamsBean", "com.ashera.recycleview", ptrTable, methods, NULL, 7, 0x1, 1, 0, 0, -1, -1, -1, -1 };
-  return &_ASRecyclerViewImpl_RecyclerViewParamsBean;
-}
-
-@end
-
-void ASRecyclerViewImpl_RecyclerViewParamsBean_initWithASRecyclerViewImpl_(ASRecyclerViewImpl_RecyclerViewParamsBean *self, ASRecyclerViewImpl *outer$) {
-  ASViewGroupImpl_ViewGroupParamsBean_init(self);
-}
-
-ASRecyclerViewImpl_RecyclerViewParamsBean *new_ASRecyclerViewImpl_RecyclerViewParamsBean_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$) {
-  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_RecyclerViewParamsBean, initWithASRecyclerViewImpl_, outer$)
-}
-
-ASRecyclerViewImpl_RecyclerViewParamsBean *create_ASRecyclerViewImpl_RecyclerViewParamsBean_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$) {
-  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_RecyclerViewParamsBean, initWithASRecyclerViewImpl_, outer$)
-}
-
-J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_RecyclerViewParamsBean)
-
-@implementation ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder
-
-- (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$ {
-  ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder_initWithASRecyclerViewImpl_(self, outer$);
-  return self;
-}
-
-+ (const J2ObjcClassInfo *)__metadata {
-  static J2ObjcMethodInfo methods[] = {
-    { NULL, NULL, 0x1, -1, 0, -1, -1, -1, -1 },
-  };
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
-  #pragma clang diagnostic ignored "-Wundeclared-selector"
-  methods[0].selector = @selector(initWithASRecyclerViewImpl:);
-  #pragma clang diagnostic pop
-  static const void *ptrTable[] = { "LASRecyclerViewImpl;", "Lcom/ashera/layout/ViewGroupImpl$ViewGroupCommandParamsBuilder<Lcom/ashera/recycleview/RecyclerViewImpl$RecyclerViewCommandParamsBuilder;>;" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder = { "RecyclerViewCommandParamsBuilder", "com.ashera.recycleview", ptrTable, methods, NULL, 7, 0x1, 1, 0, 0, -1, -1, 1, -1 };
-  return &_ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder;
-}
-
-@end
-
-void ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder_initWithASRecyclerViewImpl_(ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder *self, ASRecyclerViewImpl *outer$) {
-  ASViewGroupImpl_ViewGroupCommandParamsBuilder_init(self);
-}
-
-ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder *new_ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$) {
-  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder, initWithASRecyclerViewImpl_, outer$)
-}
-
-ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder *create_ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$) {
-  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder, initWithASRecyclerViewImpl_, outer$)
-}
-
-J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_RecyclerViewCommandParamsBuilder)
 
 @implementation ASRecyclerViewImpl_3
 
