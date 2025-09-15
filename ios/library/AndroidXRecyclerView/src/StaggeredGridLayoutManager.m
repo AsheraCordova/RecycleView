@@ -20,13 +20,11 @@
 #include "ViewCompat.h"
 #include "ViewGroup.h"
 #include "java/lang/ClassLoader.h"
-#include "java/lang/Deprecated.h"
 #include "java/lang/IllegalArgumentException.h"
 #include "java/lang/Integer.h"
 #include "java/lang/Math.h"
 #include "java/lang/Runnable.h"
 #include "java/lang/System.h"
-#include "java/lang/annotation/Annotation.h"
 #include "java/util/ArrayList.h"
 #include "java/util/Arrays.h"
 #include "java/util/BitSet.h"
@@ -337,8 +335,6 @@ __attribute__((unused)) static jint ADXStaggeredGridLayoutManager_findFirstRefer
 __attribute__((unused)) static jint ADXStaggeredGridLayoutManager_findLastReferenceChildPositionWithInt_(ADXStaggeredGridLayoutManager *self, jint itemCount);
 
 __attribute__((unused)) static jint ADXStaggeredGridLayoutManager_convertFocusDirectionToLayoutDirectionWithInt_(ADXStaggeredGridLayoutManager *self, jint focusDirection);
-
-__attribute__((unused)) static IOSObjectArray *ADXStaggeredGridLayoutManager__Annotations$0(void);
 
 @interface ADXStaggeredGridLayoutManager_1 : NSObject < JavaLangRunnable > {
  @public
@@ -1621,7 +1617,7 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
     { "HORIZONTAL", "I", .constantValue.asInt = ADXStaggeredGridLayoutManager_HORIZONTAL, 0x19, -1, -1, -1, -1 },
     { "VERTICAL", "I", .constantValue.asInt = ADXStaggeredGridLayoutManager_VERTICAL, 0x19, -1, -1, -1, -1 },
     { "GAP_HANDLING_NONE", "I", .constantValue.asInt = ADXStaggeredGridLayoutManager_GAP_HANDLING_NONE, 0x19, -1, -1, -1, -1 },
-    { "GAP_HANDLING_LAZY", "I", .constantValue.asInt = ADXStaggeredGridLayoutManager_GAP_HANDLING_LAZY, 0x19, -1, -1, -1, 112 },
+    { "GAP_HANDLING_LAZY", "I", .constantValue.asInt = ADXStaggeredGridLayoutManager_GAP_HANDLING_LAZY, 0x19, -1, -1, -1, -1 },
     { "GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS", "I", .constantValue.asInt = ADXStaggeredGridLayoutManager_GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS, 0x19, -1, -1, -1, -1 },
     { "INVALID_OFFSET", "I", .constantValue.asInt = ADXStaggeredGridLayoutManager_INVALID_OFFSET, 0x18, -1, -1, -1, -1 },
     { "MAX_SCROLL_FACTOR", "F", .constantValue.asFloat = ADXStaggeredGridLayoutManager_MAX_SCROLL_FACTOR, 0x1a, -1, -1, -1, -1 },
@@ -1650,8 +1646,8 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
     { "mPrefetchDistances_", "[I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mCheckForGapsRunnable_", "LJavaLangRunnable;", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "II", "onScrollStateChanged", "I", "onDetachedFromWindow", "LADXRecyclerView;LADXRecyclerView_Recycler;", "checkSpanForGap", "LADXStaggeredGridLayoutManager_Span;", "setSpanCount", "setOrientation", "setReverseLayout", "Z", "setGapStrategy", "assertNotInLayoutOrScroll", "LNSString;", "setMeasuredDimension", "LADRect;II", "onLayoutChildren", "LADXRecyclerView_Recycler;LADXRecyclerView_State;", "onAdapterChanged", "LADXRecyclerView_Adapter;LADXRecyclerView_Adapter;", "LADXRecyclerView_Recycler;LADXRecyclerView_State;Z", "onLayoutCompleted", "LADXRecyclerView_State;", "applyPendingSavedState", "LADXStaggeredGridLayoutManager_AnchorInfo;", "updateAnchorInfoForLayout", "LADXRecyclerView_State;LADXStaggeredGridLayoutManager_AnchorInfo;", "updateAnchorFromChildren", "updateAnchorFromPendingData", "updateMeasureSpecs", "findFirstVisibleItemPositions", "[I", "findFirstCompletelyVisibleItemPositions", "findLastVisibleItemPositions", "findLastCompletelyVisibleItemPositions", "computeHorizontalScrollOffset", "computeScrollOffset", "computeVerticalScrollOffset", "computeHorizontalScrollExtent", "computeScrollExtent", "computeVerticalScrollExtent", "computeHorizontalScrollRange", "computeScrollRange", "computeVerticalScrollRange", "measureChildWithDecorationsAndMargin", "LADView;LADXStaggeredGridLayoutManager_LayoutParams;Z", "LADView;IIZ", "updateSpecWithExtra", "III", "onRestoreInstanceState", "LADParcelable;", "findFirstVisibleItemClosestToStart", "findFirstVisibleItemClosestToEnd", "fixEndGap", "fixStartGap", "updateLayoutState", "ILADXRecyclerView_State;", "setLayoutStateDirection", "offsetChildrenHorizontal", "offsetChildrenVertical", "onItemsRemoved", "LADXRecyclerView;II", "onItemsAdded", "onItemsChanged", "LADXRecyclerView;", "onItemsMoved", "LADXRecyclerView;III", "onItemsUpdated", "LADXRecyclerView;IILNSObject;", "handleUpdate", "fill", "LADXRecyclerView_Recycler;LADXLayoutState;LADXRecyclerView_State;", "createFullSpanItemFromEnd", "createFullSpanItemFromStart", "attachViewToSpans", "LADView;LADXStaggeredGridLayoutManager_LayoutParams;LADXLayoutState;", "recycle", "LADXRecyclerView_Recycler;LADXLayoutState;", "appendViewToAllSpans", "LADView;", "prependViewToAllSpans", "updateAllRemainingSpans", "updateRemainingSpans", "LADXStaggeredGridLayoutManager_Span;II", "getMaxStart", "getMinStart", "getMaxEnd", "getMinEnd", "recycleFromStart", "LADXRecyclerView_Recycler;I", "recycleFromEnd", "preferLastSpan", "getNextSpan", "LADXLayoutState;", "scrollHorizontallyBy", "ILADXRecyclerView_Recycler;LADXRecyclerView_State;", "scrollVerticallyBy", "calculateScrollDirectionForPosition", "scrollToPosition", "scrollToPositionWithOffset", "collectAdjacentPrefetchPositions", "IILADXRecyclerView_State;LADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;", "prepareLayoutStateForDelta", "scrollBy", "findFirstReferenceChildPosition", "findLastReferenceChildPosition", "checkLayoutParams", "LADXRecyclerView_LayoutParams;", "onFocusSearchFailed", "LADView;ILADXRecyclerView_Recycler;LADXRecyclerView_State;", "convertFocusDirectionToLayoutDirection", &ADXStaggeredGridLayoutManager_TAG, (void *)&ADXStaggeredGridLayoutManager__Annotations$0, "LADXStaggeredGridLayoutManager_LayoutParams;LADXStaggeredGridLayoutManager_Span;LADXStaggeredGridLayoutManager_LazySpanLookup;LADXStaggeredGridLayoutManager_SavedState;LADXStaggeredGridLayoutManager_AnchorInfo;" };
-  static const J2ObjcClassInfo _ADXStaggeredGridLayoutManager = { "StaggeredGridLayoutManager", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 102, 33, -1, 113, -1, -1, -1 };
+  static const void *ptrTable[] = { "II", "onScrollStateChanged", "I", "onDetachedFromWindow", "LADXRecyclerView;LADXRecyclerView_Recycler;", "checkSpanForGap", "LADXStaggeredGridLayoutManager_Span;", "setSpanCount", "setOrientation", "setReverseLayout", "Z", "setGapStrategy", "assertNotInLayoutOrScroll", "LNSString;", "setMeasuredDimension", "LADRect;II", "onLayoutChildren", "LADXRecyclerView_Recycler;LADXRecyclerView_State;", "onAdapterChanged", "LADXRecyclerView_Adapter;LADXRecyclerView_Adapter;", "LADXRecyclerView_Recycler;LADXRecyclerView_State;Z", "onLayoutCompleted", "LADXRecyclerView_State;", "applyPendingSavedState", "LADXStaggeredGridLayoutManager_AnchorInfo;", "updateAnchorInfoForLayout", "LADXRecyclerView_State;LADXStaggeredGridLayoutManager_AnchorInfo;", "updateAnchorFromChildren", "updateAnchorFromPendingData", "updateMeasureSpecs", "findFirstVisibleItemPositions", "[I", "findFirstCompletelyVisibleItemPositions", "findLastVisibleItemPositions", "findLastCompletelyVisibleItemPositions", "computeHorizontalScrollOffset", "computeScrollOffset", "computeVerticalScrollOffset", "computeHorizontalScrollExtent", "computeScrollExtent", "computeVerticalScrollExtent", "computeHorizontalScrollRange", "computeScrollRange", "computeVerticalScrollRange", "measureChildWithDecorationsAndMargin", "LADView;LADXStaggeredGridLayoutManager_LayoutParams;Z", "LADView;IIZ", "updateSpecWithExtra", "III", "onRestoreInstanceState", "LADParcelable;", "findFirstVisibleItemClosestToStart", "findFirstVisibleItemClosestToEnd", "fixEndGap", "fixStartGap", "updateLayoutState", "ILADXRecyclerView_State;", "setLayoutStateDirection", "offsetChildrenHorizontal", "offsetChildrenVertical", "onItemsRemoved", "LADXRecyclerView;II", "onItemsAdded", "onItemsChanged", "LADXRecyclerView;", "onItemsMoved", "LADXRecyclerView;III", "onItemsUpdated", "LADXRecyclerView;IILNSObject;", "handleUpdate", "fill", "LADXRecyclerView_Recycler;LADXLayoutState;LADXRecyclerView_State;", "createFullSpanItemFromEnd", "createFullSpanItemFromStart", "attachViewToSpans", "LADView;LADXStaggeredGridLayoutManager_LayoutParams;LADXLayoutState;", "recycle", "LADXRecyclerView_Recycler;LADXLayoutState;", "appendViewToAllSpans", "LADView;", "prependViewToAllSpans", "updateAllRemainingSpans", "updateRemainingSpans", "LADXStaggeredGridLayoutManager_Span;II", "getMaxStart", "getMinStart", "getMaxEnd", "getMinEnd", "recycleFromStart", "LADXRecyclerView_Recycler;I", "recycleFromEnd", "preferLastSpan", "getNextSpan", "LADXLayoutState;", "scrollHorizontallyBy", "ILADXRecyclerView_Recycler;LADXRecyclerView_State;", "scrollVerticallyBy", "calculateScrollDirectionForPosition", "scrollToPosition", "scrollToPositionWithOffset", "collectAdjacentPrefetchPositions", "IILADXRecyclerView_State;LADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;", "prepareLayoutStateForDelta", "scrollBy", "findFirstReferenceChildPosition", "findLastReferenceChildPosition", "checkLayoutParams", "LADXRecyclerView_LayoutParams;", "onFocusSearchFailed", "LADView;ILADXRecyclerView_Recycler;LADXRecyclerView_State;", "convertFocusDirectionToLayoutDirection", &ADXStaggeredGridLayoutManager_TAG, "LADXStaggeredGridLayoutManager_LayoutParams;LADXStaggeredGridLayoutManager_Span;LADXStaggeredGridLayoutManager_LazySpanLookup;LADXStaggeredGridLayoutManager_SavedState;LADXStaggeredGridLayoutManager_AnchorInfo;" };
+  static const J2ObjcClassInfo _ADXStaggeredGridLayoutManager = { "StaggeredGridLayoutManager", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 102, 33, -1, 112, -1, -1, -1 };
   return &_ADXStaggeredGridLayoutManager;
 }
 
@@ -2540,10 +2536,6 @@ jint ADXStaggeredGridLayoutManager_convertFocusDirectionToLayoutDirectionWithInt
     default:
     return ADXLayoutState_INVALID_LAYOUT;
   }
-}
-
-IOSObjectArray *ADXStaggeredGridLayoutManager__Annotations$0() {
-  return [IOSObjectArray arrayWithObjects:(id[]){ create_JavaLangDeprecated() } count:1 type:JavaLangAnnotationAnnotation_class_()];
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXStaggeredGridLayoutManager)

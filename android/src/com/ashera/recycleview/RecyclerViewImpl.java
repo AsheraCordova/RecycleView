@@ -1025,6 +1025,7 @@ public java.util.Map<String, Object> getOnFlingEventObj(int velocityX,int veloci
     obj.put("eventType", "fling");
     obj.put("fragmentId", w.getFragment().getFragmentId());
     obj.put("actionUrl", w.getFragment().getActionUrl());
+    obj.put("namespace", w.getFragment().getNamespace());
     
     if (w.getComponentId() != null) {
     	obj.put("componentId", w.getComponentId());
@@ -1138,6 +1139,7 @@ public java.util.Map<String, Object> getOnScrolledEventObj(RecyclerView recycler
     obj.put("eventType", "scrolled");
     obj.put("fragmentId", w.getFragment().getFragmentId());
     obj.put("actionUrl", w.getFragment().getActionUrl());
+    obj.put("namespace", w.getFragment().getNamespace());
     
     if (w.getComponentId() != null) {
     	obj.put("componentId", w.getComponentId());
@@ -1162,6 +1164,7 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
     obj.put("eventType", "scrollstatechange");
     obj.put("fragmentId", w.getFragment().getFragmentId());
     obj.put("actionUrl", w.getFragment().getActionUrl());
+    obj.put("namespace", w.getFragment().getNamespace());
     
     if (w.getComponentId() != null) {
     	obj.put("componentId", w.getComponentId());
@@ -1418,7 +1421,15 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 	}
 	
 	private void setLayout(Object objValue) {
-		String json = com.ashera.utils.ResourceBundleUtils.getString("xml/recycler", ((String) objValue).replace("@xml/", ""), fragment);
+		String value = (String) objValue;
+		
+		String inlineResource = fragment.getInlineResource(value);
+		String json;
+		if (inlineResource == null) {
+			json = com.ashera.utils.ResourceBundleUtils.getString("xml/recycler", value.replace("@xml/", ""), fragment);
+		} else {
+			json = PluginInvoker.xml2json(inlineResource, fragment);
+		}
 		Map<String, Object> configMap =  PluginInvoker.unmarshal(json, Map.class);
 		this.layout =  PluginInvoker.getMap(configMap.get("layout"));
 		

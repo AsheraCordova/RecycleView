@@ -4,16 +4,12 @@
 //
 
 #include "DiffUtil.h"
-#include "IOSClass.h"
-#include "IOSObjectArray.h"
 #include "Item.h"
 #include "J2ObjC_source.h"
 #include "ListUpdateCallback.h"
 #include "NestedGroup.h"
 #include "RVGroup.h"
 #include "UpdatingGroup.h"
-#include "java/lang/Deprecated.h"
-#include "java/lang/annotation/Annotation.h"
 #include "java/util/ArrayList.h"
 #include "java/util/List.h"
 
@@ -30,8 +26,6 @@
 
 J2OBJC_FIELD_SETTER(ADXUpdatingGroup, listUpdateCallback_, id<ADXListUpdateCallback>)
 J2OBJC_FIELD_SETTER(ADXUpdatingGroup, items_, id<JavaUtilList>)
-
-__attribute__((unused)) static IOSObjectArray *ADXUpdatingGroup__Annotations$0(void);
 
 @interface ADXUpdatingGroup_1 : NSObject < ADXListUpdateCallback > {
  @public
@@ -158,8 +152,8 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "listUpdateCallback_", "LADXListUpdateCallback;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "items_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 7, -1 },
   };
-  static const void *ptrTable[] = { "update", "LJavaUtilList;", "(Ljava/util/List<+Lcom/xwray/groupie/Item;>;)V", "getGroup", "I", "getPosition", "LADXRVGroup;", "Ljava/util/List<Lcom/xwray/groupie/Item;>;", "LADXUpdatingGroup_UpdatingCallback;", (void *)&ADXUpdatingGroup__Annotations$0 };
-  static const J2ObjcClassInfo _ADXUpdatingGroup = { "UpdatingGroup", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x1, 5, 2, -1, 8, -1, -1, 9 };
+  static const void *ptrTable[] = { "update", "LJavaUtilList;", "(Ljava/util/List<+Lcom/xwray/groupie/Item;>;)V", "getGroup", "I", "getPosition", "LADXRVGroup;", "Ljava/util/List<Lcom/xwray/groupie/Item;>;", "LADXUpdatingGroup_UpdatingCallback;" };
+  static const J2ObjcClassInfo _ADXUpdatingGroup = { "UpdatingGroup", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x1, 5, 2, -1, 8, -1, -1, -1 };
   return &_ADXUpdatingGroup;
 }
 
@@ -177,10 +171,6 @@ ADXUpdatingGroup *new_ADXUpdatingGroup_init() {
 
 ADXUpdatingGroup *create_ADXUpdatingGroup_init() {
   J2OBJC_CREATE_IMPL(ADXUpdatingGroup, init)
-}
-
-IOSObjectArray *ADXUpdatingGroup__Annotations$0() {
-  return [IOSObjectArray arrayWithObjects:(id[]){ create_JavaLangDeprecated() } count:1 type:JavaLangAnnotationAnnotation_class_()];
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXUpdatingGroup)

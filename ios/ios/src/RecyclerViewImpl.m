@@ -2464,7 +2464,15 @@ jint ASRecyclerViewImpl_getOrientation(ASRecyclerViewImpl *self) {
 }
 
 void ASRecyclerViewImpl_setLayoutWithId_(ASRecyclerViewImpl *self, id objValue) {
-  NSString *json = ASResourceBundleUtils_getStringWithNSString_withNSString_withASIFragment_(@"xml/recycler", [((NSString *) nil_chk(((NSString *) cast_chk(objValue, [NSString class])))) java_replace:@"@xml/" withSequence:@""], self->fragment_);
+  NSString *value = (NSString *) cast_chk(objValue, [NSString class]);
+  NSString *inlineResource = [((id<ASIFragment>) nil_chk(self->fragment_)) getInlineResourceWithNSString:value];
+  NSString *json;
+  if (inlineResource == nil) {
+    json = ASResourceBundleUtils_getStringWithNSString_withNSString_withASIFragment_(@"xml/recycler", [((NSString *) nil_chk(value)) java_replace:@"@xml/" withSequence:@""], self->fragment_);
+  }
+  else {
+    json = ASPluginInvoker_xml2jsonWithNSString_withASIFragment_(inlineResource, self->fragment_);
+  }
   id<JavaUtilMap> configMap = ASPluginInvoker_unmarshalWithNSString_withIOSClass_(json, JavaUtilMap_class_());
   self->layout_ = ASPluginInvoker_getMapWithId_([((id<JavaUtilMap>) nil_chk(configMap)) getWithId:@"layout"]);
   if ([nil_chk([((id<JavaUtilMap>) nil_chk(self->layout_)) getWithId:@"@adapter"]) isEqual:@"simple"]) {
@@ -4626,6 +4634,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
   (void) [obj putWithId:@"eventType" withId:@"scrolled"];
   (void) [obj putWithId:@"fragmentId" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getFragmentId]];
   (void) [obj putWithId:@"actionUrl" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getActionUrl]];
+  (void) [obj putWithId:@"namespace" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getNamespace]];
   if ([((id<ASIWidget>) nil_chk(w_)) getComponentId] != nil) {
     (void) [obj putWithId:@"componentId" withId:[((id<ASIWidget>) nil_chk(w_)) getComponentId]];
   }
@@ -4644,6 +4653,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
   (void) [obj putWithId:@"eventType" withId:@"scrollstatechange"];
   (void) [obj putWithId:@"fragmentId" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getFragmentId]];
   (void) [obj putWithId:@"actionUrl" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getActionUrl]];
+  (void) [obj putWithId:@"namespace" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getNamespace]];
   if ([((id<ASIWidget>) nil_chk(w_)) getComponentId] != nil) {
     (void) [obj putWithId:@"componentId" withId:[((id<ASIWidget>) nil_chk(w_)) getComponentId]];
   }

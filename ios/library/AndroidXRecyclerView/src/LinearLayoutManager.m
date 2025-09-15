@@ -4,8 +4,6 @@
 //
 
 #include "Context.h"
-#include "IOSClass.h"
-#include "IOSObjectArray.h"
 #include "IOSPrimitiveArray.h"
 #include "J2ObjC_source.h"
 #include "LinearLayoutManager.h"
@@ -19,12 +17,10 @@
 #include "ViewBoundsCheck.h"
 #include "ViewCompat.h"
 #include "ViewGroup.h"
-#include "java/lang/Deprecated.h"
 #include "java/lang/IllegalArgumentException.h"
 #include "java/lang/Integer.h"
 #include "java/lang/Math.h"
 #include "java/lang/RuntimeException.h"
-#include "java/lang/annotation/Annotation.h"
 #include "java/util/List.h"
 
 
@@ -292,8 +288,6 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_findFirstPartially
 __attribute__((unused)) static ADView *ADXLinearLayoutManager_findLastPartiallyOrCompletelyInvisibleChild(ADXLinearLayoutManager *self);
 
 __attribute__((unused)) static void ADXLinearLayoutManager_logChildren(ADXLinearLayoutManager *self);
-
-__attribute__((unused)) static IOSObjectArray *ADXLinearLayoutManager__Annotations$0(void);
 
 @interface ADXLinearLayoutManager_LayoutState ()
 
@@ -1354,61 +1348,61 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
     { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 11, 3, -1, -1, -1, -1 },
     { NULL, "LADView;", 0x1, 12, 10, -1, -1, -1, -1 },
-    { NULL, "I", 0x4, 13, 14, -1, -1, 15, -1 },
-    { NULL, "V", 0x4, 16, 17, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 18, 19, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 20, 14, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 21, 22, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 23, 24, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 25, 26, -1, -1, -1, -1 },
-    { NULL, "Z", 0x2, 27, 26, -1, -1, -1, -1 },
-    { NULL, "Z", 0x2, 28, 29, -1, -1, -1, -1 },
-    { NULL, "I", 0x2, 30, 31, -1, -1, -1, -1 },
-    { NULL, "I", 0x2, 32, 31, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 33, 34, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 33, 35, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 36, 34, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 36, 35, -1, -1, -1, -1 },
+    { NULL, "I", 0x4, 13, 14, -1, -1, -1, -1 },
+    { NULL, "V", 0x4, 15, 16, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 17, 18, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 19, 14, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 20, 21, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 22, 23, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 24, 25, -1, -1, -1, -1 },
+    { NULL, "Z", 0x2, 26, 25, -1, -1, -1, -1 },
+    { NULL, "Z", 0x2, 27, 28, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 29, 30, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 31, 30, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 32, 33, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 32, 34, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 35, 33, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 35, 34, -1, -1, -1, -1 },
     { NULL, "Z", 0x4, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "LADXLinearLayoutManager_LayoutState;", 0x0, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 37, 10, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 38, 35, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 39, 40, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 41, 40, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 36, 10, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 37, 34, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 38, 39, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 40, 39, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 41, 14, -1, -1, -1, -1 },
     { NULL, "I", 0x1, 42, 14, -1, -1, -1, -1 },
     { NULL, "I", 0x1, 43, 14, -1, -1, -1, -1 },
     { NULL, "I", 0x1, 44, 14, -1, -1, -1, -1 },
     { NULL, "I", 0x1, 45, 14, -1, -1, -1, -1 },
     { NULL, "I", 0x1, 46, 14, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 47, 14, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 47, 14, -1, -1, -1, -1 },
     { NULL, "I", 0x2, 48, 14, -1, -1, -1, -1 },
     { NULL, "I", 0x2, 49, 14, -1, -1, -1, -1 },
-    { NULL, "I", 0x2, 50, 14, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 51, 3, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 50, 3, -1, -1, -1, -1 },
     { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 52, 53, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 51, 52, -1, -1, -1, -1 },
     { NULL, "Z", 0x0, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 54, 55, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 56, 57, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 58, 10, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 53, 54, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 55, 56, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 57, 10, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 59, 60, -1, -1, -1, -1 },
-    { NULL, "I", 0x0, 61, 40, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 62, 63, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 64, 65, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 66, 65, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 67, 65, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 68, 69, -1, -1, -1, -1 },
-    { NULL, "I", 0x0, 70, 71, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 72, 73, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 58, 59, -1, -1, -1, -1 },
+    { NULL, "I", 0x0, 60, 39, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 61, 62, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 63, 64, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 65, 64, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 66, 64, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 67, 68, -1, -1, -1, -1 },
+    { NULL, "I", 0x0, 69, 70, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 71, 72, -1, -1, -1, -1 },
     { NULL, "Z", 0x0, -1, -1, -1, -1, -1, -1 },
-    { NULL, "I", 0x0, 74, 10, -1, -1, -1, -1 },
+    { NULL, "I", 0x0, 73, 10, -1, -1, -1, -1 },
     { NULL, "LADView;", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "LADView;", 0x2, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LADView;", 0x0, 75, 76, -1, -1, -1, -1 },
-    { NULL, "LADView;", 0x0, 77, 76, -1, -1, -1, -1 },
-    { NULL, "LADView;", 0x0, 78, 79, -1, -1, -1, -1 },
+    { NULL, "LADView;", 0x0, 74, 75, -1, -1, -1, -1 },
+    { NULL, "LADView;", 0x0, 76, 75, -1, -1, -1, -1 },
+    { NULL, "LADView;", 0x0, 77, 78, -1, -1, -1, -1 },
     { NULL, "LADView;", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "LADView;", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "LADView;", 0x2, -1, -1, -1, -1, -1, -1 },
@@ -1417,13 +1411,13 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LADView;", 0x0, 80, 81, -1, -1, -1, -1 },
-    { NULL, "LADView;", 0x0, 82, 35, -1, -1, -1, -1 },
-    { NULL, "LADView;", 0x1, 83, 84, -1, -1, -1, -1 },
+    { NULL, "LADView;", 0x0, 79, 80, -1, -1, -1, -1 },
+    { NULL, "LADView;", 0x0, 81, 34, -1, -1, -1, -1 },
+    { NULL, "LADView;", 0x1, 82, 83, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 85, 86, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 84, 85, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
@@ -1519,7 +1513,7 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   methods[88].selector = @selector(prepareForDropWithADView:withADView:withInt:withInt:);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
-    { "TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 87, -1, -1 },
+    { "TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 86, -1, -1 },
     { "DEBUG", "Z", .constantValue.asBOOL = ADXLinearLayoutManager_DEBUG, 0x18, -1, -1, -1, -1 },
     { "HORIZONTAL", "I", .constantValue.asInt = ADXLinearLayoutManager_HORIZONTAL, 0x19, -1, -1, -1, -1 },
     { "VERTICAL", "I", .constantValue.asInt = ADXLinearLayoutManager_VERTICAL, 0x19, -1, -1, -1, -1 },
@@ -1542,8 +1536,8 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
     { "mInitialPrefetchItemCount_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mReusableIntPair_", "[I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "LADContext;", "LADContext;IZ", "setRecycleChildrenOnDetach", "Z", "onDetachedFromWindow", "LADXRecyclerView;LADXRecyclerView_Recycler;", "onRestoreInstanceState", "LADParcelable;", "setStackFromEnd", "setOrientation", "I", "setReverseLayout", "findViewByPosition", "getExtraLayoutSpace", "LADXRecyclerView_State;", (void *)&ADXLinearLayoutManager__Annotations$0, "calculateExtraLayoutSpace", "LADXRecyclerView_State;[I", "onLayoutChildren", "LADXRecyclerView_Recycler;LADXRecyclerView_State;", "onLayoutCompleted", "onAnchorReady", "LADXRecyclerView_Recycler;LADXRecyclerView_State;LADXLinearLayoutManager_AnchorInfo;I", "layoutForPredictiveAnimations", "LADXRecyclerView_Recycler;LADXRecyclerView_State;II", "updateAnchorInfoForLayout", "LADXRecyclerView_Recycler;LADXRecyclerView_State;LADXLinearLayoutManager_AnchorInfo;", "updateAnchorFromChildren", "updateAnchorFromPendingData", "LADXRecyclerView_State;LADXLinearLayoutManager_AnchorInfo;", "fixLayoutEndGap", "ILADXRecyclerView_Recycler;LADXRecyclerView_State;Z", "fixLayoutStartGap", "updateLayoutStateToFillEnd", "LADXLinearLayoutManager_AnchorInfo;", "II", "updateLayoutStateToFillStart", "scrollToPosition", "scrollToPositionWithOffset", "scrollHorizontallyBy", "ILADXRecyclerView_Recycler;LADXRecyclerView_State;", "scrollVerticallyBy", "computeHorizontalScrollOffset", "computeVerticalScrollOffset", "computeHorizontalScrollExtent", "computeVerticalScrollExtent", "computeHorizontalScrollRange", "computeVerticalScrollRange", "computeScrollOffset", "computeScrollExtent", "computeScrollRange", "setSmoothScrollbarEnabled", "updateLayoutState", "IIZLADXRecyclerView_State;", "collectPrefetchPositionsForLayoutState", "LADXRecyclerView_State;LADXLinearLayoutManager_LayoutState;LADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;", "collectInitialPrefetchPositions", "ILADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;", "setInitialPrefetchItemCount", "collectAdjacentPrefetchPositions", "IILADXRecyclerView_State;LADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;", "scrollBy", "assertNotInLayoutOrScroll", "LNSString;", "recycleChildren", "LADXRecyclerView_Recycler;II", "recycleViewsFromStart", "recycleViewsFromEnd", "recycleByLayoutState", "LADXRecyclerView_Recycler;LADXLinearLayoutManager_LayoutState;", "fill", "LADXRecyclerView_Recycler;LADXLinearLayoutManager_LayoutState;LADXRecyclerView_State;Z", "layoutChunk", "LADXRecyclerView_Recycler;LADXRecyclerView_State;LADXLinearLayoutManager_LayoutState;LADXLinearLayoutManager_LayoutChunkResult;", "convertFocusDirectionToLayoutDirection", "findFirstVisibleChildClosestToStart", "ZZ", "findFirstVisibleChildClosestToEnd", "findReferenceChild", "LADXRecyclerView_Recycler;LADXRecyclerView_State;ZZ", "findOneVisibleChild", "IIZZ", "findOnePartiallyOrCompletelyInvisibleChild", "onFocusSearchFailed", "LADView;ILADXRecyclerView_Recycler;LADXRecyclerView_State;", "prepareForDrop", "LADView;LADView;II", &ADXLinearLayoutManager_TAG, "LADXLinearLayoutManager_LayoutState;LADXLinearLayoutManager_SavedState;LADXLinearLayoutManager_AnchorInfo;LADXLinearLayoutManager_LayoutChunkResult;" };
-  static const J2ObjcClassInfo _ADXLinearLayoutManager = { "LinearLayoutManager", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 89, 22, -1, 88, -1, -1, -1 };
+  static const void *ptrTable[] = { "LADContext;", "LADContext;IZ", "setRecycleChildrenOnDetach", "Z", "onDetachedFromWindow", "LADXRecyclerView;LADXRecyclerView_Recycler;", "onRestoreInstanceState", "LADParcelable;", "setStackFromEnd", "setOrientation", "I", "setReverseLayout", "findViewByPosition", "getExtraLayoutSpace", "LADXRecyclerView_State;", "calculateExtraLayoutSpace", "LADXRecyclerView_State;[I", "onLayoutChildren", "LADXRecyclerView_Recycler;LADXRecyclerView_State;", "onLayoutCompleted", "onAnchorReady", "LADXRecyclerView_Recycler;LADXRecyclerView_State;LADXLinearLayoutManager_AnchorInfo;I", "layoutForPredictiveAnimations", "LADXRecyclerView_Recycler;LADXRecyclerView_State;II", "updateAnchorInfoForLayout", "LADXRecyclerView_Recycler;LADXRecyclerView_State;LADXLinearLayoutManager_AnchorInfo;", "updateAnchorFromChildren", "updateAnchorFromPendingData", "LADXRecyclerView_State;LADXLinearLayoutManager_AnchorInfo;", "fixLayoutEndGap", "ILADXRecyclerView_Recycler;LADXRecyclerView_State;Z", "fixLayoutStartGap", "updateLayoutStateToFillEnd", "LADXLinearLayoutManager_AnchorInfo;", "II", "updateLayoutStateToFillStart", "scrollToPosition", "scrollToPositionWithOffset", "scrollHorizontallyBy", "ILADXRecyclerView_Recycler;LADXRecyclerView_State;", "scrollVerticallyBy", "computeHorizontalScrollOffset", "computeVerticalScrollOffset", "computeHorizontalScrollExtent", "computeVerticalScrollExtent", "computeHorizontalScrollRange", "computeVerticalScrollRange", "computeScrollOffset", "computeScrollExtent", "computeScrollRange", "setSmoothScrollbarEnabled", "updateLayoutState", "IIZLADXRecyclerView_State;", "collectPrefetchPositionsForLayoutState", "LADXRecyclerView_State;LADXLinearLayoutManager_LayoutState;LADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;", "collectInitialPrefetchPositions", "ILADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;", "setInitialPrefetchItemCount", "collectAdjacentPrefetchPositions", "IILADXRecyclerView_State;LADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;", "scrollBy", "assertNotInLayoutOrScroll", "LNSString;", "recycleChildren", "LADXRecyclerView_Recycler;II", "recycleViewsFromStart", "recycleViewsFromEnd", "recycleByLayoutState", "LADXRecyclerView_Recycler;LADXLinearLayoutManager_LayoutState;", "fill", "LADXRecyclerView_Recycler;LADXLinearLayoutManager_LayoutState;LADXRecyclerView_State;Z", "layoutChunk", "LADXRecyclerView_Recycler;LADXRecyclerView_State;LADXLinearLayoutManager_LayoutState;LADXLinearLayoutManager_LayoutChunkResult;", "convertFocusDirectionToLayoutDirection", "findFirstVisibleChildClosestToStart", "ZZ", "findFirstVisibleChildClosestToEnd", "findReferenceChild", "LADXRecyclerView_Recycler;LADXRecyclerView_State;ZZ", "findOneVisibleChild", "IIZZ", "findOnePartiallyOrCompletelyInvisibleChild", "onFocusSearchFailed", "LADView;ILADXRecyclerView_Recycler;LADXRecyclerView_State;", "prepareForDrop", "LADView;LADView;II", &ADXLinearLayoutManager_TAG, "LADXLinearLayoutManager_LayoutState;LADXLinearLayoutManager_SavedState;LADXLinearLayoutManager_AnchorInfo;LADXLinearLayoutManager_LayoutChunkResult;" };
+  static const J2ObjcClassInfo _ADXLinearLayoutManager = { "LinearLayoutManager", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 89, 22, -1, 87, -1, -1, -1 };
   return &_ADXLinearLayoutManager;
 }
 
@@ -1980,10 +1974,6 @@ void ADXLinearLayoutManager_logChildren(ADXLinearLayoutManager *self) {
     ADLog_dWithNSString_withNSString_(ADXLinearLayoutManager_TAG, JreStrcat("$I$I", @"item ", [self getPositionWithADView:child], @", coord:", [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:child]));
   }
   ADLog_dWithNSString_withNSString_(ADXLinearLayoutManager_TAG, @"==============");
-}
-
-IOSObjectArray *ADXLinearLayoutManager__Annotations$0() {
-  return [IOSObjectArray arrayWithObjects:(id[]){ create_JavaLangDeprecated() } count:1 type:JavaLangAnnotationAnnotation_class_()];
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXLinearLayoutManager)

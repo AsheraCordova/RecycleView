@@ -11,8 +11,6 @@
 #include "GroupAdapter.h"
 #include "GroupUtils.h"
 #include "GroupieViewHolder.h"
-#include "IOSClass.h"
-#include "IOSObjectArray.h"
 #include "Item.h"
 #include "J2ObjC_source.h"
 #include "LayoutInflater.h"
@@ -23,11 +21,9 @@
 #include "RecyclerView.h"
 #include "View.h"
 #include "ViewGroup.h"
-#include "java/lang/Deprecated.h"
 #include "java/lang/IllegalStateException.h"
 #include "java/lang/IndexOutOfBoundsException.h"
 #include "java/lang/RuntimeException.h"
-#include "java/lang/annotation/Annotation.h"
 #include "java/util/ArrayList.h"
 #include "java/util/Collection.h"
 #include "java/util/List.h"
@@ -72,12 +68,6 @@ __attribute__((unused)) static void ADXGroupAdapter_removeWithInt_withADXRVGroup
 __attribute__((unused)) static jint ADXGroupAdapter_getItemCountBeforeGroupWithInt_(ADXGroupAdapter *self, jint groupIndex);
 
 __attribute__((unused)) static void ADXGroupAdapter_setNewGroupsWithJavaUtilCollection_(ADXGroupAdapter *self, id<JavaUtilCollection> newGroups);
-
-__attribute__((unused)) static IOSObjectArray *ADXGroupAdapter__Annotations$0(void);
-
-__attribute__((unused)) static IOSObjectArray *ADXGroupAdapter__Annotations$1(void);
-
-__attribute__((unused)) static IOSObjectArray *ADXGroupAdapter__Annotations$2(void);
 
 @interface ADXGroupAdapter_1 : NSObject < ADXAsyncDiffUtil_Callback > {
  @public
@@ -512,34 +502,34 @@ J2OBJC_IGNORE_DESIGNATED_END
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, 41, 1, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 42, 1, -1, -1, 43, -1 },
+    { NULL, "I", 0x1, 42, 1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 44, 40, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 45, 10, -1, 11, -1, -1 },
-    { NULL, "V", 0x1, 46, 40, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 47, 10, -1, 11, -1, -1 },
+    { NULL, "V", 0x1, 43, 40, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 44, 10, -1, 11, -1, -1 },
+    { NULL, "V", 0x1, 45, 40, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 46, 10, -1, 11, -1, -1 },
+    { NULL, "V", 0x1, 47, 1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 48, 1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 49, 1, -1, -1, 50, -1 },
-    { NULL, "V", 0x2, 46, 51, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 44, 51, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 45, 49, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 43, 49, -1, -1, -1, -1 },
+    { NULL, "LADXRVGroup;", 0x1, 50, 1, -1, -1, -1, -1 },
+    { NULL, "LADXRVGroup;", 0x1, 51, 1, -1, -1, -1, -1 },
     { NULL, "LADXRVGroup;", 0x1, 52, 1, -1, -1, -1, -1 },
-    { NULL, "LADXRVGroup;", 0x1, 53, 1, -1, -1, -1, -1 },
-    { NULL, "LADXRVGroup;", 0x1, 54, 1, -1, -1, 55, -1 },
-    { NULL, "LADXRVGroup;", 0x1, 54, 39, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 56, 40, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 57, 58, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 59, 58, -1, -1, -1, -1 },
+    { NULL, "LADXRVGroup;", 0x1, 52, 39, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 53, 40, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 54, 55, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 56, 55, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 56, 57, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 58, 55, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 59, 60, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 61, 58, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 62, 63, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 62, 64, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 65, 63, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 66, 63, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 67, 63, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 59, 61, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 62, 60, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 63, 60, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 64, 60, -1, -1, -1, -1 },
     { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LADXItem;", 0x1, 68, 1, -1, 69, -1, -1 },
-    { NULL, "I", 0x2, 70, 1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 71, 10, -1, 11, -1, -1 },
+    { NULL, "LADXItem;", 0x1, 65, 1, -1, 66, -1, -1 },
+    { NULL, "I", 0x2, 67, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 68, 10, -1, 11, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
@@ -602,7 +592,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   methods[55].selector = @selector(setNewGroupsWithJavaUtilCollection:);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
-    { "groups_", "LJavaUtilList;", .constantValue.asLong = 0, 0x12, -1, -1, 72, -1 },
+    { "groups_", "LJavaUtilList;", .constantValue.asLong = 0, 0x12, -1, -1, 69, -1 },
     { "onItemClickListener_", "LADXOnItemClickListener;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "onItemLongClickListener_", "LADXOnItemLongClickListener;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "spanCount_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -611,8 +601,8 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "asyncDiffUtil_", "LADXAsyncDiffUtil;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "spanSizeLookup_", "LADXGridLayoutManager_SpanSizeLookup;", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "setSpanCount", "I", "updateAsync", "LJavaUtilList;", "(Ljava/util/List<+Lcom/xwray/groupie/RVGroup;>;)V", "LJavaUtilList;LADXOnAsyncUpdateListener;", "(Ljava/util/List<+Lcom/xwray/groupie/RVGroup;>;Lcom/xwray/groupie/OnAsyncUpdateListener;)V", "LJavaUtilList;ZLADXOnAsyncUpdateListener;", "(Ljava/util/List<+Lcom/xwray/groupie/RVGroup;>;ZLcom/xwray/groupie/OnAsyncUpdateListener;)V", "replaceAll", "LJavaUtilCollection;", "(Ljava/util/Collection<+Lcom/xwray/groupie/RVGroup;>;)V", "update", "LJavaUtilCollection;Z", "(Ljava/util/Collection<+Lcom/xwray/groupie/RVGroup;>;Z)V", "setOnItemClickListener", "LADXOnItemClickListener;", "setOnItemLongClickListener", "LADXOnItemLongClickListener;", "onCreateViewHolder", "LADViewGroup;I", "(Lr/android/view/ViewGroup;I)TVH;", "onBindViewHolder", "LADXGroupieViewHolder;I", "(TVH;I)V", "LADXGroupieViewHolder;ILJavaUtilList;", "(TVH;ILjava/util/List<Ljava/lang/Object;>;)V", "onViewRecycled", "LADXGroupieViewHolder;", "(TVH;)V", "onFailedToRecycleView", "(TVH;)Z", "onViewAttachedToWindow", "onViewDetachedFromWindow", "getItemViewType", "getItemId", "getItem", "(TVH;)Lcom/xwray/groupie/Item;", "getAdapterPosition", "LADXItem;", "LADXRVGroup;", "getItemCountForGroup", "getItemCount", (void *)&ADXGroupAdapter__Annotations$0, "add", "addAll", "remove", "removeAll", "removeGroupAtAdapterPosition", "removeGroup", (void *)&ADXGroupAdapter__Annotations$1, "ILADXRVGroup;", "getTopLevelGroup", "getGroupAtAdapterPosition", "getGroup", (void *)&ADXGroupAdapter__Annotations$2, "onChanged", "onItemInserted", "LADXRVGroup;I", "onItemChanged", "LADXRVGroup;ILNSObject;", "onItemRemoved", "onItemRangeChanged", "LADXRVGroup;II", "LADXRVGroup;IILNSObject;", "onItemRangeInserted", "onItemRangeRemoved", "onItemMoved", "getItemForViewType", "(I)Lcom/xwray/groupie/Item<TVH;>;", "getItemCountBeforeGroup", "setNewGroups", "Ljava/util/List<Lcom/xwray/groupie/RVGroup;>;", "<VH:Lcom/xwray/groupie/GroupieViewHolder;>Landroidx/recyclerview/widget/RecyclerView$Adapter<TVH;>;Lcom/xwray/groupie/GroupDataObserver;" };
-  static const J2ObjcClassInfo _ADXGroupAdapter = { "GroupAdapter", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x1, 56, 8, -1, -1, -1, 73, -1 };
+  static const void *ptrTable[] = { "setSpanCount", "I", "updateAsync", "LJavaUtilList;", "(Ljava/util/List<+Lcom/xwray/groupie/RVGroup;>;)V", "LJavaUtilList;LADXOnAsyncUpdateListener;", "(Ljava/util/List<+Lcom/xwray/groupie/RVGroup;>;Lcom/xwray/groupie/OnAsyncUpdateListener;)V", "LJavaUtilList;ZLADXOnAsyncUpdateListener;", "(Ljava/util/List<+Lcom/xwray/groupie/RVGroup;>;ZLcom/xwray/groupie/OnAsyncUpdateListener;)V", "replaceAll", "LJavaUtilCollection;", "(Ljava/util/Collection<+Lcom/xwray/groupie/RVGroup;>;)V", "update", "LJavaUtilCollection;Z", "(Ljava/util/Collection<+Lcom/xwray/groupie/RVGroup;>;Z)V", "setOnItemClickListener", "LADXOnItemClickListener;", "setOnItemLongClickListener", "LADXOnItemLongClickListener;", "onCreateViewHolder", "LADViewGroup;I", "(Lr/android/view/ViewGroup;I)TVH;", "onBindViewHolder", "LADXGroupieViewHolder;I", "(TVH;I)V", "LADXGroupieViewHolder;ILJavaUtilList;", "(TVH;ILjava/util/List<Ljava/lang/Object;>;)V", "onViewRecycled", "LADXGroupieViewHolder;", "(TVH;)V", "onFailedToRecycleView", "(TVH;)Z", "onViewAttachedToWindow", "onViewDetachedFromWindow", "getItemViewType", "getItemId", "getItem", "(TVH;)Lcom/xwray/groupie/Item;", "getAdapterPosition", "LADXItem;", "LADXRVGroup;", "getItemCountForGroup", "getItemCount", "add", "addAll", "remove", "removeAll", "removeGroupAtAdapterPosition", "removeGroup", "ILADXRVGroup;", "getTopLevelGroup", "getGroupAtAdapterPosition", "getGroup", "onChanged", "onItemInserted", "LADXRVGroup;I", "onItemChanged", "LADXRVGroup;ILNSObject;", "onItemRemoved", "onItemRangeChanged", "LADXRVGroup;II", "LADXRVGroup;IILNSObject;", "onItemRangeInserted", "onItemRangeRemoved", "onItemMoved", "getItemForViewType", "(I)Lcom/xwray/groupie/Item<TVH;>;", "getItemCountBeforeGroup", "setNewGroups", "Ljava/util/List<Lcom/xwray/groupie/RVGroup;>;", "<VH:Lcom/xwray/groupie/GroupieViewHolder;>Landroidx/recyclerview/widget/RecyclerView$Adapter<TVH;>;Lcom/xwray/groupie/GroupDataObserver;" };
+  static const J2ObjcClassInfo _ADXGroupAdapter = { "GroupAdapter", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x1, 56, 8, -1, -1, -1, 70, -1 };
   return &_ADXGroupAdapter;
 }
 
@@ -659,18 +649,6 @@ void ADXGroupAdapter_setNewGroupsWithJavaUtilCollection_(ADXGroupAdapter *self, 
   for (id<ADXRVGroup> __strong group in nil_chk(newGroups)) {
     [((id<ADXRVGroup>) nil_chk(group)) registerGroupDataObserverWithADXGroupDataObserver:self];
   }
-}
-
-IOSObjectArray *ADXGroupAdapter__Annotations$0() {
-  return [IOSObjectArray arrayWithObjects:(id[]){ create_JavaLangDeprecated() } count:1 type:JavaLangAnnotationAnnotation_class_()];
-}
-
-IOSObjectArray *ADXGroupAdapter__Annotations$1() {
-  return [IOSObjectArray arrayWithObjects:(id[]){ create_JavaLangDeprecated() } count:1 type:JavaLangAnnotationAnnotation_class_()];
-}
-
-IOSObjectArray *ADXGroupAdapter__Annotations$2() {
-  return [IOSObjectArray arrayWithObjects:(id[]){ create_JavaLangDeprecated() } count:1 type:JavaLangAnnotationAnnotation_class_()];
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXGroupAdapter)
