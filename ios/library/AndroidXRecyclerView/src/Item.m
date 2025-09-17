@@ -265,7 +265,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 + (void)initialize {
   if (self == [ADXItem class]) {
-    JreStrongAssignAndConsume(&ADXItem_ID_COUNTER, new_JavaUtilConcurrentAtomicAtomicLong_initWithLong_(0));
+    JreStrongAssignAndConsume(&ADXItem_ID_COUNTER, new_JavaUtilConcurrentAtomicAtomicLong_init());
     J2OBJC_SET_INITIALIZED(ADXItem)
   }
 }
