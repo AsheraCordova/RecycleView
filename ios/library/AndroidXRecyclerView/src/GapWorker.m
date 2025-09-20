@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\GapWorker.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "AdapterHelper.h"
 #include "ChildHelper.h"
 #include "GapWorker.h"
@@ -11,7 +16,10 @@
 #include "RecyclerView.h"
 #include "TraceCompat.h"
 #include "View.h"
+#include "java/lang/Boolean.h"
 #include "java/lang/IllegalArgumentException.h"
+#include "java/lang/Integer.h"
+#include "java/lang/Long.h"
 #include "java/lang/Math.h"
 #include "java/lang/System.h"
 #include "java/lang/ThreadLocal.h"
@@ -26,12 +34,11 @@
 #include "java/util/function/ToIntFunction.h"
 #include "java/util/function/ToLongFunction.h"
 
-@class JavaUtilArrayList;
-@protocol JavaUtilComparator;
-@protocol JavaUtilFunctionFunction;
-@protocol JavaUtilFunctionToDoubleFunction;
-@protocol JavaUtilFunctionToIntFunction;
-@protocol JavaUtilFunctionToLongFunction;
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 #pragma clang diagnostic ignored "-Wprotocol"
@@ -49,16 +56,16 @@
 - (void)buildTaskList;
 
 - (ADXRecyclerView_ViewHolder *)prefetchPositionWithDeadlineWithADXRecyclerView:(ADXRecyclerView *)view
-                                                                        withInt:(jint)position
-                                                                       withLong:(jlong)deadlineNs;
+                                                                        withInt:(int32_t)position
+                                                                       withLong:(int64_t)deadlineNs;
 
 - (void)prefetchInnerRecyclerViewWithDeadlineWithADXRecyclerView:(ADXRecyclerView *)innerView
-                                                        withLong:(jlong)deadlineNs;
+                                                        withLong:(int64_t)deadlineNs;
 
 - (void)flushTaskWithDeadlineWithADXGapWorker_Task:(ADXGapWorker_Task *)task
-                                          withLong:(jlong)deadlineNs;
+                                          withLong:(int64_t)deadlineNs;
 
-- (void)flushTasksWithDeadlineWithLong:(jlong)deadlineNs;
+- (void)flushTasksWithDeadlineWithLong:(int64_t)deadlineNs;
 
 @end
 
@@ -66,20 +73,20 @@ J2OBJC_FIELD_SETTER(ADXGapWorker, mTasks_, JavaUtilArrayList *)
 
 __attribute__((unused)) static void ADXGapWorker_buildTaskList(ADXGapWorker *self);
 
-__attribute__((unused)) static ADXRecyclerView_ViewHolder *ADXGapWorker_prefetchPositionWithDeadlineWithADXRecyclerView_withInt_withLong_(ADXGapWorker *self, ADXRecyclerView *view, jint position, jlong deadlineNs);
+__attribute__((unused)) static ADXRecyclerView_ViewHolder *ADXGapWorker_prefetchPositionWithDeadlineWithADXRecyclerView_withInt_withLong_(ADXGapWorker *self, ADXRecyclerView *view, int32_t position, int64_t deadlineNs);
 
-__attribute__((unused)) static void ADXGapWorker_prefetchInnerRecyclerViewWithDeadlineWithADXRecyclerView_withLong_(ADXGapWorker *self, ADXRecyclerView *innerView, jlong deadlineNs);
+__attribute__((unused)) static void ADXGapWorker_prefetchInnerRecyclerViewWithDeadlineWithADXRecyclerView_withLong_(ADXGapWorker *self, ADXRecyclerView *innerView, int64_t deadlineNs);
 
-__attribute__((unused)) static void ADXGapWorker_flushTaskWithDeadlineWithADXGapWorker_Task_withLong_(ADXGapWorker *self, ADXGapWorker_Task *task, jlong deadlineNs);
+__attribute__((unused)) static void ADXGapWorker_flushTaskWithDeadlineWithADXGapWorker_Task_withLong_(ADXGapWorker *self, ADXGapWorker_Task *task, int64_t deadlineNs);
 
-__attribute__((unused)) static void ADXGapWorker_flushTasksWithDeadlineWithLong_(ADXGapWorker *self, jlong deadlineNs);
+__attribute__((unused)) static void ADXGapWorker_flushTasksWithDeadlineWithLong_(ADXGapWorker *self, int64_t deadlineNs);
 
 @interface ADXGapWorker_1 : NSObject < JavaUtilComparator >
 
 - (instancetype)init;
 
-- (jint)compareWithId:(ADXGapWorker_Task *)lhs
-               withId:(ADXGapWorker_Task *)rhs;
+- (int32_t)compareWithId:(ADXGapWorker_Task *)lhs
+                  withId:(ADXGapWorker_Task *)rhs;
 
 @end
 
@@ -90,6 +97,7 @@ __attribute__((unused)) static void ADXGapWorker_1_init(ADXGapWorker_1 *self);
 __attribute__((unused)) static ADXGapWorker_1 *new_ADXGapWorker_1_init(void) NS_RETURNS_RETAINED;
 
 __attribute__((unused)) static ADXGapWorker_1 *create_ADXGapWorker_1_init(void);
+
 
 J2OBJC_INITIALIZED_DEFN(ADXGapWorker)
 
@@ -108,12 +116,12 @@ id<JavaUtilComparator> ADXGapWorker_sTaskComparator;
 }
 
 - (void)removeWithADXRecyclerView:(ADXRecyclerView *)recyclerView {
-  jboolean removeSuccess = [((JavaUtilArrayList *) nil_chk(mRecyclerViews_)) removeWithId:recyclerView];
+  bool removeSuccess = [((JavaUtilArrayList *) nil_chk(mRecyclerViews_)) removeWithId:recyclerView];
 }
 
 - (void)postFromTraversalWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                     withInt:(jint)prefetchDx
-                                     withInt:(jint)prefetchDy {
+                                     withInt:(int32_t)prefetchDx
+                                     withInt:(int32_t)prefetchDy {
   if ([((ADXRecyclerView *) nil_chk(recyclerView)) isAttachedToWindow]) {
     if (mPostTimeNs_ == 0) {
       mPostTimeNs_ = [recyclerView getNanoTime];
@@ -127,32 +135,32 @@ id<JavaUtilComparator> ADXGapWorker_sTaskComparator;
   ADXGapWorker_buildTaskList(self);
 }
 
-+ (jboolean)isPrefetchPositionAttachedWithADXRecyclerView:(ADXRecyclerView *)view
-                                                  withInt:(jint)position {
++ (bool)isPrefetchPositionAttachedWithADXRecyclerView:(ADXRecyclerView *)view
+                                              withInt:(int32_t)position {
   return ADXGapWorker_isPrefetchPositionAttachedWithADXRecyclerView_withInt_(view, position);
 }
 
 - (ADXRecyclerView_ViewHolder *)prefetchPositionWithDeadlineWithADXRecyclerView:(ADXRecyclerView *)view
-                                                                        withInt:(jint)position
-                                                                       withLong:(jlong)deadlineNs {
+                                                                        withInt:(int32_t)position
+                                                                       withLong:(int64_t)deadlineNs {
   return ADXGapWorker_prefetchPositionWithDeadlineWithADXRecyclerView_withInt_withLong_(self, view, position, deadlineNs);
 }
 
 - (void)prefetchInnerRecyclerViewWithDeadlineWithADXRecyclerView:(ADXRecyclerView *)innerView
-                                                        withLong:(jlong)deadlineNs {
+                                                        withLong:(int64_t)deadlineNs {
   ADXGapWorker_prefetchInnerRecyclerViewWithDeadlineWithADXRecyclerView_withLong_(self, innerView, deadlineNs);
 }
 
 - (void)flushTaskWithDeadlineWithADXGapWorker_Task:(ADXGapWorker_Task *)task
-                                          withLong:(jlong)deadlineNs {
+                                          withLong:(int64_t)deadlineNs {
   ADXGapWorker_flushTaskWithDeadlineWithADXGapWorker_Task_withLong_(self, task, deadlineNs);
 }
 
-- (void)flushTasksWithDeadlineWithLong:(jlong)deadlineNs {
+- (void)flushTasksWithDeadlineWithLong:(int64_t)deadlineNs {
   ADXGapWorker_flushTasksWithDeadlineWithLong_(self, deadlineNs);
 }
 
-- (void)prefetchWithLong:(jlong)deadlineNs {
+- (void)prefetchWithLong:(int64_t)deadlineNs {
   ADXGapWorker_buildTaskList(self);
   ADXGapWorker_flushTasksWithDeadlineWithLong_(self, deadlineNs);
 }
@@ -163,9 +171,9 @@ id<JavaUtilComparator> ADXGapWorker_sTaskComparator;
     if ([((JavaUtilArrayList *) nil_chk(mRecyclerViews_)) isEmpty]) {
       return;
     }
-    jint size = [((JavaUtilArrayList *) nil_chk(mRecyclerViews_)) size];
-    jlong latestFrameVsyncMs = 0;
-    for (jint i = 0; i < size; i++) {
+    int32_t size = [((JavaUtilArrayList *) nil_chk(mRecyclerViews_)) size];
+    int64_t latestFrameVsyncMs = 0;
+    for (int32_t i = 0; i < size; i++) {
       ADXRecyclerView *view = JreRetainedLocalValue([((JavaUtilArrayList *) nil_chk(mRecyclerViews_)) getWithInt:i]);
       if ([((ADXRecyclerView *) nil_chk(view)) getWindowVisibility] == ADView_VISIBLE) {
         latestFrameVsyncMs = JavaLangMath_maxWithLong_withLong_([view getDrawingTime], latestFrameVsyncMs);
@@ -174,7 +182,7 @@ id<JavaUtilComparator> ADXGapWorker_sTaskComparator;
     if (latestFrameVsyncMs == 0) {
       return;
     }
-    jlong nextFrameNs = [((JavaUtilConcurrentTimeUnit *) nil_chk(JreLoadEnum(JavaUtilConcurrentTimeUnit, MILLISECONDS))) toNanosWithLong:latestFrameVsyncMs] + mFrameIntervalNs_;
+    int64_t nextFrameNs = [((JavaUtilConcurrentTimeUnit *) nil_chk(JreLoadEnum(JavaUtilConcurrentTimeUnit, MILLISECONDS))) toNanosWithLong:latestFrameVsyncMs] + mFrameIntervalNs_;
     [self prefetchWithLong:nextFrameNs];
   }
   @finally {
@@ -258,9 +266,9 @@ ADXGapWorker *create_ADXGapWorker_initPackagePrivate() {
 }
 
 void ADXGapWorker_buildTaskList(ADXGapWorker *self) {
-  jint viewCount = [((JavaUtilArrayList *) nil_chk(self->mRecyclerViews_)) size];
-  jint totalTaskCount = 0;
-  for (jint i = 0; i < viewCount; i++) {
+  int32_t viewCount = [((JavaUtilArrayList *) nil_chk(self->mRecyclerViews_)) size];
+  int32_t totalTaskCount = 0;
+  for (int32_t i = 0; i < viewCount; i++) {
     ADXRecyclerView *view = JreRetainedLocalValue([((JavaUtilArrayList *) nil_chk(self->mRecyclerViews_)) getWithInt:i]);
     if ([((ADXRecyclerView *) nil_chk(view)) getWindowVisibility] == ADView_VISIBLE) {
       [((ADXGapWorker_LayoutPrefetchRegistryImpl *) nil_chk(view->mPrefetchRegistry_)) collectPrefetchPositionsFromViewWithADXRecyclerView:view withBoolean:false];
@@ -268,15 +276,15 @@ void ADXGapWorker_buildTaskList(ADXGapWorker *self) {
     }
   }
   [((JavaUtilArrayList *) nil_chk(self->mTasks_)) ensureCapacityWithInt:totalTaskCount];
-  jint totalTaskIndex = 0;
-  for (jint i = 0; i < viewCount; i++) {
+  int32_t totalTaskIndex = 0;
+  for (int32_t i = 0; i < viewCount; i++) {
     ADXRecyclerView *view = JreRetainedLocalValue([((JavaUtilArrayList *) nil_chk(self->mRecyclerViews_)) getWithInt:i]);
     if ([((ADXRecyclerView *) nil_chk(view)) getWindowVisibility] != ADView_VISIBLE) {
       continue;
     }
     ADXGapWorker_LayoutPrefetchRegistryImpl *prefetchRegistry = JreRetainedLocalValue(view->mPrefetchRegistry_);
-    jint viewVelocity = JavaLangMath_absWithInt_(((ADXGapWorker_LayoutPrefetchRegistryImpl *) nil_chk(prefetchRegistry))->mPrefetchDx_) + JavaLangMath_absWithInt_(prefetchRegistry->mPrefetchDy_);
-    for (jint j = 0; j < prefetchRegistry->mCount_ * 2; j += 2) {
+    int32_t viewVelocity = JavaLangMath_absWithInt_(((ADXGapWorker_LayoutPrefetchRegistryImpl *) nil_chk(prefetchRegistry))->mPrefetchDx_) + JavaLangMath_absWithInt_(prefetchRegistry->mPrefetchDy_);
+    for (int32_t j = 0; j < prefetchRegistry->mCount_ * 2; j += 2) {
       ADXGapWorker_Task *task;
       if (totalTaskIndex >= [((JavaUtilArrayList *) nil_chk(self->mTasks_)) size]) {
         task = create_ADXGapWorker_Task_init();
@@ -285,7 +293,7 @@ void ADXGapWorker_buildTaskList(ADXGapWorker *self) {
       else {
         task = [((JavaUtilArrayList *) nil_chk(self->mTasks_)) getWithInt:totalTaskIndex];
       }
-      jint distanceToItem = IOSIntArray_Get(nil_chk(prefetchRegistry->mPrefetchArray_), j + 1);
+      int32_t distanceToItem = IOSIntArray_Get(nil_chk(prefetchRegistry->mPrefetchArray_), j + 1);
       ((ADXGapWorker_Task *) nil_chk(task))->immediate_ = (distanceToItem <= viewVelocity);
       task->viewVelocity_ = viewVelocity;
       task->distanceToItem_ = distanceToItem;
@@ -297,10 +305,10 @@ void ADXGapWorker_buildTaskList(ADXGapWorker *self) {
   JavaUtilCollections_sortWithJavaUtilList_withJavaUtilComparator_(self->mTasks_, ADXGapWorker_sTaskComparator);
 }
 
-jboolean ADXGapWorker_isPrefetchPositionAttachedWithADXRecyclerView_withInt_(ADXRecyclerView *view, jint position) {
+bool ADXGapWorker_isPrefetchPositionAttachedWithADXRecyclerView_withInt_(ADXRecyclerView *view, int32_t position) {
   ADXGapWorker_initialize();
-  jint childCount = [((ADXChildHelper *) nil_chk(((ADXRecyclerView *) nil_chk(view))->mChildHelper_)) getUnfilteredChildCount];
-  for (jint i = 0; i < childCount; i++) {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(((ADXRecyclerView *) nil_chk(view))->mChildHelper_)) getUnfilteredChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADView *attachedView = JreRetainedLocalValue([((ADXChildHelper *) nil_chk(view->mChildHelper_)) getUnfilteredChildAtWithInt:i]);
     ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_(attachedView);
     if (((ADXRecyclerView_ViewHolder *) nil_chk(holder))->mPosition_ == position && ![holder isInvalid]) {
@@ -310,7 +318,7 @@ jboolean ADXGapWorker_isPrefetchPositionAttachedWithADXRecyclerView_withInt_(ADX
   return false;
 }
 
-ADXRecyclerView_ViewHolder *ADXGapWorker_prefetchPositionWithDeadlineWithADXRecyclerView_withInt_withLong_(ADXGapWorker *self, ADXRecyclerView *view, jint position, jlong deadlineNs) {
+ADXRecyclerView_ViewHolder *ADXGapWorker_prefetchPositionWithDeadlineWithADXRecyclerView_withInt_withLong_(ADXGapWorker *self, ADXRecyclerView *view, int32_t position, int64_t deadlineNs) {
   if (ADXGapWorker_isPrefetchPositionAttachedWithADXRecyclerView_withInt_(view, position)) {
     return nil;
   }
@@ -334,7 +342,7 @@ ADXRecyclerView_ViewHolder *ADXGapWorker_prefetchPositionWithDeadlineWithADXRecy
   return holder;
 }
 
-void ADXGapWorker_prefetchInnerRecyclerViewWithDeadlineWithADXRecyclerView_withLong_(ADXGapWorker *self, ADXRecyclerView *innerView, jlong deadlineNs) {
+void ADXGapWorker_prefetchInnerRecyclerViewWithDeadlineWithADXRecyclerView_withLong_(ADXGapWorker *self, ADXRecyclerView *innerView, int64_t deadlineNs) {
   if (innerView == nil) {
     return;
   }
@@ -347,8 +355,8 @@ void ADXGapWorker_prefetchInnerRecyclerViewWithDeadlineWithADXRecyclerView_withL
     @try {
       ADXTraceCompat_beginSectionWithNSString_(ADXRecyclerView_TRACE_NESTED_PREFETCH_TAG);
       [((ADXRecyclerView_State *) nil_chk(innerView->mState_)) prepareForNestedPrefetchWithADXRecyclerView_Adapter:innerView->mAdapter_];
-      for (jint i = 0; i < innerPrefetchRegistry->mCount_ * 2; i += 2) {
-        jint innerPosition = IOSIntArray_Get(nil_chk(innerPrefetchRegistry->mPrefetchArray_), i);
+      for (int32_t i = 0; i < innerPrefetchRegistry->mCount_ * 2; i += 2) {
+        int32_t innerPosition = IOSIntArray_Get(nil_chk(innerPrefetchRegistry->mPrefetchArray_), i);
         ADXGapWorker_prefetchPositionWithDeadlineWithADXRecyclerView_withInt_withLong_(self, innerView, innerPosition, deadlineNs);
       }
     }
@@ -358,16 +366,16 @@ void ADXGapWorker_prefetchInnerRecyclerViewWithDeadlineWithADXRecyclerView_withL
   }
 }
 
-void ADXGapWorker_flushTaskWithDeadlineWithADXGapWorker_Task_withLong_(ADXGapWorker *self, ADXGapWorker_Task *task, jlong deadlineNs) {
-  jlong taskDeadlineNs = ((ADXGapWorker_Task *) nil_chk(task))->immediate_ ? ADXRecyclerView_FOREVER_NS : deadlineNs;
+void ADXGapWorker_flushTaskWithDeadlineWithADXGapWorker_Task_withLong_(ADXGapWorker *self, ADXGapWorker_Task *task, int64_t deadlineNs) {
+  int64_t taskDeadlineNs = ((ADXGapWorker_Task *) nil_chk(task))->immediate_ ? ADXRecyclerView_FOREVER_NS : deadlineNs;
   ADXRecyclerView_ViewHolder *holder = ADXGapWorker_prefetchPositionWithDeadlineWithADXRecyclerView_withInt_withLong_(self, task->view_, task->position_, taskDeadlineNs);
   if (holder != nil && holder->mNestedRecyclerView_ != nil && [holder isBound] && ![holder isInvalid]) {
     ADXGapWorker_prefetchInnerRecyclerViewWithDeadlineWithADXRecyclerView_withLong_(self, [holder->mNestedRecyclerView_ get], deadlineNs);
   }
 }
 
-void ADXGapWorker_flushTasksWithDeadlineWithLong_(ADXGapWorker *self, jlong deadlineNs) {
-  for (jint i = 0; i < [((JavaUtilArrayList *) nil_chk(self->mTasks_)) size]; i++) {
+void ADXGapWorker_flushTasksWithDeadlineWithLong_(ADXGapWorker *self, int64_t deadlineNs) {
+  for (int32_t i = 0; i < [((JavaUtilArrayList *) nil_chk(self->mTasks_)) size]; i++) {
     ADXGapWorker_Task *task = [((JavaUtilArrayList *) nil_chk(self->mTasks_)) getWithInt:i];
     if (((ADXGapWorker_Task *) nil_chk(task))->view_ == nil) {
       break;
@@ -449,14 +457,14 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (void)setPrefetchVectorWithInt:(jint)dx
-                         withInt:(jint)dy {
+- (void)setPrefetchVectorWithInt:(int32_t)dx
+                         withInt:(int32_t)dy {
   mPrefetchDx_ = dx;
   mPrefetchDy_ = dy;
 }
 
 - (void)collectPrefetchPositionsFromViewWithADXRecyclerView:(ADXRecyclerView *)view
-                                                withBoolean:(jboolean)nested {
+                                                withBoolean:(bool)nested {
   mCount_ = 0;
   if (mPrefetchArray_ != nil) {
     JavaUtilArrays_fillWithIntArray_withInt_(mPrefetchArray_, -1);
@@ -481,15 +489,15 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (void)addPositionWithInt:(jint)layoutPosition
-                   withInt:(jint)pixelDistance {
+- (void)addPositionWithInt:(int32_t)layoutPosition
+                   withInt:(int32_t)pixelDistance {
   if (layoutPosition < 0) {
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(@"Layout positions must be non-negative");
   }
   if (pixelDistance < 0) {
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(@"Pixel distance must be non-negative");
   }
-  jint storagePosition = mCount_ * 2;
+  int32_t storagePosition = mCount_ * 2;
   if (mPrefetchArray_ == nil) {
     JreStrongAssignAndConsume(&mPrefetchArray_, [IOSIntArray newArrayWithLength:4]);
     JavaUtilArrays_fillWithIntArray_withInt_(mPrefetchArray_, -1);
@@ -504,10 +512,10 @@ J2OBJC_IGNORE_DESIGNATED_END
   mCount_++;
 }
 
-- (jboolean)lastPrefetchIncludedPositionWithInt:(jint)position {
+- (bool)lastPrefetchIncludedPositionWithInt:(int32_t)position {
   if (mPrefetchArray_ != nil) {
-    jint count = mCount_ * 2;
-    for (jint i = 0; i < count; i += 2) {
+    int32_t count = mCount_ * 2;
+    for (int32_t i = 0; i < count; i += 2) {
       if (IOSIntArray_Get(mPrefetchArray_, i) == position) return true;
     }
   }
@@ -581,17 +589,17 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jint)compareWithId:(ADXGapWorker_Task *)lhs
-               withId:(ADXGapWorker_Task *)rhs {
+- (int32_t)compareWithId:(ADXGapWorker_Task *)lhs
+                  withId:(ADXGapWorker_Task *)rhs {
   if ((((ADXGapWorker_Task *) nil_chk(lhs))->view_ == nil) != (((ADXGapWorker_Task *) nil_chk(rhs))->view_ == nil)) {
     return lhs->view_ == nil ? 1 : -1;
   }
   if (lhs->immediate_ != rhs->immediate_) {
     return lhs->immediate_ ? -1 : 1;
   }
-  jint deltaViewVelocity = rhs->viewVelocity_ - lhs->viewVelocity_;
+  int32_t deltaViewVelocity = rhs->viewVelocity_ - lhs->viewVelocity_;
   if (deltaViewVelocity != 0) return deltaViewVelocity;
-  jint deltaDistanceToItem = lhs->distanceToItem_ - rhs->distanceToItem_;
+  int32_t deltaDistanceToItem = lhs->distanceToItem_ - rhs->distanceToItem_;
   if (deltaDistanceToItem != 0) return deltaDistanceToItem;
   return 0;
 }
@@ -637,7 +645,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   methods[1].selector = @selector(compareWithId:withId:);
   #pragma clang diagnostic pop
   static const void *ptrTable[] = { "compare", "LADXGapWorker_Task;LADXGapWorker_Task;", "LADXGapWorker;", "Ljava/lang/Object;Ljava/util/Comparator<Landroidx/recyclerview/widget/GapWorker$Task;>;" };
-  static const J2ObjcClassInfo _ADXGapWorker_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8018, 2, 0, 2, -1, -1, 3, -1 };
+  static const J2ObjcClassInfo _ADXGapWorker_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8000, 2, 0, 2, -1, -1, 3, -1 };
   return &_ADXGapWorker_1;
 }
 

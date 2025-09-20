@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\DiffUtil.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_DiffUtil")
@@ -24,6 +25,7 @@
 
 @class ADXDiffUtil_Callback;
 @class ADXDiffUtil_DiffResult;
+@class JavaLangBoolean;
 
 /*!
  @brief DiffUtil is a utility class that calculates the difference between two lists and outputs a
@@ -98,7 +100,7 @@
   old list into the new list.
  */
 + (ADXDiffUtil_DiffResult *)calculateDiffWithADXDiffUtil_Callback:(ADXDiffUtil_Callback *)cb
-                                                      withBoolean:(jboolean)detectMoves;
+                                                      withBoolean:(bool)detectMoves;
 
 @end
 
@@ -106,16 +108,20 @@ J2OBJC_STATIC_INIT(ADXDiffUtil)
 
 FOUNDATION_EXPORT ADXDiffUtil_DiffResult *ADXDiffUtil_calculateDiffWithADXDiffUtil_Callback_(ADXDiffUtil_Callback *cb);
 
-FOUNDATION_EXPORT ADXDiffUtil_DiffResult *ADXDiffUtil_calculateDiffWithADXDiffUtil_Callback_withBoolean_(ADXDiffUtil_Callback *cb, jboolean detectMoves);
+FOUNDATION_EXPORT ADXDiffUtil_DiffResult *ADXDiffUtil_calculateDiffWithADXDiffUtil_Callback_withBoolean_(ADXDiffUtil_Callback *cb, bool detectMoves);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil)
 
 @compatibility_alias AndroidxRecyclerviewWidgetDiffUtil ADXDiffUtil;
 
+
 #endif
 
 #if !defined (ADXDiffUtil_Callback_) && (INCLUDE_ALL_DiffUtil || defined(INCLUDE_ADXDiffUtil_Callback))
 #define ADXDiffUtil_Callback_
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief A Callback class used by DiffUtil while calculating the diff between two lists.
@@ -142,8 +148,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil)
  @param newItemPosition The position of the item in the new list which replaces the                         oldItem
  @return True if the contents of the items are the same or false if they are different.
  */
-- (jboolean)areContentsTheSameWithInt:(jint)oldItemPosition
-                              withInt:(jint)newItemPosition;
+- (bool)areContentsTheSameWithInt:(int32_t)oldItemPosition
+                          withInt:(int32_t)newItemPosition;
 
 /*!
  @brief Called by the DiffUtil to decide whether two object represent the same Item.
@@ -153,8 +159,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil)
  @param newItemPosition The position of the item in the new list
  @return True if the two items represent the same object or false if they are different.
  */
-- (jboolean)areItemsTheSameWithInt:(jint)oldItemPosition
-                           withInt:(jint)newItemPosition;
+- (bool)areItemsTheSameWithInt:(int32_t)oldItemPosition
+                       withInt:(int32_t)newItemPosition;
 
 /*!
  @brief When <code>areItemsTheSame(int, int)</code> returns <code>true</code> for two items and 
@@ -171,20 +177,20 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil)
  @param newItemPosition The position of the item in the new list
  @return A payload object that represents the change between the two items.
  */
-- (id)getChangePayloadWithInt:(jint)oldItemPosition
-                      withInt:(jint)newItemPosition;
+- (id)getChangePayloadWithInt:(int32_t)oldItemPosition
+                      withInt:(int32_t)newItemPosition;
 
 /*!
  @brief Returns the size of the new list.
  @return The size of the new list.
  */
-- (jint)getNewListSize;
+- (int32_t)getNewListSize;
 
 /*!
  @brief Returns the size of the old list.
  @return The size of the old list.
  */
-- (jint)getOldListSize;
+- (int32_t)getOldListSize;
 
 @end
 
@@ -194,10 +200,13 @@ FOUNDATION_EXPORT void ADXDiffUtil_Callback_init(ADXDiffUtil_Callback *self);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Callback)
 
+
 #endif
 
 #if !defined (ADXDiffUtil_ItemCallback_) && (INCLUDE_ALL_DiffUtil || defined(INCLUDE_ADXDiffUtil_ItemCallback))
 #define ADXDiffUtil_ItemCallback_
+
+@class JavaLangBoolean;
 
 /*!
  @brief Callback for calculating the diff between two non-null items in a list.
@@ -234,8 +243,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Callback)
  @return True if the contents of the items are the same or false if they are different.
  - seealso: Callback#areContentsTheSame(int, int)
  */
-- (jboolean)areContentsTheSameWithId:(id)oldItem
-                              withId:(id)newItem;
+- (bool)areContentsTheSameWithId:(id)oldItem
+                          withId:(id)newItem;
 
 /*!
  @brief Called to check whether two objects represent the same item.
@@ -250,8 +259,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Callback)
  @return True if the two items represent the same object or false if they are different.
  - seealso: Callback#areItemsTheSame(int, int)
  */
-- (jboolean)areItemsTheSameWithId:(id)oldItem
-                           withId:(id)newItem;
+- (bool)areItemsTheSameWithId:(id)oldItem
+                       withId:(id)newItem;
 
 /*!
  @brief When <code>areItemsTheSame(T, T)</code> returns <code>true</code> for two items and 
@@ -277,10 +286,13 @@ FOUNDATION_EXPORT void ADXDiffUtil_ItemCallback_init(ADXDiffUtil_ItemCallback *s
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_ItemCallback)
 
+
 #endif
 
 #if !defined (ADXDiffUtil_Diagonal_) && (INCLUDE_ALL_DiffUtil || defined(INCLUDE_ADXDiffUtil_Diagonal))
 #define ADXDiffUtil_Diagonal_
+
+@class JavaLangInteger;
 
 /*!
  @brief A diagonal is a match in the graph.
@@ -288,20 +300,20 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_ItemCallback)
  */
 @interface ADXDiffUtil_Diagonal : NSObject {
  @public
-  jint x_;
-  jint y_;
-  jint size_;
+  int32_t x_;
+  int32_t y_;
+  int32_t size_;
 }
 
 #pragma mark Package-Private
 
-- (instancetype)initWithInt:(jint)x
-                    withInt:(jint)y
-                    withInt:(jint)size;
+- (instancetype)initWithInt:(int32_t)x
+                    withInt:(int32_t)y
+                    withInt:(int32_t)size;
 
-- (jint)endX;
+- (int32_t)endX;
 
-- (jint)endY;
+- (int32_t)endY;
 
 // Disallowed inherited constructors, do not use.
 
@@ -311,13 +323,14 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_ItemCallback)
 
 J2OBJC_EMPTY_STATIC_INIT(ADXDiffUtil_Diagonal)
 
-FOUNDATION_EXPORT void ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(ADXDiffUtil_Diagonal *self, jint x, jint y, jint size);
+FOUNDATION_EXPORT void ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(ADXDiffUtil_Diagonal *self, int32_t x, int32_t y, int32_t size);
 
-FOUNDATION_EXPORT ADXDiffUtil_Diagonal *new_ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(jint x, jint y, jint size) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXDiffUtil_Diagonal *new_ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(int32_t x, int32_t y, int32_t size) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXDiffUtil_Diagonal *create_ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(jint x, jint y, jint size);
+FOUNDATION_EXPORT ADXDiffUtil_Diagonal *create_ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(int32_t x, int32_t y, int32_t size);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Diagonal)
+
 
 #endif
 
@@ -325,6 +338,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Diagonal)
 #define ADXDiffUtil_Snake_
 
 @class ADXDiffUtil_Diagonal;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief Snakes represent a match between two lists.It is optionally prefixed or postfixed with an
@@ -336,34 +351,34 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Diagonal)
   /*!
    @brief Position in the old list
    */
-  jint startX_;
+  int32_t startX_;
   /*!
    @brief Position in the new list
    */
-  jint startY_;
+  int32_t startY_;
   /*!
    @brief End position in the old list, exclusive
    */
-  jint endX_;
+  int32_t endX_;
   /*!
    @brief End position in the new list, exclusive
    */
-  jint endY_;
+  int32_t endY_;
   /*!
    @brief True if this snake was created in the reverse search, false otherwise.
    */
-  jboolean reverse_;
+  bool reverse_;
 }
 
 #pragma mark Package-Private
 
 - (instancetype)init;
 
-- (jint)diagonalSize;
+- (int32_t)diagonalSize;
 
-- (jboolean)hasAdditionOrRemoval;
+- (bool)hasAdditionOrRemoval;
 
-- (jboolean)isAddition;
+- (bool)isAddition;
 
 /*!
  @brief Extract the diagonal of the snake to make reasoning easier for the rest of the
@@ -383,10 +398,13 @@ FOUNDATION_EXPORT ADXDiffUtil_Snake *create_ADXDiffUtil_Snake_init(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Snake)
 
+
 #endif
 
 #if !defined (ADXDiffUtil_Range_) && (INCLUDE_ALL_DiffUtil || defined(INCLUDE_ADXDiffUtil_Range))
 #define ADXDiffUtil_Range_
+
+@class JavaLangInteger;
 
 /*!
  @brief Represents a range in two lists that needs to be solved.
@@ -397,26 +415,26 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Snake)
  */
 @interface ADXDiffUtil_Range : NSObject {
  @public
-  jint oldListStart_;
-  jint oldListEnd_;
-  jint newListStart_;
-  jint newListEnd_;
+  int32_t oldListStart_;
+  int32_t oldListEnd_;
+  int32_t newListStart_;
+  int32_t newListEnd_;
 }
 
 #pragma mark Public
 
 - (instancetype)init;
 
-- (instancetype)initWithInt:(jint)oldListStart
-                    withInt:(jint)oldListEnd
-                    withInt:(jint)newListStart
-                    withInt:(jint)newListEnd;
+- (instancetype)initWithInt:(int32_t)oldListStart
+                    withInt:(int32_t)oldListEnd
+                    withInt:(int32_t)newListStart
+                    withInt:(int32_t)newListEnd;
 
 #pragma mark Package-Private
 
-- (jint)newSize OBJC_METHOD_FAMILY_NONE;
+- (int32_t)newSize OBJC_METHOD_FAMILY_NONE;
 
-- (jint)oldSize;
+- (int32_t)oldSize;
 
 @end
 
@@ -428,13 +446,14 @@ FOUNDATION_EXPORT ADXDiffUtil_Range *new_ADXDiffUtil_Range_init(void) NS_RETURNS
 
 FOUNDATION_EXPORT ADXDiffUtil_Range *create_ADXDiffUtil_Range_init(void);
 
-FOUNDATION_EXPORT void ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(ADXDiffUtil_Range *self, jint oldListStart, jint oldListEnd, jint newListStart, jint newListEnd);
+FOUNDATION_EXPORT void ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(ADXDiffUtil_Range *self, int32_t oldListStart, int32_t oldListEnd, int32_t newListStart, int32_t newListEnd);
 
-FOUNDATION_EXPORT ADXDiffUtil_Range *new_ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(jint oldListStart, jint oldListEnd, jint newListStart, jint newListEnd) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXDiffUtil_Range *new_ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(int32_t oldListStart, int32_t oldListEnd, int32_t newListStart, int32_t newListEnd) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXDiffUtil_Range *create_ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(jint oldListStart, jint oldListEnd, jint newListStart, jint newListEnd);
+FOUNDATION_EXPORT ADXDiffUtil_Range *create_ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(int32_t oldListStart, int32_t oldListEnd, int32_t newListStart, int32_t newListEnd);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Range)
+
 
 #endif
 
@@ -444,6 +463,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Range)
 @class ADXDiffUtil_Callback;
 @class ADXRecyclerView_Adapter;
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol ADXListUpdateCallback;
 @protocol JavaUtilList;
 
@@ -467,7 +488,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Range)
  - seealso: #NO_POSITION
  - seealso: #convertOldPositionToNew(int)
  */
-- (jint)convertNewPositionToOldWithInt:(jint)newListPosition;
+- (int32_t)convertNewPositionToOldWithInt:(int32_t)newListPosition;
 
 /*!
  @brief Given a position in the old list, returns the position in the new list, or 
@@ -477,7 +498,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Range)
  - seealso: #NO_POSITION
  - seealso: #convertNewPositionToOld(int)
  */
-- (jint)convertOldPositionToNewWithInt:(jint)oldListPosition;
+- (int32_t)convertOldPositionToNewWithInt:(int32_t)oldListPosition;
 
 /*!
  @brief Dispatches the update events to the given adapter.
@@ -536,7 +557,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_Range)
                             withJavaUtilList:(id<JavaUtilList>)diagonals
                                 withIntArray:(IOSIntArray *)oldItemStatuses
                                 withIntArray:(IOSIntArray *)newItemStatuses
-                                 withBoolean:(jboolean)detectMoves;
+                                 withBoolean:(bool)detectMoves;
 
 // Disallowed inherited constructors, do not use.
 
@@ -549,17 +570,18 @@ J2OBJC_EMPTY_STATIC_INIT(ADXDiffUtil_DiffResult)
 /*!
  @brief Signifies an item not present in the list.
  */
-inline jint ADXDiffUtil_DiffResult_get_NO_POSITION(void);
+inline int32_t ADXDiffUtil_DiffResult_get_NO_POSITION(void);
 #define ADXDiffUtil_DiffResult_NO_POSITION -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, NO_POSITION, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, NO_POSITION, int32_t)
 
-FOUNDATION_EXPORT void ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_DiffResult *self, ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, jboolean detectMoves);
+FOUNDATION_EXPORT void ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_DiffResult *self, ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, bool detectMoves);
 
-FOUNDATION_EXPORT ADXDiffUtil_DiffResult *new_ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, jboolean detectMoves) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXDiffUtil_DiffResult *new_ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, bool detectMoves) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXDiffUtil_DiffResult *create_ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, jboolean detectMoves);
+FOUNDATION_EXPORT ADXDiffUtil_DiffResult *create_ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, bool detectMoves);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_DiffResult)
+
 
 #endif
 
@@ -567,6 +589,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_DiffResult)
 #define ADXDiffUtil_CenteredArray_
 
 @class IOSIntArray;
+@class JavaLangInteger;
 
 /*!
  @brief Array wrapper w/ negative index support.
@@ -577,18 +600,18 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_DiffResult)
 
 #pragma mark Public
 
-- (void)fillWithInt:(jint)value;
+- (void)fillWithInt:(int32_t)value;
 
 #pragma mark Package-Private
 
-- (instancetype)initWithInt:(jint)size;
+- (instancetype)initWithInt:(int32_t)size;
 
 - (IOSIntArray *)backingData;
 
-- (jint)getWithInt:(jint)index;
+- (int32_t)getWithInt:(int32_t)index;
 
-- (void)setWithInt:(jint)index
-           withInt:(jint)value;
+- (void)setWithInt:(int32_t)index
+           withInt:(int32_t)value;
 
 // Disallowed inherited constructors, do not use.
 
@@ -598,13 +621,14 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_DiffResult)
 
 J2OBJC_EMPTY_STATIC_INIT(ADXDiffUtil_CenteredArray)
 
-FOUNDATION_EXPORT void ADXDiffUtil_CenteredArray_initWithInt_(ADXDiffUtil_CenteredArray *self, jint size);
+FOUNDATION_EXPORT void ADXDiffUtil_CenteredArray_initWithInt_(ADXDiffUtil_CenteredArray *self, int32_t size);
 
-FOUNDATION_EXPORT ADXDiffUtil_CenteredArray *new_ADXDiffUtil_CenteredArray_initWithInt_(jint size) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXDiffUtil_CenteredArray *new_ADXDiffUtil_CenteredArray_initWithInt_(int32_t size) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXDiffUtil_CenteredArray *create_ADXDiffUtil_CenteredArray_initWithInt_(jint size);
+FOUNDATION_EXPORT ADXDiffUtil_CenteredArray *create_ADXDiffUtil_CenteredArray_initWithInt_(int32_t size);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_CenteredArray)
+
 
 #endif
 

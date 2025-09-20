@@ -3,12 +3,24 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\GroupUtils.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "GroupUtils.h"
 #include "Item.h"
 #include "J2ObjC_source.h"
 #include "RVGroup.h"
 #include "java/lang/IndexOutOfBoundsException.h"
+#include "java/lang/Integer.h"
 #include "java/util/Collection.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @implementation ADXGroupUtils
@@ -19,11 +31,11 @@
 }
 
 + (ADXItem *)getItemWithJavaUtilCollection:(id<JavaUtilCollection>)groups
-                                   withInt:(jint)position {
+                                   withInt:(int32_t)position {
   return ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(groups, position);
 }
 
-+ (jint)getItemCountWithJavaUtilCollection:(id<JavaUtilCollection>)groups {
++ (int32_t)getItemCountWithJavaUtilCollection:(id<JavaUtilCollection>)groups {
   return ADXGroupUtils_getItemCountWithJavaUtilCollection_(groups);
 }
 
@@ -59,11 +71,11 @@ ADXGroupUtils *create_ADXGroupUtils_initPackagePrivate() {
   J2OBJC_CREATE_IMPL(ADXGroupUtils, initPackagePrivate)
 }
 
-ADXItem *ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(id<JavaUtilCollection> groups, jint position) {
+ADXItem *ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(id<JavaUtilCollection> groups, int32_t position) {
   ADXGroupUtils_initialize();
-  jint previousPosition = 0;
+  int32_t previousPosition = 0;
   for (id<ADXRVGroup> __strong group in nil_chk(groups)) {
-    jint size = [((id<ADXRVGroup>) nil_chk(group)) getItemCount];
+    int32_t size = [((id<ADXRVGroup>) nil_chk(group)) getItemCount];
     if (size + previousPosition > position) {
       return [group getItemWithInt:position - previousPosition];
     }
@@ -72,9 +84,9 @@ ADXItem *ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(id<JavaUtilCollect
   @throw create_JavaLangIndexOutOfBoundsException_initWithNSString_(JreStrcat("$I$I$", @"Wanted item at ", position, @" but there are only ", previousPosition, @" items"));
 }
 
-jint ADXGroupUtils_getItemCountWithJavaUtilCollection_(id<JavaUtilCollection> groups) {
+int32_t ADXGroupUtils_getItemCountWithJavaUtilCollection_(id<JavaUtilCollection> groups) {
   ADXGroupUtils_initialize();
-  jint size = 0;
+  int32_t size = 0;
   for (id<ADXRVGroup> __strong group in nil_chk(groups)) {
     size += [((id<ADXRVGroup>) nil_chk(group)) getItemCount];
   }

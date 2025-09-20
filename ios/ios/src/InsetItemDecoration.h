@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-ios-widgets\IOSRecycleViewPlugin\src\main\java\com\ashera\recycleview\InsetItemDecoration.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_InsetItemDecoration")
@@ -56,6 +57,7 @@ FOUNDATION_EXPORT ASInsetItemDecoration *create_ASInsetItemDecoration_init(void)
 J2OBJC_TYPE_LITERAL_HEADER(ASInsetItemDecoration)
 
 @compatibility_alias ComAsheraRecycleviewInsetItemDecoration ASInsetItemDecoration;
+
 
 #endif
 

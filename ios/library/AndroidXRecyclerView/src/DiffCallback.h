@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\DiffCallback.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_DiffCallback")
@@ -26,24 +27,26 @@
 #define INCLUDE_ADXDiffUtil_Callback 1
 #include "DiffUtil.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 
 @interface ADXDiffCallback : ADXDiffUtil_Callback
 
 #pragma mark Public
 
-- (jboolean)areContentsTheSameWithInt:(jint)oldItemPosition
-                              withInt:(jint)newItemPosition;
+- (bool)areContentsTheSameWithInt:(int32_t)oldItemPosition
+                          withInt:(int32_t)newItemPosition;
 
-- (jboolean)areItemsTheSameWithInt:(jint)oldItemPosition
-                           withInt:(jint)newItemPosition;
+- (bool)areItemsTheSameWithInt:(int32_t)oldItemPosition
+                       withInt:(int32_t)newItemPosition;
 
-- (id)getChangePayloadWithInt:(jint)oldItemPosition
-                      withInt:(jint)newItemPosition;
+- (id)getChangePayloadWithInt:(int32_t)oldItemPosition
+                      withInt:(int32_t)newItemPosition;
 
-- (jint)getNewListSize;
+- (int32_t)getNewListSize;
 
-- (jint)getOldListSize;
+- (int32_t)getOldListSize;
 
 #pragma mark Package-Private
 
@@ -67,6 +70,7 @@ FOUNDATION_EXPORT ADXDiffCallback *create_ADXDiffCallback_initPackagePrivateWith
 J2OBJC_TYPE_LITERAL_HEADER(ADXDiffCallback)
 
 @compatibility_alias ComXwrayGroupieDiffCallback ADXDiffCallback;
+
 
 #endif
 

@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\Section.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "DiffCallback.h"
 #include "DiffUtil.h"
 #include "GroupUtils.h"
@@ -11,13 +16,19 @@
 #include "NestedGroup.h"
 #include "RVGroup.h"
 #include "Section.h"
+#include "java/lang/Boolean.h"
 #include "java/lang/IndexOutOfBoundsException.h"
+#include "java/lang/Integer.h"
 #include "java/lang/NullPointerException.h"
 #include "java/util/ArrayList.h"
 #include "java/util/Collection.h"
 #include "java/util/List.h"
 
-@class JavaUtilArrayList;
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXSection () {
@@ -26,9 +37,9 @@
   id<ADXRVGroup> footer_;
   id<ADXRVGroup> placeholder_;
   JavaUtilArrayList *children_;
-  jboolean hideWhenEmpty_;
-  jboolean isHeaderAndFooterVisible_;
-  jboolean isPlaceholderVisible_;
+  bool hideWhenEmpty_;
+  bool isHeaderAndFooterVisible_;
+  bool isPlaceholderVisible_;
   id<ADXListUpdateCallback> listUpdateCallback_;
 }
 
@@ -40,31 +51,31 @@
 
 - (void)showHeadersAndFooters;
 
-- (jint)getBodyItemCount;
+- (int32_t)getBodyItemCount;
 
-- (jint)getItemCountWithoutFooter;
+- (int32_t)getItemCountWithoutFooter;
 
-- (jint)getHeaderCount;
+- (int32_t)getHeaderCount;
 
-- (jint)getHeaderItemCount;
+- (int32_t)getHeaderItemCount;
 
-- (jint)getFooterItemCount;
+- (int32_t)getFooterItemCount;
 
-- (jint)getFooterCount;
+- (int32_t)getFooterCount;
 
-- (jint)getPlaceholderCount;
+- (int32_t)getPlaceholderCount;
 
-- (jboolean)isHeaderShown;
+- (bool)isHeaderShown;
 
-- (jboolean)isFooterShown;
+- (bool)isFooterShown;
 
-- (jboolean)isPlaceholderShown;
+- (bool)isPlaceholderShown;
 
-- (void)notifyHeaderItemsChangedWithInt:(jint)previousHeaderItemCount;
+- (void)notifyHeaderItemsChangedWithInt:(int32_t)previousHeaderItemCount;
 
-- (void)notifyFooterItemsChangedWithInt:(jint)previousFooterItemCount;
+- (void)notifyFooterItemsChangedWithInt:(int32_t)previousFooterItemCount;
 
-- (jint)getPlaceholderItemCount;
+- (int32_t)getPlaceholderItemCount;
 
 @end
 
@@ -82,31 +93,31 @@ __attribute__((unused)) static void ADXSection_hideDecorations(ADXSection *self)
 
 __attribute__((unused)) static void ADXSection_showHeadersAndFooters(ADXSection *self);
 
-__attribute__((unused)) static jint ADXSection_getBodyItemCount(ADXSection *self);
+__attribute__((unused)) static int32_t ADXSection_getBodyItemCount(ADXSection *self);
 
-__attribute__((unused)) static jint ADXSection_getItemCountWithoutFooter(ADXSection *self);
+__attribute__((unused)) static int32_t ADXSection_getItemCountWithoutFooter(ADXSection *self);
 
-__attribute__((unused)) static jint ADXSection_getHeaderCount(ADXSection *self);
+__attribute__((unused)) static int32_t ADXSection_getHeaderCount(ADXSection *self);
 
-__attribute__((unused)) static jint ADXSection_getHeaderItemCount(ADXSection *self);
+__attribute__((unused)) static int32_t ADXSection_getHeaderItemCount(ADXSection *self);
 
-__attribute__((unused)) static jint ADXSection_getFooterItemCount(ADXSection *self);
+__attribute__((unused)) static int32_t ADXSection_getFooterItemCount(ADXSection *self);
 
-__attribute__((unused)) static jint ADXSection_getFooterCount(ADXSection *self);
+__attribute__((unused)) static int32_t ADXSection_getFooterCount(ADXSection *self);
 
-__attribute__((unused)) static jint ADXSection_getPlaceholderCount(ADXSection *self);
+__attribute__((unused)) static int32_t ADXSection_getPlaceholderCount(ADXSection *self);
 
-__attribute__((unused)) static jboolean ADXSection_isHeaderShown(ADXSection *self);
+__attribute__((unused)) static bool ADXSection_isHeaderShown(ADXSection *self);
 
-__attribute__((unused)) static jboolean ADXSection_isFooterShown(ADXSection *self);
+__attribute__((unused)) static bool ADXSection_isFooterShown(ADXSection *self);
 
-__attribute__((unused)) static jboolean ADXSection_isPlaceholderShown(ADXSection *self);
+__attribute__((unused)) static bool ADXSection_isPlaceholderShown(ADXSection *self);
 
-__attribute__((unused)) static void ADXSection_notifyHeaderItemsChangedWithInt_(ADXSection *self, jint previousHeaderItemCount);
+__attribute__((unused)) static void ADXSection_notifyHeaderItemsChangedWithInt_(ADXSection *self, int32_t previousHeaderItemCount);
 
-__attribute__((unused)) static void ADXSection_notifyFooterItemsChangedWithInt_(ADXSection *self, jint previousFooterItemCount);
+__attribute__((unused)) static void ADXSection_notifyFooterItemsChangedWithInt_(ADXSection *self, int32_t previousFooterItemCount);
 
-__attribute__((unused)) static jint ADXSection_getPlaceholderItemCount(ADXSection *self);
+__attribute__((unused)) static int32_t ADXSection_getPlaceholderItemCount(ADXSection *self);
 
 @interface ADXSection_1 : NSObject < ADXListUpdateCallback > {
  @public
@@ -115,17 +126,17 @@ __attribute__((unused)) static jint ADXSection_getPlaceholderItemCount(ADXSectio
 
 - (instancetype)initWithADXSection:(ADXSection *)outer$;
 
-- (void)onInsertedWithInt:(jint)position
-                  withInt:(jint)count;
+- (void)onInsertedWithInt:(int32_t)position
+                  withInt:(int32_t)count;
 
-- (void)onRemovedWithInt:(jint)position
-                 withInt:(jint)count;
+- (void)onRemovedWithInt:(int32_t)position
+                 withInt:(int32_t)count;
 
-- (void)onMovedWithInt:(jint)fromPosition
-               withInt:(jint)toPosition;
+- (void)onMovedWithInt:(int32_t)fromPosition
+               withInt:(int32_t)toPosition;
 
-- (void)onChangedWithInt:(jint)position
-                 withInt:(jint)count
+- (void)onChangedWithInt:(int32_t)position
+                 withInt:(int32_t)count
                   withId:(id)payload;
 
 @end
@@ -137,6 +148,7 @@ __attribute__((unused)) static void ADXSection_1_initWithADXSection_(ADXSection_
 __attribute__((unused)) static ADXSection_1 *new_ADXSection_1_initWithADXSection_(ADXSection *outer$) NS_RETURNS_RETAINED;
 
 __attribute__((unused)) static ADXSection_1 *create_ADXSection_1_initWithADXSection_(ADXSection *outer$);
+
 
 @implementation ADXSection
 
@@ -163,11 +175,11 @@ J2OBJC_IGNORE_DESIGNATED_END
   return self;
 }
 
-- (void)addWithInt:(jint)position
+- (void)addWithInt:(int32_t)position
     withADXRVGroup:(id<ADXRVGroup>)group {
   [super addWithInt:position withADXRVGroup:group];
   [((JavaUtilArrayList *) nil_chk(children_)) addWithInt:position withId:group];
-  jint notifyPosition = ADXSection_getHeaderItemCount(self) + ADXGroupUtils_getItemCountWithJavaUtilCollection_([children_ subListWithInt:0 withInt:position]);
+  int32_t notifyPosition = ADXSection_getHeaderItemCount(self) + ADXGroupUtils_getItemCountWithJavaUtilCollection_([children_ subListWithInt:0 withInt:position]);
   [self notifyItemRangeInsertedWithInt:notifyPosition withInt:[((id<ADXRVGroup>) nil_chk(group)) getItemCount]];
   [self refreshEmptyState];
 }
@@ -175,27 +187,27 @@ J2OBJC_IGNORE_DESIGNATED_END
 - (void)addAllWithJavaUtilCollection:(id<JavaUtilCollection>)groups {
   if ([((id<JavaUtilCollection>) nil_chk(groups)) isEmpty]) return;
   [super addAllWithJavaUtilCollection:groups];
-  jint position = ADXSection_getItemCountWithoutFooter(self);
+  int32_t position = ADXSection_getItemCountWithoutFooter(self);
   [((JavaUtilArrayList *) nil_chk(self->children_)) addAllWithJavaUtilCollection:groups];
   [self notifyItemRangeInsertedWithInt:position withInt:ADXGroupUtils_getItemCountWithJavaUtilCollection_(groups)];
   [self refreshEmptyState];
 }
 
-- (void)addAllWithInt:(jint)position
+- (void)addAllWithInt:(int32_t)position
 withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   if ([((id<JavaUtilCollection>) nil_chk(groups)) isEmpty]) {
     return;
   }
   [super addAllWithInt:position withJavaUtilCollection:groups];
   [((JavaUtilArrayList *) nil_chk(self->children_)) addAllWithInt:position withJavaUtilCollection:groups];
-  jint notifyPosition = ADXSection_getHeaderItemCount(self) + ADXGroupUtils_getItemCountWithJavaUtilCollection_([children_ subListWithInt:0 withInt:position]);
+  int32_t notifyPosition = ADXSection_getHeaderItemCount(self) + ADXGroupUtils_getItemCountWithJavaUtilCollection_([children_ subListWithInt:0 withInt:position]);
   [self notifyItemRangeInsertedWithInt:notifyPosition withInt:ADXGroupUtils_getItemCountWithJavaUtilCollection_(groups)];
   [self refreshEmptyState];
 }
 
 - (void)addWithADXRVGroup:(id<ADXRVGroup>)group {
   [super addWithADXRVGroup:group];
-  jint position = ADXSection_getItemCountWithoutFooter(self);
+  int32_t position = ADXSection_getItemCountWithoutFooter(self);
   [((JavaUtilArrayList *) nil_chk(children_)) addWithId:group];
   [self notifyItemRangeInsertedWithInt:position withInt:[((id<ADXRVGroup>) nil_chk(group)) getItemCount]];
   [self refreshEmptyState];
@@ -203,7 +215,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
 
 - (void)removeWithADXRVGroup:(id<ADXRVGroup>)group {
   [super removeWithADXRVGroup:group];
-  jint position = [self getItemCountBeforeGroupWithADXRVGroup:group];
+  int32_t position = [self getItemCountBeforeGroupWithADXRVGroup:group];
   [((JavaUtilArrayList *) nil_chk(children_)) removeWithId:group];
   [self notifyItemRangeRemovedWithInt:position withInt:[((id<ADXRVGroup>) nil_chk(group)) getItemCount]];
   [self refreshEmptyState];
@@ -215,7 +227,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   }
   [super removeAllWithJavaUtilCollection:groups];
   for (id<ADXRVGroup> __strong group in groups) {
-    jint position = [self getItemCountBeforeGroupWithADXRVGroup:group];
+    int32_t position = [self getItemCountBeforeGroupWithADXRVGroup:group];
     [((JavaUtilArrayList *) nil_chk(children_)) removeWithId:group];
     [self notifyItemRangeRemovedWithInt:position withInt:[((id<ADXRVGroup>) nil_chk(group)) getItemCount]];
   }
@@ -249,7 +261,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
 }
 
 - (void)updateWithJavaUtilCollection:(id<JavaUtilCollection>)newBodyGroups
-                         withBoolean:(jboolean)detectMoves {
+                         withBoolean:(bool)detectMoves {
   id<JavaUtilList> oldBodyGroups = create_JavaUtilArrayList_initWithJavaUtilCollection_(children_);
   ADXDiffUtil_DiffResult *diffResult = ADXDiffUtil_calculateDiffWithADXDiffUtil_Callback_withBoolean_(create_ADXDiffCallback_initPackagePrivateWithJavaUtilCollection_withJavaUtilCollection_(oldBodyGroups, newBodyGroups), detectMoves);
   [self updateWithJavaUtilCollection:newBodyGroups withADXDiffUtil_DiffResult:diffResult];
@@ -287,7 +299,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   ADXSection_hidePlaceholder(self);
 }
 
-- (jboolean)isEmpty {
+- (bool)isEmpty {
   return [((JavaUtilArrayList *) nil_chk(children_)) isEmpty] || ADXGroupUtils_getItemCountWithJavaUtilCollection_(children_) == 0;
 }
 
@@ -296,7 +308,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
 }
 
 - (void)refreshEmptyState {
-  jboolean isEmpty = [self isEmpty];
+  bool isEmpty = [self isEmpty];
   if (isEmpty) {
     if (hideWhenEmpty_) {
       ADXSection_hideDecorations(self);
@@ -316,35 +328,35 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   ADXSection_showHeadersAndFooters(self);
 }
 
-- (jint)getBodyItemCount {
+- (int32_t)getBodyItemCount {
   return ADXSection_getBodyItemCount(self);
 }
 
-- (jint)getItemCountWithoutFooter {
+- (int32_t)getItemCountWithoutFooter {
   return ADXSection_getItemCountWithoutFooter(self);
 }
 
-- (jint)getHeaderCount {
+- (int32_t)getHeaderCount {
   return ADXSection_getHeaderCount(self);
 }
 
-- (jint)getHeaderItemCount {
+- (int32_t)getHeaderItemCount {
   return ADXSection_getHeaderItemCount(self);
 }
 
-- (jint)getFooterItemCount {
+- (int32_t)getFooterItemCount {
   return ADXSection_getFooterItemCount(self);
 }
 
-- (jint)getFooterCount {
+- (int32_t)getFooterCount {
   return ADXSection_getFooterCount(self);
 }
 
-- (jint)getPlaceholderCount {
+- (int32_t)getPlaceholderCount {
   return ADXSection_getPlaceholderCount(self);
 }
 
-- (id<ADXRVGroup>)getGroupWithInt:(jint)position {
+- (id<ADXRVGroup>)getGroupWithInt:(int32_t)position {
   if (ADXSection_isHeaderShown(self) && position == 0) return header_;
   position -= ADXSection_getHeaderCount(self);
   if (ADXSection_isPlaceholderShown(self) && position == 0) return placeholder_;
@@ -362,40 +374,40 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   }
 }
 
-- (jint)getGroupCount {
+- (int32_t)getGroupCount {
   return ADXSection_getHeaderCount(self) + ADXSection_getFooterCount(self) + ADXSection_getPlaceholderCount(self) + [((JavaUtilArrayList *) nil_chk(children_)) size];
 }
 
-- (jint)getPositionWithADXRVGroup:(id<ADXRVGroup>)group {
-  jint count = 0;
+- (int32_t)getPositionWithADXRVGroup:(id<ADXRVGroup>)group {
+  int32_t count = 0;
   if (ADXSection_isHeaderShown(self)) {
-    if (group == header_) return count;
+    if (JreObjectEqualsEquals(group, header_)) return count;
   }
   count += ADXSection_getHeaderCount(self);
   if (ADXSection_isPlaceholderShown(self)) {
-    if (group == placeholder_) return count;
+    if (JreObjectEqualsEquals(group, placeholder_)) return count;
   }
   count += ADXSection_getPlaceholderCount(self);
-  jint index = [((JavaUtilArrayList *) nil_chk(children_)) indexOfWithId:group];
+  int32_t index = [((JavaUtilArrayList *) nil_chk(children_)) indexOfWithId:group];
   if (index >= 0) return count + index;
   count += [children_ size];
   if (ADXSection_isFooterShown(self)) {
-    if (footer_ == group) {
+    if (JreObjectEqualsEquals(footer_, group)) {
       return count;
     }
   }
   return -1;
 }
 
-- (jboolean)isHeaderShown {
+- (bool)isHeaderShown {
   return ADXSection_isHeaderShown(self);
 }
 
-- (jboolean)isFooterShown {
+- (bool)isFooterShown {
   return ADXSection_isFooterShown(self);
 }
 
-- (jboolean)isPlaceholderShown {
+- (bool)isPlaceholderShown {
   return ADXSection_isPlaceholderShown(self);
 }
 
@@ -404,7 +416,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   if (self->header_ != nil) {
     [self->header_ unregisterGroupDataObserverWithADXGroupDataObserver:self];
   }
-  jint previousHeaderItemCount = ADXSection_getHeaderItemCount(self);
+  int32_t previousHeaderItemCount = ADXSection_getHeaderItemCount(self);
   JreStrongAssign(&self->header_, header);
   [header registerGroupDataObserverWithADXGroupDataObserver:self];
   ADXSection_notifyHeaderItemsChangedWithInt_(self, previousHeaderItemCount);
@@ -415,12 +427,12 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
     return;
   }
   [self->header_ unregisterGroupDataObserverWithADXGroupDataObserver:self];
-  jint previousHeaderItemCount = ADXSection_getHeaderItemCount(self);
+  int32_t previousHeaderItemCount = ADXSection_getHeaderItemCount(self);
   JreStrongAssign(&self->header_, nil);
   ADXSection_notifyHeaderItemsChangedWithInt_(self, previousHeaderItemCount);
 }
 
-- (void)notifyHeaderItemsChangedWithInt:(jint)previousHeaderItemCount {
+- (void)notifyHeaderItemsChangedWithInt:(int32_t)previousHeaderItemCount {
   ADXSection_notifyHeaderItemsChangedWithInt_(self, previousHeaderItemCount);
 }
 
@@ -429,7 +441,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   if (self->footer_ != nil) {
     [self->footer_ unregisterGroupDataObserverWithADXGroupDataObserver:self];
   }
-  jint previousFooterItemCount = ADXSection_getFooterItemCount(self);
+  int32_t previousFooterItemCount = ADXSection_getFooterItemCount(self);
   JreStrongAssign(&self->footer_, footer);
   [footer registerGroupDataObserverWithADXGroupDataObserver:self];
   ADXSection_notifyFooterItemsChangedWithInt_(self, previousFooterItemCount);
@@ -440,48 +452,48 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
     return;
   }
   [self->footer_ unregisterGroupDataObserverWithADXGroupDataObserver:self];
-  jint previousFooterItemCount = ADXSection_getFooterItemCount(self);
+  int32_t previousFooterItemCount = ADXSection_getFooterItemCount(self);
   JreStrongAssign(&self->footer_, nil);
   ADXSection_notifyFooterItemsChangedWithInt_(self, previousFooterItemCount);
 }
 
-- (void)notifyFooterItemsChangedWithInt:(jint)previousFooterItemCount {
+- (void)notifyFooterItemsChangedWithInt:(int32_t)previousFooterItemCount {
   ADXSection_notifyFooterItemsChangedWithInt_(self, previousFooterItemCount);
 }
 
-- (void)setHideWhenEmptyWithBoolean:(jboolean)hide {
+- (void)setHideWhenEmptyWithBoolean:(bool)hide {
   if (hideWhenEmpty_ == hide) return;
   hideWhenEmpty_ = hide;
   [self refreshEmptyState];
 }
 
 - (void)onItemInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                             withInt:(jint)position {
+                             withInt:(int32_t)position {
   [super onItemInsertedWithADXRVGroup:group withInt:position];
   [self refreshEmptyState];
 }
 
 - (void)onItemRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position {
+                            withInt:(int32_t)position {
   [super onItemRemovedWithADXRVGroup:group withInt:position];
   [self refreshEmptyState];
 }
 
 - (void)onItemRangeInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount {
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount {
   [super onItemRangeInsertedWithADXRVGroup:group withInt:positionStart withInt:itemCount];
   [self refreshEmptyState];
 }
 
 - (void)onItemRangeRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount {
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount {
   [super onItemRangeRemovedWithADXRVGroup:group withInt:positionStart withInt:itemCount];
   [self refreshEmptyState];
 }
 
-- (jint)getPlaceholderItemCount {
+- (int32_t)getPlaceholderItemCount {
   return ADXSection_getPlaceholderItemCount(self);
 }
 
@@ -688,7 +700,7 @@ void ADXSection_hidePlaceholder(ADXSection *self) {
 
 void ADXSection_hideDecorations(ADXSection *self) {
   if (!self->isHeaderAndFooterVisible_ && !self->isPlaceholderVisible_) return;
-  jint count = ADXSection_getHeaderItemCount(self) + ADXSection_getPlaceholderItemCount(self) + ADXSection_getFooterItemCount(self);
+  int32_t count = ADXSection_getHeaderItemCount(self) + ADXSection_getPlaceholderItemCount(self) + ADXSection_getFooterItemCount(self);
   self->isHeaderAndFooterVisible_ = false;
   self->isPlaceholderVisible_ = false;
   [self notifyItemRangeRemovedWithInt:0 withInt:count];
@@ -701,48 +713,48 @@ void ADXSection_showHeadersAndFooters(ADXSection *self) {
   [self notifyItemRangeInsertedWithInt:ADXSection_getItemCountWithoutFooter(self) withInt:ADXSection_getFooterItemCount(self)];
 }
 
-jint ADXSection_getBodyItemCount(ADXSection *self) {
+int32_t ADXSection_getBodyItemCount(ADXSection *self) {
   return self->isPlaceholderVisible_ ? ADXSection_getPlaceholderItemCount(self) : ADXGroupUtils_getItemCountWithJavaUtilCollection_(self->children_);
 }
 
-jint ADXSection_getItemCountWithoutFooter(ADXSection *self) {
+int32_t ADXSection_getItemCountWithoutFooter(ADXSection *self) {
   return ADXSection_getBodyItemCount(self) + ADXSection_getHeaderItemCount(self);
 }
 
-jint ADXSection_getHeaderCount(ADXSection *self) {
+int32_t ADXSection_getHeaderCount(ADXSection *self) {
   return self->header_ == nil || !self->isHeaderAndFooterVisible_ ? 0 : 1;
 }
 
-jint ADXSection_getHeaderItemCount(ADXSection *self) {
+int32_t ADXSection_getHeaderItemCount(ADXSection *self) {
   return ADXSection_getHeaderCount(self) == 0 ? 0 : [((id<ADXRVGroup>) nil_chk(self->header_)) getItemCount];
 }
 
-jint ADXSection_getFooterItemCount(ADXSection *self) {
+int32_t ADXSection_getFooterItemCount(ADXSection *self) {
   return ADXSection_getFooterCount(self) == 0 ? 0 : [((id<ADXRVGroup>) nil_chk(self->footer_)) getItemCount];
 }
 
-jint ADXSection_getFooterCount(ADXSection *self) {
+int32_t ADXSection_getFooterCount(ADXSection *self) {
   return self->footer_ == nil || !self->isHeaderAndFooterVisible_ ? 0 : 1;
 }
 
-jint ADXSection_getPlaceholderCount(ADXSection *self) {
+int32_t ADXSection_getPlaceholderCount(ADXSection *self) {
   return self->isPlaceholderVisible_ ? 1 : 0;
 }
 
-jboolean ADXSection_isHeaderShown(ADXSection *self) {
+bool ADXSection_isHeaderShown(ADXSection *self) {
   return ADXSection_getHeaderCount(self) > 0;
 }
 
-jboolean ADXSection_isFooterShown(ADXSection *self) {
+bool ADXSection_isFooterShown(ADXSection *self) {
   return ADXSection_getFooterCount(self) > 0;
 }
 
-jboolean ADXSection_isPlaceholderShown(ADXSection *self) {
+bool ADXSection_isPlaceholderShown(ADXSection *self) {
   return ADXSection_getPlaceholderCount(self) > 0;
 }
 
-void ADXSection_notifyHeaderItemsChangedWithInt_(ADXSection *self, jint previousHeaderItemCount) {
-  jint newHeaderItemCount = ADXSection_getHeaderItemCount(self);
+void ADXSection_notifyHeaderItemsChangedWithInt_(ADXSection *self, int32_t previousHeaderItemCount) {
+  int32_t newHeaderItemCount = ADXSection_getHeaderItemCount(self);
   if (previousHeaderItemCount > 0) {
     [self notifyItemRangeRemovedWithInt:0 withInt:previousHeaderItemCount];
   }
@@ -751,8 +763,8 @@ void ADXSection_notifyHeaderItemsChangedWithInt_(ADXSection *self, jint previous
   }
 }
 
-void ADXSection_notifyFooterItemsChangedWithInt_(ADXSection *self, jint previousFooterItemCount) {
-  jint newFooterItemCount = ADXSection_getFooterItemCount(self);
+void ADXSection_notifyFooterItemsChangedWithInt_(ADXSection *self, int32_t previousFooterItemCount) {
+  int32_t newFooterItemCount = ADXSection_getFooterItemCount(self);
   if (previousFooterItemCount > 0) {
     [self notifyItemRangeRemovedWithInt:ADXSection_getItemCountWithoutFooter(self) withInt:previousFooterItemCount];
   }
@@ -761,7 +773,7 @@ void ADXSection_notifyFooterItemsChangedWithInt_(ADXSection *self, jint previous
   }
 }
 
-jint ADXSection_getPlaceholderItemCount(ADXSection *self) {
+int32_t ADXSection_getPlaceholderItemCount(ADXSection *self) {
   if (self->isPlaceholderVisible_ && self->placeholder_ != nil) {
     return [self->placeholder_ getItemCount];
   }
@@ -770,6 +782,8 @@ jint ADXSection_getPlaceholderItemCount(ADXSection *self) {
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXSection)
 
+J2OBJC_NAME_MAPPING(ADXSection, "com.xwray.groupie", "ADX")
+
 @implementation ADXSection_1
 
 - (instancetype)initWithADXSection:(ADXSection *)outer$ {
@@ -777,24 +791,24 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXSection)
   return self;
 }
 
-- (void)onInsertedWithInt:(jint)position
-                  withInt:(jint)count {
+- (void)onInsertedWithInt:(int32_t)position
+                  withInt:(int32_t)count {
   [this$0_ notifyItemRangeInsertedWithInt:ADXSection_getHeaderItemCount(this$0_) + position withInt:count];
 }
 
-- (void)onRemovedWithInt:(jint)position
-                 withInt:(jint)count {
+- (void)onRemovedWithInt:(int32_t)position
+                 withInt:(int32_t)count {
   [this$0_ notifyItemRangeRemovedWithInt:ADXSection_getHeaderItemCount(this$0_) + position withInt:count];
 }
 
-- (void)onMovedWithInt:(jint)fromPosition
-               withInt:(jint)toPosition {
-  jint headerItemCount = ADXSection_getHeaderItemCount(this$0_);
+- (void)onMovedWithInt:(int32_t)fromPosition
+               withInt:(int32_t)toPosition {
+  int32_t headerItemCount = ADXSection_getHeaderItemCount(this$0_);
   [this$0_ notifyItemMovedWithInt:headerItemCount + fromPosition withInt:headerItemCount + toPosition];
 }
 
-- (void)onChangedWithInt:(jint)position
-                 withInt:(jint)count
+- (void)onChangedWithInt:(int32_t)position
+                 withInt:(int32_t)count
                   withId:(id)payload {
   [this$0_ notifyItemRangeChangedWithInt:ADXSection_getHeaderItemCount(this$0_) + position withInt:count withId:payload];
 }
@@ -825,7 +839,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXSection)
     { "this$0_", "LADXSection;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXSection;", "onInserted", "II", "onRemoved", "onMoved", "onChanged", "IILNSObject;" };
-  static const J2ObjcClassInfo _ADXSection_1 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8010, 5, 1, 0, -1, -1, -1, -1 };
+  static const J2ObjcClassInfo _ADXSection_1 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8000, 5, 1, 0, -1, -1, -1, -1 };
   return &_ADXSection_1;
 }
 

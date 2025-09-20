@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\ExpandableGroup.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_ExpandableGroup")
@@ -26,6 +27,8 @@
 #define INCLUDE_ADXNestedGroup 1
 #include "NestedGroup.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol ADXExpandableItem;
 @protocol ADXRVGroup;
 @protocol JavaUtilCollection;
@@ -41,65 +44,65 @@
 - (instancetype)initWithADXRVGroup:(id<ADXRVGroup, ADXExpandableItem>)expandableItem;
 
 - (instancetype)initWithADXRVGroup:(id<ADXRVGroup, ADXExpandableItem>)expandableItem
-                       withBoolean:(jboolean)isExpanded;
+                       withBoolean:(bool)isExpanded;
 
-- (void)addWithInt:(jint)position
+- (void)addWithInt:(int32_t)position
     withADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)addWithADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)addAllWithJavaUtilCollection:(id<JavaUtilCollection>)groups;
 
-- (void)addAllWithInt:(jint)position
+- (void)addAllWithInt:(int32_t)position
 withJavaUtilCollection:(id<JavaUtilCollection>)groups;
 
-- (jint)getChildCount;
+- (int32_t)getChildCount;
 
-- (id<ADXRVGroup>)getGroupWithInt:(jint)position;
+- (id<ADXRVGroup>)getGroupWithInt:(int32_t)position;
 
-- (jint)getGroupCount;
+- (int32_t)getGroupCount;
 
-- (jint)getPositionWithADXRVGroup:(id<ADXRVGroup>)group;
+- (int32_t)getPositionWithADXRVGroup:(id<ADXRVGroup>)group;
 
-- (jboolean)isExpanded;
+- (bool)isExpanded;
 
 - (void)onChangedWithADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)onDataSetInvalidated;
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position;
+                            withInt:(int32_t)position;
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position
+                            withInt:(int32_t)position
                              withId:(id)payload;
 
 - (void)onItemInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                             withInt:(jint)position;
+                             withInt:(int32_t)position;
 
 - (void)onItemMovedWithADXRVGroup:(id<ADXRVGroup>)group
-                          withInt:(jint)fromPosition
-                          withInt:(jint)toPosition;
+                          withInt:(int32_t)fromPosition
+                          withInt:(int32_t)toPosition;
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount;
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount;
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount
                                   withId:(id)payload;
 
 - (void)onItemRangeInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount;
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount;
 
 - (void)onItemRangeRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount;
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount;
 
 - (void)onItemRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position;
+                            withInt:(int32_t)position;
 
 - (void)onToggleExpanded;
 
@@ -109,7 +112,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups;
 
 - (void)replaceAllWithJavaUtilCollection:(id<JavaUtilCollection>)groups;
 
-- (void)setExpandedWithBoolean:(jboolean)isExpanded;
+- (void)setExpandedWithBoolean:(bool)isExpanded;
 
 // Disallowed inherited constructors, do not use.
 
@@ -125,15 +128,16 @@ FOUNDATION_EXPORT ADXExpandableGroup *new_ADXExpandableGroup_initWithADXRVGroup_
 
 FOUNDATION_EXPORT ADXExpandableGroup *create_ADXExpandableGroup_initWithADXRVGroup_(id<ADXRVGroup, ADXExpandableItem> expandableItem);
 
-FOUNDATION_EXPORT void ADXExpandableGroup_initWithADXRVGroup_withBoolean_(ADXExpandableGroup *self, id<ADXRVGroup, ADXExpandableItem> expandableItem, jboolean isExpanded);
+FOUNDATION_EXPORT void ADXExpandableGroup_initWithADXRVGroup_withBoolean_(ADXExpandableGroup *self, id<ADXRVGroup, ADXExpandableItem> expandableItem, bool isExpanded);
 
-FOUNDATION_EXPORT ADXExpandableGroup *new_ADXExpandableGroup_initWithADXRVGroup_withBoolean_(id<ADXRVGroup, ADXExpandableItem> expandableItem, jboolean isExpanded) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXExpandableGroup *new_ADXExpandableGroup_initWithADXRVGroup_withBoolean_(id<ADXRVGroup, ADXExpandableItem> expandableItem, bool isExpanded) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXExpandableGroup *create_ADXExpandableGroup_initWithADXRVGroup_withBoolean_(id<ADXRVGroup, ADXExpandableItem> expandableItem, jboolean isExpanded);
+FOUNDATION_EXPORT ADXExpandableGroup *create_ADXExpandableGroup_initWithADXRVGroup_withBoolean_(id<ADXRVGroup, ADXExpandableItem> expandableItem, bool isExpanded);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXExpandableGroup)
 
 @compatibility_alias ComXwrayGroupieExpandableGroup ADXExpandableGroup;
+
 
 #endif
 

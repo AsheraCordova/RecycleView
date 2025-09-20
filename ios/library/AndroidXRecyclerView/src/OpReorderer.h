@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\OpReorderer.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_OpReorderer")
@@ -17,6 +18,7 @@
 #define ADXOpReorderer_
 
 @class ADXAdapterHelper_UpdateOp;
+@class JavaLangInteger;
 @protocol ADXOpReorderer_Callback;
 @protocol JavaUtilList;
 
@@ -32,15 +34,15 @@
 - (void)reorderOpsWithJavaUtilList:(id<JavaUtilList>)ops;
 
 - (void)swapMoveRemoveWithJavaUtilList:(id<JavaUtilList>)list
-                               withInt:(jint)movePos
+                               withInt:(int32_t)movePos
          withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)moveOp
-                               withInt:(jint)removePos
+                               withInt:(int32_t)removePos
          withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)removeOp;
 
 - (void)swapMoveUpdateWithJavaUtilList:(id<JavaUtilList>)list
-                               withInt:(jint)move
+                               withInt:(int32_t)move
          withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)moveOp
-                               withInt:(jint)update
+                               withInt:(int32_t)update
          withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)updateOp;
 
 // Disallowed inherited constructors, do not use.
@@ -63,18 +65,20 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXOpReorderer)
 
 @compatibility_alias AndroidxRecyclerviewWidgetOpReorderer ADXOpReorderer;
 
+
 #endif
 
 #if !defined (ADXOpReorderer_Callback_) && (INCLUDE_ALL_OpReorderer || defined(INCLUDE_ADXOpReorderer_Callback))
 #define ADXOpReorderer_Callback_
 
 @class ADXAdapterHelper_UpdateOp;
+@class JavaLangInteger;
 
 @protocol ADXOpReorderer_Callback < JavaObject >
 
-- (ADXAdapterHelper_UpdateOp *)obtainUpdateOpWithInt:(jint)cmd
-                                             withInt:(jint)startPosition
-                                             withInt:(jint)itemCount
+- (ADXAdapterHelper_UpdateOp *)obtainUpdateOpWithInt:(int32_t)cmd
+                                             withInt:(int32_t)startPosition
+                                             withInt:(int32_t)itemCount
                                               withId:(id)payload;
 
 - (void)recycleUpdateOpWithADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)op;
@@ -84,6 +88,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXOpReorderer)
 J2OBJC_EMPTY_STATIC_INIT(ADXOpReorderer_Callback)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXOpReorderer_Callback)
+
 
 #endif
 

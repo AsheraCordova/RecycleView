@@ -3,14 +3,27 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\ViewBoundsCheck.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "IOSClass.h"
 #include "IOSObjectArray.h"
 #include "J2ObjC_source.h"
 #include "View.h"
 #include "ViewBoundsCheck.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Integer.h"
 #include "java/lang/annotation/Annotation.h"
 #include "java/lang/annotation/Retention.h"
 #include "java/lang/annotation/RetentionPolicy.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXViewBoundsCheck_ViewBounds : NSObject
@@ -30,18 +43,18 @@ __attribute__((unused)) static IOSObjectArray *ADXViewBoundsCheck_ViewBounds__An
   return self;
 }
 
-- (ADView *)findOneViewWithinBoundFlagsWithInt:(jint)fromIndex
-                                       withInt:(jint)toIndex
-                                       withInt:(jint)preferredBoundFlags
-                                       withInt:(jint)acceptableBoundFlags {
-  jint start = [((id<ADXViewBoundsCheck_Callback>) nil_chk(mCallback_)) getParentStart];
-  jint end = [mCallback_ getParentEnd];
-  jint next = toIndex > fromIndex ? 1 : -1;
+- (ADView *)findOneViewWithinBoundFlagsWithInt:(int32_t)fromIndex
+                                       withInt:(int32_t)toIndex
+                                       withInt:(int32_t)preferredBoundFlags
+                                       withInt:(int32_t)acceptableBoundFlags {
+  int32_t start = [((id<ADXViewBoundsCheck_Callback>) nil_chk(mCallback_)) getParentStart];
+  int32_t end = [mCallback_ getParentEnd];
+  int32_t next = toIndex > fromIndex ? 1 : -1;
   ADView *acceptableMatch = nil;
-  for (jint i = fromIndex; i != toIndex; i += next) {
+  for (int32_t i = fromIndex; i != toIndex; i += next) {
     ADView *child = [mCallback_ getChildAtWithInt:i];
-    jint childStart = [mCallback_ getChildStartWithADView:child];
-    jint childEnd = [mCallback_ getChildEndWithADView:child];
+    int32_t childStart = [mCallback_ getChildStartWithADView:child];
+    int32_t childEnd = [mCallback_ getChildEndWithADView:child];
     [((ADXViewBoundsCheck_BoundFlags *) nil_chk(mBoundFlags_)) setBoundsWithInt:start withInt:end withInt:childStart withInt:childEnd];
     if (preferredBoundFlags != 0) {
       [((ADXViewBoundsCheck_BoundFlags *) nil_chk(mBoundFlags_)) resetFlags];
@@ -61,8 +74,8 @@ __attribute__((unused)) static IOSObjectArray *ADXViewBoundsCheck_ViewBounds__An
   return acceptableMatch;
 }
 
-- (jboolean)isViewWithinBoundFlagsWithADView:(ADView *)child
-                                     withInt:(jint)boundsFlags {
+- (bool)isViewWithinBoundFlagsWithADView:(ADView *)child
+                                 withInt:(int32_t)boundsFlags {
   [((ADXViewBoundsCheck_BoundFlags *) nil_chk(mBoundFlags_)) setBoundsWithInt:[((id<ADXViewBoundsCheck_Callback>) nil_chk(mCallback_)) getParentStart] withInt:[mCallback_ getParentEnd] withInt:[mCallback_ getChildStartWithADView:child] withInt:[mCallback_ getChildEndWithADView:child]];
   if (boundsFlags != 0) {
     [((ADXViewBoundsCheck_BoundFlags *) nil_chk(mBoundFlags_)) resetFlags];
@@ -163,17 +176,17 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (void)setBoundsWithInt:(jint)rvStart
-                 withInt:(jint)rvEnd
-                 withInt:(jint)childStart
-                 withInt:(jint)childEnd {
+- (void)setBoundsWithInt:(int32_t)rvStart
+                 withInt:(int32_t)rvEnd
+                 withInt:(int32_t)childStart
+                 withInt:(int32_t)childEnd {
   mRvStart_ = rvStart;
   mRvEnd_ = rvEnd;
   mChildStart_ = childStart;
   mChildEnd_ = childEnd;
 }
 
-- (void)addFlagsWithInt:(jint)flags {
+- (void)addFlagsWithInt:(int32_t)flags {
   mBoundFlags_ |= flags;
 }
 
@@ -181,8 +194,8 @@ J2OBJC_IGNORE_DESIGNATED_END
   mBoundFlags_ = 0;
 }
 
-- (jint)compareWithInt:(jint)x
-               withInt:(jint)y {
+- (int32_t)compareWithInt:(int32_t)x
+                  withInt:(int32_t)y {
   if (x > y) {
     return ADXViewBoundsCheck_GT;
   }
@@ -192,7 +205,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   return ADXViewBoundsCheck_LT;
 }
 
-- (jboolean)boundsMatch {
+- (bool)boundsMatch {
   if ((mBoundFlags_ & (JreLShift32(ADXViewBoundsCheck_MASK, ADXViewBoundsCheck_CVS_PVS_POS))) != 0) {
     if ((mBoundFlags_ & (JreLShift32([self compareWithInt:mChildStart_ withInt:mRvStart_], ADXViewBoundsCheck_CVS_PVS_POS))) == 0) {
       return false;

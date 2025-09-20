@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\NestedGroup.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_NestedGroup")
@@ -31,6 +32,7 @@
 #include "GroupDataObserver.h"
 
 @class ADXItem;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 
 /*!
@@ -45,47 +47,47 @@
 
 - (instancetype)init;
 
-- (void)addWithInt:(jint)position
+- (void)addWithInt:(int32_t)position
     withADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)addWithADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)addAllWithJavaUtilCollection:(id<JavaUtilCollection>)groups;
 
-- (void)addAllWithInt:(jint)position
+- (void)addAllWithInt:(int32_t)position
 withJavaUtilCollection:(id<JavaUtilCollection>)groups;
 
-- (id<ADXRVGroup>)getGroupWithInt:(jint)position;
+- (id<ADXRVGroup>)getGroupWithInt:(int32_t)position;
 
-- (jint)getGroupCount;
+- (int32_t)getGroupCount;
 
-- (ADXItem *)getItemWithInt:(jint)position;
+- (ADXItem *)getItemWithInt:(int32_t)position;
 
-- (jint)getItemCount;
+- (int32_t)getItemCount;
 
-- (jint)getPositionWithADXItem:(ADXItem *)item;
+- (int32_t)getPositionWithADXItem:(ADXItem *)item;
 
-- (jint)getPositionWithADXRVGroup:(id<ADXRVGroup>)group;
+- (int32_t)getPositionWithADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)notifyChanged;
 
 - (void)notifyDataSetInvalidated;
 
-- (void)notifyItemChangedWithInt:(jint)position;
+- (void)notifyItemChangedWithInt:(int32_t)position;
 
-- (void)notifyItemChangedWithInt:(jint)position
+- (void)notifyItemChangedWithInt:(int32_t)position
                           withId:(id)payload;
 
-- (void)notifyItemInsertedWithInt:(jint)position;
+- (void)notifyItemInsertedWithInt:(int32_t)position;
 
-- (void)notifyItemMovedWithInt:(jint)fromPosition
-                       withInt:(jint)toPosition;
+- (void)notifyItemMovedWithInt:(int32_t)fromPosition
+                       withInt:(int32_t)toPosition;
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount;
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount;
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount
                                withId:(id)payload;
 
 /*!
@@ -93,13 +95,13 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups;
  @param positionStart
  @param itemCount
  */
-- (void)notifyItemRangeInsertedWithInt:(jint)positionStart
-                               withInt:(jint)itemCount;
+- (void)notifyItemRangeInsertedWithInt:(int32_t)positionStart
+                               withInt:(int32_t)itemCount;
 
-- (void)notifyItemRangeRemovedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount;
+- (void)notifyItemRangeRemovedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount;
 
-- (void)notifyItemRemovedWithInt:(jint)position;
+- (void)notifyItemRemovedWithInt:(int32_t)position;
 
 /*!
  @brief Every item in the group still exists but the data in each has changed (e.g.should rebind).
@@ -110,38 +112,38 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups;
 - (void)onDataSetInvalidated;
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position;
+                            withInt:(int32_t)position;
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position
+                            withInt:(int32_t)position
                              withId:(id)payload;
 
 - (void)onItemInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                             withInt:(jint)position;
+                             withInt:(int32_t)position;
 
 - (void)onItemMovedWithADXRVGroup:(id<ADXRVGroup>)group
-                          withInt:(jint)fromPosition
-                          withInt:(jint)toPosition;
+                          withInt:(int32_t)fromPosition
+                          withInt:(int32_t)toPosition;
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount;
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount;
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount
                                   withId:(id)payload;
 
 - (void)onItemRangeInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount;
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount;
 
 - (void)onItemRangeRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount;
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount;
 
 - (void)onItemRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position;
+                            withInt:(int32_t)position;
 
 - (void)registerGroupDataObserverWithADXGroupDataObserver:(id<ADXGroupDataObserver>)groupDataObserver;
 
@@ -155,9 +157,9 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups;
 
 #pragma mark Protected
 
-- (jint)getItemCountBeforeGroupWithInt:(jint)groupIndex;
+- (int32_t)getItemCountBeforeGroupWithInt:(int32_t)groupIndex;
 
-- (jint)getItemCountBeforeGroupWithADXRVGroup:(id<ADXRVGroup>)group;
+- (int32_t)getItemCountBeforeGroupWithADXRVGroup:(id<ADXRVGroup>)group;
 
 @end
 
@@ -168,6 +170,7 @@ FOUNDATION_EXPORT void ADXNestedGroup_init(ADXNestedGroup *self);
 J2OBJC_TYPE_LITERAL_HEADER(ADXNestedGroup)
 
 @compatibility_alias ComXwrayGroupieNestedGroup ADXNestedGroup;
+
 
 #endif
 

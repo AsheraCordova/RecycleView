@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\OnAsyncUpdateListener.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_OnAsyncUpdateListener")
@@ -31,6 +32,7 @@ J2OBJC_EMPTY_STATIC_INIT(ADXOnAsyncUpdateListener)
 J2OBJC_TYPE_LITERAL_HEADER(ADXOnAsyncUpdateListener)
 
 #define ComXwrayGroupieOnAsyncUpdateListener ADXOnAsyncUpdateListener
+
 
 #endif
 

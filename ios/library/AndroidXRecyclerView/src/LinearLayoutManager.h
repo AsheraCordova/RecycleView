@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\LinearLayoutManager.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_LinearLayoutManager")
@@ -38,6 +39,9 @@
 @class ADXRecyclerView_Recycler;
 @class ADXRecyclerView_State;
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class NSString;
 @protocol ADParcelable;
 @protocol ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;
 
@@ -50,7 +54,7 @@
   /*!
    @brief Current orientation.Either <code>HORIZONTAL</code> or <code>VERTICAL</code>
    */
-  jint mOrientation_;
+  int32_t mOrientation_;
   /*!
    @brief Many calculations are made depending on orientation.To keep it clean, this interface
   helps <code>LinearLayoutManager</code> make those decisions.
@@ -61,17 +65,17 @@
    It is calculated by checking <code>getReverseLayout()</code> and View's layout direction. 
  <code>onLayoutChildren(RecyclerView.Recycler, RecyclerView.State)</code> is run.
    */
-  jboolean mShouldReverseLayout_;
+  bool mShouldReverseLayout_;
   /*!
    @brief When LayoutManager needs to scroll to a position, it sets this variable and requests a
   layout which will check this variable and re-layout accordingly.
    */
-  jint mPendingScrollPosition_;
+  int32_t mPendingScrollPosition_;
   /*!
    @brief Used to keep the offset value when <code>scrollToPositionWithOffset(int, int)</code> is
   called.
    */
-  jint mPendingScrollPositionOffset_;
+  int32_t mPendingScrollPositionOffset_;
   ADXLinearLayoutManager_SavedState *mPendingSavedState_;
   /*!
    @brief Re-used variable to keep anchor information on re-layout.
@@ -95,40 +99,40 @@
  @param reverseLayout When set to true, layouts from end to start.
  */
 - (instancetype)initWithADContext:(ADContext *)context
-                          withInt:(jint)orientation
-                      withBoolean:(jboolean)reverseLayout;
+                          withInt:(int32_t)orientation
+                      withBoolean:(bool)reverseLayout;
 
 - (void)assertNotInLayoutOrScrollWithNSString:(NSString *)message;
 
 /*!
  @return true if <code>getOrientation()</code> is <code>HORIZONTAL</code>
  */
-- (jboolean)canScrollHorizontally;
+- (bool)canScrollHorizontally;
 
 /*!
  @return true if <code>getOrientation()</code> is <code>VERTICAL</code>
  */
-- (jboolean)canScrollVertically;
+- (bool)canScrollVertically;
 
-- (void)collectAdjacentPrefetchPositionsWithInt:(jint)dx
-                                        withInt:(jint)dy
+- (void)collectAdjacentPrefetchPositionsWithInt:(int32_t)dx
+                                        withInt:(int32_t)dy
                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
 withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>)layoutPrefetchRegistry;
 
-- (void)collectInitialPrefetchPositionsWithInt:(jint)adapterItemCount
+- (void)collectInitialPrefetchPositionsWithInt:(int32_t)adapterItemCount
 withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>)layoutPrefetchRegistry;
 
-- (jint)computeHorizontalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeHorizontalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeVerticalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeVerticalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 /*!
  @brief Returns the adapter position of the first fully visible view.This position does not include
@@ -141,7 +145,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  - seealso: #findFirstVisibleItemPosition()
  - seealso: #findLastCompletelyVisibleItemPosition()
  */
-- (jint)findFirstCompletelyVisibleItemPosition;
+- (int32_t)findFirstCompletelyVisibleItemPosition;
 
 /*!
  @brief Returns the adapter position of the first visible view.This position does not include
@@ -160,7 +164,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  - seealso: #findFirstCompletelyVisibleItemPosition()
  - seealso: #findLastVisibleItemPosition()
  */
-- (jint)findFirstVisibleItemPosition;
+- (int32_t)findFirstVisibleItemPosition;
 
 /*!
  @brief Returns the adapter position of the last fully visible view.This position does not include
@@ -173,7 +177,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  - seealso: #findLastVisibleItemPosition()
  - seealso: #findFirstCompletelyVisibleItemPosition()
  */
-- (jint)findLastCompletelyVisibleItemPosition;
+- (int32_t)findLastCompletelyVisibleItemPosition;
 
 /*!
  @brief Returns the adapter position of the last visible view.This position does not include
@@ -192,11 +196,11 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  - seealso: #findLastCompletelyVisibleItemPosition()
  - seealso: #findFirstVisibleItemPosition()
  */
-- (jint)findLastVisibleItemPosition;
+- (int32_t)findLastVisibleItemPosition;
 
 /*!
  */
-- (ADView *)findViewByPositionWithInt:(jint)position;
+- (ADView *)findViewByPositionWithInt:(int32_t)position;
 
 /*!
  */
@@ -212,14 +216,14 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  - seealso: #setInitialPrefetchItemCount(int)
  - seealso: #collectInitialPrefetchPositions(int, LayoutPrefetchRegistry)
  */
-- (jint)getInitialPrefetchItemCount;
+- (int32_t)getInitialPrefetchItemCount;
 
 /*!
  @brief Returns the current orientation of the layout.
  @return Current orientation,  either <code>HORIZONTAL</code> or <code>VERTICAL</code>
  - seealso: #setOrientation(int)
  */
-- (jint)getOrientation;
+- (int32_t)getOrientation;
 
 /*!
  @brief Returns whether LayoutManager will recycle its children when it is detached from
@@ -227,33 +231,33 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  @return true if LayoutManager will recycle its children when it is detached from
   RecyclerView.
  */
-- (jboolean)getRecycleChildrenOnDetach;
+- (bool)getRecycleChildrenOnDetach;
 
 /*!
  @brief Returns if views are laid out from the opposite direction of the layout.
  @return If layout is reversed or not.
  - seealso: #setReverseLayout(boolean)
  */
-- (jboolean)getReverseLayout;
+- (bool)getReverseLayout;
 
-- (jboolean)getStackFromEnd;
+- (bool)getStackFromEnd;
 
 /*!
  */
-- (jboolean)isAutoMeasureEnabled;
+- (bool)isAutoMeasureEnabled;
 
 /*!
  @brief Returns the current state of the smooth scrollbar feature.It is enabled by default.
  @return True if smooth scrollbar is enabled, false otherwise.
  - seealso: #setSmoothScrollbarEnabled(boolean)
  */
-- (jboolean)isSmoothScrollbarEnabled;
+- (bool)isSmoothScrollbarEnabled;
 
 - (void)onDetachedFromWindowWithADXRecyclerView:(ADXRecyclerView *)view
                    withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler;
 
 - (ADView *)onFocusSearchFailedWithADView:(ADView *)focused
-                                  withInt:(jint)direction
+                                  withInt:(int32_t)direction
              withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                 withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
@@ -272,14 +276,14 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  */
 - (void)prepareForDropWithADView:(ADView *)view
                       withADView:(ADView *)target
-                         withInt:(jint)x
-                         withInt:(jint)y;
+                         withInt:(int32_t)x
+                         withInt:(int32_t)y;
 
 /*!
  */
-- (jint)scrollHorizontallyByWithInt:(jint)dx
-       withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-          withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)scrollHorizontallyByWithInt:(int32_t)dx
+          withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+             withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 /*!
  @brief <p>Scroll the RecyclerView to make the position visible.
@@ -295,7 +299,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  @param position Scroll to this adapter position
  - seealso: #scrollToPositionWithOffset(int, int)
  */
-- (void)scrollToPositionWithInt:(jint)position;
+- (void)scrollToPositionWithInt:(int32_t)position;
 
 /*!
  @brief Scroll to the specified adapter position with the given offset from resolved layout
@@ -314,14 +318,14 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  - seealso: #setReverseLayout(boolean)
  - seealso: #scrollToPosition(int)
  */
-- (void)scrollToPositionWithOffsetWithInt:(jint)position
-                                  withInt:(jint)offset;
+- (void)scrollToPositionWithOffsetWithInt:(int32_t)position
+                                  withInt:(int32_t)offset;
 
 /*!
  */
-- (jint)scrollVerticallyByWithInt:(jint)dy
-     withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-        withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)scrollVerticallyByWithInt:(int32_t)dy
+        withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+           withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 /*!
  @brief Sets the number of items to prefetch in 
@@ -349,7 +353,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  - seealso: #getInitialPrefetchItemCount()
  - seealso: #collectInitialPrefetchPositions(int, LayoutPrefetchRegistry)
  */
-- (void)setInitialPrefetchItemCountWithInt:(jint)itemCount;
+- (void)setInitialPrefetchItemCountWithInt:(int32_t)itemCount;
 
 /*!
  @brief Sets the orientation of the layout.
@@ -357,7 +361,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   will do its best to keep scroll position.
  @param orientation<code>HORIZONTAL</code>  or <code>VERTICAL</code>
  */
-- (void)setOrientationWithInt:(jint)orientation;
+- (void)setOrientationWithInt:(int32_t)orientation;
 
 /*!
  @brief Set whether LayoutManager will recycle its children when it is detached from
@@ -371,7 +375,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   is restored.
  @param recycleChildrenOnDetach Whether children should be recycled in detach or not.
  */
-- (void)setRecycleChildrenOnDetachWithBoolean:(jboolean)recycleChildrenOnDetach;
+- (void)setRecycleChildrenOnDetachWithBoolean:(bool)recycleChildrenOnDetach;
 
 /*!
  @brief Used to reverse item traversal and layout order.
@@ -385,7 +389,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  <code>r.android.widget.AbsListView.setStackFromBottom(boolean)</code>, use 
  <code>setStackFromEnd(boolean)</code>
  */
-- (void)setReverseLayoutWithBoolean:(jboolean)reverseLayout;
+- (void)setReverseLayoutWithBoolean:(bool)reverseLayout;
 
 /*!
  @brief When smooth scrollbar is enabled, the position and size of the scrollbar thumb is computed
@@ -401,14 +405,14 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  @param enabled Whether or not to enable smooth scrollbar.
  - seealso: #setSmoothScrollbarEnabled(boolean)
  */
-- (void)setSmoothScrollbarEnabledWithBoolean:(jboolean)enabled;
+- (void)setSmoothScrollbarEnabledWithBoolean:(bool)enabled;
 
 /*!
  @brief Compatibility support for <code>r.android.widget.AbsListView.setStackFromBottom(boolean)</code>
  */
-- (void)setStackFromEndWithBoolean:(jboolean)stackFromEnd;
+- (void)setStackFromEndWithBoolean:(bool)stackFromEnd;
 
-- (jboolean)supportsPredictiveItemAnimations;
+- (bool)supportsPredictiveItemAnimations;
 
 #pragma mark Protected
 
@@ -462,9 +466,9 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   enough to handle it.</p>
  @return The extra space that should be laid out (in pixels).
  */
-- (jint)getExtraLayoutSpaceWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)getExtraLayoutSpaceWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jboolean)isLayoutRTL;
+- (bool)isLayoutRTL;
 
 #pragma mark Package-Private
 
@@ -480,7 +484,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  @return <code>LayoutState.LAYOUT_START</code> or <code>LayoutState.LAYOUT_END</code> if focus direction
   is applicable to current state, <code>LayoutState.INVALID_LAYOUT</code> otherwise.
  */
-- (jint)convertFocusDirectionToLayoutDirectionWithInt:(jint)focusDirection;
+- (int32_t)convertFocusDirectionToLayoutDirectionWithInt:(int32_t)focusDirection;
 
 /*!
  @brief Test overrides this to plug some tracking and verification.
@@ -501,10 +505,10 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  @param stopOnFocusable If true, filling stops in the first focusable new child
  @return Number of pixels that it added. Useful for scroll functions.
  */
-- (jint)fillWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-  withADXLinearLayoutManager_LayoutState:(ADXLinearLayoutManager_LayoutState *)layoutState
-               withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                             withBoolean:(jboolean)stopOnFocusable;
+- (int32_t)fillWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+     withADXLinearLayoutManager_LayoutState:(ADXLinearLayoutManager_LayoutState *)layoutState
+                  withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                                withBoolean:(bool)stopOnFocusable;
 
 /*!
  @brief Convenience method to find the visible child closes to end.Caller should check if it has
@@ -512,8 +516,8 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  @param completelyVisible Whether child should be completely visible or not
  @return The first visible child closest to end of the layout from user's perspective.
  */
-- (ADView *)findFirstVisibleChildClosestToEndWithBoolean:(jboolean)completelyVisible
-                                             withBoolean:(jboolean)acceptPartiallyVisible;
+- (ADView *)findFirstVisibleChildClosestToEndWithBoolean:(bool)completelyVisible
+                                             withBoolean:(bool)acceptPartiallyVisible;
 
 /*!
  @brief Convenience method to find the visible child closes to start.Caller should check if it has
@@ -521,16 +525,16 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  @param completelyVisible Whether child should be completely visible or not
  @return The first visible child closest to start of the layout from user's perspective.
  */
-- (ADView *)findFirstVisibleChildClosestToStartWithBoolean:(jboolean)completelyVisible
-                                               withBoolean:(jboolean)acceptPartiallyVisible;
+- (ADView *)findFirstVisibleChildClosestToStartWithBoolean:(bool)completelyVisible
+                                               withBoolean:(bool)acceptPartiallyVisible;
 
-- (ADView *)findOnePartiallyOrCompletelyInvisibleChildWithInt:(jint)fromIndex
-                                                      withInt:(jint)toIndex;
+- (ADView *)findOnePartiallyOrCompletelyInvisibleChildWithInt:(int32_t)fromIndex
+                                                      withInt:(int32_t)toIndex;
 
-- (ADView *)findOneVisibleChildWithInt:(jint)fromIndex
-                               withInt:(jint)toIndex
-                           withBoolean:(jboolean)completelyVisible
-                           withBoolean:(jboolean)acceptPartiallyVisible;
+- (ADView *)findOneVisibleChildWithInt:(int32_t)fromIndex
+                               withInt:(int32_t)toIndex
+                           withBoolean:(bool)completelyVisible
+                           withBoolean:(bool)acceptPartiallyVisible;
 
 /*!
  @brief Finds a suitable anchor child.
@@ -550,8 +554,8 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  */
 - (ADView *)findReferenceChildWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                                  withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                               withBoolean:(jboolean)layoutFromEnd
-                                               withBoolean:(jboolean)traverseChildrenInReverseOrder;
+                                               withBoolean:(bool)layoutFromEnd
+                                               withBoolean:(bool)traverseChildrenInReverseOrder;
 
 - (void)layoutChunkWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
@@ -569,15 +573,15 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
 - (void)onAnchorReadyWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                         withADXRecyclerView_State:(ADXRecyclerView_State *)state
             withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo
-                                          withInt:(jint)firstLayoutItemDirection;
+                                          withInt:(int32_t)firstLayoutItemDirection;
 
-- (jboolean)resolveIsInfinite;
+- (bool)resolveIsInfinite;
 
-- (jint)scrollByWithInt:(jint)delta
+- (int32_t)scrollByWithInt:(int32_t)delta
 withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+ withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jboolean)shouldMeasureTwice;
+- (bool)shouldMeasureTwice;
 
 /*!
  @brief Used for debugging.
@@ -602,21 +606,21 @@ J2OBJC_FIELD_SETTER(ADXLinearLayoutManager, mOrientationHelper_, ADXOrientationH
 J2OBJC_FIELD_SETTER(ADXLinearLayoutManager, mPendingSavedState_, ADXLinearLayoutManager_SavedState *)
 J2OBJC_FIELD_SETTER(ADXLinearLayoutManager, mAnchorInfo_, ADXLinearLayoutManager_AnchorInfo *)
 
-inline jboolean ADXLinearLayoutManager_get_DEBUG(void);
+inline bool ADXLinearLayoutManager_get_DEBUG(void);
 #define ADXLinearLayoutManager_DEBUG false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager, DEBUG, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager, DEBUG, bool)
 
-inline jint ADXLinearLayoutManager_get_HORIZONTAL(void);
+inline int32_t ADXLinearLayoutManager_get_HORIZONTAL(void);
 #define ADXLinearLayoutManager_HORIZONTAL 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager, HORIZONTAL, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager, HORIZONTAL, int32_t)
 
-inline jint ADXLinearLayoutManager_get_VERTICAL(void);
+inline int32_t ADXLinearLayoutManager_get_VERTICAL(void);
 #define ADXLinearLayoutManager_VERTICAL 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager, VERTICAL, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager, VERTICAL, int32_t)
 
-inline jint ADXLinearLayoutManager_get_INVALID_OFFSET(void);
-#define ADXLinearLayoutManager_INVALID_OFFSET ((jint) 0x80000000)
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager, INVALID_OFFSET, jint)
+inline int32_t ADXLinearLayoutManager_get_INVALID_OFFSET(void);
+#define ADXLinearLayoutManager_INVALID_OFFSET ((int32_t) 0x80000000)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager, INVALID_OFFSET, int32_t)
 
 FOUNDATION_EXPORT void ADXLinearLayoutManager_initWithADContext_(ADXLinearLayoutManager *self, ADContext *context);
 
@@ -624,15 +628,16 @@ FOUNDATION_EXPORT ADXLinearLayoutManager *new_ADXLinearLayoutManager_initWithADC
 
 FOUNDATION_EXPORT ADXLinearLayoutManager *create_ADXLinearLayoutManager_initWithADContext_(ADContext *context);
 
-FOUNDATION_EXPORT void ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADXLinearLayoutManager *self, ADContext *context, jint orientation, jboolean reverseLayout);
+FOUNDATION_EXPORT void ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADXLinearLayoutManager *self, ADContext *context, int32_t orientation, bool reverseLayout);
 
-FOUNDATION_EXPORT ADXLinearLayoutManager *new_ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADContext *context, jint orientation, jboolean reverseLayout) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXLinearLayoutManager *new_ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADContext *context, int32_t orientation, bool reverseLayout) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXLinearLayoutManager *create_ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADContext *context, jint orientation, jboolean reverseLayout);
+FOUNDATION_EXPORT ADXLinearLayoutManager *create_ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADContext *context, int32_t orientation, bool reverseLayout);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager)
 
 @compatibility_alias AndroidxRecyclerviewWidgetLinearLayoutManager ADXLinearLayoutManager;
+
 
 #endif
 
@@ -642,6 +647,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager)
 @class ADView;
 @class ADXRecyclerView_Recycler;
 @class ADXRecyclerView_State;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class NSString;
 @protocol JavaUtilList;
 
 /*!
@@ -653,58 +661,58 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager)
   /*!
    @brief We may not want to recycle children in some cases (e.g.layout)
    */
-  jboolean mRecycle_;
+  bool mRecycle_;
   /*!
    @brief Pixel offset where layout should start
    */
-  jint mOffset_;
+  int32_t mOffset_;
   /*!
    @brief Number of pixels that we should fill, in the layout direction.
    */
-  jint mAvailable_;
+  int32_t mAvailable_;
   /*!
    @brief Current position on the adapter to get the next item.
    */
-  jint mCurrentPosition_;
+  int32_t mCurrentPosition_;
   /*!
    @brief Defines the direction in which the data adapter is traversed.
    Should be <code>ITEM_DIRECTION_HEAD</code> or <code>ITEM_DIRECTION_TAIL</code>
    */
-  jint mItemDirection_;
+  int32_t mItemDirection_;
   /*!
    @brief Defines the direction in which the layout is filled.
    Should be <code>LAYOUT_START</code> or <code>LAYOUT_END</code>
    */
-  jint mLayoutDirection_;
+  int32_t mLayoutDirection_;
   /*!
    @brief Used when LayoutState is constructed in a scrolling state.
    It should be set the amount of scrolling we can make without creating a new view.
   Settings this is required for efficient view recycling.
    */
-  jint mScrollingOffset_;
+  int32_t mScrollingOffset_;
   /*!
    @brief Used if you want to pre-layout items that are not yet visible.
    The difference with <code>mAvailable</code> is that, when recycling, distance laid out for 
  <code>mExtraFillSpace</code> is not considered to avoid recycling visible children.
    */
-  jint mExtraFillSpace_;
+  int32_t mExtraFillSpace_;
   /*!
    @brief Contains the <code>calculateExtraLayoutSpace(RecyclerView.State, int[])</code>  extra layout
   space} that should be excluded for recycling when cleaning up the tail of the list during
   a smooth scroll.
    */
-  jint mNoRecycleSpace_;
+  int32_t mNoRecycleSpace_;
   /*!
    @brief Equal to <code>RecyclerView.State.isPreLayout()</code>.When consuming scrap, if this value
   is set to true, we skip removed views since they should not be laid out in post layout
   step.
    */
-  jboolean mIsPreLayout_;
+  bool mIsPreLayout_;
   /*!
    @brief The most recent <code>scrollBy(int, RecyclerView.Recycler, RecyclerView.State)</code>
   amount.
    */
-  jint mLastScrollDelta_;
+  int32_t mLastScrollDelta_;
   /*!
    @brief When LLM needs to layout particular views, it sets this list in which case, LayoutState
   will only return views from this list and return null if it cannot find an item.
@@ -713,7 +721,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager)
   /*!
    @brief Used when there is no limit in how many views can be laid out.
    */
-  jboolean mInfinite_;
+  bool mInfinite_;
 }
 
 #pragma mark Public
@@ -731,7 +739,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager)
 /*!
  @return true if there are more items in the data adapter
  */
-- (jboolean)hasMoreWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (bool)hasMoreWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 - (void)log;
 
@@ -753,29 +761,29 @@ inline NSString *ADXLinearLayoutManager_LayoutState_get_TAG(void);
 FOUNDATION_EXPORT NSString *ADXLinearLayoutManager_LayoutState_TAG;
 J2OBJC_STATIC_FIELD_OBJ_FINAL(ADXLinearLayoutManager_LayoutState, TAG, NSString *)
 
-inline jint ADXLinearLayoutManager_LayoutState_get_LAYOUT_START(void);
+inline int32_t ADXLinearLayoutManager_LayoutState_get_LAYOUT_START(void);
 #define ADXLinearLayoutManager_LayoutState_LAYOUT_START -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, LAYOUT_START, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, LAYOUT_START, int32_t)
 
-inline jint ADXLinearLayoutManager_LayoutState_get_LAYOUT_END(void);
+inline int32_t ADXLinearLayoutManager_LayoutState_get_LAYOUT_END(void);
 #define ADXLinearLayoutManager_LayoutState_LAYOUT_END 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, LAYOUT_END, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, LAYOUT_END, int32_t)
 
-inline jint ADXLinearLayoutManager_LayoutState_get_INVALID_LAYOUT(void);
-#define ADXLinearLayoutManager_LayoutState_INVALID_LAYOUT ((jint) 0x80000000)
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, INVALID_LAYOUT, jint)
+inline int32_t ADXLinearLayoutManager_LayoutState_get_INVALID_LAYOUT(void);
+#define ADXLinearLayoutManager_LayoutState_INVALID_LAYOUT ((int32_t) 0x80000000)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, INVALID_LAYOUT, int32_t)
 
-inline jint ADXLinearLayoutManager_LayoutState_get_ITEM_DIRECTION_HEAD(void);
+inline int32_t ADXLinearLayoutManager_LayoutState_get_ITEM_DIRECTION_HEAD(void);
 #define ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_HEAD -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, ITEM_DIRECTION_HEAD, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, ITEM_DIRECTION_HEAD, int32_t)
 
-inline jint ADXLinearLayoutManager_LayoutState_get_ITEM_DIRECTION_TAIL(void);
+inline int32_t ADXLinearLayoutManager_LayoutState_get_ITEM_DIRECTION_TAIL(void);
 #define ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, ITEM_DIRECTION_TAIL, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, ITEM_DIRECTION_TAIL, int32_t)
 
-inline jint ADXLinearLayoutManager_LayoutState_get_SCROLLING_OFFSET_NaN(void);
-#define ADXLinearLayoutManager_LayoutState_SCROLLING_OFFSET_NaN ((jint) 0x80000000)
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, SCROLLING_OFFSET_NaN, jint)
+inline int32_t ADXLinearLayoutManager_LayoutState_get_SCROLLING_OFFSET_NaN(void);
+#define ADXLinearLayoutManager_LayoutState_SCROLLING_OFFSET_NaN ((int32_t) 0x80000000)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager_LayoutState, SCROLLING_OFFSET_NaN, int32_t)
 
 FOUNDATION_EXPORT void ADXLinearLayoutManager_LayoutState_init(ADXLinearLayoutManager_LayoutState *self);
 
@@ -784,6 +792,7 @@ FOUNDATION_EXPORT ADXLinearLayoutManager_LayoutState *new_ADXLinearLayoutManager
 FOUNDATION_EXPORT ADXLinearLayoutManager_LayoutState *create_ADXLinearLayoutManager_LayoutState_init(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager_LayoutState)
+
 
 #endif
 
@@ -794,15 +803,17 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager_LayoutState)
 #define INCLUDE_ADParcelable 1
 #include "Parcelable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol ADParcel;
 
 /*!
  */
 @interface ADXLinearLayoutManager_SavedState : NSObject < ADParcelable > {
  @public
-  jint mAnchorPosition_;
-  jint mAnchorOffset_;
-  jboolean mAnchorLayoutFromEnd_;
+  int32_t mAnchorPosition_;
+  int32_t mAnchorOffset_;
+  bool mAnchorLayoutFromEnd_;
 }
 
 #pragma mark Public
@@ -811,16 +822,16 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager_LayoutState)
 
 - (instancetype)initWithADXLinearLayoutManager_SavedState:(ADXLinearLayoutManager_SavedState *)other;
 
-- (jint)describeContents;
+- (int32_t)describeContents;
 
 - (void)writeToParcelWithADParcel:(id<ADParcel>)dest
-                          withInt:(jint)flags;
+                          withInt:(int32_t)flags;
 
 #pragma mark Package-Private
 
 - (instancetype)initWithADParcel:(id<ADParcel>)inArg;
 
-- (jboolean)hasValidAnchor;
+- (bool)hasValidAnchor;
 
 - (void)invalidateAnchor;
 
@@ -848,6 +859,7 @@ FOUNDATION_EXPORT ADXLinearLayoutManager_SavedState *create_ADXLinearLayoutManag
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager_SavedState)
 
+
 #endif
 
 #if !defined (ADXLinearLayoutManager_AnchorInfo_) && (INCLUDE_ALL_LinearLayoutManager || defined(INCLUDE_ADXLinearLayoutManager_AnchorInfo))
@@ -856,6 +868,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager_SavedState)
 @class ADView;
 @class ADXOrientationHelper;
 @class ADXRecyclerView_State;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class NSString;
 
 /*!
  @brief Simple data class to keep Anchor information
@@ -863,19 +878,19 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager_SavedState)
 @interface ADXLinearLayoutManager_AnchorInfo : NSObject {
  @public
   ADXOrientationHelper *mOrientationHelper_;
-  jint mPosition_;
-  jint mCoordinate_;
-  jboolean mLayoutFromEnd_;
-  jboolean mValid_;
+  int32_t mPosition_;
+  int32_t mCoordinate_;
+  bool mLayoutFromEnd_;
+  bool mValid_;
 }
 
 #pragma mark Public
 
 - (void)assignFromViewWithADView:(ADView *)child
-                         withInt:(jint)position;
+                         withInt:(int32_t)position;
 
 - (void)assignFromViewAndKeepVisibleRectWithADView:(ADView *)child
-                                           withInt:(jint)position;
+                                           withInt:(int32_t)position;
 
 - (NSString *)description;
 
@@ -889,8 +904,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager_SavedState)
  */
 - (void)assignCoordinateFromPadding;
 
-- (jboolean)isViewValidAsAnchorWithADView:(ADView *)child
-                withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (bool)isViewValidAsAnchorWithADView:(ADView *)child
+            withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 - (void)reset;
 
@@ -908,17 +923,21 @@ FOUNDATION_EXPORT ADXLinearLayoutManager_AnchorInfo *create_ADXLinearLayoutManag
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager_AnchorInfo)
 
+
 #endif
 
 #if !defined (ADXLinearLayoutManager_LayoutChunkResult_) && (INCLUDE_ALL_LinearLayoutManager || defined(INCLUDE_ADXLinearLayoutManager_LayoutChunkResult))
 #define ADXLinearLayoutManager_LayoutChunkResult_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 @interface ADXLinearLayoutManager_LayoutChunkResult : NSObject {
  @public
-  jint mConsumed_;
-  jboolean mFinished_;
-  jboolean mIgnoreConsumed_;
-  jboolean mFocusable_;
+  int32_t mConsumed_;
+  bool mFinished_;
+  bool mIgnoreConsumed_;
+  bool mFocusable_;
 }
 
 #pragma mark Protected
@@ -940,6 +959,7 @@ FOUNDATION_EXPORT ADXLinearLayoutManager_LayoutChunkResult *new_ADXLinearLayoutM
 FOUNDATION_EXPORT ADXLinearLayoutManager_LayoutChunkResult *create_ADXLinearLayoutManager_LayoutChunkResult_init(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXLinearLayoutManager_LayoutChunkResult)
+
 
 #endif
 

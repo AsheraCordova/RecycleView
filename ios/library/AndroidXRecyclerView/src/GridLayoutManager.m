@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\GridLayoutManager.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "Context.h"
 #include "GridLayoutManager.h"
 #include "IOSClass.h"
@@ -17,15 +22,25 @@
 #include "SparseIntArray.h"
 #include "View.h"
 #include "ViewGroup.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Float.h"
 #include "java/lang/IllegalArgumentException.h"
+#include "java/lang/Integer.h"
 #include "java/lang/Math.h"
 #include "java/lang/UnsupportedOperationException.h"
 #include "java/util/Arrays.h"
 
 
+@class NSString;
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
+
+
 @interface ADXGridLayoutManager () {
  @public
-  jboolean mUsingSpansToEstimateScrollBarDimensions_;
+  bool mUsingSpansToEstimateScrollBarDimensions_;
 }
 
 - (void)clearPreLayoutSpanMappingCache;
@@ -37,26 +52,26 @@
 /*!
  @param totalSpace Total available space after padding is removed
  */
-- (void)calculateItemBordersWithInt:(jint)totalSpace;
+- (void)calculateItemBordersWithInt:(int32_t)totalSpace;
 
 - (void)ensureViewSet;
 
 - (void)ensureAnchorIsInCorrectSpanWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
                           withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo
-                                                        withInt:(jint)itemDirection;
+                                                        withInt:(int32_t)itemDirection;
 
-- (jint)getSpanGroupIndexWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                            withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                              withInt:(jint)viewPosition;
+- (int32_t)getSpanGroupIndexWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                               withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                                                 withInt:(int32_t)viewPosition;
 
-- (jint)getSpanIndexWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                         withInt:(jint)pos;
+- (int32_t)getSpanIndexWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                          withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                                            withInt:(int32_t)pos;
 
-- (jint)getSpanSizeWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                      withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                        withInt:(jint)pos;
+- (int32_t)getSpanSizeWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                         withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                                           withInt:(int32_t)pos;
 
 /*!
  @brief Measures a child with currently known information.This is not necessarily the child's final
@@ -67,8 +82,8 @@
  @param alreadyMeasured True if we've already measured this view once
  */
 - (void)measureChildWithADView:(ADView *)view
-                       withInt:(jint)otherDirParentSpecMode
-                   withBoolean:(jboolean)alreadyMeasured;
+                       withInt:(int32_t)otherDirParentSpecMode
+                   withBoolean:(bool)alreadyMeasured;
 
 /*!
  @brief This is called after laying out a row (if vertical) or a column (if horizontal) when the
@@ -79,28 +94,28 @@
  @param maxSizeInOther The maximum size per span ratio from the measurement of the children.
  @param currentOtherDirSize The size before this layout chunk. There is no reason to go below.
  */
-- (void)guessMeasurementWithFloat:(jfloat)maxSizeInOther
-                          withInt:(jint)currentOtherDirSize;
+- (void)guessMeasurementWithFloat:(float)maxSizeInOther
+                          withInt:(int32_t)currentOtherDirSize;
 
 - (void)measureChildWithDecorationsAndMarginWithADView:(ADView *)child
-                                               withInt:(jint)widthSpec
-                                               withInt:(jint)heightSpec
-                                           withBoolean:(jboolean)alreadyMeasured;
+                                               withInt:(int32_t)widthSpec
+                                               withInt:(int32_t)heightSpec
+                                           withBoolean:(bool)alreadyMeasured;
 
 - (void)assignSpansWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                        withInt:(jint)count
-                                    withBoolean:(jboolean)layingOutInPrimaryDirection;
+                                        withInt:(int32_t)count
+                                    withBoolean:(bool)layingOutInPrimaryDirection;
 
-- (jint)computeScrollRangeWithSpanInfoWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeScrollRangeWithSpanInfoWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeScrollOffsetWithSpanInfoWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeScrollOffsetWithSpanInfoWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 @end
 
-inline jboolean ADXGridLayoutManager_get_DEBUG(void);
+inline bool ADXGridLayoutManager_get_DEBUG(void);
 #define ADXGridLayoutManager_DEBUG false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXGridLayoutManager, DEBUG, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXGridLayoutManager, DEBUG, bool)
 
 inline NSString *ADXGridLayoutManager_get_TAG(void);
 static NSString *ADXGridLayoutManager_TAG = @"GridLayoutManager";
@@ -112,34 +127,34 @@ __attribute__((unused)) static void ADXGridLayoutManager_cachePreLayoutSpanMappi
 
 __attribute__((unused)) static void ADXGridLayoutManager_updateMeasurements(ADXGridLayoutManager *self);
 
-__attribute__((unused)) static void ADXGridLayoutManager_calculateItemBordersWithInt_(ADXGridLayoutManager *self, jint totalSpace);
+__attribute__((unused)) static void ADXGridLayoutManager_calculateItemBordersWithInt_(ADXGridLayoutManager *self, int32_t totalSpace);
 
 __attribute__((unused)) static void ADXGridLayoutManager_ensureViewSet(ADXGridLayoutManager *self);
 
-__attribute__((unused)) static void ADXGridLayoutManager_ensureAnchorIsInCorrectSpanWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo, jint itemDirection);
+__attribute__((unused)) static void ADXGridLayoutManager_ensureAnchorIsInCorrectSpanWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo, int32_t itemDirection);
 
-__attribute__((unused)) static jint ADXGridLayoutManager_getSpanGroupIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jint viewPosition);
+__attribute__((unused)) static int32_t ADXGridLayoutManager_getSpanGroupIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, int32_t viewPosition);
 
-__attribute__((unused)) static jint ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jint pos);
+__attribute__((unused)) static int32_t ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, int32_t pos);
 
-__attribute__((unused)) static jint ADXGridLayoutManager_getSpanSizeWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jint pos);
+__attribute__((unused)) static int32_t ADXGridLayoutManager_getSpanSizeWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, int32_t pos);
 
-__attribute__((unused)) static void ADXGridLayoutManager_measureChildWithADView_withInt_withBoolean_(ADXGridLayoutManager *self, ADView *view, jint otherDirParentSpecMode, jboolean alreadyMeasured);
+__attribute__((unused)) static void ADXGridLayoutManager_measureChildWithADView_withInt_withBoolean_(ADXGridLayoutManager *self, ADView *view, int32_t otherDirParentSpecMode, bool alreadyMeasured);
 
-__attribute__((unused)) static void ADXGridLayoutManager_guessMeasurementWithFloat_withInt_(ADXGridLayoutManager *self, jfloat maxSizeInOther, jint currentOtherDirSize);
+__attribute__((unused)) static void ADXGridLayoutManager_guessMeasurementWithFloat_withInt_(ADXGridLayoutManager *self, float maxSizeInOther, int32_t currentOtherDirSize);
 
-__attribute__((unused)) static void ADXGridLayoutManager_measureChildWithDecorationsAndMarginWithADView_withInt_withInt_withBoolean_(ADXGridLayoutManager *self, ADView *child, jint widthSpec, jint heightSpec, jboolean alreadyMeasured);
+__attribute__((unused)) static void ADXGridLayoutManager_measureChildWithDecorationsAndMarginWithADView_withInt_withInt_withBoolean_(ADXGridLayoutManager *self, ADView *child, int32_t widthSpec, int32_t heightSpec, bool alreadyMeasured);
 
-__attribute__((unused)) static void ADXGridLayoutManager_assignSpansWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_withBoolean_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jint count, jboolean layingOutInPrimaryDirection);
+__attribute__((unused)) static void ADXGridLayoutManager_assignSpansWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_withBoolean_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, int32_t count, bool layingOutInPrimaryDirection);
 
-__attribute__((unused)) static jint ADXGridLayoutManager_computeScrollRangeWithSpanInfoWithADXRecyclerView_State_(ADXGridLayoutManager *self, ADXRecyclerView_State *state);
+__attribute__((unused)) static int32_t ADXGridLayoutManager_computeScrollRangeWithSpanInfoWithADXRecyclerView_State_(ADXGridLayoutManager *self, ADXRecyclerView_State *state);
 
-__attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWithSpanInfoWithADXRecyclerView_State_(ADXGridLayoutManager *self, ADXRecyclerView_State *state);
+__attribute__((unused)) static int32_t ADXGridLayoutManager_computeScrollOffsetWithSpanInfoWithADXRecyclerView_State_(ADXGridLayoutManager *self, ADXRecyclerView_State *state);
 
 @interface ADXGridLayoutManager_SpanSizeLookup () {
  @public
-  jboolean mCacheSpanIndices_;
-  jboolean mCacheSpanGroupIndices_;
+  bool mCacheSpanIndices_;
+  bool mCacheSpanGroupIndices_;
 }
 
 @end
@@ -147,28 +162,28 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
 @implementation ADXGridLayoutManager
 
 - (instancetype)initWithADContext:(ADContext *)context
-                          withInt:(jint)spanCount {
+                          withInt:(int32_t)spanCount {
   ADXGridLayoutManager_initWithADContext_withInt_(self, context, spanCount);
   return self;
 }
 
 - (instancetype)initWithADContext:(ADContext *)context
-                          withInt:(jint)spanCount
-                          withInt:(jint)orientation
-                      withBoolean:(jboolean)reverseLayout {
+                          withInt:(int32_t)spanCount
+                          withInt:(int32_t)orientation
+                      withBoolean:(bool)reverseLayout {
   ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(self, context, spanCount, orientation, reverseLayout);
   return self;
 }
 
-- (void)setStackFromEndWithBoolean:(jboolean)stackFromEnd {
+- (void)setStackFromEndWithBoolean:(bool)stackFromEnd {
   if (stackFromEnd) {
     @throw create_JavaLangUnsupportedOperationException_initWithNSString_(@"GridLayoutManager does not support stack from end. Consider using reverse layout");
   }
   [super setStackFromEndWithBoolean:false];
 }
 
-- (jint)getRowCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                      withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)getRowCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                                         withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   if (mOrientation_ == ADXLinearLayoutManager_HORIZONTAL) {
     return mSpanCount_;
   }
@@ -178,8 +193,8 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
   return ADXGridLayoutManager_getSpanGroupIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, [state getItemCount] - 1) + 1;
 }
 
-- (jint)getColumnCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                         withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)getColumnCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                                            withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   if (mOrientation_ == ADXLinearLayoutManager_VERTICAL) {
     return mSpanCount_;
   }
@@ -212,8 +227,8 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
 }
 
 - (void)onItemsAddedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                withInt:(jint)positionStart
-                                withInt:(jint)itemCount {
+                                withInt:(int32_t)positionStart
+                                withInt:(int32_t)itemCount {
   [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(mSpanSizeLookup_)) invalidateSpanIndexCache];
   [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(mSpanSizeLookup_)) invalidateSpanGroupIndexCache];
 }
@@ -224,24 +239,24 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
 }
 
 - (void)onItemsRemovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount {
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount {
   [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(mSpanSizeLookup_)) invalidateSpanIndexCache];
   [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(mSpanSizeLookup_)) invalidateSpanGroupIndexCache];
 }
 
 - (void)onItemsUpdatedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount
                                    withId:(id)payload {
   [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(mSpanSizeLookup_)) invalidateSpanIndexCache];
   [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(mSpanSizeLookup_)) invalidateSpanGroupIndexCache];
 }
 
 - (void)onItemsMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                withInt:(jint)from
-                                withInt:(jint)to
-                                withInt:(jint)itemCount {
+                                withInt:(int32_t)from
+                                withInt:(int32_t)to
+                                withInt:(int32_t)itemCount {
   [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(mSpanSizeLookup_)) invalidateSpanIndexCache];
   [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(mSpanSizeLookup_)) invalidateSpanGroupIndexCache];
 }
@@ -255,7 +270,7 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
   }
 }
 
-- (jboolean)checkLayoutParamsWithADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
+- (bool)checkLayoutParamsWithADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
   return [lp isKindOfClass:[ADXGridLayoutManager_LayoutParams class]];
 }
 
@@ -272,40 +287,40 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
 }
 
 - (void)setMeasuredDimensionWithADRect:(ADRect *)childrenBounds
-                               withInt:(jint)wSpec
-                               withInt:(jint)hSpec {
+                               withInt:(int32_t)wSpec
+                               withInt:(int32_t)hSpec {
   if (mCachedBorders_ == nil) {
     [super setMeasuredDimensionWithADRect:childrenBounds withInt:wSpec withInt:hSpec];
   }
-  jint width;
-  jint height;
-  jint horizontalPadding = [self getPaddingLeft] + [self getPaddingRight];
-  jint verticalPadding = [self getPaddingTop] + [self getPaddingBottom];
+  int32_t width;
+  int32_t height;
+  int32_t horizontalPadding = [self getPaddingLeft] + [self getPaddingRight];
+  int32_t verticalPadding = [self getPaddingTop] + [self getPaddingBottom];
   if (mOrientation_ == ADXLinearLayoutManager_VERTICAL) {
-    jint usedHeight = [((ADRect *) nil_chk(childrenBounds)) height] + verticalPadding;
+    int32_t usedHeight = [((ADRect *) nil_chk(childrenBounds)) height] + verticalPadding;
     height = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(hSpec, usedHeight, [self getMinimumHeight]);
     width = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(wSpec, IOSIntArray_Get(mCachedBorders_, ((IOSIntArray *) nil_chk(mCachedBorders_))->size_ - 1) + horizontalPadding, [self getMinimumWidth]);
   }
   else {
-    jint usedWidth = [((ADRect *) nil_chk(childrenBounds)) width] + horizontalPadding;
+    int32_t usedWidth = [((ADRect *) nil_chk(childrenBounds)) width] + horizontalPadding;
     width = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(wSpec, usedWidth, [self getMinimumWidth]);
     height = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(hSpec, IOSIntArray_Get(mCachedBorders_, ((IOSIntArray *) nil_chk(mCachedBorders_))->size_ - 1) + verticalPadding, [self getMinimumHeight]);
   }
   [self setMeasuredDimensionWithInt:width withInt:height];
 }
 
-- (void)calculateItemBordersWithInt:(jint)totalSpace {
+- (void)calculateItemBordersWithInt:(int32_t)totalSpace {
   ADXGridLayoutManager_calculateItemBordersWithInt_(self, totalSpace);
 }
 
 + (IOSIntArray *)calculateItemBordersWithIntArray:(IOSIntArray *)cachedBorders
-                                          withInt:(jint)spanCount
-                                          withInt:(jint)totalSpace {
+                                          withInt:(int32_t)spanCount
+                                          withInt:(int32_t)totalSpace {
   return ADXGridLayoutManager_calculateItemBordersWithIntArray_withInt_withInt_(cachedBorders, spanCount, totalSpace);
 }
 
-- (jint)getSpaceForSpanRangeWithInt:(jint)startSpan
-                            withInt:(jint)spanSize {
+- (int32_t)getSpaceForSpanRangeWithInt:(int32_t)startSpan
+                               withInt:(int32_t)spanSize {
   if (mOrientation_ == ADXLinearLayoutManager_VERTICAL && [self isLayoutRTL]) {
     return IOSIntArray_Get(nil_chk(mCachedBorders_), mSpanCount_ - startSpan) - IOSIntArray_Get(mCachedBorders_, mSpanCount_ - startSpan - spanSize);
   }
@@ -317,7 +332,7 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
 - (void)onAnchorReadyWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                         withADXRecyclerView_State:(ADXRecyclerView_State *)state
             withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo
-                                          withInt:(jint)itemDirection {
+                                          withInt:(int32_t)itemDirection {
   [super onAnchorReadyWithADXRecyclerView_Recycler:recycler withADXRecyclerView_State:state withADXLinearLayoutManager_AnchorInfo:anchorInfo withInt:itemDirection];
   ADXGridLayoutManager_updateMeasurements(self);
   if ([((ADXRecyclerView_State *) nil_chk(state)) getItemCount] > 0 && ![state isPreLayout]) {
@@ -330,17 +345,17 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
   ADXGridLayoutManager_ensureViewSet(self);
 }
 
-- (jint)scrollHorizontallyByWithInt:(jint)dx
-       withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-          withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)scrollHorizontallyByWithInt:(int32_t)dx
+          withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+             withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   ADXGridLayoutManager_updateMeasurements(self);
   ADXGridLayoutManager_ensureViewSet(self);
   return [super scrollHorizontallyByWithInt:dx withADXRecyclerView_Recycler:recycler withADXRecyclerView_State:state];
 }
 
-- (jint)scrollVerticallyByWithInt:(jint)dy
-     withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-        withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)scrollVerticallyByWithInt:(int32_t)dy
+        withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+           withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   ADXGridLayoutManager_updateMeasurements(self);
   ADXGridLayoutManager_ensureViewSet(self);
   return [super scrollVerticallyByWithInt:dy withADXRecyclerView_Recycler:recycler withADXRecyclerView_State:state];
@@ -349,33 +364,33 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
 - (void)ensureAnchorIsInCorrectSpanWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
                           withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo
-                                                        withInt:(jint)itemDirection {
+                                                        withInt:(int32_t)itemDirection {
   ADXGridLayoutManager_ensureAnchorIsInCorrectSpanWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_withInt_(self, recycler, state, anchorInfo, itemDirection);
 }
 
 - (ADView *)findReferenceChildWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                                  withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                               withBoolean:(jboolean)layoutFromEnd
-                                               withBoolean:(jboolean)traverseChildrenInReverseOrder {
-  jint start = 0;
-  jint end = [self getChildCount];
-  jint diff = 1;
+                                               withBoolean:(bool)layoutFromEnd
+                                               withBoolean:(bool)traverseChildrenInReverseOrder {
+  int32_t start = 0;
+  int32_t end = [self getChildCount];
+  int32_t diff = 1;
   if (traverseChildrenInReverseOrder) {
     start = [self getChildCount] - 1;
     end = -1;
     diff = -1;
   }
-  jint itemCount = [((ADXRecyclerView_State *) nil_chk(state)) getItemCount];
+  int32_t itemCount = [((ADXRecyclerView_State *) nil_chk(state)) getItemCount];
   [self ensureLayoutState];
   ADView *invalidMatch = nil;
   ADView *outOfBoundsMatch = nil;
-  jint boundsStart = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getStartAfterPadding];
-  jint boundsEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding];
-  for (jint i = start; i != end; i += diff) {
+  int32_t boundsStart = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getStartAfterPadding];
+  int32_t boundsEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding];
+  for (int32_t i = start; i != end; i += diff) {
     ADView *view = [self getChildAtWithInt:i];
-    jint position = [self getPositionWithADView:view];
+    int32_t position = [self getPositionWithADView:view];
     if (position >= 0 && position < itemCount) {
-      jint span = ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, position);
+      int32_t span = ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, position);
       if (span != 0) {
         continue;
       }
@@ -397,33 +412,33 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
   return outOfBoundsMatch != nil ? outOfBoundsMatch : invalidMatch;
 }
 
-- (jint)getSpanGroupIndexWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                            withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                              withInt:(jint)viewPosition {
+- (int32_t)getSpanGroupIndexWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                               withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                                                 withInt:(int32_t)viewPosition {
   return ADXGridLayoutManager_getSpanGroupIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, viewPosition);
 }
 
-- (jint)getSpanIndexWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                         withInt:(jint)pos {
+- (int32_t)getSpanIndexWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                          withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                                            withInt:(int32_t)pos {
   return ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, pos);
 }
 
-- (jint)getSpanSizeWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                      withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                        withInt:(jint)pos {
+- (int32_t)getSpanSizeWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                         withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                                           withInt:(int32_t)pos {
   return ADXGridLayoutManager_getSpanSizeWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, pos);
 }
 
 - (void)collectPrefetchPositionsForLayoutStateWithADXRecyclerView_State:(ADXRecyclerView_State *)state
                                  withADXLinearLayoutManager_LayoutState:(ADXLinearLayoutManager_LayoutState *)layoutState
                withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>)layoutPrefetchRegistry {
-  jint remainingSpan = mSpanCount_;
-  jint count = 0;
+  int32_t remainingSpan = mSpanCount_;
+  int32_t count = 0;
   while (count < mSpanCount_ && [((ADXLinearLayoutManager_LayoutState *) nil_chk(layoutState)) hasMoreWithADXRecyclerView_State:state] && remainingSpan > 0) {
-    jint pos = ((ADXLinearLayoutManager_LayoutState *) nil_chk(layoutState))->mCurrentPosition_;
+    int32_t pos = ((ADXLinearLayoutManager_LayoutState *) nil_chk(layoutState))->mCurrentPosition_;
     [((id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>) nil_chk(layoutPrefetchRegistry)) addPositionWithInt:pos withInt:JavaLangMath_maxWithInt_withInt_(0, layoutState->mScrollingOffset_)];
-    jint spanSize = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(mSpanSizeLookup_)) getSpanSizeWithInt:pos];
+    int32_t spanSize = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(mSpanSizeLookup_)) getSpanSizeWithInt:pos];
     remainingSpan -= spanSize;
     layoutState->mCurrentPosition_ += layoutState->mItemDirection_;
     count++;
@@ -434,23 +449,23 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
          withADXLinearLayoutManager_LayoutState:(ADXLinearLayoutManager_LayoutState *)layoutState
    withADXLinearLayoutManager_LayoutChunkResult:(ADXLinearLayoutManager_LayoutChunkResult *)result {
-  jint otherDirSpecMode = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getModeInOther];
-  jboolean flexibleInOtherDir = otherDirSpecMode != ADView_MeasureSpec_EXACTLY;
-  jint currentOtherDirSize = [self getChildCount] > 0 ? IOSIntArray_Get(nil_chk(mCachedBorders_), mSpanCount_) : 0;
+  int32_t otherDirSpecMode = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getModeInOther];
+  bool flexibleInOtherDir = otherDirSpecMode != ADView_MeasureSpec_EXACTLY;
+  int32_t currentOtherDirSize = [self getChildCount] > 0 ? IOSIntArray_Get(nil_chk(mCachedBorders_), mSpanCount_) : 0;
   if (flexibleInOtherDir) {
     ADXGridLayoutManager_updateMeasurements(self);
   }
-  jboolean layingOutInPrimaryDirection = ((ADXLinearLayoutManager_LayoutState *) nil_chk(layoutState))->mItemDirection_ == ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL;
-  jint count = 0;
-  jint remainingSpan = mSpanCount_;
+  bool layingOutInPrimaryDirection = ((ADXLinearLayoutManager_LayoutState *) nil_chk(layoutState))->mItemDirection_ == ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL;
+  int32_t count = 0;
+  int32_t remainingSpan = mSpanCount_;
   if (!layingOutInPrimaryDirection) {
-    jint itemSpanIndex = ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, layoutState->mCurrentPosition_);
-    jint itemSpanSize = ADXGridLayoutManager_getSpanSizeWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, layoutState->mCurrentPosition_);
+    int32_t itemSpanIndex = ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, layoutState->mCurrentPosition_);
+    int32_t itemSpanSize = ADXGridLayoutManager_getSpanSizeWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, layoutState->mCurrentPosition_);
     remainingSpan = itemSpanIndex + itemSpanSize;
   }
   while (count < mSpanCount_ && [layoutState hasMoreWithADXRecyclerView_State:state] && remainingSpan > 0) {
-    jint pos = layoutState->mCurrentPosition_;
-    jint spanSize = ADXGridLayoutManager_getSpanSizeWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, pos);
+    int32_t pos = layoutState->mCurrentPosition_;
+    int32_t spanSize = ADXGridLayoutManager_getSpanSizeWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, pos);
     if (spanSize > mSpanCount_) {
       @throw create_JavaLangIllegalArgumentException_initWithNSString_(JreStrcat("$I$I$I$", @"Item at position ", pos, @" requires ", spanSize, @" spans but GridLayoutManager has only ", mSpanCount_, @" spans."));
     }
@@ -469,10 +484,10 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
     ((ADXLinearLayoutManager_LayoutChunkResult *) nil_chk(result))->mFinished_ = true;
     return;
   }
-  jint maxSize = 0;
-  jfloat maxSizeInOther = 0;
+  int32_t maxSize = 0;
+  float maxSizeInOther = 0;
   ADXGridLayoutManager_assignSpansWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_withBoolean_(self, recycler, state, count, layingOutInPrimaryDirection);
-  for (jint i = 0; i < count; i++) {
+  for (int32_t i = 0; i < count; i++) {
     ADView *view = IOSObjectArray_Get(nil_chk(mSet_), i);
     if (layoutState->mScrapList_ == nil) {
       if (layingOutInPrimaryDirection) {
@@ -492,12 +507,12 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
     }
     [self calculateItemDecorationsForChildWithADView:view withADRect:mDecorInsets_];
     ADXGridLayoutManager_measureChildWithADView_withInt_withBoolean_(self, view, otherDirSpecMode, false);
-    jint size = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementWithADView:view];
+    int32_t size = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementWithADView:view];
     if (size > maxSize) {
       maxSize = size;
     }
     ADXGridLayoutManager_LayoutParams *lp = (ADXGridLayoutManager_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXGridLayoutManager_LayoutParams class]);
-    jfloat otherSize = 1.0f * [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementInOtherWithADView:view] / ((ADXGridLayoutManager_LayoutParams *) nil_chk(lp))->mSpanSize_;
+    float otherSize = 1.0f * [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementInOtherWithADView:view] / ((ADXGridLayoutManager_LayoutParams *) nil_chk(lp))->mSpanSize_;
     if (otherSize > maxSizeInOther) {
       maxSizeInOther = otherSize;
     }
@@ -505,25 +520,25 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
   if (flexibleInOtherDir) {
     ADXGridLayoutManager_guessMeasurementWithFloat_withInt_(self, maxSizeInOther, currentOtherDirSize);
     maxSize = 0;
-    for (jint i = 0; i < count; i++) {
+    for (int32_t i = 0; i < count; i++) {
       ADView *view = IOSObjectArray_Get(nil_chk(mSet_), i);
       ADXGridLayoutManager_measureChildWithADView_withInt_withBoolean_(self, view, ADView_MeasureSpec_EXACTLY, true);
-      jint size = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementWithADView:view];
+      int32_t size = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementWithADView:view];
       if (size > maxSize) {
         maxSize = size;
       }
     }
   }
-  for (jint i = 0; i < count; i++) {
+  for (int32_t i = 0; i < count; i++) {
     ADView *view = IOSObjectArray_Get(nil_chk(mSet_), i);
     if ([((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementWithADView:view] != maxSize) {
       ADXGridLayoutManager_LayoutParams *lp = (ADXGridLayoutManager_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXGridLayoutManager_LayoutParams class]);
       ADRect *decorInsets = ((ADXGridLayoutManager_LayoutParams *) nil_chk(lp))->mDecorInsets_;
-      jint verticalInsets = ((ADRect *) nil_chk(decorInsets))->top_ + decorInsets->bottom_ + lp->topMargin_ + lp->bottomMargin_;
-      jint horizontalInsets = decorInsets->left_ + decorInsets->right_ + lp->leftMargin_ + lp->rightMargin_;
-      jint totalSpaceInOther = [self getSpaceForSpanRangeWithInt:lp->mSpanIndex_ withInt:lp->mSpanSize_];
-      jint wSpec;
-      jint hSpec;
+      int32_t verticalInsets = ((ADRect *) nil_chk(decorInsets))->top_ + decorInsets->bottom_ + lp->topMargin_ + lp->bottomMargin_;
+      int32_t horizontalInsets = decorInsets->left_ + decorInsets->right_ + lp->leftMargin_ + lp->rightMargin_;
+      int32_t totalSpaceInOther = [self getSpaceForSpanRangeWithInt:lp->mSpanIndex_ withInt:lp->mSpanSize_];
+      int32_t wSpec;
+      int32_t hSpec;
       if (mOrientation_ == ADXLinearLayoutManager_VERTICAL) {
         wSpec = ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_(totalSpaceInOther, ADView_MeasureSpec_EXACTLY, horizontalInsets, lp->width_, false);
         hSpec = ADView_MeasureSpec_makeMeasureSpecWithInt_withInt_(maxSize - verticalInsets, ADView_MeasureSpec_EXACTLY);
@@ -536,10 +551,10 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
     }
   }
   ((ADXLinearLayoutManager_LayoutChunkResult *) nil_chk(result))->mConsumed_ = maxSize;
-  jint left = 0;
-  jint right = 0;
-  jint top = 0;
-  jint bottom = 0;
+  int32_t left = 0;
+  int32_t right = 0;
+  int32_t top = 0;
+  int32_t bottom = 0;
   if (mOrientation_ == ADXLinearLayoutManager_VERTICAL) {
     if (layoutState->mLayoutDirection_ == ADXLinearLayoutManager_LayoutState_LAYOUT_START) {
       bottom = layoutState->mOffset_;
@@ -560,7 +575,7 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
       right = left + maxSize;
     }
   }
-  for (jint i = 0; i < count; i++) {
+  for (int32_t i = 0; i < count; i++) {
     ADView *view = IOSObjectArray_Get(nil_chk(mSet_), i);
     ADXGridLayoutManager_LayoutParams *params = (ADXGridLayoutManager_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXGridLayoutManager_LayoutParams class]);
     if (mOrientation_ == ADXLinearLayoutManager_VERTICAL) {
@@ -587,35 +602,35 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
 }
 
 - (void)measureChildWithADView:(ADView *)view
-                       withInt:(jint)otherDirParentSpecMode
-                   withBoolean:(jboolean)alreadyMeasured {
+                       withInt:(int32_t)otherDirParentSpecMode
+                   withBoolean:(bool)alreadyMeasured {
   ADXGridLayoutManager_measureChildWithADView_withInt_withBoolean_(self, view, otherDirParentSpecMode, alreadyMeasured);
 }
 
-- (void)guessMeasurementWithFloat:(jfloat)maxSizeInOther
-                          withInt:(jint)currentOtherDirSize {
+- (void)guessMeasurementWithFloat:(float)maxSizeInOther
+                          withInt:(int32_t)currentOtherDirSize {
   ADXGridLayoutManager_guessMeasurementWithFloat_withInt_(self, maxSizeInOther, currentOtherDirSize);
 }
 
 - (void)measureChildWithDecorationsAndMarginWithADView:(ADView *)child
-                                               withInt:(jint)widthSpec
-                                               withInt:(jint)heightSpec
-                                           withBoolean:(jboolean)alreadyMeasured {
+                                               withInt:(int32_t)widthSpec
+                                               withInt:(int32_t)heightSpec
+                                           withBoolean:(bool)alreadyMeasured {
   ADXGridLayoutManager_measureChildWithDecorationsAndMarginWithADView_withInt_withInt_withBoolean_(self, child, widthSpec, heightSpec, alreadyMeasured);
 }
 
 - (void)assignSpansWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                        withInt:(jint)count
-                                    withBoolean:(jboolean)layingOutInPrimaryDirection {
+                                        withInt:(int32_t)count
+                                    withBoolean:(bool)layingOutInPrimaryDirection {
   ADXGridLayoutManager_assignSpansWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_withBoolean_(self, recycler, state, count, layingOutInPrimaryDirection);
 }
 
-- (jint)getSpanCount {
+- (int32_t)getSpanCount {
   return mSpanCount_;
 }
 
-- (void)setSpanCountWithInt:(jint)spanCount {
+- (void)setSpanCountWithInt:(int32_t)spanCount {
   if (spanCount == mSpanCount_) {
     return;
   }
@@ -629,7 +644,7 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
 }
 
 - (ADView *)onFocusSearchFailedWithADView:(ADView *)focused
-                                  withInt:(jint)direction
+                                  withInt:(int32_t)direction
              withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                 withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   ADView *prevFocusedChild = JreRetainedLocalValue([self findContainingItemViewWithADView:focused]);
@@ -637,17 +652,17 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
     return nil;
   }
   ADXGridLayoutManager_LayoutParams *lp = (ADXGridLayoutManager_LayoutParams *) cast_chk([prevFocusedChild getLayoutParams], [ADXGridLayoutManager_LayoutParams class]);
-  jint prevSpanStart = ((ADXGridLayoutManager_LayoutParams *) nil_chk(lp))->mSpanIndex_;
-  jint prevSpanEnd = lp->mSpanIndex_ + lp->mSpanSize_;
+  int32_t prevSpanStart = ((ADXGridLayoutManager_LayoutParams *) nil_chk(lp))->mSpanIndex_;
+  int32_t prevSpanEnd = lp->mSpanIndex_ + lp->mSpanSize_;
   ADView *view = [super onFocusSearchFailedWithADView:focused withInt:direction withADXRecyclerView_Recycler:recycler withADXRecyclerView_State:state];
   if (view == nil) {
     return nil;
   }
-  jint layoutDir = [self convertFocusDirectionToLayoutDirectionWithInt:direction];
-  jboolean ascend = (layoutDir == ADXLinearLayoutManager_LayoutState_LAYOUT_END) != mShouldReverseLayout_;
-  jint start;
-  jint inc;
-  jint limit;
+  int32_t layoutDir = [self convertFocusDirectionToLayoutDirectionWithInt:direction];
+  bool ascend = (layoutDir == ADXLinearLayoutManager_LayoutState_LAYOUT_END) != mShouldReverseLayout_;
+  int32_t start;
+  int32_t inc;
+  int32_t limit;
   if (ascend) {
     start = [self getChildCount] - 1;
     inc = -1;
@@ -658,31 +673,31 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
     inc = 1;
     limit = [self getChildCount];
   }
-  jboolean preferLastSpan = mOrientation_ == ADXLinearLayoutManager_VERTICAL && [self isLayoutRTL];
+  bool preferLastSpan = mOrientation_ == ADXLinearLayoutManager_VERTICAL && [self isLayoutRTL];
   ADView *focusableWeakCandidate = nil;
-  jint focusableWeakCandidateSpanIndex = -1;
-  jint focusableWeakCandidateOverlap = 0;
+  int32_t focusableWeakCandidateSpanIndex = -1;
+  int32_t focusableWeakCandidateOverlap = 0;
   ADView *unfocusableWeakCandidate = nil;
-  jint unfocusableWeakCandidateSpanIndex = -1;
-  jint unfocusableWeakCandidateOverlap = 0;
-  jint focusableSpanGroupIndex = ADXGridLayoutManager_getSpanGroupIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, start);
-  for (jint i = start; i != limit; i += inc) {
-    jint spanGroupIndex = ADXGridLayoutManager_getSpanGroupIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, i);
+  int32_t unfocusableWeakCandidateSpanIndex = -1;
+  int32_t unfocusableWeakCandidateOverlap = 0;
+  int32_t focusableSpanGroupIndex = ADXGridLayoutManager_getSpanGroupIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, start);
+  for (int32_t i = start; i != limit; i += inc) {
+    int32_t spanGroupIndex = ADXGridLayoutManager_getSpanGroupIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, i);
     ADView *candidate = JreRetainedLocalValue([self getChildAtWithInt:i]);
-    if (candidate == prevFocusedChild) {
+    if (JreObjectEqualsEquals(candidate, prevFocusedChild)) {
       break;
     }
     ADXGridLayoutManager_LayoutParams *candidateLp = (ADXGridLayoutManager_LayoutParams *) cast_chk([((ADView *) nil_chk(candidate)) getLayoutParams], [ADXGridLayoutManager_LayoutParams class]);
-    jint candidateStart = ((ADXGridLayoutManager_LayoutParams *) nil_chk(candidateLp))->mSpanIndex_;
-    jint candidateEnd = candidateLp->mSpanIndex_ + candidateLp->mSpanSize_;
-    jboolean assignAsWeek = false;
+    int32_t candidateStart = ((ADXGridLayoutManager_LayoutParams *) nil_chk(candidateLp))->mSpanIndex_;
+    int32_t candidateEnd = candidateLp->mSpanIndex_ + candidateLp->mSpanSize_;
+    bool assignAsWeek = false;
     if (unfocusableWeakCandidate == nil) {
       assignAsWeek = true;
     }
     else {
-      jint maxStart = JavaLangMath_maxWithInt_withInt_(candidateStart, prevSpanStart);
-      jint minEnd = JavaLangMath_minWithInt_withInt_(candidateEnd, prevSpanEnd);
-      jint overlap = minEnd - maxStart;
+      int32_t maxStart = JavaLangMath_maxWithInt_withInt_(candidateStart, prevSpanStart);
+      int32_t minEnd = JavaLangMath_minWithInt_withInt_(candidateEnd, prevSpanEnd);
+      int32_t overlap = minEnd - maxStart;
     }
     if (assignAsWeek) {
       {
@@ -695,11 +710,11 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
   return (focusableWeakCandidate != nil) ? focusableWeakCandidate : unfocusableWeakCandidate;
 }
 
-- (jboolean)supportsPredictiveItemAnimations {
+- (bool)supportsPredictiveItemAnimations {
   return mPendingSavedState_ == nil && !mPendingSpanCountChange_;
 }
 
-- (jint)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   if (mUsingSpansToEstimateScrollBarDimensions_) {
     return ADXGridLayoutManager_computeScrollRangeWithSpanInfoWithADXRecyclerView_State_(self, state);
   }
@@ -708,7 +723,7 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
   }
 }
 
-- (jint)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   if (mUsingSpansToEstimateScrollBarDimensions_) {
     return ADXGridLayoutManager_computeScrollRangeWithSpanInfoWithADXRecyclerView_State_(self, state);
   }
@@ -717,7 +732,7 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
   }
 }
 
-- (jint)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   if (mUsingSpansToEstimateScrollBarDimensions_) {
     return ADXGridLayoutManager_computeScrollOffsetWithSpanInfoWithADXRecyclerView_State_(self, state);
   }
@@ -726,7 +741,7 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
   }
 }
 
-- (jint)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   if (mUsingSpansToEstimateScrollBarDimensions_) {
     return ADXGridLayoutManager_computeScrollOffsetWithSpanInfoWithADXRecyclerView_State_(self, state);
   }
@@ -735,19 +750,19 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
   }
 }
 
-- (void)setUsingSpansToEstimateScrollbarDimensionsWithBoolean:(jboolean)useSpansToEstimateScrollBarDimensions {
+- (void)setUsingSpansToEstimateScrollbarDimensionsWithBoolean:(bool)useSpansToEstimateScrollBarDimensions {
   mUsingSpansToEstimateScrollBarDimensions_ = useSpansToEstimateScrollBarDimensions;
 }
 
-- (jboolean)isUsingSpansToEstimateScrollbarDimensions {
+- (bool)isUsingSpansToEstimateScrollbarDimensions {
   return mUsingSpansToEstimateScrollBarDimensions_;
 }
 
-- (jint)computeScrollRangeWithSpanInfoWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeScrollRangeWithSpanInfoWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXGridLayoutManager_computeScrollRangeWithSpanInfoWithADXRecyclerView_State_(self, state);
 }
 
-- (jint)computeScrollOffsetWithSpanInfoWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeScrollOffsetWithSpanInfoWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXGridLayoutManager_computeScrollOffsetWithSpanInfoWithADXRecyclerView_State_(self, state);
 }
 
@@ -889,7 +904,7 @@ __attribute__((unused)) static jint ADXGridLayoutManager_computeScrollOffsetWith
 
 @end
 
-void ADXGridLayoutManager_initWithADContext_withInt_(ADXGridLayoutManager *self, ADContext *context, jint spanCount) {
+void ADXGridLayoutManager_initWithADContext_withInt_(ADXGridLayoutManager *self, ADContext *context, int32_t spanCount) {
   ADXLinearLayoutManager_initWithADContext_(self, context);
   self->mPendingSpanCountChange_ = false;
   self->mSpanCount_ = ADXGridLayoutManager_DEFAULT_SPAN_COUNT;
@@ -900,15 +915,15 @@ void ADXGridLayoutManager_initWithADContext_withInt_(ADXGridLayoutManager *self,
   [self setSpanCountWithInt:spanCount];
 }
 
-ADXGridLayoutManager *new_ADXGridLayoutManager_initWithADContext_withInt_(ADContext *context, jint spanCount) {
+ADXGridLayoutManager *new_ADXGridLayoutManager_initWithADContext_withInt_(ADContext *context, int32_t spanCount) {
   J2OBJC_NEW_IMPL(ADXGridLayoutManager, initWithADContext_withInt_, context, spanCount)
 }
 
-ADXGridLayoutManager *create_ADXGridLayoutManager_initWithADContext_withInt_(ADContext *context, jint spanCount) {
+ADXGridLayoutManager *create_ADXGridLayoutManager_initWithADContext_withInt_(ADContext *context, int32_t spanCount) {
   J2OBJC_CREATE_IMPL(ADXGridLayoutManager, initWithADContext_withInt_, context, spanCount)
 }
 
-void ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADXGridLayoutManager *self, ADContext *context, jint spanCount, jint orientation, jboolean reverseLayout) {
+void ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADXGridLayoutManager *self, ADContext *context, int32_t spanCount, int32_t orientation, bool reverseLayout) {
   ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(self, context, orientation, reverseLayout);
   self->mPendingSpanCountChange_ = false;
   self->mSpanCount_ = ADXGridLayoutManager_DEFAULT_SPAN_COUNT;
@@ -919,11 +934,11 @@ void ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADXGrid
   [self setSpanCountWithInt:spanCount];
 }
 
-ADXGridLayoutManager *new_ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADContext *context, jint spanCount, jint orientation, jboolean reverseLayout) {
+ADXGridLayoutManager *new_ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADContext *context, int32_t spanCount, int32_t orientation, bool reverseLayout) {
   J2OBJC_NEW_IMPL(ADXGridLayoutManager, initWithADContext_withInt_withInt_withBoolean_, context, spanCount, orientation, reverseLayout)
 }
 
-ADXGridLayoutManager *create_ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADContext *context, jint spanCount, jint orientation, jboolean reverseLayout) {
+ADXGridLayoutManager *create_ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADContext *context, int32_t spanCount, int32_t orientation, bool reverseLayout) {
   J2OBJC_CREATE_IMPL(ADXGridLayoutManager, initWithADContext_withInt_withInt_withBoolean_, context, spanCount, orientation, reverseLayout)
 }
 
@@ -933,17 +948,17 @@ void ADXGridLayoutManager_clearPreLayoutSpanMappingCache(ADXGridLayoutManager *s
 }
 
 void ADXGridLayoutManager_cachePreLayoutSpanMapping(ADXGridLayoutManager *self) {
-  jint childCount = [self getChildCount];
-  for (jint i = 0; i < childCount; i++) {
+  int32_t childCount = [self getChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADXGridLayoutManager_LayoutParams *lp = (ADXGridLayoutManager_LayoutParams *) cast_chk([((ADView *) nil_chk([self getChildAtWithInt:i])) getLayoutParams], [ADXGridLayoutManager_LayoutParams class]);
-    jint viewPosition = [((ADXGridLayoutManager_LayoutParams *) nil_chk(lp)) getViewLayoutPosition];
+    int32_t viewPosition = [((ADXGridLayoutManager_LayoutParams *) nil_chk(lp)) getViewLayoutPosition];
     [((ADSparseIntArray *) nil_chk(self->mPreLayoutSpanSizeCache_)) putWithInt:viewPosition withInt:[lp getSpanSize]];
     [((ADSparseIntArray *) nil_chk(self->mPreLayoutSpanIndexCache_)) putWithInt:viewPosition withInt:[lp getSpanIndex]];
   }
 }
 
 void ADXGridLayoutManager_updateMeasurements(ADXGridLayoutManager *self) {
-  jint totalSpace;
+  int32_t totalSpace;
   if ([self getOrientation] == ADXLinearLayoutManager_VERTICAL) {
     totalSpace = [self getWidth] - [self getPaddingRight] - [self getPaddingLeft];
   }
@@ -953,22 +968,22 @@ void ADXGridLayoutManager_updateMeasurements(ADXGridLayoutManager *self) {
   ADXGridLayoutManager_calculateItemBordersWithInt_(self, totalSpace);
 }
 
-void ADXGridLayoutManager_calculateItemBordersWithInt_(ADXGridLayoutManager *self, jint totalSpace) {
+void ADXGridLayoutManager_calculateItemBordersWithInt_(ADXGridLayoutManager *self, int32_t totalSpace) {
   JreStrongAssign(&self->mCachedBorders_, ADXGridLayoutManager_calculateItemBordersWithIntArray_withInt_withInt_(self->mCachedBorders_, self->mSpanCount_, totalSpace));
 }
 
-IOSIntArray *ADXGridLayoutManager_calculateItemBordersWithIntArray_withInt_withInt_(IOSIntArray *cachedBorders, jint spanCount, jint totalSpace) {
+IOSIntArray *ADXGridLayoutManager_calculateItemBordersWithIntArray_withInt_withInt_(IOSIntArray *cachedBorders, int32_t spanCount, int32_t totalSpace) {
   ADXGridLayoutManager_initialize();
   if (cachedBorders == nil || cachedBorders->size_ != spanCount + 1 || IOSIntArray_Get(cachedBorders, cachedBorders->size_ - 1) != totalSpace) {
     cachedBorders = [IOSIntArray arrayWithLength:spanCount + 1];
   }
   *IOSIntArray_GetRef(cachedBorders, 0) = 0;
-  jint sizePerSpan = JreIntDiv(totalSpace, spanCount);
-  jint sizePerSpanRemainder = JreIntMod(totalSpace, spanCount);
-  jint consumedPixels = 0;
-  jint additionalSize = 0;
-  for (jint i = 1; i <= spanCount; i++) {
-    jint itemSize = sizePerSpan;
+  int32_t sizePerSpan = JreIntDiv(totalSpace, spanCount);
+  int32_t sizePerSpanRemainder = JreIntMod(totalSpace, spanCount);
+  int32_t consumedPixels = 0;
+  int32_t additionalSize = 0;
+  for (int32_t i = 1; i <= spanCount; i++) {
+    int32_t itemSize = sizePerSpan;
     additionalSize += sizePerSpanRemainder;
     if (additionalSize > 0 && (spanCount - additionalSize) < sizePerSpanRemainder) {
       itemSize += 1;
@@ -986,9 +1001,9 @@ void ADXGridLayoutManager_ensureViewSet(ADXGridLayoutManager *self) {
   }
 }
 
-void ADXGridLayoutManager_ensureAnchorIsInCorrectSpanWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo, jint itemDirection) {
-  jboolean layingOutInPrimaryDirection = itemDirection == ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL;
-  jint span = ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, ((ADXLinearLayoutManager_AnchorInfo *) nil_chk(anchorInfo))->mPosition_);
+void ADXGridLayoutManager_ensureAnchorIsInCorrectSpanWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo, int32_t itemDirection) {
+  bool layingOutInPrimaryDirection = itemDirection == ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL;
+  int32_t span = ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, ((ADXLinearLayoutManager_AnchorInfo *) nil_chk(anchorInfo))->mPosition_);
   if (layingOutInPrimaryDirection) {
     while (span > 0 && anchorInfo->mPosition_ > 0) {
       anchorInfo->mPosition_--;
@@ -996,11 +1011,11 @@ void ADXGridLayoutManager_ensureAnchorIsInCorrectSpanWithADXRecyclerView_Recycle
     }
   }
   else {
-    jint indexLimit = [((ADXRecyclerView_State *) nil_chk(state)) getItemCount] - 1;
-    jint pos = anchorInfo->mPosition_;
-    jint bestSpan = span;
+    int32_t indexLimit = [((ADXRecyclerView_State *) nil_chk(state)) getItemCount] - 1;
+    int32_t pos = anchorInfo->mPosition_;
+    int32_t bestSpan = span;
     while (pos < indexLimit) {
-      jint next = ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, pos + 1);
+      int32_t next = ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, pos + 1);
       if (next > bestSpan) {
         pos += 1;
         bestSpan = next;
@@ -1013,11 +1028,11 @@ void ADXGridLayoutManager_ensureAnchorIsInCorrectSpanWithADXRecyclerView_Recycle
   }
 }
 
-jint ADXGridLayoutManager_getSpanGroupIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jint viewPosition) {
+int32_t ADXGridLayoutManager_getSpanGroupIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, int32_t viewPosition) {
   if (![((ADXRecyclerView_State *) nil_chk(state)) isPreLayout]) {
     return [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:viewPosition withInt:self->mSpanCount_];
   }
-  jint adapterPosition = [((ADXRecyclerView_Recycler *) nil_chk(recycler)) convertPreLayoutPositionToPostLayoutWithInt:viewPosition];
+  int32_t adapterPosition = [((ADXRecyclerView_Recycler *) nil_chk(recycler)) convertPreLayoutPositionToPostLayoutWithInt:viewPosition];
   if (adapterPosition == -1) {
     ADLog_wWithNSString_withNSString_(ADXGridLayoutManager_TAG, JreStrcat("$I", @"Cannot find span size for pre layout position. ", viewPosition));
     return 0;
@@ -1025,15 +1040,15 @@ jint ADXGridLayoutManager_getSpanGroupIndexWithADXRecyclerView_Recycler_withADXR
   return [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:adapterPosition withInt:self->mSpanCount_];
 }
 
-jint ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jint pos) {
+int32_t ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, int32_t pos) {
   if (![((ADXRecyclerView_State *) nil_chk(state)) isPreLayout]) {
     return [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanIndexWithInt:pos withInt:self->mSpanCount_];
   }
-  jint cached = [((ADSparseIntArray *) nil_chk(self->mPreLayoutSpanIndexCache_)) getWithInt:pos withInt:-1];
+  int32_t cached = [((ADSparseIntArray *) nil_chk(self->mPreLayoutSpanIndexCache_)) getWithInt:pos withInt:-1];
   if (cached != -1) {
     return cached;
   }
-  jint adapterPosition = [((ADXRecyclerView_Recycler *) nil_chk(recycler)) convertPreLayoutPositionToPostLayoutWithInt:pos];
+  int32_t adapterPosition = [((ADXRecyclerView_Recycler *) nil_chk(recycler)) convertPreLayoutPositionToPostLayoutWithInt:pos];
   if (adapterPosition == -1) {
     ADLog_wWithNSString_withNSString_(ADXGridLayoutManager_TAG, JreStrcat("$I", @"Cannot find span size for pre layout position. It is not cached, not in the adapter. Pos:", pos));
     return 0;
@@ -1041,15 +1056,15 @@ jint ADXGridLayoutManager_getSpanIndexWithADXRecyclerView_Recycler_withADXRecycl
   return [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanIndexWithInt:adapterPosition withInt:self->mSpanCount_];
 }
 
-jint ADXGridLayoutManager_getSpanSizeWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jint pos) {
+int32_t ADXGridLayoutManager_getSpanSizeWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, int32_t pos) {
   if (![((ADXRecyclerView_State *) nil_chk(state)) isPreLayout]) {
     return [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getSpanSizeWithInt:pos];
   }
-  jint cached = [((ADSparseIntArray *) nil_chk(self->mPreLayoutSpanSizeCache_)) getWithInt:pos withInt:-1];
+  int32_t cached = [((ADSparseIntArray *) nil_chk(self->mPreLayoutSpanSizeCache_)) getWithInt:pos withInt:-1];
   if (cached != -1) {
     return cached;
   }
-  jint adapterPosition = [((ADXRecyclerView_Recycler *) nil_chk(recycler)) convertPreLayoutPositionToPostLayoutWithInt:pos];
+  int32_t adapterPosition = [((ADXRecyclerView_Recycler *) nil_chk(recycler)) convertPreLayoutPositionToPostLayoutWithInt:pos];
   if (adapterPosition == -1) {
     ADLog_wWithNSString_withNSString_(ADXGridLayoutManager_TAG, JreStrcat("$I", @"Cannot find span size for pre layout position. It is not cached, not in the adapter. Pos:", pos));
     return 1;
@@ -1057,14 +1072,14 @@ jint ADXGridLayoutManager_getSpanSizeWithADXRecyclerView_Recycler_withADXRecycle
   return [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getSpanSizeWithInt:adapterPosition];
 }
 
-void ADXGridLayoutManager_measureChildWithADView_withInt_withBoolean_(ADXGridLayoutManager *self, ADView *view, jint otherDirParentSpecMode, jboolean alreadyMeasured) {
+void ADXGridLayoutManager_measureChildWithADView_withInt_withBoolean_(ADXGridLayoutManager *self, ADView *view, int32_t otherDirParentSpecMode, bool alreadyMeasured) {
   ADXGridLayoutManager_LayoutParams *lp = (ADXGridLayoutManager_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXGridLayoutManager_LayoutParams class]);
   ADRect *decorInsets = ((ADXGridLayoutManager_LayoutParams *) nil_chk(lp))->mDecorInsets_;
-  jint verticalInsets = ((ADRect *) nil_chk(decorInsets))->top_ + decorInsets->bottom_ + lp->topMargin_ + lp->bottomMargin_;
-  jint horizontalInsets = decorInsets->left_ + decorInsets->right_ + lp->leftMargin_ + lp->rightMargin_;
-  jint availableSpaceInOther = [self getSpaceForSpanRangeWithInt:lp->mSpanIndex_ withInt:lp->mSpanSize_];
-  jint wSpec;
-  jint hSpec;
+  int32_t verticalInsets = ((ADRect *) nil_chk(decorInsets))->top_ + decorInsets->bottom_ + lp->topMargin_ + lp->bottomMargin_;
+  int32_t horizontalInsets = decorInsets->left_ + decorInsets->right_ + lp->leftMargin_ + lp->rightMargin_;
+  int32_t availableSpaceInOther = [self getSpaceForSpanRangeWithInt:lp->mSpanIndex_ withInt:lp->mSpanSize_];
+  int32_t wSpec;
+  int32_t hSpec;
   if (self->mOrientation_ == ADXLinearLayoutManager_VERTICAL) {
     wSpec = ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_(availableSpaceInOther, otherDirParentSpecMode, horizontalInsets, lp->width_, false);
     hSpec = ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_([((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getTotalSpace], [self getHeightMode], verticalInsets, lp->height_, true);
@@ -1076,14 +1091,14 @@ void ADXGridLayoutManager_measureChildWithADView_withInt_withBoolean_(ADXGridLay
   ADXGridLayoutManager_measureChildWithDecorationsAndMarginWithADView_withInt_withInt_withBoolean_(self, view, wSpec, hSpec, alreadyMeasured);
 }
 
-void ADXGridLayoutManager_guessMeasurementWithFloat_withInt_(ADXGridLayoutManager *self, jfloat maxSizeInOther, jint currentOtherDirSize) {
-  jint contentSize = JavaLangMath_roundWithFloat_(maxSizeInOther * self->mSpanCount_);
+void ADXGridLayoutManager_guessMeasurementWithFloat_withInt_(ADXGridLayoutManager *self, float maxSizeInOther, int32_t currentOtherDirSize) {
+  int32_t contentSize = JavaLangMath_roundWithFloat_(maxSizeInOther * self->mSpanCount_);
   ADXGridLayoutManager_calculateItemBordersWithInt_(self, JavaLangMath_maxWithInt_withInt_(contentSize, currentOtherDirSize));
 }
 
-void ADXGridLayoutManager_measureChildWithDecorationsAndMarginWithADView_withInt_withInt_withBoolean_(ADXGridLayoutManager *self, ADView *child, jint widthSpec, jint heightSpec, jboolean alreadyMeasured) {
+void ADXGridLayoutManager_measureChildWithDecorationsAndMarginWithADView_withInt_withInt_withBoolean_(ADXGridLayoutManager *self, ADView *child, int32_t widthSpec, int32_t heightSpec, bool alreadyMeasured) {
   ADXRecyclerView_LayoutParams *lp = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
-  jboolean measure;
+  bool measure;
   if (alreadyMeasured) {
     measure = [self shouldReMeasureChildWithADView:child withInt:widthSpec withInt:heightSpec withADXRecyclerView_LayoutParams:lp];
   }
@@ -1095,11 +1110,11 @@ void ADXGridLayoutManager_measureChildWithDecorationsAndMarginWithADView_withInt
   }
 }
 
-void ADXGridLayoutManager_assignSpansWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_withBoolean_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jint count, jboolean layingOutInPrimaryDirection) {
-  jint span;
-  jint start;
-  jint end;
-  jint diff;
+void ADXGridLayoutManager_assignSpansWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_withBoolean_(ADXGridLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, int32_t count, bool layingOutInPrimaryDirection) {
+  int32_t span;
+  int32_t start;
+  int32_t end;
+  int32_t diff;
   if (layingOutInPrimaryDirection) {
     start = 0;
     end = count;
@@ -1111,7 +1126,7 @@ void ADXGridLayoutManager_assignSpansWithADXRecyclerView_Recycler_withADXRecycle
     diff = -1;
   }
   span = 0;
-  for (jint i = start; i != end; i += diff) {
+  for (int32_t i = start; i != end; i += diff) {
     ADView *view = IOSObjectArray_Get(nil_chk(self->mSet_), i);
     ADXGridLayoutManager_LayoutParams *params = (ADXGridLayoutManager_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXGridLayoutManager_LayoutParams class]);
     ((ADXGridLayoutManager_LayoutParams *) nil_chk(params))->mSpanSize_ = ADXGridLayoutManager_getSpanSizeWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_(self, recycler, state, [self getPositionWithADView:view]);
@@ -1120,7 +1135,7 @@ void ADXGridLayoutManager_assignSpansWithADXRecyclerView_Recycler_withADXRecycle
   }
 }
 
-jint ADXGridLayoutManager_computeScrollRangeWithSpanInfoWithADXRecyclerView_State_(ADXGridLayoutManager *self, ADXRecyclerView_State *state) {
+int32_t ADXGridLayoutManager_computeScrollRangeWithSpanInfoWithADXRecyclerView_State_(ADXGridLayoutManager *self, ADXRecyclerView_State *state) {
   if ([self getChildCount] == 0 || [((ADXRecyclerView_State *) nil_chk(state)) getItemCount] == 0) {
     return 0;
   }
@@ -1133,43 +1148,45 @@ jint ADXGridLayoutManager_computeScrollRangeWithSpanInfoWithADXRecyclerView_Stat
   if (![self isSmoothScrollbarEnabled]) {
     return [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[((ADXRecyclerView_State *) nil_chk(state)) getItemCount] - 1 withInt:self->mSpanCount_] + 1;
   }
-  jint laidOutArea = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedEndWithADView:endChild] - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:startChild];
-  jint firstVisibleSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:startChild] withInt:self->mSpanCount_];
-  jint lastVisibleSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:endChild] withInt:self->mSpanCount_];
-  jint totalSpans = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[((ADXRecyclerView_State *) nil_chk(state)) getItemCount] - 1 withInt:self->mSpanCount_] + 1;
-  jint laidOutSpans = lastVisibleSpan - firstVisibleSpan + 1;
-  return JreFpToInt((((jfloat) laidOutArea / laidOutSpans) * totalSpans));
+  int32_t laidOutArea = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedEndWithADView:endChild] - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:startChild];
+  int32_t firstVisibleSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:startChild] withInt:self->mSpanCount_];
+  int32_t lastVisibleSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:endChild] withInt:self->mSpanCount_];
+  int32_t totalSpans = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[((ADXRecyclerView_State *) nil_chk(state)) getItemCount] - 1 withInt:self->mSpanCount_] + 1;
+  int32_t laidOutSpans = lastVisibleSpan - firstVisibleSpan + 1;
+  return JreFpToInt((((float) laidOutArea / laidOutSpans) * totalSpans));
 }
 
-jint ADXGridLayoutManager_computeScrollOffsetWithSpanInfoWithADXRecyclerView_State_(ADXGridLayoutManager *self, ADXRecyclerView_State *state) {
+int32_t ADXGridLayoutManager_computeScrollOffsetWithSpanInfoWithADXRecyclerView_State_(ADXGridLayoutManager *self, ADXRecyclerView_State *state) {
   if ([self getChildCount] == 0 || [((ADXRecyclerView_State *) nil_chk(state)) getItemCount] == 0) {
     return 0;
   }
   [self ensureLayoutState];
-  jboolean smoothScrollEnabled = [self isSmoothScrollbarEnabled];
+  bool smoothScrollEnabled = [self isSmoothScrollbarEnabled];
   ADView *startChild = JreRetainedLocalValue([self findFirstVisibleChildClosestToStartWithBoolean:!smoothScrollEnabled withBoolean:true]);
   ADView *endChild = JreRetainedLocalValue([self findFirstVisibleChildClosestToEndWithBoolean:!smoothScrollEnabled withBoolean:true]);
   if (startChild == nil || endChild == nil) {
     return 0;
   }
-  jint startChildSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:startChild] withInt:self->mSpanCount_];
-  jint endChildSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:endChild] withInt:self->mSpanCount_];
-  jint minSpan = JavaLangMath_minWithInt_withInt_(startChildSpan, endChildSpan);
-  jint maxSpan = JavaLangMath_maxWithInt_withInt_(startChildSpan, endChildSpan);
-  jint totalSpans = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[((ADXRecyclerView_State *) nil_chk(state)) getItemCount] - 1 withInt:self->mSpanCount_] + 1;
-  jint spansBefore = self->mShouldReverseLayout_ ? JavaLangMath_maxWithInt_withInt_(0, totalSpans - maxSpan - 1) : JavaLangMath_maxWithInt_withInt_(0, minSpan);
+  int32_t startChildSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:startChild] withInt:self->mSpanCount_];
+  int32_t endChildSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:endChild] withInt:self->mSpanCount_];
+  int32_t minSpan = JavaLangMath_minWithInt_withInt_(startChildSpan, endChildSpan);
+  int32_t maxSpan = JavaLangMath_maxWithInt_withInt_(startChildSpan, endChildSpan);
+  int32_t totalSpans = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[((ADXRecyclerView_State *) nil_chk(state)) getItemCount] - 1 withInt:self->mSpanCount_] + 1;
+  int32_t spansBefore = self->mShouldReverseLayout_ ? JavaLangMath_maxWithInt_withInt_(0, totalSpans - maxSpan - 1) : JavaLangMath_maxWithInt_withInt_(0, minSpan);
   if (!smoothScrollEnabled) {
     return spansBefore;
   }
-  jint laidOutArea = JavaLangMath_absWithInt_([((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedEndWithADView:endChild] - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:startChild]);
-  jint firstVisibleSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:startChild] withInt:self->mSpanCount_];
-  jint lastVisibleSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:endChild] withInt:self->mSpanCount_];
-  jint laidOutSpans = lastVisibleSpan - firstVisibleSpan + 1;
-  jfloat avgSizePerSpan = (jfloat) laidOutArea / laidOutSpans;
+  int32_t laidOutArea = JavaLangMath_absWithInt_([((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedEndWithADView:endChild] - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:startChild]);
+  int32_t firstVisibleSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:startChild] withInt:self->mSpanCount_];
+  int32_t lastVisibleSpan = [((ADXGridLayoutManager_SpanSizeLookup *) nil_chk(self->mSpanSizeLookup_)) getCachedSpanGroupIndexWithInt:[self getPositionWithADView:endChild] withInt:self->mSpanCount_];
+  int32_t laidOutSpans = lastVisibleSpan - firstVisibleSpan + 1;
+  float avgSizePerSpan = (float) laidOutArea / laidOutSpans;
   return JavaLangMath_roundWithFloat_(spansBefore * avgSizePerSpan + ([((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getStartAfterPadding] - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:startChild]));
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXGridLayoutManager)
+
+J2OBJC_NAME_MAPPING(ADXGridLayoutManager, "androidx.recyclerview.widget", "ADX")
 
 @implementation ADXGridLayoutManager_SpanSizeLookup
 
@@ -1180,20 +1197,20 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jint)getSpanSizeWithInt:(jint)position {
+- (int32_t)getSpanSizeWithInt:(int32_t)position {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (void)setSpanIndexCacheEnabledWithBoolean:(jboolean)cacheSpanIndices {
+- (void)setSpanIndexCacheEnabledWithBoolean:(bool)cacheSpanIndices {
   if (!cacheSpanIndices) {
     [((ADSparseIntArray *) nil_chk(mSpanGroupIndexCache_)) clear];
   }
   mCacheSpanIndices_ = cacheSpanIndices;
 }
 
-- (void)setSpanGroupIndexCacheEnabledWithBoolean:(jboolean)cacheSpanGroupIndices {
+- (void)setSpanGroupIndexCacheEnabledWithBoolean:(bool)cacheSpanGroupIndices {
   if (!cacheSpanGroupIndices) {
     [((ADSparseIntArray *) nil_chk(mSpanGroupIndexCache_)) clear];
   }
@@ -1208,59 +1225,59 @@ J2OBJC_IGNORE_DESIGNATED_END
   [((ADSparseIntArray *) nil_chk(mSpanGroupIndexCache_)) clear];
 }
 
-- (jboolean)isSpanIndexCacheEnabled {
+- (bool)isSpanIndexCacheEnabled {
   return mCacheSpanIndices_;
 }
 
-- (jboolean)isSpanGroupIndexCacheEnabled {
+- (bool)isSpanGroupIndexCacheEnabled {
   return mCacheSpanGroupIndices_;
 }
 
-- (jint)getCachedSpanIndexWithInt:(jint)position
-                          withInt:(jint)spanCount {
+- (int32_t)getCachedSpanIndexWithInt:(int32_t)position
+                             withInt:(int32_t)spanCount {
   if (!mCacheSpanIndices_) {
     return [self getSpanIndexWithInt:position withInt:spanCount];
   }
-  jint existing = [((ADSparseIntArray *) nil_chk(mSpanIndexCache_)) getWithInt:position withInt:-1];
+  int32_t existing = [((ADSparseIntArray *) nil_chk(mSpanIndexCache_)) getWithInt:position withInt:-1];
   if (existing != -1) {
     return existing;
   }
-  jint value = [self getSpanIndexWithInt:position withInt:spanCount];
+  int32_t value = [self getSpanIndexWithInt:position withInt:spanCount];
   [mSpanIndexCache_ putWithInt:position withInt:value];
   return value;
 }
 
-- (jint)getCachedSpanGroupIndexWithInt:(jint)position
-                               withInt:(jint)spanCount {
+- (int32_t)getCachedSpanGroupIndexWithInt:(int32_t)position
+                                  withInt:(int32_t)spanCount {
   if (!mCacheSpanGroupIndices_) {
     return [self getSpanGroupIndexWithInt:position withInt:spanCount];
   }
-  jint existing = [((ADSparseIntArray *) nil_chk(mSpanGroupIndexCache_)) getWithInt:position withInt:-1];
+  int32_t existing = [((ADSparseIntArray *) nil_chk(mSpanGroupIndexCache_)) getWithInt:position withInt:-1];
   if (existing != -1) {
     return existing;
   }
-  jint value = [self getSpanGroupIndexWithInt:position withInt:spanCount];
+  int32_t value = [self getSpanGroupIndexWithInt:position withInt:spanCount];
   [mSpanGroupIndexCache_ putWithInt:position withInt:value];
   return value;
 }
 
-- (jint)getSpanIndexWithInt:(jint)position
-                    withInt:(jint)spanCount {
-  jint positionSpanSize = [self getSpanSizeWithInt:position];
+- (int32_t)getSpanIndexWithInt:(int32_t)position
+                       withInt:(int32_t)spanCount {
+  int32_t positionSpanSize = [self getSpanSizeWithInt:position];
   if (positionSpanSize == spanCount) {
     return 0;
   }
-  jint span = 0;
-  jint startPos = 0;
+  int32_t span = 0;
+  int32_t startPos = 0;
   if (mCacheSpanIndices_) {
-    jint prevKey = ADXGridLayoutManager_SpanSizeLookup_findFirstKeyLessThanWithADSparseIntArray_withInt_(mSpanIndexCache_, position);
+    int32_t prevKey = ADXGridLayoutManager_SpanSizeLookup_findFirstKeyLessThanWithADSparseIntArray_withInt_(mSpanIndexCache_, position);
     if (prevKey >= 0) {
       span = [((ADSparseIntArray *) nil_chk(mSpanIndexCache_)) getWithInt:prevKey] + [self getSpanSizeWithInt:prevKey];
       startPos = prevKey + 1;
     }
   }
-  for (jint i = startPos; i < position; i++) {
-    jint size = [self getSpanSizeWithInt:i];
+  for (int32_t i = startPos; i < position; i++) {
+    int32_t size = [self getSpanSizeWithInt:i];
     span += size;
     if (span == spanCount) {
       span = 0;
@@ -1275,18 +1292,18 @@ J2OBJC_IGNORE_DESIGNATED_END
   return 0;
 }
 
-+ (jint)findFirstKeyLessThanWithADSparseIntArray:(ADSparseIntArray *)cache
-                                         withInt:(jint)position {
++ (int32_t)findFirstKeyLessThanWithADSparseIntArray:(ADSparseIntArray *)cache
+                                            withInt:(int32_t)position {
   return ADXGridLayoutManager_SpanSizeLookup_findFirstKeyLessThanWithADSparseIntArray_withInt_(cache, position);
 }
 
-- (jint)getSpanGroupIndexWithInt:(jint)adapterPosition
-                         withInt:(jint)spanCount {
-  jint span = 0;
-  jint group = 0;
-  jint start = 0;
+- (int32_t)getSpanGroupIndexWithInt:(int32_t)adapterPosition
+                            withInt:(int32_t)spanCount {
+  int32_t span = 0;
+  int32_t group = 0;
+  int32_t start = 0;
   if (mCacheSpanGroupIndices_) {
-    jint prevKey = ADXGridLayoutManager_SpanSizeLookup_findFirstKeyLessThanWithADSparseIntArray_withInt_(mSpanGroupIndexCache_, adapterPosition);
+    int32_t prevKey = ADXGridLayoutManager_SpanSizeLookup_findFirstKeyLessThanWithADSparseIntArray_withInt_(mSpanGroupIndexCache_, adapterPosition);
     if (prevKey != -1) {
       group = [((ADSparseIntArray *) nil_chk(mSpanGroupIndexCache_)) getWithInt:prevKey];
       start = prevKey + 1;
@@ -1297,9 +1314,9 @@ J2OBJC_IGNORE_DESIGNATED_END
       }
     }
   }
-  jint positionSpanSize = [self getSpanSizeWithInt:adapterPosition];
-  for (jint i = start; i < adapterPosition; i++) {
-    jint size = [self getSpanSizeWithInt:i];
+  int32_t positionSpanSize = [self getSpanSizeWithInt:adapterPosition];
+  for (int32_t i = start; i < adapterPosition; i++) {
+    int32_t size = [self getSpanSizeWithInt:i];
     span += size;
     if (span == spanCount) {
       span = 0;
@@ -1376,13 +1393,13 @@ void ADXGridLayoutManager_SpanSizeLookup_init(ADXGridLayoutManager_SpanSizeLooku
   self->mCacheSpanGroupIndices_ = false;
 }
 
-jint ADXGridLayoutManager_SpanSizeLookup_findFirstKeyLessThanWithADSparseIntArray_withInt_(ADSparseIntArray *cache, jint position) {
+int32_t ADXGridLayoutManager_SpanSizeLookup_findFirstKeyLessThanWithADSparseIntArray_withInt_(ADSparseIntArray *cache, int32_t position) {
   ADXGridLayoutManager_SpanSizeLookup_initialize();
-  jint lo = 0;
-  jint hi = [((ADSparseIntArray *) nil_chk(cache)) size] - 1;
+  int32_t lo = 0;
+  int32_t hi = [((ADSparseIntArray *) nil_chk(cache)) size] - 1;
   while (lo <= hi) {
-    jint mid = JreURShift32((lo + hi), 1);
-    jint midVal = [cache keyAtWithInt:mid];
+    int32_t mid = JreURShift32((lo + hi), 1);
+    int32_t midVal = [cache keyAtWithInt:mid];
     if (midVal < position) {
       lo = mid + 1;
     }
@@ -1390,7 +1407,7 @@ jint ADXGridLayoutManager_SpanSizeLookup_findFirstKeyLessThanWithADSparseIntArra
       hi = mid - 1;
     }
   }
-  jint index = lo - 1;
+  int32_t index = lo - 1;
   if (index >= 0 && index < [cache size]) {
     return [cache keyAtWithInt:index];
   }
@@ -1408,12 +1425,12 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jint)getSpanSizeWithInt:(jint)position {
+- (int32_t)getSpanSizeWithInt:(int32_t)position {
   return 1;
 }
 
-- (jint)getSpanIndexWithInt:(jint)position
-                    withInt:(jint)spanCount {
+- (int32_t)getSpanIndexWithInt:(int32_t)position
+                       withInt:(int32_t)spanCount {
   return JreIntMod(position, spanCount);
 }
 
@@ -1453,8 +1470,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXGridLayoutManager_DefaultSpanSizeLookup)
 
 @implementation ADXGridLayoutManager_LayoutParams
 
-- (instancetype)initWithInt:(jint)width
-                    withInt:(jint)height {
+- (instancetype)initWithInt:(int32_t)width
+                    withInt:(int32_t)height {
   ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(self, width, height);
   return self;
 }
@@ -1474,11 +1491,11 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXGridLayoutManager_DefaultSpanSizeLookup)
   return self;
 }
 
-- (jint)getSpanIndex {
+- (int32_t)getSpanIndex {
   return mSpanIndex_;
 }
 
-- (jint)getSpanSize {
+- (int32_t)getSpanSize {
   return mSpanSize_;
 }
 
@@ -1513,17 +1530,17 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXGridLayoutManager_DefaultSpanSizeLookup)
 
 @end
 
-void ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(ADXGridLayoutManager_LayoutParams *self, jint width, jint height) {
+void ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(ADXGridLayoutManager_LayoutParams *self, int32_t width, int32_t height) {
   ADXRecyclerView_LayoutParams_initWithInt_withInt_(self, width, height);
   self->mSpanIndex_ = ADXGridLayoutManager_LayoutParams_INVALID_SPAN_ID;
   self->mSpanSize_ = 0;
 }
 
-ADXGridLayoutManager_LayoutParams *new_ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(jint width, jint height) {
+ADXGridLayoutManager_LayoutParams *new_ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(int32_t width, int32_t height) {
   J2OBJC_NEW_IMPL(ADXGridLayoutManager_LayoutParams, initWithInt_withInt_, width, height)
 }
 
-ADXGridLayoutManager_LayoutParams *create_ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(jint width, jint height) {
+ADXGridLayoutManager_LayoutParams *create_ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(int32_t width, int32_t height) {
   J2OBJC_CREATE_IMPL(ADXGridLayoutManager_LayoutParams, initWithInt_withInt_, width, height)
 }
 

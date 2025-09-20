@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\GridLayoutManager.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_GridLayoutManager")
@@ -37,6 +38,8 @@
 @class ADXRecyclerView_State;
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;
 
 /*!
@@ -50,8 +53,8 @@
   /*!
    @brief Span size have been changed but we've not done a new layout calculation.
    */
-  jboolean mPendingSpanCountChange_;
-  jint mSpanCount_;
+  bool mPendingSpanCountChange_;
+  int32_t mSpanCount_;
   /*!
    @brief Right borders for each span.
    <p>For <b>i-th</b> item start is <code>mCachedBorders</code>[i-1] + 1
@@ -76,7 +79,7 @@
  @param spanCount The number of columns in the grid
  */
 - (instancetype)initWithADContext:(ADContext *)context
-                          withInt:(jint)spanCount;
+                          withInt:(int32_t)spanCount;
 
 /*!
  @param context Current context, will be used to access resources.
@@ -86,34 +89,34 @@
  @param reverseLayout When set to true, layouts from end to start.
  */
 - (instancetype)initWithADContext:(ADContext *)context
-                          withInt:(jint)spanCount
-                          withInt:(jint)orientation
-                      withBoolean:(jboolean)reverseLayout;
+                          withInt:(int32_t)spanCount
+                          withInt:(int32_t)orientation
+                      withBoolean:(bool)reverseLayout;
 
-- (jboolean)checkLayoutParamsWithADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp;
+- (bool)checkLayoutParamsWithADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp;
 
-- (jint)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 - (ADXRecyclerView_LayoutParams *)generateDefaultLayoutParams;
 
-- (jint)getColumnCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                         withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)getColumnCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                                            withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)getRowCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                      withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)getRowCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                                         withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 /*!
  @brief Returns the number of spans laid out by this grid.
  @return The number of spans
  - seealso: #setSpanCount(int)
  */
-- (jint)getSpanCount;
+- (int32_t)getSpanCount;
 
 /*!
  @brief Returns the current <code>SpanSizeLookup</code> used by the GridLayoutManager.
@@ -129,31 +132,31 @@
  @return true if the scroll offset and scroll range calculations take account of span
   information.
  */
-- (jboolean)isUsingSpansToEstimateScrollbarDimensions;
+- (bool)isUsingSpansToEstimateScrollbarDimensions;
 
 - (ADView *)onFocusSearchFailedWithADView:(ADView *)focused
-                                  withInt:(jint)direction
+                                  withInt:(int32_t)direction
              withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                 withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 - (void)onItemsAddedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                withInt:(jint)positionStart
-                                withInt:(jint)itemCount;
+                                withInt:(int32_t)positionStart
+                                withInt:(int32_t)itemCount;
 
 - (void)onItemsChangedWithADXRecyclerView:(ADXRecyclerView *)recyclerView;
 
 - (void)onItemsMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                withInt:(jint)from
-                                withInt:(jint)to
-                                withInt:(jint)itemCount;
+                                withInt:(int32_t)from
+                                withInt:(int32_t)to
+                                withInt:(int32_t)itemCount;
 
 - (void)onItemsRemovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount;
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount;
 
 - (void)onItemsUpdatedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount
                                    withId:(id)payload;
 
 - (void)onLayoutChildrenWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
@@ -161,17 +164,17 @@
 
 - (void)onLayoutCompletedWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)scrollHorizontallyByWithInt:(jint)dx
-       withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-          withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)scrollHorizontallyByWithInt:(int32_t)dx
+          withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+             withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)scrollVerticallyByWithInt:(jint)dy
-     withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-        withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)scrollVerticallyByWithInt:(int32_t)dy
+        withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+           withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 - (void)setMeasuredDimensionWithADRect:(ADRect *)childrenBounds
-                               withInt:(jint)wSpec
-                               withInt:(jint)hSpec;
+                               withInt:(int32_t)wSpec
+                               withInt:(int32_t)hSpec;
 
 /*!
  @brief Sets the number of spans to be laid out.
@@ -181,7 +184,7 @@
  @param spanCount The total number of spans in the grid
  - seealso: #getSpanCount()
  */
-- (void)setSpanCountWithInt:(jint)spanCount;
+- (void)setSpanCountWithInt:(int32_t)spanCount;
 
 /*!
  @brief Sets the source to get the number of spans occupied by each item in the adapter.
@@ -193,7 +196,7 @@
  @brief stackFromEnd is not supported by GridLayoutManager.Consider using 
  <code>setReverseLayout(boolean)</code>.
  */
-- (void)setStackFromEndWithBoolean:(jboolean)stackFromEnd;
+- (void)setStackFromEndWithBoolean:(bool)stackFromEnd;
 
 /*!
  @brief When this flag is set, the scroll offset and scroll range calculations will take account
@@ -217,9 +220,9 @@
   and span index caching is also enabled via a call to 
  <code>SpanSizeLookup.setSpanIndexCacheEnabled(boolean)</code>}.
  */
-- (void)setUsingSpansToEstimateScrollbarDimensionsWithBoolean:(jboolean)useSpansToEstimateScrollBarDimensions;
+- (void)setUsingSpansToEstimateScrollbarDimensionsWithBoolean:(bool)useSpansToEstimateScrollBarDimensions;
 
-- (jboolean)supportsPredictiveItemAnimations;
+- (bool)supportsPredictiveItemAnimations;
 
 #pragma mark Package-Private
 
@@ -231,8 +234,8 @@
   has not changed.
  */
 + (IOSIntArray *)calculateItemBordersWithIntArray:(IOSIntArray *)cachedBorders
-                                          withInt:(jint)spanCount
-                                          withInt:(jint)totalSpace;
+                                          withInt:(int32_t)spanCount
+                                          withInt:(int32_t)totalSpace;
 
 - (void)collectPrefetchPositionsForLayoutStateWithADXRecyclerView_State:(ADXRecyclerView_State *)state
                                  withADXLinearLayoutManager_LayoutState:(ADXLinearLayoutManager_LayoutState *)layoutState
@@ -240,11 +243,11 @@
 
 - (ADView *)findReferenceChildWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                                  withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                               withBoolean:(jboolean)layoutFromEnd
-                                               withBoolean:(jboolean)traverseChildrenInReverseOrder;
+                                               withBoolean:(bool)layoutFromEnd
+                                               withBoolean:(bool)traverseChildrenInReverseOrder;
 
-- (jint)getSpaceForSpanRangeWithInt:(jint)startSpan
-                            withInt:(jint)spanSize;
+- (int32_t)getSpaceForSpanRangeWithInt:(int32_t)startSpan
+                               withInt:(int32_t)spanSize;
 
 - (void)layoutChunkWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
@@ -254,15 +257,15 @@
 - (void)onAnchorReadyWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                         withADXRecyclerView_State:(ADXRecyclerView_State *)state
             withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo
-                                          withInt:(jint)itemDirection;
+                                          withInt:(int32_t)itemDirection;
 
 // Disallowed inherited constructors, do not use.
 
 - (instancetype)initWithADContext:(ADContext *)arg0 NS_UNAVAILABLE;
 
 - (instancetype)initWithADContext:(ADContext *)arg0
-                          withInt:(jint)arg1
-                      withBoolean:(jboolean)arg2 NS_UNAVAILABLE;
+                          withInt:(int32_t)arg1
+                      withBoolean:(bool)arg2 NS_UNAVAILABLE;
 
 @end
 
@@ -275,27 +278,28 @@ J2OBJC_FIELD_SETTER(ADXGridLayoutManager, mPreLayoutSpanIndexCache_, ADSparseInt
 J2OBJC_FIELD_SETTER(ADXGridLayoutManager, mSpanSizeLookup_, ADXGridLayoutManager_SpanSizeLookup *)
 J2OBJC_FIELD_SETTER(ADXGridLayoutManager, mDecorInsets_, ADRect *)
 
-inline jint ADXGridLayoutManager_get_DEFAULT_SPAN_COUNT(void);
+inline int32_t ADXGridLayoutManager_get_DEFAULT_SPAN_COUNT(void);
 #define ADXGridLayoutManager_DEFAULT_SPAN_COUNT -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXGridLayoutManager, DEFAULT_SPAN_COUNT, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXGridLayoutManager, DEFAULT_SPAN_COUNT, int32_t)
 
-FOUNDATION_EXPORT void ADXGridLayoutManager_initWithADContext_withInt_(ADXGridLayoutManager *self, ADContext *context, jint spanCount);
+FOUNDATION_EXPORT void ADXGridLayoutManager_initWithADContext_withInt_(ADXGridLayoutManager *self, ADContext *context, int32_t spanCount);
 
-FOUNDATION_EXPORT ADXGridLayoutManager *new_ADXGridLayoutManager_initWithADContext_withInt_(ADContext *context, jint spanCount) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXGridLayoutManager *new_ADXGridLayoutManager_initWithADContext_withInt_(ADContext *context, int32_t spanCount) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXGridLayoutManager *create_ADXGridLayoutManager_initWithADContext_withInt_(ADContext *context, jint spanCount);
+FOUNDATION_EXPORT ADXGridLayoutManager *create_ADXGridLayoutManager_initWithADContext_withInt_(ADContext *context, int32_t spanCount);
 
-FOUNDATION_EXPORT void ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADXGridLayoutManager *self, ADContext *context, jint spanCount, jint orientation, jboolean reverseLayout);
+FOUNDATION_EXPORT void ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADXGridLayoutManager *self, ADContext *context, int32_t spanCount, int32_t orientation, bool reverseLayout);
 
-FOUNDATION_EXPORT ADXGridLayoutManager *new_ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADContext *context, jint spanCount, jint orientation, jboolean reverseLayout) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXGridLayoutManager *new_ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADContext *context, int32_t spanCount, int32_t orientation, bool reverseLayout) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXGridLayoutManager *create_ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADContext *context, jint spanCount, jint orientation, jboolean reverseLayout);
+FOUNDATION_EXPORT ADXGridLayoutManager *create_ADXGridLayoutManager_initWithADContext_withInt_withInt_withBoolean_(ADContext *context, int32_t spanCount, int32_t orientation, bool reverseLayout);
 
-FOUNDATION_EXPORT IOSIntArray *ADXGridLayoutManager_calculateItemBordersWithIntArray_withInt_withInt_(IOSIntArray *cachedBorders, jint spanCount, jint totalSpace);
+FOUNDATION_EXPORT IOSIntArray *ADXGridLayoutManager_calculateItemBordersWithIntArray_withInt_withInt_(IOSIntArray *cachedBorders, int32_t spanCount, int32_t totalSpace);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager)
 
 @compatibility_alias AndroidxRecyclerviewWidgetGridLayoutManager ADXGridLayoutManager;
+
 
 #endif
 
@@ -303,6 +307,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager)
 #define ADXGridLayoutManager_SpanSizeLookup_
 
 @class ADSparseIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief A helper class to provide the number of spans each item occupies.
@@ -329,8 +335,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager)
  @param spanCount The total number of spans in the grid
  @return The index of the span group including the item at the given adapter position
  */
-- (jint)getSpanGroupIndexWithInt:(jint)adapterPosition
-                         withInt:(jint)spanCount;
+- (int32_t)getSpanGroupIndexWithInt:(int32_t)adapterPosition
+                            withInt:(int32_t)spanCount;
 
 /*!
  @brief Returns the final span index of the provided position.
@@ -354,15 +360,15 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager)
  @return The final span position of the item. Should be between 0 (inclusive) and 
  <code>spanCount</code>(exclusive)
  */
-- (jint)getSpanIndexWithInt:(jint)position
-                    withInt:(jint)spanCount;
+- (int32_t)getSpanIndexWithInt:(int32_t)position
+                       withInt:(int32_t)spanCount;
 
 /*!
  @brief Returns the number of span occupied by the item at <code>position</code>.
  @param position The adapter position of the item
  @return The number of spans occupied by the item at the provided position
  */
-- (jint)getSpanSizeWithInt:(jint)position;
+- (int32_t)getSpanSizeWithInt:(int32_t)position;
 
 /*!
  @brief Clears the span group index cache.GridLayoutManager automatically calls this method
@@ -380,13 +386,13 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager)
  @brief Returns whether results of <code>getSpanGroupIndex(int, int)</code> method are cached or not.
  @return True if results of <code>getSpanGroupIndex(int, int)</code> are cached.
  */
-- (jboolean)isSpanGroupIndexCacheEnabled;
+- (bool)isSpanGroupIndexCacheEnabled;
 
 /*!
  @brief Returns whether results of <code>getSpanIndex(int, int)</code> method are cached or not.
  @return True if results of <code>getSpanIndex(int, int)</code> are cached.
  */
-- (jboolean)isSpanIndexCacheEnabled;
+- (bool)isSpanIndexCacheEnabled;
 
 /*!
  @brief Sets whether the results of <code>getSpanGroupIndex(int, int)</code> method should be cached
@@ -397,7 +403,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager)
   performance.
  @param cacheSpanGroupIndices Whether results of getGroupSpanIndex should be cached or                               not.
  */
-- (void)setSpanGroupIndexCacheEnabledWithBoolean:(jboolean)cacheSpanGroupIndices;
+- (void)setSpanGroupIndexCacheEnabledWithBoolean:(bool)cacheSpanGroupIndices;
 
 /*!
  @brief Sets whether the results of <code>getSpanIndex(int, int)</code> method should be cached or
@@ -407,18 +413,18 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager)
   to true for better performance.
  @param cacheSpanIndices Whether results of getSpanIndex should be cached or not.
  */
-- (void)setSpanIndexCacheEnabledWithBoolean:(jboolean)cacheSpanIndices;
+- (void)setSpanIndexCacheEnabledWithBoolean:(bool)cacheSpanIndices;
 
 #pragma mark Package-Private
 
-+ (jint)findFirstKeyLessThanWithADSparseIntArray:(ADSparseIntArray *)cache
-                                         withInt:(jint)position;
++ (int32_t)findFirstKeyLessThanWithADSparseIntArray:(ADSparseIntArray *)cache
+                                            withInt:(int32_t)position;
 
-- (jint)getCachedSpanGroupIndexWithInt:(jint)position
-                               withInt:(jint)spanCount;
+- (int32_t)getCachedSpanGroupIndexWithInt:(int32_t)position
+                                  withInt:(int32_t)spanCount;
 
-- (jint)getCachedSpanIndexWithInt:(jint)position
-                          withInt:(jint)spanCount;
+- (int32_t)getCachedSpanIndexWithInt:(int32_t)position
+                             withInt:(int32_t)spanCount;
 
 @end
 
@@ -429,14 +435,17 @@ J2OBJC_FIELD_SETTER(ADXGridLayoutManager_SpanSizeLookup, mSpanGroupIndexCache_, 
 
 FOUNDATION_EXPORT void ADXGridLayoutManager_SpanSizeLookup_init(ADXGridLayoutManager_SpanSizeLookup *self);
 
-FOUNDATION_EXPORT jint ADXGridLayoutManager_SpanSizeLookup_findFirstKeyLessThanWithADSparseIntArray_withInt_(ADSparseIntArray *cache, jint position);
+FOUNDATION_EXPORT int32_t ADXGridLayoutManager_SpanSizeLookup_findFirstKeyLessThanWithADSparseIntArray_withInt_(ADSparseIntArray *cache, int32_t position);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager_SpanSizeLookup)
+
 
 #endif
 
 #if !defined (ADXGridLayoutManager_DefaultSpanSizeLookup_) && (INCLUDE_ALL_GridLayoutManager || defined(INCLUDE_ADXGridLayoutManager_DefaultSpanSizeLookup))
 #define ADXGridLayoutManager_DefaultSpanSizeLookup_
+
+@class JavaLangInteger;
 
 /*!
  @brief Default implementation for <code>SpanSizeLookup</code>.Each item occupies 1 span.
@@ -447,10 +456,10 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager_SpanSizeLookup)
 
 - (instancetype)init;
 
-- (jint)getSpanIndexWithInt:(jint)position
-                    withInt:(jint)spanCount;
+- (int32_t)getSpanIndexWithInt:(int32_t)position
+                       withInt:(int32_t)spanCount;
 
-- (jint)getSpanSizeWithInt:(jint)position;
+- (int32_t)getSpanSizeWithInt:(int32_t)position;
 
 @end
 
@@ -464,6 +473,7 @@ FOUNDATION_EXPORT ADXGridLayoutManager_DefaultSpanSizeLookup *create_ADXGridLayo
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager_DefaultSpanSizeLookup)
 
+
 #endif
 
 #if !defined (ADXGridLayoutManager_LayoutParams_) && (INCLUDE_ALL_GridLayoutManager || defined(INCLUDE_ADXGridLayoutManager_LayoutParams))
@@ -475,6 +485,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager_DefaultSpanSizeLookup)
 
 @class ADViewGroup_LayoutParams;
 @class ADViewGroup_MarginLayoutParams;
+@class JavaLangInteger;
 
 /*!
  @brief LayoutParams used by GridLayoutManager.
@@ -485,16 +496,16 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager_DefaultSpanSizeLookup)
  */
 @interface ADXGridLayoutManager_LayoutParams : ADXRecyclerView_LayoutParams {
  @public
-  jint mSpanIndex_;
-  jint mSpanSize_;
+  int32_t mSpanIndex_;
+  int32_t mSpanSize_;
 }
 
 #pragma mark Public
 
 /*!
  */
-- (instancetype)initWithInt:(jint)width
-                    withInt:(jint)height;
+- (instancetype)initWithInt:(int32_t)width
+                    withInt:(int32_t)height;
 
 - (instancetype)initWithADViewGroup_LayoutParams:(ADViewGroup_LayoutParams *)source;
 
@@ -515,14 +526,14 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager_DefaultSpanSizeLookup)
   If the View occupies multiple spans, span with the minimum index is returned.
  @return The span index of the View.
  */
-- (jint)getSpanIndex;
+- (int32_t)getSpanIndex;
 
 /*!
  @brief Returns the number of spans occupied by this View.If the View not laid out yet, the
   return value is <code>undefined</code>.
  @return The number of spans occupied by this View.
  */
-- (jint)getSpanSize;
+- (int32_t)getSpanSize;
 
 @end
 
@@ -531,15 +542,15 @@ J2OBJC_EMPTY_STATIC_INIT(ADXGridLayoutManager_LayoutParams)
 /*!
  @brief Span Id for Views that are not laid out yet.
  */
-inline jint ADXGridLayoutManager_LayoutParams_get_INVALID_SPAN_ID(void);
+inline int32_t ADXGridLayoutManager_LayoutParams_get_INVALID_SPAN_ID(void);
 #define ADXGridLayoutManager_LayoutParams_INVALID_SPAN_ID -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXGridLayoutManager_LayoutParams, INVALID_SPAN_ID, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXGridLayoutManager_LayoutParams, INVALID_SPAN_ID, int32_t)
 
-FOUNDATION_EXPORT void ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(ADXGridLayoutManager_LayoutParams *self, jint width, jint height);
+FOUNDATION_EXPORT void ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(ADXGridLayoutManager_LayoutParams *self, int32_t width, int32_t height);
 
-FOUNDATION_EXPORT ADXGridLayoutManager_LayoutParams *new_ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(jint width, jint height) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXGridLayoutManager_LayoutParams *new_ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(int32_t width, int32_t height) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXGridLayoutManager_LayoutParams *create_ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(jint width, jint height);
+FOUNDATION_EXPORT ADXGridLayoutManager_LayoutParams *create_ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(int32_t width, int32_t height);
 
 FOUNDATION_EXPORT void ADXGridLayoutManager_LayoutParams_initWithADViewGroup_MarginLayoutParams_(ADXGridLayoutManager_LayoutParams *self, ADViewGroup_MarginLayoutParams *source);
 
@@ -560,6 +571,7 @@ FOUNDATION_EXPORT ADXGridLayoutManager_LayoutParams *new_ADXGridLayoutManager_La
 FOUNDATION_EXPORT ADXGridLayoutManager_LayoutParams *create_ADXGridLayoutManager_LayoutParams_initWithADXRecyclerView_LayoutParams_(ADXRecyclerView_LayoutParams *source);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXGridLayoutManager_LayoutParams)
+
 
 #endif
 

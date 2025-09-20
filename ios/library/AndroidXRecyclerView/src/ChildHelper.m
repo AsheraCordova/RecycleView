@@ -3,16 +3,30 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\ChildHelper.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "ChildHelper.h"
 #include "J2ObjC_source.h"
 #include "RecyclerView.h"
 #include "View.h"
 #include "ViewGroup.h"
+#include "java/lang/Boolean.h"
 #include "java/lang/IllegalArgumentException.h"
+#include "java/lang/Integer.h"
 #include "java/lang/Long.h"
 #include "java/lang/RuntimeException.h"
 #include "java/util/ArrayList.h"
 #include "java/util/List.h"
+
+
+@class NSString;
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXChildHelper ()
@@ -27,15 +41,15 @@
  @brief Unmarks a child view as hidden.
  @param child View to hide.
  */
-- (jboolean)unhideViewInternalWithADView:(ADView *)child;
+- (bool)unhideViewInternalWithADView:(ADView *)child;
 
-- (jint)getOffsetWithInt:(jint)index;
+- (int32_t)getOffsetWithInt:(int32_t)index;
 
 @end
 
-inline jboolean ADXChildHelper_get_DEBUG(void);
+inline bool ADXChildHelper_get_DEBUG(void);
 #define ADXChildHelper_DEBUG false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXChildHelper, DEBUG, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXChildHelper, DEBUG, bool)
 
 inline NSString *ADXChildHelper_get_TAG(void);
 static NSString *ADXChildHelper_TAG = @"ChildrenHelper";
@@ -43,9 +57,9 @@ J2OBJC_STATIC_FIELD_OBJ_FINAL(ADXChildHelper, TAG, NSString *)
 
 __attribute__((unused)) static void ADXChildHelper_hideViewInternalWithADView_(ADXChildHelper *self, ADView *child);
 
-__attribute__((unused)) static jboolean ADXChildHelper_unhideViewInternalWithADView_(ADXChildHelper *self, ADView *child);
+__attribute__((unused)) static bool ADXChildHelper_unhideViewInternalWithADView_(ADXChildHelper *self, ADView *child);
 
-__attribute__((unused)) static jint ADXChildHelper_getOffsetWithInt_(ADXChildHelper *self, jint index);
+__attribute__((unused)) static int32_t ADXChildHelper_getOffsetWithInt_(ADXChildHelper *self, int32_t index);
 
 @interface ADXChildHelper_Bucket ()
 
@@ -70,19 +84,19 @@ __attribute__((unused)) static void ADXChildHelper_Bucket_ensureNext(ADXChildHel
   ADXChildHelper_hideViewInternalWithADView_(self, child);
 }
 
-- (jboolean)unhideViewInternalWithADView:(ADView *)child {
+- (bool)unhideViewInternalWithADView:(ADView *)child {
   return ADXChildHelper_unhideViewInternalWithADView_(self, child);
 }
 
 - (void)addViewWithADView:(ADView *)child
-              withBoolean:(jboolean)hidden {
+              withBoolean:(bool)hidden {
   [self addViewWithADView:child withInt:-1 withBoolean:hidden];
 }
 
 - (void)addViewWithADView:(ADView *)child
-                  withInt:(jint)index
-              withBoolean:(jboolean)hidden {
-  jint offset;
+                  withInt:(int32_t)index
+              withBoolean:(bool)hidden {
+  int32_t offset;
   if (index < 0) {
     offset = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) getChildCount];
   }
@@ -96,12 +110,12 @@ __attribute__((unused)) static void ADXChildHelper_Bucket_ensureNext(ADXChildHel
   [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) addViewWithADView:child withInt:offset];
 }
 
-- (jint)getOffsetWithInt:(jint)index {
+- (int32_t)getOffsetWithInt:(int32_t)index {
   return ADXChildHelper_getOffsetWithInt_(self, index);
 }
 
 - (void)removeViewWithADView:(ADView *)view {
-  jint index = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) indexOfChildWithADView:view];
+  int32_t index = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) indexOfChildWithADView:view];
   if (index < 0) {
     return;
   }
@@ -111,8 +125,8 @@ __attribute__((unused)) static void ADXChildHelper_Bucket_ensureNext(ADXChildHel
   [mCallback_ removeViewAtWithInt:index];
 }
 
-- (void)removeViewAtWithInt:(jint)index {
-  jint offset = ADXChildHelper_getOffsetWithInt_(self, index);
+- (void)removeViewAtWithInt:(int32_t)index {
+  int32_t offset = ADXChildHelper_getOffsetWithInt_(self, index);
   ADView *view = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) getChildAtWithInt:offset];
   if (view == nil) {
     return;
@@ -123,23 +137,23 @@ __attribute__((unused)) static void ADXChildHelper_Bucket_ensureNext(ADXChildHel
   [mCallback_ removeViewAtWithInt:offset];
 }
 
-- (ADView *)getChildAtWithInt:(jint)index {
-  jint offset = ADXChildHelper_getOffsetWithInt_(self, index);
+- (ADView *)getChildAtWithInt:(int32_t)index {
+  int32_t offset = ADXChildHelper_getOffsetWithInt_(self, index);
   return [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) getChildAtWithInt:offset];
 }
 
 - (void)removeAllViewsUnfiltered {
   [((ADXChildHelper_Bucket *) nil_chk(mBucket_)) reset];
-  for (jint i = [((id<JavaUtilList>) nil_chk(mHiddenViews_)) size] - 1; i >= 0; i--) {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(mHiddenViews_)) size] - 1; i >= 0; i--) {
     [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) onLeftHiddenStateWithADView:[mHiddenViews_ getWithInt:i]];
     [mHiddenViews_ removeWithInt:i];
   }
   [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) removeAllViews];
 }
 
-- (ADView *)findHiddenNonRemovedViewWithInt:(jint)position {
-  jint count = [((id<JavaUtilList>) nil_chk(mHiddenViews_)) size];
-  for (jint i = 0; i < count; i++) {
+- (ADView *)findHiddenNonRemovedViewWithInt:(int32_t)position {
+  int32_t count = [((id<JavaUtilList>) nil_chk(mHiddenViews_)) size];
+  for (int32_t i = 0; i < count; i++) {
     ADView *view = [mHiddenViews_ getWithInt:i];
     ADXRecyclerView_ViewHolder *holder = JreRetainedLocalValue([((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) getChildViewHolderWithADView:view]);
     if ([((ADXRecyclerView_ViewHolder *) nil_chk(holder)) getLayoutPosition] == position && ![holder isInvalid] && ![holder isRemoved]) {
@@ -150,10 +164,10 @@ __attribute__((unused)) static void ADXChildHelper_Bucket_ensureNext(ADXChildHel
 }
 
 - (void)attachViewToParentWithADView:(ADView *)child
-                             withInt:(jint)index
+                             withInt:(int32_t)index
         withADViewGroup_LayoutParams:(ADViewGroup_LayoutParams *)layoutParams
-                         withBoolean:(jboolean)hidden {
-  jint offset;
+                         withBoolean:(bool)hidden {
+  int32_t offset;
   if (index < 0) {
     offset = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) getChildCount];
   }
@@ -167,26 +181,26 @@ __attribute__((unused)) static void ADXChildHelper_Bucket_ensureNext(ADXChildHel
   [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) attachViewToParentWithADView:child withInt:offset withADViewGroup_LayoutParams:layoutParams];
 }
 
-- (jint)getChildCount {
+- (int32_t)getChildCount {
   return [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) getChildCount] - [((id<JavaUtilList>) nil_chk(mHiddenViews_)) size];
 }
 
-- (jint)getUnfilteredChildCount {
+- (int32_t)getUnfilteredChildCount {
   return [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) getChildCount];
 }
 
-- (ADView *)getUnfilteredChildAtWithInt:(jint)index {
+- (ADView *)getUnfilteredChildAtWithInt:(int32_t)index {
   return [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) getChildAtWithInt:index];
 }
 
-- (void)detachViewFromParentWithInt:(jint)index {
-  jint offset = ADXChildHelper_getOffsetWithInt_(self, index);
+- (void)detachViewFromParentWithInt:(int32_t)index {
+  int32_t offset = ADXChildHelper_getOffsetWithInt_(self, index);
   [((ADXChildHelper_Bucket *) nil_chk(mBucket_)) removeWithInt:offset];
   [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) detachViewFromParentWithInt:offset];
 }
 
-- (jint)indexOfChildWithADView:(ADView *)child {
-  jint index = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) indexOfChildWithADView:child];
+- (int32_t)indexOfChildWithADView:(ADView *)child {
+  int32_t index = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) indexOfChildWithADView:child];
   if (index == -1) {
     return -1;
   }
@@ -198,12 +212,12 @@ __attribute__((unused)) static void ADXChildHelper_Bucket_ensureNext(ADXChildHel
   return index - [mBucket_ countOnesBeforeWithInt:index];
 }
 
-- (jboolean)isHiddenWithADView:(ADView *)view {
+- (bool)isHiddenWithADView:(ADView *)view {
   return [((id<JavaUtilList>) nil_chk(mHiddenViews_)) containsWithId:view];
 }
 
 - (void)hideWithADView:(ADView *)view {
-  jint offset = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) indexOfChildWithADView:view];
+  int32_t offset = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) indexOfChildWithADView:view];
   if (offset < 0) {
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(JreStrcat("$@", @"view is not a child, cannot hide ", view));
   }
@@ -212,7 +226,7 @@ __attribute__((unused)) static void ADXChildHelper_Bucket_ensureNext(ADXChildHel
 }
 
 - (void)unhideWithADView:(ADView *)view {
-  jint offset = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) indexOfChildWithADView:view];
+  int32_t offset = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) indexOfChildWithADView:view];
   if (offset < 0) {
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(JreStrcat("$@", @"view is not a child, cannot hide ", view));
   }
@@ -227,8 +241,8 @@ __attribute__((unused)) static void ADXChildHelper_Bucket_ensureNext(ADXChildHel
   return JreStrcat("$$I", [((ADXChildHelper_Bucket *) nil_chk(mBucket_)) description], @", hidden list:", [((id<JavaUtilList>) nil_chk(mHiddenViews_)) size]);
 }
 
-- (jboolean)removeViewIfHiddenWithADView:(ADView *)view {
-  jint index = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) indexOfChildWithADView:view];
+- (bool)removeViewIfHiddenWithADView:(ADView *)view {
+  int32_t index = [((id<ADXChildHelper_Callback>) nil_chk(mCallback_)) indexOfChildWithADView:view];
   if (index == -1) {
     ADXChildHelper_unhideViewInternalWithADView_(self, view);
     return true;
@@ -334,7 +348,7 @@ void ADXChildHelper_hideViewInternalWithADView_(ADXChildHelper *self, ADView *ch
   [((id<ADXChildHelper_Callback>) nil_chk(self->mCallback_)) onEnteredHiddenStateWithADView:child];
 }
 
-jboolean ADXChildHelper_unhideViewInternalWithADView_(ADXChildHelper *self, ADView *child) {
+bool ADXChildHelper_unhideViewInternalWithADView_(ADXChildHelper *self, ADView *child) {
   if ([((id<JavaUtilList>) nil_chk(self->mHiddenViews_)) removeWithId:child]) {
     [((id<ADXChildHelper_Callback>) nil_chk(self->mCallback_)) onLeftHiddenStateWithADView:child];
     return true;
@@ -344,15 +358,15 @@ jboolean ADXChildHelper_unhideViewInternalWithADView_(ADXChildHelper *self, ADVi
   }
 }
 
-jint ADXChildHelper_getOffsetWithInt_(ADXChildHelper *self, jint index) {
+int32_t ADXChildHelper_getOffsetWithInt_(ADXChildHelper *self, int32_t index) {
   if (index < 0) {
     return -1;
   }
-  jint limit = [((id<ADXChildHelper_Callback>) nil_chk(self->mCallback_)) getChildCount];
-  jint offset = index;
+  int32_t limit = [((id<ADXChildHelper_Callback>) nil_chk(self->mCallback_)) getChildCount];
+  int32_t offset = index;
   while (offset < limit) {
-    jint removedBefore = [((ADXChildHelper_Bucket *) nil_chk(self->mBucket_)) countOnesBeforeWithInt:offset];
-    jint diff = index - (offset - removedBefore);
+    int32_t removedBefore = [((ADXChildHelper_Bucket *) nil_chk(self->mBucket_)) countOnesBeforeWithInt:offset];
+    int32_t diff = index - (offset - removedBefore);
     if (diff == 0) {
       while ([self->mBucket_ getWithInt:offset]) {
         offset++;
@@ -377,7 +391,7 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (void)setWithInt:(jint)index {
+- (void)setWithInt:(int32_t)index {
   if (index >= ADXChildHelper_Bucket_BITS_PER_WORD) {
     ADXChildHelper_Bucket_ensureNext(self);
     [((ADXChildHelper_Bucket *) nil_chk(mNext_)) setWithInt:index - ADXChildHelper_Bucket_BITS_PER_WORD];
@@ -391,7 +405,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   ADXChildHelper_Bucket_ensureNext(self);
 }
 
-- (void)clearWithInt:(jint)index {
+- (void)clearWithInt:(int32_t)index {
   if (index >= ADXChildHelper_Bucket_BITS_PER_WORD) {
     if (mNext_ != nil) {
       [mNext_ clearWithInt:index - ADXChildHelper_Bucket_BITS_PER_WORD];
@@ -402,7 +416,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (jboolean)getWithInt:(jint)index {
+- (bool)getWithInt:(int32_t)index {
   if (index >= ADXChildHelper_Bucket_BITS_PER_WORD) {
     ADXChildHelper_Bucket_ensureNext(self);
     return [((ADXChildHelper_Bucket *) nil_chk(mNext_)) getWithInt:index - ADXChildHelper_Bucket_BITS_PER_WORD];
@@ -419,17 +433,17 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (void)insertWithInt:(jint)index
-          withBoolean:(jboolean)value {
+- (void)insertWithInt:(int32_t)index
+          withBoolean:(bool)value {
   if (index >= ADXChildHelper_Bucket_BITS_PER_WORD) {
     ADXChildHelper_Bucket_ensureNext(self);
     [((ADXChildHelper_Bucket *) nil_chk(mNext_)) insertWithInt:index - ADXChildHelper_Bucket_BITS_PER_WORD withBoolean:value];
   }
   else {
-    jboolean lastBit = (mData_ & ADXChildHelper_Bucket_LAST_BIT) != 0;
-    jlong mask = (JreLShift64(1LL, index)) - 1;
-    jlong before = mData_ & mask;
-    jlong after = JreLShift64((mData_ & ~mask), 1);
+    bool lastBit = (mData_ & ADXChildHelper_Bucket_LAST_BIT) != 0;
+    int64_t mask = (JreLShift64(1LL, index)) - 1;
+    int64_t before = mData_ & mask;
+    int64_t after = JreLShift64((mData_ & ~mask), 1);
     mData_ = before | after;
     if (value) {
       [self setWithInt:index];
@@ -444,18 +458,18 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (jboolean)removeWithInt:(jint)index {
+- (bool)removeWithInt:(int32_t)index {
   if (index >= ADXChildHelper_Bucket_BITS_PER_WORD) {
     ADXChildHelper_Bucket_ensureNext(self);
     return [((ADXChildHelper_Bucket *) nil_chk(mNext_)) removeWithInt:index - ADXChildHelper_Bucket_BITS_PER_WORD];
   }
   else {
-    jlong mask = (JreLShift64(1LL, index));
-    jboolean value = (mData_ & mask) != 0;
+    int64_t mask = (JreLShift64(1LL, index));
+    bool value = (mData_ & mask) != 0;
     mData_ &= ~mask;
     mask = mask - 1;
-    jlong before = mData_ & mask;
-    jlong after = JavaLangLong_rotateRightWithLong_withInt_(mData_ & ~mask, 1);
+    int64_t before = mData_ & mask;
+    int64_t after = JavaLangLong_rotateRightWithLong_withInt_(mData_ & ~mask, 1);
     mData_ = before | after;
     if (mNext_ != nil) {
       if ([mNext_ getWithInt:0]) {
@@ -467,7 +481,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (jint)countOnesBeforeWithInt:(jint)index {
+- (int32_t)countOnesBeforeWithInt:(int32_t)index {
   if (mNext_ == nil) {
     if (index >= ADXChildHelper_Bucket_BITS_PER_WORD) {
       return JavaLangLong_bitCountWithLong_(mData_);

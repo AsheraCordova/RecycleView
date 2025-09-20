@@ -3,20 +3,31 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\DiffCallback.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "DiffCallback.h"
 #include "DiffUtil.h"
 #include "GroupUtils.h"
 #include "Item.h"
 #include "J2ObjC_source.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Integer.h"
 #include "java/util/Collection.h"
 
-@protocol JavaUtilCollection;
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXDiffCallback () {
  @public
-  jint oldBodyItemCount_;
-  jint newBodyItemCount_;
+  int32_t oldBodyItemCount_;
+  int32_t newBodyItemCount_;
   id<JavaUtilCollection> oldGroups_;
   id<JavaUtilCollection> newGroups_;
 }
@@ -34,30 +45,30 @@ J2OBJC_FIELD_SETTER(ADXDiffCallback, newGroups_, id<JavaUtilCollection>)
   return self;
 }
 
-- (jint)getOldListSize {
+- (int32_t)getOldListSize {
   return oldBodyItemCount_;
 }
 
-- (jint)getNewListSize {
+- (int32_t)getNewListSize {
   return newBodyItemCount_;
 }
 
-- (jboolean)areItemsTheSameWithInt:(jint)oldItemPosition
-                           withInt:(jint)newItemPosition {
+- (bool)areItemsTheSameWithInt:(int32_t)oldItemPosition
+                       withInt:(int32_t)newItemPosition {
   ADXItem *oldItem = ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(oldGroups_, oldItemPosition);
   ADXItem *newItem = ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(newGroups_, newItemPosition);
   return [((ADXItem *) nil_chk(newItem)) isSameAsWithADXItem:oldItem];
 }
 
-- (jboolean)areContentsTheSameWithInt:(jint)oldItemPosition
-                              withInt:(jint)newItemPosition {
+- (bool)areContentsTheSameWithInt:(int32_t)oldItemPosition
+                          withInt:(int32_t)newItemPosition {
   ADXItem *oldItem = ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(oldGroups_, oldItemPosition);
   ADXItem *newItem = ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(newGroups_, newItemPosition);
   return [((ADXItem *) nil_chk(newItem)) hasSameContentAsWithADXItem:oldItem];
 }
 
-- (id)getChangePayloadWithInt:(jint)oldItemPosition
-                      withInt:(jint)newItemPosition {
+- (id)getChangePayloadWithInt:(int32_t)oldItemPosition
+                      withInt:(int32_t)newItemPosition {
   ADXItem *oldItem = ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(oldGroups_, oldItemPosition);
   ADXItem *newItem = ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(newGroups_, newItemPosition);
   return [((ADXItem *) nil_chk(oldItem)) getChangePayloadWithADXItem:newItem];

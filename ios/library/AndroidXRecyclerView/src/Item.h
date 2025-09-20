@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\Item.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_Item")
@@ -32,6 +33,9 @@
 
 @class ADView;
 @class ADXGroupieViewHolder;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol ADXGroupDataObserver;
 @protocol ADXOnItemClickListener;
 @protocol ADXOnItemLongClickListener;
@@ -48,7 +52,7 @@
 - (instancetype)init;
 
 - (void)bindWithADXGroupieViewHolder:(ADXGroupieViewHolder *)viewHolder
-                             withInt:(jint)position;
+                             withInt:(int32_t)position;
 
 /*!
  @brief If you don't specify how to handle payloads in your implementation, they'll be ignored and
@@ -58,7 +62,7 @@
  @param payloads A list of payloads (may be empty)
  */
 - (void)bindWithADXGroupieViewHolder:(ADXGroupieViewHolder *)viewHolder
-                             withInt:(jint)position
+                             withInt:(int32_t)position
                     withJavaUtilList:(id<JavaUtilList>)payloads;
 
 /*!
@@ -70,7 +74,7 @@
  @param onItemLongClickListener An optional adapter-level long click listener
  */
 - (void)bindWithADXGroupieViewHolder:(ADXGroupieViewHolder *)viewHolder
-                             withInt:(jint)position
+                             withInt:(int32_t)position
                     withJavaUtilList:(id<JavaUtilList>)payloads
           withADXOnItemClickListener:(id<ADXOnItemClickListener>)onItemClickListener
       withADXOnItemLongClickListener:(id<ADXOnItemLongClickListener>)onItemLongClickListener;
@@ -79,7 +83,7 @@
 
 - (id)getChangePayloadWithADXItem:(ADXItem *)newItem;
 
-- (jint)getDragDirs;
+- (int32_t)getDragDirs;
 
 /*!
  @brief A set of key/value pairs stored on the ViewHolder that can be useful for distinguishing
@@ -96,27 +100,27 @@
   an object from a database that it represents.
  @return A unique id
  */
-- (jlong)getId;
+- (int64_t)getId;
 
-- (ADXItem *)getItemWithInt:(jint)position;
+- (ADXItem *)getItemWithInt:(int32_t)position;
 
-- (jint)getItemCount;
+- (int32_t)getItemCount;
 
-- (jint)getLayout;
+- (int32_t)getLayout;
 
-- (jint)getPositionWithADXItem:(ADXItem *)item;
+- (int32_t)getPositionWithADXItem:(ADXItem *)item;
 
-- (jint)getSpanSizeWithInt:(jint)spanCount
-                   withInt:(jint)position;
+- (int32_t)getSpanSizeWithInt:(int32_t)spanCount
+                      withInt:(int32_t)position;
 
-- (jint)getSwipeDirs;
+- (int32_t)getSwipeDirs;
 
 /*!
  @brief Override this method if the same layout needs to have different viewTypes.
  @return the viewType, defaults to the layoutId
  - seealso: RecyclerView.Adapter#getItemViewType(int)
  */
-- (jint)getViewType;
+- (int32_t)getViewType;
 
 /*!
  @brief Whether this item has the same content as another when compared using DiffUtil.
@@ -125,11 +129,11 @@
   The default implementation does this using <code>equals(Object)</code>
  @return True if both items have the same content, false otherwise
  */
-- (jboolean)hasSameContentAsWithADXItem:(ADXItem *)other;
+- (bool)hasSameContentAsWithADXItem:(ADXItem *)other;
 
-- (jboolean)isClickable;
+- (bool)isClickable;
 
-- (jboolean)isLongClickable;
+- (bool)isLongClickable;
 
 /*!
  @brief Whether the view should be recycled.Return false to prevent the view from being recycled.
@@ -137,7 +141,7 @@
  @return Whether the view should be recycled.
  - seealso: RecyclerView.Adapter#onFailedToRecycleView(RecyclerView.ViewHolder)
  */
-- (jboolean)isRecyclable;
+- (bool)isRecyclable;
 
 /*!
  @brief Whether two item objects represent the same underlying data when compared using DiffUtil,
@@ -146,7 +150,7 @@
   The default implementation compares both view type and id.
  @return True if the items are the same, false otherwise.
  */
-- (jboolean)isSameAsWithADXItem:(ADXItem *)other;
+- (bool)isSameAsWithADXItem:(ADXItem *)other;
 
 - (void)notifyChanged;
 
@@ -168,7 +172,7 @@
 
 #pragma mark Protected
 
-- (instancetype)initWithLong:(jlong)id_;
+- (instancetype)initWithLong:(int64_t)id_;
 
 @end
 
@@ -178,11 +182,12 @@ J2OBJC_FIELD_SETTER(ADXItem, parentDataObserver_, id<ADXGroupDataObserver>)
 
 FOUNDATION_EXPORT void ADXItem_init(ADXItem *self);
 
-FOUNDATION_EXPORT void ADXItem_initWithLong_(ADXItem *self, jlong id_);
+FOUNDATION_EXPORT void ADXItem_initWithLong_(ADXItem *self, int64_t id_);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXItem)
 
 @compatibility_alias ComXwrayGroupieItem ADXItem;
+
 
 #endif
 

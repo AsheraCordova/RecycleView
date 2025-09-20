@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\UpdatingGroup.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_UpdatingGroup")
@@ -26,6 +27,7 @@
 #define INCLUDE_ADXNestedGroup 1
 #include "NestedGroup.h"
 
+@class JavaLangInteger;
 @protocol ADXRVGroup;
 @protocol JavaUtilList;
 
@@ -47,11 +49,11 @@
 
 - (instancetype)init;
 
-- (id<ADXRVGroup>)getGroupWithInt:(jint)position;
+- (id<ADXRVGroup>)getGroupWithInt:(int32_t)position;
 
-- (jint)getGroupCount;
+- (int32_t)getGroupCount;
 
-- (jint)getPositionWithADXRVGroup:(id<ADXRVGroup>)group;
+- (int32_t)getPositionWithADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)updateWithJavaUtilList:(id<JavaUtilList>)newItems;
 
@@ -68,6 +70,7 @@ FOUNDATION_EXPORT ADXUpdatingGroup *create_ADXUpdatingGroup_init(void);
 J2OBJC_TYPE_LITERAL_HEADER(ADXUpdatingGroup)
 
 @compatibility_alias ComXwrayGroupieUpdatingGroup ADXUpdatingGroup;
+
 
 #endif
 

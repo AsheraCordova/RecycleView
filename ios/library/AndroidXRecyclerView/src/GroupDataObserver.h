@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\GroupDataObserver.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_GroupDataObserver")
@@ -22,6 +23,7 @@
 #if !defined (ADXGroupDataObserver_) && (INCLUDE_ALL_GroupDataObserver || defined(INCLUDE_ADXGroupDataObserver))
 #define ADXGroupDataObserver_
 
+@class JavaLangInteger;
 @protocol ADXRVGroup;
 
 @protocol ADXGroupDataObserver < JavaObject >
@@ -29,38 +31,38 @@
 - (void)onChangedWithADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)onItemInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                             withInt:(jint)position;
+                             withInt:(int32_t)position;
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position;
+                            withInt:(int32_t)position;
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position
+                            withInt:(int32_t)position
                              withId:(id)payload;
 
 - (void)onItemRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position;
+                            withInt:(int32_t)position;
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount;
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount;
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount
                                   withId:(id)payload;
 
 - (void)onItemRangeInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount;
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount;
 
 - (void)onItemRangeRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount;
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount;
 
 - (void)onItemMovedWithADXRVGroup:(id<ADXRVGroup>)group
-                          withInt:(jint)fromPosition
-                          withInt:(jint)toPosition;
+                          withInt:(int32_t)fromPosition
+                          withInt:(int32_t)toPosition;
 
 - (void)onDataSetInvalidated;
 
@@ -71,6 +73,7 @@ J2OBJC_EMPTY_STATIC_INIT(ADXGroupDataObserver)
 J2OBJC_TYPE_LITERAL_HEADER(ADXGroupDataObserver)
 
 #define ComXwrayGroupieGroupDataObserver ADXGroupDataObserver
+
 
 #endif
 

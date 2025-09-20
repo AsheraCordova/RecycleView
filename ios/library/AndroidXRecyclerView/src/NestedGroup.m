@@ -3,19 +3,30 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\NestedGroup.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "GroupDataObserver.h"
 #include "Item.h"
 #include "J2ObjC_source.h"
 #include "NestedGroup.h"
 #include "RVGroup.h"
+#include "java/lang/Boolean.h"
 #include "java/lang/IllegalStateException.h"
 #include "java/lang/IndexOutOfBoundsException.h"
+#include "java/lang/Integer.h"
 #include "java/util/ArrayList.h"
 #include "java/util/Collection.h"
 #include "java/util/List.h"
 
+
 @class ADXNestedGroup_GroupDataObservable;
-@protocol JavaUtilList;
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXNestedGroup () {
@@ -39,38 +50,38 @@ J2OBJC_FIELD_SETTER(ADXNestedGroup, observable_, ADXNestedGroup_GroupDataObserva
 - (instancetype)init;
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount;
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount;
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount
                                   withId:(id)payload;
 
 - (void)onItemInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                             withInt:(jint)position;
+                             withInt:(int32_t)position;
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position;
+                            withInt:(int32_t)position;
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position
+                            withInt:(int32_t)position
                              withId:(id)payload;
 
 - (void)onItemRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position;
+                            withInt:(int32_t)position;
 
 - (void)onItemRangeInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount;
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount;
 
 - (void)onItemRangeRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount;
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount;
 
 - (void)onItemMovedWithADXRVGroup:(id<ADXRVGroup>)group
-                          withInt:(jint)fromPosition
-                          withInt:(jint)toPosition;
+                          withInt:(int32_t)fromPosition
+                          withInt:(int32_t)toPosition;
 
 - (void)onChangedWithADXRVGroup:(id<ADXRVGroup>)group;
 
@@ -94,6 +105,7 @@ __attribute__((unused)) static ADXNestedGroup_GroupDataObservable *create_ADXNes
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXNestedGroup_GroupDataObservable)
 
+
 @implementation ADXNestedGroup
 
 J2OBJC_IGNORE_DESIGNATED_BEGIN
@@ -103,46 +115,46 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jint)getItemCount {
-  jint size = 0;
-  for (jint i = 0; i < [self getGroupCount]; i++) {
+- (int32_t)getItemCount {
+  int32_t size = 0;
+  for (int32_t i = 0; i < [self getGroupCount]; i++) {
     id<ADXRVGroup> group = JreRetainedLocalValue([self getGroupWithInt:i]);
     size += [((id<ADXRVGroup>) nil_chk(group)) getItemCount];
   }
   return size;
 }
 
-- (jint)getItemCountBeforeGroupWithADXRVGroup:(id<ADXRVGroup>)group {
-  jint groupIndex = [self getPositionWithADXRVGroup:group];
+- (int32_t)getItemCountBeforeGroupWithADXRVGroup:(id<ADXRVGroup>)group {
+  int32_t groupIndex = [self getPositionWithADXRVGroup:group];
   return [self getItemCountBeforeGroupWithInt:groupIndex];
 }
 
-- (jint)getItemCountBeforeGroupWithInt:(jint)groupIndex {
-  jint size = 0;
-  for (jint i = 0; i < groupIndex; i++) {
+- (int32_t)getItemCountBeforeGroupWithInt:(int32_t)groupIndex {
+  int32_t size = 0;
+  for (int32_t i = 0; i < groupIndex; i++) {
     id<ADXRVGroup> currentGroup = [self getGroupWithInt:i];
     size += [((id<ADXRVGroup>) nil_chk(currentGroup)) getItemCount];
   }
   return size;
 }
 
-- (id<ADXRVGroup>)getGroupWithInt:(jint)position {
+- (id<ADXRVGroup>)getGroupWithInt:(int32_t)position {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jint)getGroupCount {
+- (int32_t)getGroupCount {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (ADXItem *)getItemWithInt:(jint)position {
-  jint previousPosition = 0;
-  for (jint i = 0; i < [self getGroupCount]; i++) {
+- (ADXItem *)getItemWithInt:(int32_t)position {
+  int32_t previousPosition = 0;
+  for (int32_t i = 0; i < [self getGroupCount]; i++) {
     id<ADXRVGroup> group = JreRetainedLocalValue([self getGroupWithInt:i]);
-    jint size = [((id<ADXRVGroup>) nil_chk(group)) getItemCount];
+    int32_t size = [((id<ADXRVGroup>) nil_chk(group)) getItemCount];
     if (size + previousPosition > position) {
       return [group getItemWithInt:position - previousPosition];
     }
@@ -151,11 +163,11 @@ J2OBJC_IGNORE_DESIGNATED_END
   @throw create_JavaLangIndexOutOfBoundsException_initWithNSString_(JreStrcat("$I$I$", @"Wanted item at ", position, @" but there are only ", [self getItemCount], @" items"));
 }
 
-- (jint)getPositionWithADXItem:(ADXItem *)item {
-  jint previousPosition = 0;
-  for (jint i = 0; i < [self getGroupCount]; i++) {
+- (int32_t)getPositionWithADXItem:(ADXItem *)item {
+  int32_t previousPosition = 0;
+  for (int32_t i = 0; i < [self getGroupCount]; i++) {
     id<ADXRVGroup> group = JreRetainedLocalValue([self getGroupWithInt:i]);
-    jint position = [((id<ADXRVGroup>) nil_chk(group)) getPositionWithADXItem:item];
+    int32_t position = [((id<ADXRVGroup>) nil_chk(group)) getPositionWithADXItem:item];
     if (position >= 0) {
       return position + previousPosition;
     }
@@ -164,7 +176,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   return -1;
 }
 
-- (jint)getPositionWithADXRVGroup:(id<ADXRVGroup>)group {
+- (int32_t)getPositionWithADXRVGroup:(id<ADXRVGroup>)group {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
@@ -188,12 +200,12 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (void)addWithInt:(jint)position
+- (void)addWithInt:(int32_t)position
     withADXRVGroup:(id<ADXRVGroup>)group {
   [((id<ADXRVGroup>) nil_chk(group)) registerGroupDataObserverWithADXGroupDataObserver:self];
 }
 
-- (void)addAllWithInt:(jint)position
+- (void)addAllWithInt:(int32_t)position
 withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   for (id<ADXRVGroup> __strong group in nil_chk(groups)) {
     [((id<ADXRVGroup>) nil_chk(group)) registerGroupDataObserverWithADXGroupDataObserver:self];
@@ -211,8 +223,8 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
 }
 
 - (void)replaceAllWithJavaUtilCollection:(id<JavaUtilCollection>)groups {
-  jint groupCount = [self getGroupCount];
-  for (jint i = groupCount - 1; i >= 0; i--) {
+  int32_t groupCount = [self getGroupCount];
+  for (int32_t i = groupCount - 1; i >= 0; i--) {
     [((id<ADXRVGroup>) nil_chk([self getGroupWithInt:i])) unregisterGroupDataObserverWithADXGroupDataObserver:self];
   }
   for (id<ADXRVGroup> __strong group in nil_chk(groups)) {
@@ -225,55 +237,55 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
 }
 
 - (void)onItemInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                             withInt:(jint)position {
+                             withInt:(int32_t)position {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemInsertedWithADXRVGroup:self withInt:[self getItemCountBeforeGroupWithADXRVGroup:group] + position];
 }
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position {
+                            withInt:(int32_t)position {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemChangedWithADXRVGroup:self withInt:[self getItemCountBeforeGroupWithADXRVGroup:group] + position];
 }
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position
+                            withInt:(int32_t)position
                              withId:(id)payload {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemChangedWithADXRVGroup:self withInt:[self getItemCountBeforeGroupWithADXRVGroup:group] + position withId:payload];
 }
 
 - (void)onItemRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position {
+                            withInt:(int32_t)position {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemRemovedWithADXRVGroup:self withInt:[self getItemCountBeforeGroupWithADXRVGroup:group] + position];
 }
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount {
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemRangeChangedWithADXRVGroup:self withInt:[self getItemCountBeforeGroupWithADXRVGroup:group] + positionStart withInt:itemCount];
 }
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount
                                   withId:(id)payload {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemRangeChangedWithADXRVGroup:self withInt:[self getItemCountBeforeGroupWithADXRVGroup:group] + positionStart withInt:itemCount withId:payload];
 }
 
 - (void)onItemRangeInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount {
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemRangeInsertedWithADXRVGroup:self withInt:[self getItemCountBeforeGroupWithADXRVGroup:group] + positionStart withInt:itemCount];
 }
 
 - (void)onItemRangeRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount {
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemRangeRemovedWithADXRVGroup:self withInt:[self getItemCountBeforeGroupWithADXRVGroup:group] + positionStart withInt:itemCount];
 }
 
 - (void)onItemMovedWithADXRVGroup:(id<ADXRVGroup>)group
-                          withInt:(jint)fromPosition
-                          withInt:(jint)toPosition {
-  jint groupPosition = [self getItemCountBeforeGroupWithADXRVGroup:group];
+                          withInt:(int32_t)fromPosition
+                          withInt:(int32_t)toPosition {
+  int32_t groupPosition = [self getItemCountBeforeGroupWithADXRVGroup:group];
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemMovedWithADXRVGroup:self withInt:groupPosition + fromPosition withInt:groupPosition + toPosition];
 }
 
@@ -281,18 +293,18 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onDataSetInvalidated];
 }
 
-- (void)notifyItemRangeInsertedWithInt:(jint)positionStart
-                               withInt:(jint)itemCount {
+- (void)notifyItemRangeInsertedWithInt:(int32_t)positionStart
+                               withInt:(int32_t)itemCount {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemRangeInsertedWithADXRVGroup:self withInt:positionStart withInt:itemCount];
 }
 
-- (void)notifyItemRangeRemovedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount {
+- (void)notifyItemRangeRemovedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemRangeRemovedWithADXRVGroup:self withInt:positionStart withInt:itemCount];
 }
 
-- (void)notifyItemMovedWithInt:(jint)fromPosition
-                       withInt:(jint)toPosition {
+- (void)notifyItemMovedWithInt:(int32_t)fromPosition
+                       withInt:(int32_t)toPosition {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemMovedWithADXRVGroup:self withInt:fromPosition withInt:toPosition];
 }
 
@@ -300,30 +312,30 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onChangedWithADXRVGroup:self];
 }
 
-- (void)notifyItemInsertedWithInt:(jint)position {
+- (void)notifyItemInsertedWithInt:(int32_t)position {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemInsertedWithADXRVGroup:self withInt:position];
 }
 
-- (void)notifyItemChangedWithInt:(jint)position {
+- (void)notifyItemChangedWithInt:(int32_t)position {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemChangedWithADXRVGroup:self withInt:position];
 }
 
-- (void)notifyItemChangedWithInt:(jint)position
+- (void)notifyItemChangedWithInt:(int32_t)position
                           withId:(id)payload {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemChangedWithADXRVGroup:self withInt:position withId:payload];
 }
 
-- (void)notifyItemRemovedWithInt:(jint)position {
+- (void)notifyItemRemovedWithInt:(int32_t)position {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemRemovedWithADXRVGroup:self withInt:position];
 }
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount {
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemRangeChangedWithADXRVGroup:self withInt:positionStart withInt:itemCount];
 }
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount
                                withId:(id)payload {
   [((ADXNestedGroup_GroupDataObservable *) nil_chk(observable_)) onItemRangeChangedWithADXRVGroup:self withInt:positionStart withInt:itemCount withId:payload];
 }
@@ -441,6 +453,8 @@ void ADXNestedGroup_init(ADXNestedGroup *self) {
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXNestedGroup)
 
+J2OBJC_NAME_MAPPING(ADXNestedGroup, "com.xwray.groupie", "ADX")
+
 @implementation ADXNestedGroup_GroupDataObservable
 
 J2OBJC_IGNORE_DESIGNATED_BEGIN
@@ -451,77 +465,77 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount {
-  for (jint i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
     [((id<ADXGroupDataObserver>) nil_chk([observers_ getWithInt:i])) onItemRangeChangedWithADXRVGroup:group withInt:positionStart withInt:itemCount];
   }
 }
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount
                                   withId:(id)payload {
-  for (jint i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
     [((id<ADXGroupDataObserver>) nil_chk([observers_ getWithInt:i])) onItemRangeChangedWithADXRVGroup:group withInt:positionStart withInt:itemCount withId:payload];
   }
 }
 
 - (void)onItemInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                             withInt:(jint)position {
-  for (jint i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
+                             withInt:(int32_t)position {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
     [((id<ADXGroupDataObserver>) nil_chk([observers_ getWithInt:i])) onItemInsertedWithADXRVGroup:group withInt:position];
   }
 }
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position {
-  for (jint i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
+                            withInt:(int32_t)position {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
     [((id<ADXGroupDataObserver>) nil_chk([observers_ getWithInt:i])) onItemChangedWithADXRVGroup:group withInt:position];
   }
 }
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position
+                            withInt:(int32_t)position
                              withId:(id)payload {
-  for (jint i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
     [((id<ADXGroupDataObserver>) nil_chk([observers_ getWithInt:i])) onItemChangedWithADXRVGroup:group withInt:position withId:payload];
   }
 }
 
 - (void)onItemRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position {
-  for (jint i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
+                            withInt:(int32_t)position {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
     [((id<ADXGroupDataObserver>) nil_chk([observers_ getWithInt:i])) onItemRemovedWithADXRVGroup:group withInt:position];
   }
 }
 
 - (void)onItemRangeInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount {
-  for (jint i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
     [((id<ADXGroupDataObserver>) nil_chk([observers_ getWithInt:i])) onItemRangeInsertedWithADXRVGroup:group withInt:positionStart withInt:itemCount];
   }
 }
 
 - (void)onItemRangeRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount {
-  for (jint i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
     [((id<ADXGroupDataObserver>) nil_chk([observers_ getWithInt:i])) onItemRangeRemovedWithADXRVGroup:group withInt:positionStart withInt:itemCount];
   }
 }
 
 - (void)onItemMovedWithADXRVGroup:(id<ADXRVGroup>)group
-                          withInt:(jint)fromPosition
-                          withInt:(jint)toPosition {
-  for (jint i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
+                          withInt:(int32_t)fromPosition
+                          withInt:(int32_t)toPosition {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
     [((id<ADXGroupDataObserver>) nil_chk([observers_ getWithInt:i])) onItemMovedWithADXRVGroup:group withInt:fromPosition withInt:toPosition];
   }
 }
 
 - (void)onChangedWithADXRVGroup:(id<ADXRVGroup>)group {
-  for (jint i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
     [((id<ADXGroupDataObserver>) nil_chk([observers_ getWithInt:i])) onChangedWithADXRVGroup:group];
   }
 }
@@ -537,13 +551,13 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)unregisterObserverWithADXGroupDataObserver:(id<ADXGroupDataObserver>)observer {
   @synchronized(observers_) {
-    jint index = [((id<JavaUtilList>) nil_chk(observers_)) indexOfWithId:observer];
+    int32_t index = [((id<JavaUtilList>) nil_chk(observers_)) indexOfWithId:observer];
     [observers_ removeWithInt:index];
   }
 }
 
 - (void)onDataSetInvalidated {
-  for (jint i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(observers_)) size] - 1; i >= 0; i--) {
     [((id<ADXGroupDataObserver>) nil_chk([observers_ getWithInt:i])) onDataSetInvalidated];
   }
 }

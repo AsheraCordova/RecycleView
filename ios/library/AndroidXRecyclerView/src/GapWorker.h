@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\GapWorker.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_GapWorker")
@@ -27,6 +28,9 @@
 #include "java/lang/Runnable.h"
 
 @class ADXRecyclerView;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThreadLocal;
 @class JavaUtilArrayList;
 @protocol JavaUtilComparator;
@@ -34,8 +38,8 @@
 @interface ADXGapWorker : NSObject < JavaLangRunnable > {
  @public
   JavaUtilArrayList *mRecyclerViews_;
-  jlong mPostTimeNs_;
-  jlong mFrameIntervalNs_;
+  int64_t mPostTimeNs_;
+  int64_t mFrameIntervalNs_;
 }
 
 #pragma mark Public
@@ -50,17 +54,17 @@
 
 - (instancetype)initPackagePrivate;
 
-+ (jboolean)isPrefetchPositionAttachedWithADXRecyclerView:(ADXRecyclerView *)view
-                                                  withInt:(jint)position;
++ (bool)isPrefetchPositionAttachedWithADXRecyclerView:(ADXRecyclerView *)view
+                                              withInt:(int32_t)position;
 
 /*!
  @brief Schedule a prefetch immediately after the current traversal.
  */
 - (void)postFromTraversalWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                     withInt:(jint)prefetchDx
-                                     withInt:(jint)prefetchDy;
+                                     withInt:(int32_t)prefetchDx
+                                     withInt:(int32_t)prefetchDy;
 
-- (void)prefetchWithLong:(jlong)deadlineNs;
+- (void)prefetchWithLong:(int64_t)deadlineNs;
 
 // Disallowed inherited constructors, do not use.
 
@@ -89,11 +93,12 @@ FOUNDATION_EXPORT ADXGapWorker *new_ADXGapWorker_initPackagePrivate(void) NS_RET
 
 FOUNDATION_EXPORT ADXGapWorker *create_ADXGapWorker_initPackagePrivate(void);
 
-FOUNDATION_EXPORT jboolean ADXGapWorker_isPrefetchPositionAttachedWithADXRecyclerView_withInt_(ADXRecyclerView *view, jint position);
+FOUNDATION_EXPORT bool ADXGapWorker_isPrefetchPositionAttachedWithADXRecyclerView_withInt_(ADXRecyclerView *view, int32_t position);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXGapWorker)
 
 @compatibility_alias AndroidxRecyclerviewWidgetGapWorker ADXGapWorker;
+
 
 #endif
 
@@ -101,14 +106,16 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGapWorker)
 #define ADXGapWorker_Task_
 
 @class ADXRecyclerView;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 @interface ADXGapWorker_Task : NSObject {
  @public
-  jboolean immediate_;
-  jint viewVelocity_;
-  jint distanceToItem_;
+  bool immediate_;
+  int32_t viewVelocity_;
+  int32_t distanceToItem_;
   ADXRecyclerView *view_;
-  jint position_;
+  int32_t position_;
 }
 
 #pragma mark Public
@@ -133,6 +140,7 @@ FOUNDATION_EXPORT ADXGapWorker_Task *create_ADXGapWorker_Task_init(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXGapWorker_Task)
 
+
 #endif
 
 #if !defined (ADXGapWorker_LayoutPrefetchRegistryImpl_) && (INCLUDE_ALL_GapWorker || defined(INCLUDE_ADXGapWorker_LayoutPrefetchRegistryImpl))
@@ -144,22 +152,24 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGapWorker_Task)
 
 @class ADXRecyclerView;
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief Prefetch information associated with a specific RecyclerView.
  */
 @interface ADXGapWorker_LayoutPrefetchRegistryImpl : NSObject < ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry > {
  @public
-  jint mPrefetchDx_;
-  jint mPrefetchDy_;
+  int32_t mPrefetchDx_;
+  int32_t mPrefetchDy_;
   IOSIntArray *mPrefetchArray_;
-  jint mCount_;
+  int32_t mCount_;
 }
 
 #pragma mark Public
 
-- (void)addPositionWithInt:(jint)layoutPosition
-                   withInt:(jint)pixelDistance;
+- (void)addPositionWithInt:(int32_t)layoutPosition
+                   withInt:(int32_t)pixelDistance;
 
 #pragma mark Package-Private
 
@@ -171,12 +181,12 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXGapWorker_Task)
 - (void)clearPrefetchPositions;
 
 - (void)collectPrefetchPositionsFromViewWithADXRecyclerView:(ADXRecyclerView *)view
-                                                withBoolean:(jboolean)nested;
+                                                withBoolean:(bool)nested;
 
-- (jboolean)lastPrefetchIncludedPositionWithInt:(jint)position;
+- (bool)lastPrefetchIncludedPositionWithInt:(int32_t)position;
 
-- (void)setPrefetchVectorWithInt:(jint)dx
-                         withInt:(jint)dy;
+- (void)setPrefetchVectorWithInt:(int32_t)dx
+                         withInt:(int32_t)dy;
 
 @end
 
@@ -191,6 +201,7 @@ FOUNDATION_EXPORT ADXGapWorker_LayoutPrefetchRegistryImpl *new_ADXGapWorker_Layo
 FOUNDATION_EXPORT ADXGapWorker_LayoutPrefetchRegistryImpl *create_ADXGapWorker_LayoutPrefetchRegistryImpl_init(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXGapWorker_LayoutPrefetchRegistryImpl)
+
 
 #endif
 

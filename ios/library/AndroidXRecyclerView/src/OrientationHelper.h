@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\OrientationHelper.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_OrientationHelper")
@@ -19,6 +20,7 @@
 @class ADRect;
 @class ADView;
 @class ADXRecyclerView_LayoutManager;
+@class JavaLangInteger;
 
 /*!
  @brief Helper class for LayoutManagers to abstract measurements depending on the View's orientation.
@@ -51,7 +53,7 @@
  @return A new OrientationHelper
  */
 + (ADXOrientationHelper *)createOrientationHelperWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)layoutManager
-                                                                           withInt:(jint)orientation;
+                                                                           withInt:(int32_t)orientation;
 
 /*!
  @brief Creates a vertical OrientationHelper for the given LayoutManager.
@@ -69,7 +71,7 @@
  @return The last pixel of the element
  - seealso: #getDecoratedStart(r.android.view.View)
  */
-- (jint)getDecoratedEndWithADView:(ADView *)view;
+- (int32_t)getDecoratedEndWithADView:(ADView *)view;
 
 /*!
  @brief Returns the space occupied by this View in the current orientation including decorations and
@@ -78,7 +80,7 @@
  @return Total space occupied by this view
  - seealso: #getDecoratedMeasurementInOther(View)
  */
-- (jint)getDecoratedMeasurementWithADView:(ADView *)view;
+- (int32_t)getDecoratedMeasurementWithADView:(ADView *)view;
 
 /*!
  @brief Returns the space occupied by this View in the perpendicular orientation including
@@ -87,7 +89,7 @@
  @return Total space occupied by this view in the perpendicular orientation to current one
  - seealso: #getDecoratedMeasurement(View)
  */
-- (jint)getDecoratedMeasurementInOtherWithADView:(ADView *)view;
+- (int32_t)getDecoratedMeasurementInOtherWithADView:(ADView *)view;
 
 /*!
  @brief Returns the start of the view including its decoration and margin.
@@ -98,19 +100,19 @@
  @return The first pixel of the element
  - seealso: #getDecoratedEnd(r.android.view.View)
  */
-- (jint)getDecoratedStartWithADView:(ADView *)view;
+- (int32_t)getDecoratedStartWithADView:(ADView *)view;
 
 /*!
  @brief Returns the end position of the layout without taking padding into account.
  @return The end boundary for this layout without considering padding.
  */
-- (jint)getEnd;
+- (int32_t)getEnd;
 
 /*!
  @brief Returns the end position of the layout after the end padding is removed.
  @return The end boundary for this layout.
  */
-- (jint)getEndAfterPadding;
+- (int32_t)getEndAfterPadding;
 
 /*!
  @brief Returns the padding at the end of the layout.For horizontal helper, this is the right
@@ -119,7 +121,7 @@
   whether the layout is RTL or not.
  @return The padding at the end of the layout.
  */
-- (jint)getEndPadding;
+- (int32_t)getEndPadding;
 
 /*!
  @brief Returns the <code>LayoutManager</code> that
@@ -134,7 +136,7 @@
  - seealso: RecyclerView.LayoutManager#getWidthMode()
  - seealso: RecyclerView.LayoutManager#getHeightMode()
  */
-- (jint)getMode;
+- (int32_t)getMode;
 
 /*!
  @brief Returns the MeasureSpec mode for the perpendicular orientation from the LayoutManager.
@@ -143,20 +145,20 @@
  - seealso: RecyclerView.LayoutManager#getWidthMode()
  - seealso: RecyclerView.LayoutManager#getHeightMode()
  */
-- (jint)getModeInOther;
+- (int32_t)getModeInOther;
 
 /*!
  @brief Returns the start position of the layout after the start padding is added.
  @return The very first pixel we can draw.
  */
-- (jint)getStartAfterPadding;
+- (int32_t)getStartAfterPadding;
 
 /*!
  @brief Returns the total space to layout.This number is the difference between 
  <code>getEndAfterPadding()</code> and <code>getStartAfterPadding()</code>.
  @return Total space to layout children
  */
-- (jint)getTotalSpace;
+- (int32_t)getTotalSpace;
 
 /*!
  @brief Returns the layout space change between the previous layout pass and current layout pass.
@@ -168,7 +170,7 @@
  @return The difference between the current total space and previous layout's total space.
  - seealso: #onLayoutComplete()
  */
-- (jint)getTotalSpaceChange;
+- (int32_t)getTotalSpaceChange;
 
 /*!
  @brief Returns the end of the View after its matrix transformations are applied to its layout
@@ -182,7 +184,7 @@
   its position
  - seealso: RecyclerView.LayoutManager#getTransformedBoundingBox(View, boolean, Rect)
  */
-- (jint)getTransformedEndWithDecorationWithADView:(ADView *)view;
+- (int32_t)getTransformedEndWithDecorationWithADView:(ADView *)view;
 
 /*!
  @brief Returns the start of the View after its matrix transformations are applied to its layout
@@ -196,7 +198,7 @@
   its position
  - seealso: RecyclerView.LayoutManager#getTransformedBoundingBox(View, boolean, Rect)
  */
-- (jint)getTransformedStartWithDecorationWithADView:(ADView *)view;
+- (int32_t)getTransformedStartWithDecorationWithADView:(ADView *)view;
 
 /*!
  @brief Offsets the child in this orientation.
@@ -204,13 +206,13 @@
  @param offset offset amount
  */
 - (void)offsetChildWithADView:(ADView *)view
-                      withInt:(jint)offset;
+                      withInt:(int32_t)offset;
 
 /*!
  @brief Offsets all children's positions by the given amount.
  @param amount Value to add to each child's layout parameters
  */
-- (void)offsetChildrenWithInt:(jint)amount;
+- (void)offsetChildrenWithInt:(int32_t)amount;
 
 /*!
  @brief Call this method after onLayout method is complete if state is NOT pre-layout.
@@ -230,15 +232,15 @@ J2OBJC_EMPTY_STATIC_INIT(ADXOrientationHelper)
 J2OBJC_FIELD_SETTER(ADXOrientationHelper, mLayoutManager_, ADXRecyclerView_LayoutManager *)
 J2OBJC_FIELD_SETTER(ADXOrientationHelper, mTmpRect_, ADRect *)
 
-inline jint ADXOrientationHelper_get_HORIZONTAL(void);
+inline int32_t ADXOrientationHelper_get_HORIZONTAL(void);
 #define ADXOrientationHelper_HORIZONTAL 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXOrientationHelper, HORIZONTAL, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXOrientationHelper, HORIZONTAL, int32_t)
 
-inline jint ADXOrientationHelper_get_VERTICAL(void);
+inline int32_t ADXOrientationHelper_get_VERTICAL(void);
 #define ADXOrientationHelper_VERTICAL 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXOrientationHelper, VERTICAL, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXOrientationHelper, VERTICAL, int32_t)
 
-FOUNDATION_EXPORT ADXOrientationHelper *ADXOrientationHelper_createOrientationHelperWithADXRecyclerView_LayoutManager_withInt_(ADXRecyclerView_LayoutManager *layoutManager, jint orientation);
+FOUNDATION_EXPORT ADXOrientationHelper *ADXOrientationHelper_createOrientationHelperWithADXRecyclerView_LayoutManager_withInt_(ADXRecyclerView_LayoutManager *layoutManager, int32_t orientation);
 
 FOUNDATION_EXPORT ADXOrientationHelper *ADXOrientationHelper_createHorizontalHelperWithADXRecyclerView_LayoutManager_(ADXRecyclerView_LayoutManager *layoutManager);
 
@@ -247,6 +249,7 @@ FOUNDATION_EXPORT ADXOrientationHelper *ADXOrientationHelper_createVerticalHelpe
 J2OBJC_TYPE_LITERAL_HEADER(ADXOrientationHelper)
 
 @compatibility_alias AndroidxRecyclerviewWidgetOrientationHelper ADXOrientationHelper;
+
 
 #endif
 

@@ -3,11 +3,23 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\TouchCallback.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "GroupieViewHolder.h"
 #include "ItemTouchHelper.h"
 #include "J2ObjC_source.h"
 #include "RecyclerView.h"
 #include "TouchCallback.h"
+#include "java/lang/Integer.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @implementation ADXTouchCallback
@@ -19,13 +31,13 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jint)getSwipeDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-         withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+- (int32_t)getSwipeDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+            withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
   return [((ADXGroupieViewHolder *) nil_chk(((ADXGroupieViewHolder *) cast_chk(viewHolder, [ADXGroupieViewHolder class])))) getSwipeDirs];
 }
 
-- (jint)getDragDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-        withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+- (int32_t)getDragDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+           withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
   return [((ADXGroupieViewHolder *) nil_chk(((ADXGroupieViewHolder *) cast_chk(viewHolder, [ADXGroupieViewHolder class])))) getDragDirs];
 }
 
@@ -54,3 +66,5 @@ void ADXTouchCallback_init(ADXTouchCallback *self) {
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXTouchCallback)
+
+J2OBJC_NAME_MAPPING(ADXTouchCallback, "com.xwray.groupie", "ADX")

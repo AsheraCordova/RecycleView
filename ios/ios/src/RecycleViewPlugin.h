@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-ios-widgets\IOSRecycleViewPlugin\src\main\java\com\ashera\recycleview\RecycleViewPlugin.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_RecycleViewPlugin")
@@ -39,6 +40,7 @@ FOUNDATION_EXPORT void ASRecycleViewPlugin_initPlugin(void);
 J2OBJC_TYPE_LITERAL_HEADER(ASRecycleViewPlugin)
 
 @compatibility_alias ComAsheraRecycleviewRecycleViewPlugin ASRecycleViewPlugin;
+
 
 #endif
 

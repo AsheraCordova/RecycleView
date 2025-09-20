@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\AdapterListUpdateCallback.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_AdapterListUpdateCallback")
@@ -27,6 +28,7 @@
 #include "ListUpdateCallback.h"
 
 @class ADXRecyclerView_Adapter;
+@class JavaLangInteger;
 
 /*!
  @brief ListUpdateCallback that dispatches update events to the given adapter.
@@ -44,24 +46,24 @@
 
 /*!
  */
-- (void)onChangedWithInt:(jint)position
-                 withInt:(jint)count
+- (void)onChangedWithInt:(int32_t)position
+                 withInt:(int32_t)count
                   withId:(id)payload;
 
 /*!
  */
-- (void)onInsertedWithInt:(jint)position
-                  withInt:(jint)count;
+- (void)onInsertedWithInt:(int32_t)position
+                  withInt:(int32_t)count;
 
 /*!
  */
-- (void)onMovedWithInt:(jint)fromPosition
-               withInt:(jint)toPosition;
+- (void)onMovedWithInt:(int32_t)fromPosition
+               withInt:(int32_t)toPosition;
 
 /*!
  */
-- (void)onRemovedWithInt:(jint)position
-                 withInt:(jint)count;
+- (void)onRemovedWithInt:(int32_t)position
+                 withInt:(int32_t)count;
 
 // Disallowed inherited constructors, do not use.
 
@@ -80,6 +82,7 @@ FOUNDATION_EXPORT ADXAdapterListUpdateCallback *create_ADXAdapterListUpdateCallb
 J2OBJC_TYPE_LITERAL_HEADER(ADXAdapterListUpdateCallback)
 
 @compatibility_alias AndroidxRecyclerviewWidgetAdapterListUpdateCallback ADXAdapterListUpdateCallback;
+
 
 #endif
 

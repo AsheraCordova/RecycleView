@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\GroupUtils.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_GroupUtils")
@@ -23,6 +24,7 @@
 #define ADXGroupUtils_
 
 @class ADXItem;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 
 @interface ADXGroupUtils : NSObject
@@ -32,9 +34,9 @@
 - (instancetype)initPackagePrivate;
 
 + (ADXItem *)getItemWithJavaUtilCollection:(id<JavaUtilCollection>)groups
-                                   withInt:(jint)position;
+                                   withInt:(int32_t)position;
 
-+ (jint)getItemCountWithJavaUtilCollection:(id<JavaUtilCollection>)groups;
++ (int32_t)getItemCountWithJavaUtilCollection:(id<JavaUtilCollection>)groups;
 
 // Disallowed inherited constructors, do not use.
 
@@ -50,13 +52,14 @@ FOUNDATION_EXPORT ADXGroupUtils *new_ADXGroupUtils_initPackagePrivate(void) NS_R
 
 FOUNDATION_EXPORT ADXGroupUtils *create_ADXGroupUtils_initPackagePrivate(void);
 
-FOUNDATION_EXPORT ADXItem *ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(id<JavaUtilCollection> groups, jint position);
+FOUNDATION_EXPORT ADXItem *ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(id<JavaUtilCollection> groups, int32_t position);
 
-FOUNDATION_EXPORT jint ADXGroupUtils_getItemCountWithJavaUtilCollection_(id<JavaUtilCollection> groups);
+FOUNDATION_EXPORT int32_t ADXGroupUtils_getItemCountWithJavaUtilCollection_(id<JavaUtilCollection> groups);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXGroupUtils)
 
 @compatibility_alias ComXwrayGroupieGroupUtils ADXGroupUtils;
+
 
 #endif
 

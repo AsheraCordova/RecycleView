@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-ios-widgets\IOSRecycleViewPlugin\src\main\java\com\ashera\recycleview\RecyclerViewImpl.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_RecyclerViewImpl")
@@ -34,6 +35,9 @@
 @class ASRecyclerViewImpl_SectionHolder;
 @class ASWidgetAttribute;
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class NSString;
 @protocol ASIFragment;
 @protocol ASILifeCycleDecorator;
 @protocol ASIWidget;
@@ -56,19 +60,19 @@
                     withNSString:(NSString *)localname;
 
 - (void)addWithASIWidget:(id<ASIWidget>)w
-                 withInt:(jint)index;
+                 withInt:(int32_t)index;
 
 - (void)addAllModelWithId:(id)objValue;
 
 - (void)applyModelToWidget;
 
-- (jboolean)areWidgetItemsRecycled;
+- (bool)areWidgetItemsRecycled;
 
 - (id)asNativeWidget;
 
 - (id)asWidget;
 
-- (jboolean)checkIosVersionWithNSString:(NSString *)v;
+- (bool)checkIosVersionWithNSString:(NSString *)v;
 
 - (void)clear;
 
@@ -90,19 +94,19 @@
 
 - (void)invalidate;
 
-- (jboolean)isHorizontal;
+- (bool)isHorizontal;
 
 - (void)loadAttributesWithNSString:(NSString *)localName;
 
-- (id)nativescrollViewCreateWithBoolean:(jboolean)scrollIndicator
-                            withBoolean:(jboolean)userInteractionEnabled
-                            withBoolean:(jboolean)infiniteScroll;
+- (id)nativescrollViewCreateWithBoolean:(bool)scrollIndicator
+                            withBoolean:(bool)userInteractionEnabled
+                            withBoolean:(bool)infiniteScroll;
 
 - (id<ASIWidget>)newInstance OBJC_METHOD_FAMILY_NONE;
 
 - (void)notifyDataSetChanged;
 
-- (jboolean)removeWithInt:(jint)index;
+- (bool)removeWithInt:(int32_t)index;
 
 - (void)requestLayout;
 
@@ -121,26 +125,26 @@
 - (void)setItemViewParamsWithASIWidget:(id<ASIWidget>)widget
                             withADView:(ADView *)itemView;
 
-- (void)setVisibleWithBoolean:(jboolean)b;
+- (void)setVisibleWithBoolean:(bool)b;
 
-- (void)updateContentSizeOfScrolledProviderWithInt:(jint)range;
+- (void)updateContentSizeOfScrolledProviderWithInt:(int32_t)range;
 
 #pragma mark Protected
 
 - (void)addObjectWithASLoopParam:(ASLoopParam *)childModel
                     withNSString:(NSString *)modelIdPath
-                         withInt:(jint)index
+                         withInt:(int32_t)index
                     withNSString:(NSString *)currentLoopVar;
 
 - (void)clearModel;
 
-- (jboolean)filterDataWithId:(id)model;
+- (bool)filterDataWithId:(id)model;
 
 - (void)invalidateChildIfRequiredWithASIWidget:(id<ASIWidget>)childWidget;
 
 #pragma mark Package-Private
 
-- (void)adjustScrollOffsetWhenEdgeReachedWithInt:(jint)dpos;
+- (void)adjustScrollOffsetWhenEdgeReachedWithInt:(int32_t)dpos;
 
 @end
 
@@ -180,6 +184,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl)
 
 @compatibility_alias ComAsheraRecycleviewRecyclerViewImpl ASRecyclerViewImpl;
 
+
 #endif
 
 #if !defined (ASRecyclerViewImpl_Orientation_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_Orientation))
@@ -216,6 +221,7 @@ FOUNDATION_EXPORT ASRecyclerViewImpl_Orientation *create_ASRecyclerViewImpl_Orie
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
 
+
 #endif
 
 #if !defined (ASRecyclerViewImpl_RecyclerViewExt_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_RecyclerViewExt))
@@ -239,6 +245,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
 @class ASWidgetAttribute;
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class NSString;
 @protocol ASIWidget;
 @protocol JavaUtilList;
 
@@ -259,9 +268,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
 
 - (void)getLocationOnScreenWithIntArray:(IOSIntArray *)appScreenLocation;
 
-- (jint)getMaxHeight;
+- (int32_t)getMaxHeight;
 
-- (jint)getMaxWidth;
+- (int32_t)getMaxWidth;
 
 - (id<JavaUtilList>)getMethods;
 
@@ -275,12 +284,12 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
 
 - (id<ASILifeCycleDecorator>)newInstanceWithASIWidget:(id<ASIWidget>)widget OBJC_METHOD_FAMILY_NONE;
 
-- (void)offsetLeftAndRightWithInt:(jint)offset;
+- (void)offsetLeftAndRightWithInt:(int32_t)offset;
 
-- (void)offsetTopAndBottomWithInt:(jint)offset;
+- (void)offsetTopAndBottomWithInt:(int32_t)offset;
 
-- (void)onMeasureWithInt:(jint)widthMeasureSpec
-                 withInt:(jint)heightMeasureSpec;
+- (void)onMeasureWithInt:(int32_t)widthMeasureSpec
+                 withInt:(int32_t)heightMeasureSpec;
 
 - (void)remeasure;
 
@@ -290,9 +299,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
                              withNSString:(NSString *)strValue
                                    withId:(id)objValue;
 
-- (void)setMaxHeightWithInt:(jint)height;
+- (void)setMaxHeightWithInt:(int32_t)height;
 
-- (void)setMaxWidthWithInt:(jint)width;
+- (void)setMaxWidthWithInt:(int32_t)width;
 
 - (void)setMyAttributeWithNSString:(NSString *)name
                             withId:(id)value;
@@ -307,7 +316,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
 
 - (void)setState4WithId:(id)value;
 
-- (void)setVisibilityWithInt:(jint)visibility;
+- (void)setVisibilityWithInt:(int32_t)visibility;
 
 - (void)state0;
 
@@ -323,16 +332,16 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_Orientation)
 
 - (void)stateYes;
 
-- (void)updateMeasuredDimensionWithInt:(jint)width
-                               withInt:(jint)height;
+- (void)updateMeasuredDimensionWithInt:(int32_t)width
+                               withInt:(int32_t)height;
 
 #pragma mark Protected
 
-- (void)onLayoutWithBoolean:(jboolean)changed
-                    withInt:(jint)l
-                    withInt:(jint)t
-                    withInt:(jint)r
-                    withInt:(jint)b;
+- (void)onLayoutWithBoolean:(bool)changed
+                    withInt:(int32_t)l
+                    withInt:(int32_t)t
+                    withInt:(int32_t)r
+                    withInt:(int32_t)b;
 
 // Disallowed inherited constructors, do not use.
 
@@ -350,6 +359,7 @@ FOUNDATION_EXPORT ASRecyclerViewImpl_RecyclerViewExt *create_ASRecyclerViewImpl_
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_RecyclerViewExt)
 
+
 #endif
 
 #if !defined (ASRecyclerViewImpl_ScrollProviderType_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_ScrollProviderType))
@@ -360,11 +370,19 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_RecyclerViewExt)
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class NSString;
 
-typedef NS_ENUM(NSUInteger, ASRecyclerViewImpl_ScrollProviderType_Enum) {
-  ASRecyclerViewImpl_ScrollProviderType_Enum_READ_ONLY = 0,
-  ASRecyclerViewImpl_ScrollProviderType_Enum_DRAGABBLE = 1,
+typedef NS_ENUM(int32_t, ASRecyclerViewImpl_ScrollProviderType_Enum) {
+  ASRecyclerViewImpl_ScrollProviderType_Enum_READ_ONLY NS_SWIFT_NAME(readOnly) = 0,
+  ASRecyclerViewImpl_ScrollProviderType_Enum_DRAGABBLE NS_SWIFT_NAME(dragabble) = 1,
 };
+
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define ASRecyclerViewImpl_ScrollProviderType_ORDINAL int32_t
+#else
+#define ASRecyclerViewImpl_ScrollProviderType_ORDINAL ASRecyclerViewImpl_ScrollProviderType_Enum
+#endif
+
 
 @interface ASRecyclerViewImpl_ScrollProviderType : JavaLangEnum
 
@@ -377,6 +395,13 @@ typedef NS_ENUM(NSUInteger, ASRecyclerViewImpl_ScrollProviderType_Enum) {
 #pragma mark Package-Private
 
 - (ASRecyclerViewImpl_ScrollProviderType_Enum)toNSEnum;
+
+@property(readonly) ASRecyclerViewImpl_ScrollProviderType_Enum enumValue;
++ (ASRecyclerViewImpl_ScrollProviderType *)fromNSEnum:(ASRecyclerViewImpl_ScrollProviderType_Enum)value;
+
+- (ASRecyclerViewImpl_ScrollProviderType_ORDINAL)ordinal NS_SWIFT_UNAVAILABLE("Use .enumValue");
+
+- (nullable instancetype)initWithScrollProviderType:(ASRecyclerViewImpl_ScrollProviderType_Enum)value;
 
 @end
 
@@ -395,9 +420,10 @@ FOUNDATION_EXPORT IOSObjectArray *ASRecyclerViewImpl_ScrollProviderType_values(v
 
 FOUNDATION_EXPORT ASRecyclerViewImpl_ScrollProviderType *ASRecyclerViewImpl_ScrollProviderType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT ASRecyclerViewImpl_ScrollProviderType *ASRecyclerViewImpl_ScrollProviderType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT ASRecyclerViewImpl_ScrollProviderType *ASRecyclerViewImpl_ScrollProviderType_fromOrdinal(ASRecyclerViewImpl_ScrollProviderType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_ScrollProviderType)
+
 
 #endif
 
@@ -411,6 +437,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_ScrollProviderType)
 @class ADViewGroup;
 @class ASRecyclerViewImpl;
 @class ASRecyclerViewImpl_ViewHolder;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 @interface ASRecyclerViewImpl_ListAdapter : ADXRecyclerView_Adapter
 
@@ -418,20 +446,20 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_ScrollProviderType)
 
 - (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$;
 
-- (ASRecyclerViewImpl_ViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)arg0
-                                                           withInt:(jint)arg1;
+- (ASRecyclerViewImpl_ViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)parent
+                                                           withInt:(int32_t)viewType;
 
-- (jint)getItemCount;
+- (int32_t)getItemCount;
 
-- (jlong)getItemIdWithInt:(jint)position;
+- (int64_t)getItemIdWithInt:(int32_t)position;
 
-- (jint)getItemViewTypeWithInt:(jint)position;
+- (int32_t)getItemViewTypeWithInt:(int32_t)position;
 
 - (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_ViewHolder *)viewHolder
-                                               withInt:(jint)position;
+                                               withInt:(int32_t)position;
 
 - (ASRecyclerViewImpl_ViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                             withInt:(jint)viewType;
+                                                             withInt:(int32_t)viewType;
 
 - (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_ViewHolder *)holder;
 
@@ -452,6 +480,7 @@ FOUNDATION_EXPORT ASRecyclerViewImpl_ListAdapter *new_ASRecyclerViewImpl_ListAda
 FOUNDATION_EXPORT ASRecyclerViewImpl_ListAdapter *create_ASRecyclerViewImpl_ListAdapter_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$);
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_ListAdapter)
+
 
 #endif
 
@@ -498,6 +527,7 @@ FOUNDATION_EXPORT ASRecyclerViewImpl_ViewHolder *create_ASRecyclerViewImpl_ViewH
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_ViewHolder)
 
+
 #endif
 
 #if !defined (ASRecyclerViewImpl_SectionHolder_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_SectionHolder))
@@ -539,6 +569,7 @@ FOUNDATION_EXPORT ASRecyclerViewImpl_SectionHolder *create_ASRecyclerViewImpl_Se
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_SectionHolder)
 
+
 #endif
 
 #if !defined (ASRecyclerViewImpl_GenericItem_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_GenericItem))
@@ -552,12 +583,16 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_SectionHolder)
 @class ASLoopParam;
 @class ASRecyclerViewImpl;
 @class ASRecyclerViewImpl_GroupieViewHolder;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class NSString;
 @protocol ASIWidget;
 @protocol JavaUtilList;
 
 @interface ASRecyclerViewImpl_GenericItem : ADXItem {
  @public
-  jint numberOfColums_;
+  int32_t numberOfColums_;
 }
 
 #pragma mark Public
@@ -569,36 +604,36 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_SectionHolder)
                           withJavaUtilList:(id<JavaUtilList>)viewHolderIds;
 
 - (void)bindWithADXGroupieViewHolder:(ASRecyclerViewImpl_GroupieViewHolder *)viewHolder
-                             withInt:(jint)position;
+                             withInt:(int32_t)position;
 
-- (ASRecyclerViewImpl_GroupieViewHolder *)createViewHolderWithADView:(ADView *)arg0;
+- (ASRecyclerViewImpl_GroupieViewHolder *)createViewHolderWithADView:(ADView *)itemView;
 
-- (jint)getLayout;
+- (int32_t)getLayout;
 
 - (ASLoopParam *)getLoopParam;
 
-- (jint)getMargin;
+- (int32_t)getMargin;
 
-- (jint)getSpanSizeWithInt:(jint)spanCount
-                   withInt:(jint)position;
+- (int32_t)getSpanSizeWithInt:(int32_t)spanCount
+                      withInt:(int32_t)position;
 
 - (id<ASIWidget>)getTemplate;
 
 - (id<JavaUtilList>)getViewHolderIds;
 
-- (jboolean)isModified;
+- (bool)isModified;
 
-- (void)setMarginWithInt:(jint)margin;
+- (void)setMarginWithInt:(int32_t)margin;
 
-- (void)setModifiedWithBoolean:(jboolean)modified;
+- (void)setModifiedWithBoolean:(bool)modified;
 
-- (void)setNumberOfColumsWithInt:(jint)numberOfColums;
+- (void)setNumberOfColumsWithInt:(int32_t)numberOfColums;
 
 // Disallowed inherited constructors, do not use.
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithLong:(jlong)arg0 NS_UNAVAILABLE;
+- (instancetype)initWithLong:(int64_t)arg0 NS_UNAVAILABLE;
 
 @end
 
@@ -611,6 +646,7 @@ FOUNDATION_EXPORT ASRecyclerViewImpl_GenericItem *new_ASRecyclerViewImpl_Generic
 FOUNDATION_EXPORT ASRecyclerViewImpl_GenericItem *create_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds);
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericItem)
+
 
 #endif
 
@@ -626,6 +662,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericItem)
 @class ASLoopParam;
 @class ASRecyclerViewImpl;
 @class ASRecyclerViewImpl_GroupieViewHolder;
+@class JavaLangInteger;
+@class NSString;
 @protocol ASIWidget;
 @protocol JavaUtilList;
 
@@ -641,9 +679,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericItem)
                           withJavaUtilList:(id<JavaUtilList>)onClickIds;
 
 - (void)bindWithADXGroupieViewHolder:(ASRecyclerViewImpl_GroupieViewHolder *)viewHolder
-                             withInt:(jint)position;
+                             withInt:(int32_t)position;
 
-- (ASRecyclerViewImpl_GroupieViewHolder *)createViewHolderWithADView:(ADView *)arg0;
+- (ASRecyclerViewImpl_GroupieViewHolder *)createViewHolderWithADView:(ADView *)itemView;
 
 - (void)setExpandableGroupWithADXExpandableGroup:(ADXExpandableGroup *)expandableGroup;
 
@@ -667,6 +705,7 @@ FOUNDATION_EXPORT ASRecyclerViewImpl_GenericExpandableItem *create_ASRecyclerVie
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericExpandableItem)
 
+
 #endif
 
 #if !defined (ASRecyclerViewImpl_GroupieAdapter_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_GroupieAdapter))
@@ -679,6 +718,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericExpandableItem)
 @class ADViewGroup;
 @class ASRecyclerViewImpl;
 @class ASRecyclerViewImpl_GroupieViewHolder;
+@class JavaLangInteger;
 
 @interface ASRecyclerViewImpl_GroupieAdapter : ADXGroupAdapter
 
@@ -686,11 +726,11 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericExpandableItem)
 
 - (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$;
 
-- (ASRecyclerViewImpl_GroupieViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)arg0
-                                                                  withInt:(jint)arg1;
+- (ASRecyclerViewImpl_GroupieViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)parent
+                                                                  withInt:(int32_t)viewType;
 
 - (ASRecyclerViewImpl_GroupieViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                                    withInt:(jint)viewType;
+                                                                    withInt:(int32_t)viewType;
 
 - (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_GroupieViewHolder *)holder;
 
@@ -711,6 +751,7 @@ FOUNDATION_EXPORT ASRecyclerViewImpl_GroupieAdapter *new_ASRecyclerViewImpl_Grou
 FOUNDATION_EXPORT ASRecyclerViewImpl_GroupieAdapter *create_ASRecyclerViewImpl_GroupieAdapter_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$);
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieAdapter)
+
 
 #endif
 
@@ -757,12 +798,14 @@ FOUNDATION_EXPORT ASRecyclerViewImpl_GroupieViewHolder *create_ASRecyclerViewImp
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
+
 #endif
 
 #if !defined (ASRecyclerViewImpl_UIScrollViewDelegate_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_UIScrollViewDelegate))
 #define ASRecyclerViewImpl_UIScrollViewDelegate_
 
 @class ASRecyclerViewImpl;
+@class JavaLangInteger;
 
 @interface ASRecyclerViewImpl_UIScrollViewDelegate : NSObject
 
@@ -772,8 +815,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GroupieViewHolder)
 
 - (void)nativeScrollChangeListenerWithId:(id)nativeWidget;
 
-- (void)onscrollWithInt:(jint)scrollX
-                withInt:(jint)scrollY;
+- (void)onscrollWithInt:(int32_t)scrollX
+                withInt:(int32_t)scrollY;
 
 #pragma mark Package-Private
 
@@ -792,6 +835,7 @@ FOUNDATION_EXPORT ASRecyclerViewImpl_UIScrollViewDelegate *new_ASRecyclerViewImp
 FOUNDATION_EXPORT ASRecyclerViewImpl_UIScrollViewDelegate *create_ASRecyclerViewImpl_UIScrollViewDelegate_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$);
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_UIScrollViewDelegate)
+
 
 #endif
 

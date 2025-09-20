@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\OnItemClickListener.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_OnItemClickListener")
@@ -37,6 +38,7 @@ J2OBJC_EMPTY_STATIC_INIT(ADXOnItemClickListener)
 J2OBJC_TYPE_LITERAL_HEADER(ADXOnItemClickListener)
 
 #define ComXwrayGroupieOnItemClickListener ADXOnItemClickListener
+
 
 #endif
 

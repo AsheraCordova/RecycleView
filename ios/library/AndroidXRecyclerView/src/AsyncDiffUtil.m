@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\AsyncDiffUtil.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "AsyncDiffUtil.h"
 #include "AsyncTask.h"
 #include "DiffTask.h"
@@ -11,16 +16,22 @@
 #include "IOSObjectArray.h"
 #include "J2ObjC_source.h"
 #include "OnAsyncUpdateListener.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Integer.h"
 #include "java/lang/Void.h"
 #include "java/util/Collection.h"
 
-@protocol JavaUtilCollection;
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXAsyncDiffUtil () {
  @public
   id<ADXAsyncDiffUtil_Callback> asyncDiffUtilCallback_;
-  jint maxScheduledGeneration_;
+  int32_t maxScheduledGeneration_;
   id<JavaUtilCollection> groups_;
 }
 
@@ -48,16 +59,16 @@ J2OBJC_FIELD_SETTER(ADXAsyncDiffUtil, groups_, id<JavaUtilCollection>)
   return groups_;
 }
 
-- (jint)getMaxScheduledGeneration {
+- (int32_t)getMaxScheduledGeneration {
   return maxScheduledGeneration_;
 }
 
 - (void)calculateDiffWithJavaUtilCollection:(id<JavaUtilCollection>)newGroups
                    withADXDiffUtil_Callback:(ADXDiffUtil_Callback *)diffUtilCallback
                withADXOnAsyncUpdateListener:(id<ADXOnAsyncUpdateListener>)onAsyncUpdateListener
-                                withBoolean:(jboolean)detectMoves {
+                                withBoolean:(bool)detectMoves {
   JreStrongAssign(&groups_, newGroups);
-  jint runGeneration = ++maxScheduledGeneration_;
+  int32_t runGeneration = ++maxScheduledGeneration_;
   [create_ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(self, diffUtilCallback, runGeneration, detectMoves, onAsyncUpdateListener) executeWithNSObjectArray:[IOSObjectArray arrayWithLength:0 type:JavaLangVoid_class_()]];
 }
 

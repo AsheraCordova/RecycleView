@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\ViewBoundsCheck.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_ViewBoundsCheck")
@@ -18,6 +19,8 @@
 
 @class ADView;
 @class ADXViewBoundsCheck_BoundFlags;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol ADXViewBoundsCheck_Callback;
 
 /*!
@@ -50,10 +53,10 @@
  @return The first view that satisfies acceptableBoundFlags or the last view satisfying
   acceptableBoundFlags boundary conditions.
  */
-- (ADView *)findOneViewWithinBoundFlagsWithInt:(jint)fromIndex
-                                       withInt:(jint)toIndex
-                                       withInt:(jint)preferredBoundFlags
-                                       withInt:(jint)acceptableBoundFlags;
+- (ADView *)findOneViewWithinBoundFlagsWithInt:(int32_t)fromIndex
+                                       withInt:(int32_t)toIndex
+                                       withInt:(int32_t)preferredBoundFlags
+                                       withInt:(int32_t)acceptableBoundFlags;
 
 /*!
  @brief Returns whether the specified view lies within the boundary condition of its parent view.
@@ -61,8 +64,8 @@
  @param boundsFlags The flag against which the child view and parent view are matched.
  @return True if the view meets the boundsFlag, false otherwise.
  */
-- (jboolean)isViewWithinBoundFlagsWithADView:(ADView *)child
-                                     withInt:(jint)boundsFlags;
+- (bool)isViewWithinBoundFlagsWithADView:(ADView *)child
+                                 withInt:(int32_t)boundsFlags;
 
 // Disallowed inherited constructors, do not use.
 
@@ -75,125 +78,125 @@ J2OBJC_EMPTY_STATIC_INIT(ADXViewBoundsCheck)
 J2OBJC_FIELD_SETTER(ADXViewBoundsCheck, mCallback_, id<ADXViewBoundsCheck_Callback>)
 J2OBJC_FIELD_SETTER(ADXViewBoundsCheck, mBoundFlags_, ADXViewBoundsCheck_BoundFlags *)
 
-inline jint ADXViewBoundsCheck_get_GT(void);
+inline int32_t ADXViewBoundsCheck_get_GT(void);
 #define ADXViewBoundsCheck_GT 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, GT, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, GT, int32_t)
 
-inline jint ADXViewBoundsCheck_get_EQ(void);
+inline int32_t ADXViewBoundsCheck_get_EQ(void);
 #define ADXViewBoundsCheck_EQ 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, EQ, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, EQ, int32_t)
 
-inline jint ADXViewBoundsCheck_get_LT(void);
+inline int32_t ADXViewBoundsCheck_get_LT(void);
 #define ADXViewBoundsCheck_LT 4
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, LT, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, LT, int32_t)
 
-inline jint ADXViewBoundsCheck_get_CVS_PVS_POS(void);
+inline int32_t ADXViewBoundsCheck_get_CVS_PVS_POS(void);
 #define ADXViewBoundsCheck_CVS_PVS_POS 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, CVS_PVS_POS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, CVS_PVS_POS, int32_t)
 
 /*!
  @brief The child view's start should be strictly greater than parent view's start.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVS_GT_PVS(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVS_GT_PVS(void);
 #define ADXViewBoundsCheck_FLAG_CVS_GT_PVS 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_GT_PVS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_GT_PVS, int32_t)
 
 /*!
  @brief The child view's start can be equal to its parent view's start.This flag follows with GT
   or LT indicating greater (less) than or equal relation.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVS_EQ_PVS(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVS_EQ_PVS(void);
 #define ADXViewBoundsCheck_FLAG_CVS_EQ_PVS 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_EQ_PVS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_EQ_PVS, int32_t)
 
 /*!
  @brief The child view's start should be strictly less than parent view's start.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVS_LT_PVS(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVS_LT_PVS(void);
 #define ADXViewBoundsCheck_FLAG_CVS_LT_PVS 4
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_LT_PVS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_LT_PVS, int32_t)
 
-inline jint ADXViewBoundsCheck_get_CVS_PVE_POS(void);
+inline int32_t ADXViewBoundsCheck_get_CVS_PVE_POS(void);
 #define ADXViewBoundsCheck_CVS_PVE_POS 4
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, CVS_PVE_POS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, CVS_PVE_POS, int32_t)
 
 /*!
  @brief The child view's start should be strictly greater than parent view's end.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVS_GT_PVE(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVS_GT_PVE(void);
 #define ADXViewBoundsCheck_FLAG_CVS_GT_PVE 16
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_GT_PVE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_GT_PVE, int32_t)
 
 /*!
  @brief The child view's start can be equal to its parent view's end.This flag follows with GT
   or LT indicating greater (less) than or equal relation.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVS_EQ_PVE(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVS_EQ_PVE(void);
 #define ADXViewBoundsCheck_FLAG_CVS_EQ_PVE 32
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_EQ_PVE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_EQ_PVE, int32_t)
 
 /*!
  @brief The child view's start should be strictly less than parent view's end.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVS_LT_PVE(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVS_LT_PVE(void);
 #define ADXViewBoundsCheck_FLAG_CVS_LT_PVE 64
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_LT_PVE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVS_LT_PVE, int32_t)
 
-inline jint ADXViewBoundsCheck_get_CVE_PVS_POS(void);
+inline int32_t ADXViewBoundsCheck_get_CVE_PVS_POS(void);
 #define ADXViewBoundsCheck_CVE_PVS_POS 8
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, CVE_PVS_POS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, CVE_PVS_POS, int32_t)
 
 /*!
  @brief The child view's end should be strictly greater than parent view's start.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVE_GT_PVS(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVE_GT_PVS(void);
 #define ADXViewBoundsCheck_FLAG_CVE_GT_PVS 256
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_GT_PVS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_GT_PVS, int32_t)
 
 /*!
  @brief The child view's end can be equal to its parent view's start.This flag follows with GT
   or LT indicating greater (less) than or equal relation.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVE_EQ_PVS(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVE_EQ_PVS(void);
 #define ADXViewBoundsCheck_FLAG_CVE_EQ_PVS 512
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_EQ_PVS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_EQ_PVS, int32_t)
 
 /*!
  @brief The child view's end should be strictly less than parent view's start.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVE_LT_PVS(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVE_LT_PVS(void);
 #define ADXViewBoundsCheck_FLAG_CVE_LT_PVS 1024
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_LT_PVS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_LT_PVS, int32_t)
 
-inline jint ADXViewBoundsCheck_get_CVE_PVE_POS(void);
+inline int32_t ADXViewBoundsCheck_get_CVE_PVE_POS(void);
 #define ADXViewBoundsCheck_CVE_PVE_POS 12
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, CVE_PVE_POS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, CVE_PVE_POS, int32_t)
 
 /*!
  @brief The child view's end should be strictly greater than parent view's end.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVE_GT_PVE(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVE_GT_PVE(void);
 #define ADXViewBoundsCheck_FLAG_CVE_GT_PVE 4096
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_GT_PVE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_GT_PVE, int32_t)
 
 /*!
  @brief The child view's end can be equal to its parent view's end.This flag follows with GT
   or LT indicating greater (less) than or equal relation.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVE_EQ_PVE(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVE_EQ_PVE(void);
 #define ADXViewBoundsCheck_FLAG_CVE_EQ_PVE 8192
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_EQ_PVE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_EQ_PVE, int32_t)
 
 /*!
  @brief The child view's end should be strictly less than parent view's end.
  */
-inline jint ADXViewBoundsCheck_get_FLAG_CVE_LT_PVE(void);
+inline int32_t ADXViewBoundsCheck_get_FLAG_CVE_LT_PVE(void);
 #define ADXViewBoundsCheck_FLAG_CVE_LT_PVE 16384
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_LT_PVE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, FLAG_CVE_LT_PVE, int32_t)
 
-inline jint ADXViewBoundsCheck_get_MASK(void);
+inline int32_t ADXViewBoundsCheck_get_MASK(void);
 #define ADXViewBoundsCheck_MASK 7
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, MASK, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewBoundsCheck, MASK, int32_t)
 
 FOUNDATION_EXPORT void ADXViewBoundsCheck_initPackagePrivateWithADXViewBoundsCheck_Callback_(ADXViewBoundsCheck *self, id<ADXViewBoundsCheck_Callback> callback);
 
@@ -204,6 +207,7 @@ FOUNDATION_EXPORT ADXViewBoundsCheck *create_ADXViewBoundsCheck_initPackagePriva
 J2OBJC_TYPE_LITERAL_HEADER(ADXViewBoundsCheck)
 
 @compatibility_alias AndroidxRecyclerviewWidgetViewBoundsCheck ADXViewBoundsCheck;
+
 
 #endif
 
@@ -232,37 +236,41 @@ J2OBJC_EMPTY_STATIC_INIT(ADXViewBoundsCheck_ViewBounds)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXViewBoundsCheck_ViewBounds)
 
+
 #endif
 
 #if !defined (ADXViewBoundsCheck_BoundFlags_) && (INCLUDE_ALL_ViewBoundsCheck || defined(INCLUDE_ADXViewBoundsCheck_BoundFlags))
 #define ADXViewBoundsCheck_BoundFlags_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 @interface ADXViewBoundsCheck_BoundFlags : NSObject {
  @public
-  jint mBoundFlags_;
-  jint mRvStart_;
-  jint mRvEnd_;
-  jint mChildStart_;
-  jint mChildEnd_;
+  int32_t mBoundFlags_;
+  int32_t mRvStart_;
+  int32_t mRvEnd_;
+  int32_t mChildStart_;
+  int32_t mChildEnd_;
 }
 
 #pragma mark Package-Private
 
 - (instancetype)init;
 
-- (void)addFlagsWithInt:(jint)flags;
+- (void)addFlagsWithInt:(int32_t)flags;
 
-- (jboolean)boundsMatch;
+- (bool)boundsMatch;
 
-- (jint)compareWithInt:(jint)x
-               withInt:(jint)y;
+- (int32_t)compareWithInt:(int32_t)x
+                  withInt:(int32_t)y;
 
 - (void)resetFlags;
 
-- (void)setBoundsWithInt:(jint)rvStart
-                 withInt:(jint)rvEnd
-                 withInt:(jint)childStart
-                 withInt:(jint)childEnd;
+- (void)setBoundsWithInt:(int32_t)rvStart
+                 withInt:(int32_t)rvEnd
+                 withInt:(int32_t)childStart
+                 withInt:(int32_t)childEnd;
 
 @end
 
@@ -276,12 +284,14 @@ FOUNDATION_EXPORT ADXViewBoundsCheck_BoundFlags *create_ADXViewBoundsCheck_Bound
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXViewBoundsCheck_BoundFlags)
 
+
 #endif
 
 #if !defined (ADXViewBoundsCheck_Callback_) && (INCLUDE_ALL_ViewBoundsCheck || defined(INCLUDE_ADXViewBoundsCheck_Callback))
 #define ADXViewBoundsCheck_Callback_
 
 @class ADView;
+@class JavaLangInteger;
 
 /*!
  @brief Callback provided by the user of this class in order to retrieve information about child and
@@ -289,21 +299,22 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXViewBoundsCheck_BoundFlags)
  */
 @protocol ADXViewBoundsCheck_Callback < JavaObject >
 
-- (ADView *)getChildAtWithInt:(jint)index;
+- (ADView *)getChildAtWithInt:(int32_t)index;
 
-- (jint)getParentStart;
+- (int32_t)getParentStart;
 
-- (jint)getParentEnd;
+- (int32_t)getParentEnd;
 
-- (jint)getChildStartWithADView:(ADView *)view;
+- (int32_t)getChildStartWithADView:(ADView *)view;
 
-- (jint)getChildEndWithADView:(ADView *)view;
+- (int32_t)getChildEndWithADView:(ADView *)view;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(ADXViewBoundsCheck_Callback)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXViewBoundsCheck_Callback)
+
 
 #endif
 

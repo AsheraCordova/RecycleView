@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\TouchCallback.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_TouchCallback")
@@ -28,6 +29,7 @@
 
 @class ADXRecyclerView;
 @class ADXRecyclerView_ViewHolder;
+@class JavaLangInteger;
 
 @interface ADXTouchCallback : ADXItemTouchHelper_SimpleCallback
 
@@ -35,16 +37,16 @@
 
 - (instancetype)init;
 
-- (jint)getDragDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-        withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+- (int32_t)getDragDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+           withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
 
-- (jint)getSwipeDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-         withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+- (int32_t)getSwipeDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+            withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
 
 // Disallowed inherited constructors, do not use.
 
-- (instancetype)initWithInt:(jint)arg0
-                    withInt:(jint)arg1 NS_UNAVAILABLE;
+- (instancetype)initWithInt:(int32_t)arg0
+                    withInt:(int32_t)arg1 NS_UNAVAILABLE;
 
 @end
 
@@ -55,6 +57,7 @@ FOUNDATION_EXPORT void ADXTouchCallback_init(ADXTouchCallback *self);
 J2OBJC_TYPE_LITERAL_HEADER(ADXTouchCallback)
 
 @compatibility_alias ComXwrayGroupieTouchCallback ADXTouchCallback;
+
 
 #endif
 

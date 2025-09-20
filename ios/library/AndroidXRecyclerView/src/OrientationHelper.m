@@ -3,27 +3,40 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\OrientationHelper.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "J2ObjC_source.h"
 #include "OrientationHelper.h"
 #include "Rect.h"
 #include "RecyclerView.h"
 #include "View.h"
 #include "ViewGroup.h"
+#include "java/lang/Boolean.h"
 #include "java/lang/IllegalArgumentException.h"
+#include "java/lang/Integer.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXOrientationHelper () {
  @public
-  jint mLastTotalSpace_;
+  int32_t mLastTotalSpace_;
 }
 
 - (instancetype)initWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)layoutManager;
 
 @end
 
-inline jint ADXOrientationHelper_get_INVALID_SIZE(void);
-#define ADXOrientationHelper_INVALID_SIZE ((jint) 0x80000000)
-J2OBJC_STATIC_FIELD_CONSTANT(ADXOrientationHelper, INVALID_SIZE, jint)
+inline int32_t ADXOrientationHelper_get_INVALID_SIZE(void);
+#define ADXOrientationHelper_INVALID_SIZE ((int32_t) 0x80000000)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXOrientationHelper, INVALID_SIZE, int32_t)
 
 __attribute__((unused)) static void ADXOrientationHelper_initWithADXRecyclerView_LayoutManager_(ADXOrientationHelper *self, ADXRecyclerView_LayoutManager *layoutManager);
 
@@ -31,36 +44,36 @@ __attribute__((unused)) static void ADXOrientationHelper_initWithADXRecyclerView
 
 - (instancetype)initWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)layoutManager;
 
-- (jint)getEndAfterPadding;
+- (int32_t)getEndAfterPadding;
 
-- (jint)getEnd;
+- (int32_t)getEnd;
 
-- (void)offsetChildrenWithInt:(jint)amount;
+- (void)offsetChildrenWithInt:(int32_t)amount;
 
-- (jint)getStartAfterPadding;
+- (int32_t)getStartAfterPadding;
 
-- (jint)getDecoratedMeasurementWithADView:(ADView *)view;
+- (int32_t)getDecoratedMeasurementWithADView:(ADView *)view;
 
-- (jint)getDecoratedMeasurementInOtherWithADView:(ADView *)view;
+- (int32_t)getDecoratedMeasurementInOtherWithADView:(ADView *)view;
 
-- (jint)getDecoratedEndWithADView:(ADView *)view;
+- (int32_t)getDecoratedEndWithADView:(ADView *)view;
 
-- (jint)getDecoratedStartWithADView:(ADView *)view;
+- (int32_t)getDecoratedStartWithADView:(ADView *)view;
 
-- (jint)getTransformedEndWithDecorationWithADView:(ADView *)view;
+- (int32_t)getTransformedEndWithDecorationWithADView:(ADView *)view;
 
-- (jint)getTransformedStartWithDecorationWithADView:(ADView *)view;
+- (int32_t)getTransformedStartWithDecorationWithADView:(ADView *)view;
 
-- (jint)getTotalSpace;
+- (int32_t)getTotalSpace;
 
 - (void)offsetChildWithADView:(ADView *)view
-                      withInt:(jint)offset;
+                      withInt:(int32_t)offset;
 
-- (jint)getEndPadding;
+- (int32_t)getEndPadding;
 
-- (jint)getMode;
+- (int32_t)getMode;
 
-- (jint)getModeInOther;
+- (int32_t)getModeInOther;
 
 @end
 
@@ -72,40 +85,41 @@ __attribute__((unused)) static ADXOrientationHelper_1 *new_ADXOrientationHelper_
 
 __attribute__((unused)) static ADXOrientationHelper_1 *create_ADXOrientationHelper_1_initWithADXRecyclerView_LayoutManager_(ADXRecyclerView_LayoutManager *layoutManager);
 
+
 @interface ADXOrientationHelper_2 : ADXOrientationHelper
 
 - (instancetype)initWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)layoutManager;
 
-- (jint)getEndAfterPadding;
+- (int32_t)getEndAfterPadding;
 
-- (jint)getEnd;
+- (int32_t)getEnd;
 
-- (void)offsetChildrenWithInt:(jint)amount;
+- (void)offsetChildrenWithInt:(int32_t)amount;
 
-- (jint)getStartAfterPadding;
+- (int32_t)getStartAfterPadding;
 
-- (jint)getDecoratedMeasurementWithADView:(ADView *)view;
+- (int32_t)getDecoratedMeasurementWithADView:(ADView *)view;
 
-- (jint)getDecoratedMeasurementInOtherWithADView:(ADView *)view;
+- (int32_t)getDecoratedMeasurementInOtherWithADView:(ADView *)view;
 
-- (jint)getDecoratedEndWithADView:(ADView *)view;
+- (int32_t)getDecoratedEndWithADView:(ADView *)view;
 
-- (jint)getDecoratedStartWithADView:(ADView *)view;
+- (int32_t)getDecoratedStartWithADView:(ADView *)view;
 
-- (jint)getTransformedEndWithDecorationWithADView:(ADView *)view;
+- (int32_t)getTransformedEndWithDecorationWithADView:(ADView *)view;
 
-- (jint)getTransformedStartWithDecorationWithADView:(ADView *)view;
+- (int32_t)getTransformedStartWithDecorationWithADView:(ADView *)view;
 
-- (jint)getTotalSpace;
+- (int32_t)getTotalSpace;
 
 - (void)offsetChildWithADView:(ADView *)view
-                      withInt:(jint)offset;
+                      withInt:(int32_t)offset;
 
-- (jint)getEndPadding;
+- (int32_t)getEndPadding;
 
-- (jint)getMode;
+- (int32_t)getMode;
 
-- (jint)getModeInOther;
+- (int32_t)getModeInOther;
 
 @end
 
@@ -116,6 +130,7 @@ __attribute__((unused)) static void ADXOrientationHelper_2_initWithADXRecyclerVi
 __attribute__((unused)) static ADXOrientationHelper_2 *new_ADXOrientationHelper_2_initWithADXRecyclerView_LayoutManager_(ADXRecyclerView_LayoutManager *layoutManager) NS_RETURNS_RETAINED;
 
 __attribute__((unused)) static ADXOrientationHelper_2 *create_ADXOrientationHelper_2_initWithADXRecyclerView_LayoutManager_(ADXRecyclerView_LayoutManager *layoutManager);
+
 
 @implementation ADXOrientationHelper
 
@@ -132,101 +147,101 @@ __attribute__((unused)) static ADXOrientationHelper_2 *create_ADXOrientationHelp
   mLastTotalSpace_ = [self getTotalSpace];
 }
 
-- (jint)getTotalSpaceChange {
+- (int32_t)getTotalSpaceChange {
   return ADXOrientationHelper_INVALID_SIZE == mLastTotalSpace_ ? 0 : [self getTotalSpace] - mLastTotalSpace_;
 }
 
-- (jint)getDecoratedStartWithADView:(ADView *)view {
+- (int32_t)getDecoratedStartWithADView:(ADView *)view {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jint)getDecoratedEndWithADView:(ADView *)view {
+- (int32_t)getDecoratedEndWithADView:(ADView *)view {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jint)getTransformedEndWithDecorationWithADView:(ADView *)view {
+- (int32_t)getTransformedEndWithDecorationWithADView:(ADView *)view {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jint)getTransformedStartWithDecorationWithADView:(ADView *)view {
+- (int32_t)getTransformedStartWithDecorationWithADView:(ADView *)view {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jint)getDecoratedMeasurementWithADView:(ADView *)view {
+- (int32_t)getDecoratedMeasurementWithADView:(ADView *)view {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jint)getDecoratedMeasurementInOtherWithADView:(ADView *)view {
+- (int32_t)getDecoratedMeasurementInOtherWithADView:(ADView *)view {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jint)getStartAfterPadding {
+- (int32_t)getStartAfterPadding {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jint)getEndAfterPadding {
+- (int32_t)getEndAfterPadding {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jint)getEnd {
+- (int32_t)getEnd {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (void)offsetChildrenWithInt:(jint)amount {
+- (void)offsetChildrenWithInt:(int32_t)amount {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
 }
 
-- (jint)getTotalSpace {
+- (int32_t)getTotalSpace {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
 - (void)offsetChildWithADView:(ADView *)view
-                      withInt:(jint)offset {
+                      withInt:(int32_t)offset {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
 }
 
-- (jint)getEndPadding {
-  // can't call an abstract method
-  [self doesNotRecognizeSelector:_cmd];
-  return 0;
-}
-
-- (jint)getMode {
+- (int32_t)getEndPadding {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jint)getModeInOther {
+- (int32_t)getMode {
+  // can't call an abstract method
+  [self doesNotRecognizeSelector:_cmd];
+  return 0;
+}
+
+- (int32_t)getModeInOther {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
 + (ADXOrientationHelper *)createOrientationHelperWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)layoutManager
-                                                                           withInt:(jint)orientation {
+                                                                           withInt:(int32_t)orientation {
   return ADXOrientationHelper_createOrientationHelperWithADXRecyclerView_LayoutManager_withInt_(layoutManager, orientation);
 }
 
@@ -317,7 +332,7 @@ void ADXOrientationHelper_initWithADXRecyclerView_LayoutManager_(ADXOrientationH
   JreStrongAssign(&self->mLayoutManager_, layoutManager);
 }
 
-ADXOrientationHelper *ADXOrientationHelper_createOrientationHelperWithADXRecyclerView_LayoutManager_withInt_(ADXRecyclerView_LayoutManager *layoutManager, jint orientation) {
+ADXOrientationHelper *ADXOrientationHelper_createOrientationHelperWithADXRecyclerView_LayoutManager_withInt_(ADXRecyclerView_LayoutManager *layoutManager, int32_t orientation) {
   ADXOrientationHelper_initialize();
   switch (orientation) {
     case ADXOrientationHelper_HORIZONTAL:
@@ -340,6 +355,8 @@ ADXOrientationHelper *ADXOrientationHelper_createVerticalHelperWithADXRecyclerVi
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXOrientationHelper)
 
+J2OBJC_NAME_MAPPING(ADXOrientationHelper, "androidx.recyclerview.widget", "ADX")
+
 @implementation ADXOrientationHelper_1
 
 - (instancetype)initWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)layoutManager {
@@ -347,70 +364,70 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXOrientationHelper)
   return self;
 }
 
-- (jint)getEndAfterPadding {
+- (int32_t)getEndAfterPadding {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getWidth] - [mLayoutManager_ getPaddingRight];
 }
 
-- (jint)getEnd {
+- (int32_t)getEnd {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getWidth];
 }
 
-- (void)offsetChildrenWithInt:(jint)amount {
+- (void)offsetChildrenWithInt:(int32_t)amount {
   [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) offsetChildrenHorizontalWithInt:amount];
 }
 
-- (jint)getStartAfterPadding {
+- (int32_t)getStartAfterPadding {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getPaddingLeft];
 }
 
-- (jint)getDecoratedMeasurementWithADView:(ADView *)view {
+- (int32_t)getDecoratedMeasurementWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getDecoratedMeasuredWidthWithADView:view] + ((ADXRecyclerView_LayoutParams *) nil_chk(params))->leftMargin_ + params->rightMargin_;
 }
 
-- (jint)getDecoratedMeasurementInOtherWithADView:(ADView *)view {
+- (int32_t)getDecoratedMeasurementInOtherWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getDecoratedMeasuredHeightWithADView:view] + ((ADXRecyclerView_LayoutParams *) nil_chk(params))->topMargin_ + params->bottomMargin_;
 }
 
-- (jint)getDecoratedEndWithADView:(ADView *)view {
+- (int32_t)getDecoratedEndWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getDecoratedRightWithADView:view] + ((ADXRecyclerView_LayoutParams *) nil_chk(params))->rightMargin_;
 }
 
-- (jint)getDecoratedStartWithADView:(ADView *)view {
+- (int32_t)getDecoratedStartWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getDecoratedLeftWithADView:view] - ((ADXRecyclerView_LayoutParams *) nil_chk(params))->leftMargin_;
 }
 
-- (jint)getTransformedEndWithDecorationWithADView:(ADView *)view {
+- (int32_t)getTransformedEndWithDecorationWithADView:(ADView *)view {
   [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getTransformedBoundingBoxWithADView:view withBoolean:true withADRect:mTmpRect_];
   return ((ADRect *) nil_chk(mTmpRect_))->right_;
 }
 
-- (jint)getTransformedStartWithDecorationWithADView:(ADView *)view {
+- (int32_t)getTransformedStartWithDecorationWithADView:(ADView *)view {
   [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getTransformedBoundingBoxWithADView:view withBoolean:true withADRect:mTmpRect_];
   return ((ADRect *) nil_chk(mTmpRect_))->left_;
 }
 
-- (jint)getTotalSpace {
+- (int32_t)getTotalSpace {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getWidth] - [mLayoutManager_ getPaddingLeft] - [mLayoutManager_ getPaddingRight];
 }
 
 - (void)offsetChildWithADView:(ADView *)view
-                      withInt:(jint)offset {
+                      withInt:(int32_t)offset {
   [((ADView *) nil_chk(view)) offsetLeftAndRightWithInt:offset];
 }
 
-- (jint)getEndPadding {
+- (int32_t)getEndPadding {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getPaddingRight];
 }
 
-- (jint)getMode {
+- (int32_t)getMode {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getWidthMode];
 }
 
-- (jint)getModeInOther {
+- (int32_t)getModeInOther {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getHeightMode];
 }
 
@@ -454,7 +471,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXOrientationHelper)
   methods[15].selector = @selector(getModeInOther);
   #pragma clang diagnostic pop
   static const void *ptrTable[] = { "LADXRecyclerView_LayoutManager;", "offsetChildren", "I", "getDecoratedMeasurement", "LADView;", "getDecoratedMeasurementInOther", "getDecoratedEnd", "getDecoratedStart", "getTransformedEndWithDecoration", "getTransformedStartWithDecoration", "offsetChild", "LADView;I", "LADXOrientationHelper;", "createHorizontalHelperWithADXRecyclerView_LayoutManager:" };
-  static const J2ObjcClassInfo _ADXOrientationHelper_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8018, 16, 0, 12, -1, 13, -1, -1 };
+  static const J2ObjcClassInfo _ADXOrientationHelper_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8000, 16, 0, 12, -1, 13, -1, -1 };
   return &_ADXOrientationHelper_1;
 }
 
@@ -479,70 +496,70 @@ ADXOrientationHelper_1 *create_ADXOrientationHelper_1_initWithADXRecyclerView_La
   return self;
 }
 
-- (jint)getEndAfterPadding {
+- (int32_t)getEndAfterPadding {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getHeight] - [mLayoutManager_ getPaddingBottom];
 }
 
-- (jint)getEnd {
+- (int32_t)getEnd {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getHeight];
 }
 
-- (void)offsetChildrenWithInt:(jint)amount {
+- (void)offsetChildrenWithInt:(int32_t)amount {
   [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) offsetChildrenVerticalWithInt:amount];
 }
 
-- (jint)getStartAfterPadding {
+- (int32_t)getStartAfterPadding {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getPaddingTop];
 }
 
-- (jint)getDecoratedMeasurementWithADView:(ADView *)view {
+- (int32_t)getDecoratedMeasurementWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getDecoratedMeasuredHeightWithADView:view] + ((ADXRecyclerView_LayoutParams *) nil_chk(params))->topMargin_ + params->bottomMargin_;
 }
 
-- (jint)getDecoratedMeasurementInOtherWithADView:(ADView *)view {
+- (int32_t)getDecoratedMeasurementInOtherWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getDecoratedMeasuredWidthWithADView:view] + ((ADXRecyclerView_LayoutParams *) nil_chk(params))->leftMargin_ + params->rightMargin_;
 }
 
-- (jint)getDecoratedEndWithADView:(ADView *)view {
+- (int32_t)getDecoratedEndWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getDecoratedBottomWithADView:view] + ((ADXRecyclerView_LayoutParams *) nil_chk(params))->bottomMargin_;
 }
 
-- (jint)getDecoratedStartWithADView:(ADView *)view {
+- (int32_t)getDecoratedStartWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getDecoratedTopWithADView:view] - ((ADXRecyclerView_LayoutParams *) nil_chk(params))->topMargin_;
 }
 
-- (jint)getTransformedEndWithDecorationWithADView:(ADView *)view {
+- (int32_t)getTransformedEndWithDecorationWithADView:(ADView *)view {
   [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getTransformedBoundingBoxWithADView:view withBoolean:true withADRect:mTmpRect_];
   return ((ADRect *) nil_chk(mTmpRect_))->bottom_;
 }
 
-- (jint)getTransformedStartWithDecorationWithADView:(ADView *)view {
+- (int32_t)getTransformedStartWithDecorationWithADView:(ADView *)view {
   [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getTransformedBoundingBoxWithADView:view withBoolean:true withADRect:mTmpRect_];
   return ((ADRect *) nil_chk(mTmpRect_))->top_;
 }
 
-- (jint)getTotalSpace {
+- (int32_t)getTotalSpace {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getHeight] - [mLayoutManager_ getPaddingTop] - [mLayoutManager_ getPaddingBottom];
 }
 
 - (void)offsetChildWithADView:(ADView *)view
-                      withInt:(jint)offset {
+                      withInt:(int32_t)offset {
   [((ADView *) nil_chk(view)) offsetTopAndBottomWithInt:offset];
 }
 
-- (jint)getEndPadding {
+- (int32_t)getEndPadding {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getPaddingBottom];
 }
 
-- (jint)getMode {
+- (int32_t)getMode {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getHeightMode];
 }
 
-- (jint)getModeInOther {
+- (int32_t)getModeInOther {
   return [((ADXRecyclerView_LayoutManager *) nil_chk(mLayoutManager_)) getWidthMode];
 }
 
@@ -586,7 +603,7 @@ ADXOrientationHelper_1 *create_ADXOrientationHelper_1_initWithADXRecyclerView_La
   methods[15].selector = @selector(getModeInOther);
   #pragma clang diagnostic pop
   static const void *ptrTable[] = { "LADXRecyclerView_LayoutManager;", "offsetChildren", "I", "getDecoratedMeasurement", "LADView;", "getDecoratedMeasurementInOther", "getDecoratedEnd", "getDecoratedStart", "getTransformedEndWithDecoration", "getTransformedStartWithDecoration", "offsetChild", "LADView;I", "LADXOrientationHelper;", "createVerticalHelperWithADXRecyclerView_LayoutManager:" };
-  static const J2ObjcClassInfo _ADXOrientationHelper_2 = { "", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8018, 16, 0, 12, -1, 13, -1, -1 };
+  static const J2ObjcClassInfo _ADXOrientationHelper_2 = { "", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8000, 16, 0, 12, -1, 13, -1, -1 };
   return &_ADXOrientationHelper_2;
 }
 

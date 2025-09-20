@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\RecyclerView.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_RecyclerView")
@@ -62,7 +63,12 @@
 @class ADXRecyclerView_ViewHolder;
 @class ADXViewInfoStore;
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilArrayList;
+@class NSString;
 @protocol ADXRecyclerView_RecyclerListener;
 @protocol JavaUtilList;
 
@@ -72,7 +78,7 @@
   ADXAdapterHelper *mAdapterHelper_;
   ADXChildHelper *mChildHelper_;
   ADXViewInfoStore *mViewInfoStore_;
-  jboolean mClipToPadding_;
+  bool mClipToPadding_;
   ADRect *mTempRect_;
   ADRectF *mTempRectF_;
   ADXRecyclerView_Adapter *mAdapter_;
@@ -80,20 +86,20 @@
   id<ADXRecyclerView_RecyclerListener> mRecyclerListener_;
   id<JavaUtilList> mRecyclerListeners_;
   JavaUtilArrayList *mItemDecorations_;
-  jboolean mIsAttached_;
-  jboolean mHasFixedSize_;
-  jboolean mEnableFastScroller_;
-  jboolean mFirstLayoutComplete_;
-  jboolean mLayoutWasDefered_;
-  jboolean mLayoutSuppressed_;
-  jboolean mAdapterUpdateDuringMeasure_;
-  jboolean mDataSetHasChangedAfterLayout_;
-  jboolean mDispatchItemsChangedEvent_;
+  bool mIsAttached_;
+  bool mHasFixedSize_;
+  bool mEnableFastScroller_;
+  bool mFirstLayoutComplete_;
+  bool mLayoutWasDefered_;
+  bool mLayoutSuppressed_;
+  bool mAdapterUpdateDuringMeasure_;
+  bool mDataSetHasChangedAfterLayout_;
+  bool mDispatchItemsChangedEvent_;
   ADXGapWorker_LayoutPrefetchRegistryImpl *mPrefetchRegistry_;
   ADXRecyclerView_State *mState_;
-  jboolean mItemsAddedOrRemoved_;
-  jboolean mItemsChanged_;
-  jboolean mPostedAnimatorRunner_;
+  bool mItemsAddedOrRemoved_;
+  bool mItemsChanged_;
+  bool mPostedAnimatorRunner_;
   IOSIntArray *mReusableIntPair_;
   ADXRecyclerView_SavedState *mPendingSavedState_;
   ADXRecyclerView_ItemAnimator *mItemAnimator_;
@@ -106,94 +112,94 @@
 - (void)addItemDecorationWithADXRecyclerView_ItemDecoration:(ADXRecyclerView_ItemDecoration *)decor;
 
 - (void)addItemDecorationWithADXRecyclerView_ItemDecoration:(ADXRecyclerView_ItemDecoration *)decor
-                                                    withInt:(jint)index;
+                                                    withInt:(int32_t)index;
 
-- (jint)computeHorizontalScrollExtent;
+- (int32_t)computeHorizontalScrollExtent;
 
-- (jint)computeHorizontalScrollOffset;
+- (int32_t)computeHorizontalScrollOffset;
 
-- (jint)computeHorizontalScrollRange;
+- (int32_t)computeHorizontalScrollRange;
 
-- (jint)computeVerticalScrollExtent;
+- (int32_t)computeVerticalScrollExtent;
 
-- (jint)computeVerticalScrollOffset;
+- (int32_t)computeVerticalScrollOffset;
 
-- (jint)computeVerticalScrollRange;
+- (int32_t)computeVerticalScrollRange;
 
-- (jboolean)dispatchNestedFlingWithFloat:(jfloat)velocityX
-                               withFloat:(jfloat)velocityY
-                             withBoolean:(jboolean)consumed;
+- (bool)dispatchNestedFlingWithFloat:(float)velocityX
+                           withFloat:(float)velocityY
+                         withBoolean:(bool)consumed;
 
-- (jboolean)dispatchNestedPreFlingWithFloat:(jfloat)velocityX
-                                  withFloat:(jfloat)velocityY;
+- (bool)dispatchNestedPreFlingWithFloat:(float)velocityX
+                              withFloat:(float)velocityY;
 
-- (jint)dispatchNestedPreScrollWithInt:(jint)dpos;
+- (int32_t)dispatchNestedPreScrollWithInt:(int32_t)dpos;
 
-- (jboolean)dispatchNestedPreScrollWithInt:(jint)dx
-                                   withInt:(jint)dy
-                              withIntArray:(IOSIntArray *)consumed
-                              withIntArray:(IOSIntArray *)offsetInWindow;
+- (bool)dispatchNestedPreScrollWithInt:(int32_t)dx
+                               withInt:(int32_t)dy
+                          withIntArray:(IOSIntArray *)consumed
+                          withIntArray:(IOSIntArray *)offsetInWindow;
 
-- (jboolean)dispatchNestedPreScrollWithInt:(jint)dx
-                                   withInt:(jint)dy
-                              withIntArray:(IOSIntArray *)consumed
-                              withIntArray:(IOSIntArray *)offsetInWindow
-                                   withInt:(jint)type;
+- (bool)dispatchNestedPreScrollWithInt:(int32_t)dx
+                               withInt:(int32_t)dy
+                          withIntArray:(IOSIntArray *)consumed
+                          withIntArray:(IOSIntArray *)offsetInWindow
+                               withInt:(int32_t)type;
 
-- (jboolean)dispatchNestedScrollWithInt:(jint)dxConsumed
-                                withInt:(jint)dyConsumed
-                                withInt:(jint)dxUnconsumed
-                                withInt:(jint)dyUnconsumed
-                           withIntArray:(IOSIntArray *)offsetInWindow;
+- (bool)dispatchNestedScrollWithInt:(int32_t)dxConsumed
+                            withInt:(int32_t)dyConsumed
+                            withInt:(int32_t)dxUnconsumed
+                            withInt:(int32_t)dyUnconsumed
+                       withIntArray:(IOSIntArray *)offsetInWindow;
 
-- (jboolean)dispatchNestedScrollWithInt:(jint)dxConsumed
-                                withInt:(jint)dyConsumed
-                                withInt:(jint)dxUnconsumed
-                                withInt:(jint)dyUnconsumed
-                           withIntArray:(IOSIntArray *)offsetInWindow
-                                withInt:(jint)type;
-
-- (void)dispatchNestedScrollWithInt:(jint)dxConsumed
-                            withInt:(jint)dyConsumed
-                            withInt:(jint)dxUnconsumed
-                            withInt:(jint)dyUnconsumed
+- (bool)dispatchNestedScrollWithInt:(int32_t)dxConsumed
+                            withInt:(int32_t)dyConsumed
+                            withInt:(int32_t)dxUnconsumed
+                            withInt:(int32_t)dyUnconsumed
                        withIntArray:(IOSIntArray *)offsetInWindow
-                            withInt:(jint)type
+                            withInt:(int32_t)type;
+
+- (void)dispatchNestedScrollWithInt:(int32_t)dxConsumed
+                            withInt:(int32_t)dyConsumed
+                            withInt:(int32_t)dxUnconsumed
+                            withInt:(int32_t)dyUnconsumed
+                       withIntArray:(IOSIntArray *)offsetInWindow
+                            withInt:(int32_t)type
                        withIntArray:(IOSIntArray *)consumed;
 
 - (ADView *)findContainingItemViewWithADView:(ADView *)view;
 
-- (ADXRecyclerView_ViewHolder *)findViewHolderForPositionWithInt:(jint)position;
+- (ADXRecyclerView_ViewHolder *)findViewHolderForPositionWithInt:(int32_t)position;
 
 - (ADXRecyclerView_Adapter *)getAdapter;
 
 - (ADXRecyclerView_ViewHolder *)getChildViewHolderWithADView:(ADView *)child;
 
-- (jlong)getDrawingTime;
+- (int64_t)getDrawingTime;
 
 - (ADXRecyclerView_LayoutManager *)getLayoutManager;
 
 - (ADXRecyclerView_RecycledViewPool *)getRecycledViewPool;
 
-- (jint)getScrollState;
+- (int32_t)getScrollState;
 
-- (jint)getScrollX;
+- (int32_t)getScrollX;
 
-- (jint)getScrollY;
+- (int32_t)getScrollY;
 
-- (jboolean)hasNestedScrollingParent;
+- (bool)hasNestedScrollingParent;
 
-- (jboolean)hasNestedScrollingParentWithInt:(jint)type;
+- (bool)hasNestedScrollingParentWithInt:(int32_t)type;
 
-- (jboolean)hasPendingAdapterUpdates;
+- (bool)hasPendingAdapterUpdates;
 
-- (jboolean)isComputingLayout;
+- (bool)isComputingLayout;
 
-- (jboolean)isNestedScrollingEnabled;
+- (bool)isNestedScrollingEnabled;
 
-- (void)offsetChildrenHorizontalWithInt:(jint)dx;
+- (void)offsetChildrenHorizontalWithInt:(int32_t)dx;
 
-- (void)offsetChildrenVerticalWithInt:(jint)dy;
+- (void)offsetChildrenVerticalWithInt:(int32_t)dy;
 
 - (void)onChildAttachedToWindowWithADView:(ADView *)child;
 
@@ -201,51 +207,51 @@
 
 - (void)registerObserverWithADXRecyclerView_AdapterDataObserver:(ADXRecyclerView_AdapterDataObserver *)observer;
 
-- (void)scrollByWithInt:(jint)x
-                withInt:(jint)y;
+- (void)scrollByWithInt:(int32_t)x
+                withInt:(int32_t)y;
 
-- (void)scrollToPositionWithInt:(jint)position;
+- (void)scrollToPositionWithInt:(int32_t)position;
 
 - (void)setAdapterWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)adapter;
 
-- (void)setLayoutFrozenWithBoolean:(jboolean)frozen;
+- (void)setLayoutFrozenWithBoolean:(bool)frozen;
 
 - (void)setLayoutManagerWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)layout;
 
-- (void)setNestedScrollingEnabledWithBoolean:(jboolean)enabled;
+- (void)setNestedScrollingEnabledWithBoolean:(bool)enabled;
 
 - (void)setOnScrollListenerWithADXRecyclerView_OnScrollListener:(ADXRecyclerView_OnScrollListener *)listener;
 
 - (void)startNestedScroll;
 
-- (jboolean)startNestedScrollWithInt:(jint)axes;
+- (bool)startNestedScrollWithInt:(int32_t)axes;
 
-- (jboolean)startNestedScrollWithInt:(jint)axes
-                             withInt:(jint)type;
+- (bool)startNestedScrollWithInt:(int32_t)axes
+                         withInt:(int32_t)type;
 
 - (void)stopNestedScroll;
 
-- (void)stopNestedScrollWithInt:(jint)type;
+- (void)stopNestedScrollWithInt:(int32_t)type;
 
 - (void)stopScroll;
 
-- (void)suppressLayoutWithBoolean:(jboolean)suppress;
+- (void)suppressLayoutWithBoolean:(bool)suppress;
 
 #pragma mark Protected
 
-- (jboolean)awakenScrollBars;
+- (bool)awakenScrollBars;
 
-- (void)onLayoutWithBoolean:(jboolean)changed
-                    withInt:(jint)l
-                    withInt:(jint)t
-                    withInt:(jint)r
-                    withInt:(jint)b;
+- (void)onLayoutWithBoolean:(bool)changed
+                    withInt:(int32_t)l
+                    withInt:(int32_t)t
+                    withInt:(int32_t)r
+                    withInt:(int32_t)b;
 
-- (void)onMeasureWithInt:(jint)widthSpec
-                 withInt:(jint)heightSpec;
+- (void)onMeasureWithInt:(int32_t)widthSpec
+                 withInt:(int32_t)heightSpec;
 
 - (void)removeDetachedViewWithADView:(ADView *)child
-                         withBoolean:(jboolean)animate;
+                         withBoolean:(bool)animate;
 
 #pragma mark Package-Private
 
@@ -261,19 +267,19 @@
 
 - (void)assertNotInLayoutOrScrollWithNSString:(NSString *)message;
 
-- (jboolean)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+- (bool)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
 
 + (void)clearNestedRecyclerViewIfNotNestedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
 - (void)clearOldPositions;
 
-- (void)considerReleasingGlowsOnScrollWithInt:(jint)dx
-                                      withInt:(jint)dy;
+- (void)considerReleasingGlowsOnScrollWithInt:(int32_t)dx
+                                      withInt:(int32_t)dy;
 
 - (void)consumePendingUpdateOperations;
 
-- (void)defaultOnMeasureWithInt:(jint)widthSpec
-                        withInt:(jint)heightSpec;
+- (void)defaultOnMeasureWithInt:(int32_t)widthSpec
+                        withInt:(int32_t)heightSpec;
 
 - (void)dispatchChildAttachedWithADView:(ADView *)child;
 
@@ -281,8 +287,8 @@
 
 - (void)dispatchLayout;
 
-- (void)dispatchOnScrolledWithInt:(jint)hresult
-                          withInt:(jint)vresult;
+- (void)dispatchOnScrolledWithInt:(int32_t)hresult
+                          withInt:(int32_t)vresult;
 
 - (void)dispatchPendingImportantForAccessibilityChanges;
 
@@ -292,12 +298,12 @@
 
 + (ADXRecyclerView *)findNestedRecyclerViewWithADView:(ADView *)view;
 
-- (ADXRecyclerView_ViewHolder *)findViewHolderForPositionWithInt:(jint)position
-                                                     withBoolean:(jboolean)checkNewPosition;
+- (ADXRecyclerView_ViewHolder *)findViewHolderForPositionWithInt:(int32_t)position
+                                                     withBoolean:(bool)checkNewPosition;
 
-- (jint)getAdapterPositionInRecyclerViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+- (int32_t)getAdapterPositionInRecyclerViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
 
-- (jlong)getChangedHolderKeyWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
+- (int64_t)getChangedHolderKeyWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
 + (ADXRecyclerView_ViewHolder *)getChildViewHolderIntWithADView:(ADView *)child;
 
@@ -306,37 +312,37 @@
 
 - (ADRect *)getItemDecorInsetsForChildWithADView:(ADView *)child;
 
-- (jlong)getNanoTime;
+- (int64_t)getNanoTime;
 
-- (jint)getOverScrollMode;
+- (int32_t)getOverScrollMode;
 
 - (void)initAdapterManager OBJC_METHOD_FAMILY_NONE;
 
-- (jboolean)isAccessibilityEnabled;
+- (bool)isAccessibilityEnabled;
 
 - (void)markItemDecorInsetsDirty;
 
 - (void)markKnownViewsInvalid;
 
-- (void)offsetPositionRecordsForInsertWithInt:(jint)positionStart
-                                      withInt:(jint)itemCount;
+- (void)offsetPositionRecordsForInsertWithInt:(int32_t)positionStart
+                                      withInt:(int32_t)itemCount;
 
-- (void)offsetPositionRecordsForMoveWithInt:(jint)from
-                                    withInt:(jint)to;
+- (void)offsetPositionRecordsForMoveWithInt:(int32_t)from
+                                    withInt:(int32_t)to;
 
-- (void)offsetPositionRecordsForRemoveWithInt:(jint)positionStart
-                                      withInt:(jint)itemCount
-                                  withBoolean:(jboolean)applyToPreLayout;
+- (void)offsetPositionRecordsForRemoveWithInt:(int32_t)positionStart
+                                      withInt:(int32_t)itemCount
+                                  withBoolean:(bool)applyToPreLayout;
 
 - (void)onEnterLayoutOrScroll;
 
 - (void)onExitLayoutOrScroll;
 
-- (void)onExitLayoutOrScrollWithBoolean:(jboolean)enableChangeEvents;
+- (void)onExitLayoutOrScrollWithBoolean:(bool)enableChangeEvents;
 
 - (void)postAnimationRunner;
 
-- (void)processDataSetCompletelyChangedWithBoolean:(jboolean)dispatchItemsChanged;
+- (void)processDataSetCompletelyChangedWithBoolean:(bool)dispatchItemsChanged;
 
 - (void)recordAnimationInfoIfBouncedHiddenViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
                              withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)animationInfo;
@@ -347,21 +353,21 @@
 
 - (void)saveOldPositions;
 
-- (jboolean)scrollByInternalWithInt:(jint)x
-                            withInt:(jint)y
-                  withADMotionEvent:(ADMotionEvent *)ev
-                            withInt:(jint)type;
+- (bool)scrollByInternalWithInt:(int32_t)x
+                        withInt:(int32_t)y
+              withADMotionEvent:(ADMotionEvent *)ev
+                        withInt:(int32_t)type;
 
-- (void)scrollStepWithInt:(jint)dx
-                  withInt:(jint)dy
+- (void)scrollStepWithInt:(int32_t)dx
+                  withInt:(int32_t)dy
              withIntArray:(IOSIntArray *)consumed;
 
 - (void)startInterceptRequestLayout;
 
-- (void)stopInterceptRequestLayoutWithBoolean:(jboolean)performLayoutChildren;
+- (void)stopInterceptRequestLayoutWithBoolean:(bool)performLayoutChildren;
 
-- (void)viewRangeUpdateWithInt:(jint)positionStart
-                       withInt:(jint)itemCount
+- (void)viewRangeUpdateWithInt:(int32_t)positionStart
+                       withInt:(int32_t)itemCount
                         withId:(id)payload;
 
 @end
@@ -390,69 +396,69 @@ inline NSString *ADXRecyclerView_get_TAG(void);
 FOUNDATION_EXPORT NSString *ADXRecyclerView_TAG;
 J2OBJC_STATIC_FIELD_OBJ_FINAL(ADXRecyclerView, TAG, NSString *)
 
-inline jboolean ADXRecyclerView_get_DEBUG(void);
+inline bool ADXRecyclerView_get_DEBUG(void);
 #define ADXRecyclerView_DEBUG false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, DEBUG, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, DEBUG, bool)
 
-inline jboolean ADXRecyclerView_get_VERBOSE_TRACING(void);
+inline bool ADXRecyclerView_get_VERBOSE_TRACING(void);
 #define ADXRecyclerView_VERBOSE_TRACING false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, VERBOSE_TRACING, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, VERBOSE_TRACING, bool)
 
-inline jboolean ADXRecyclerView_get_FORCE_INVALIDATE_DISPLAY_LIST(void);
+inline bool ADXRecyclerView_get_FORCE_INVALIDATE_DISPLAY_LIST(void);
 #define ADXRecyclerView_FORCE_INVALIDATE_DISPLAY_LIST false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, FORCE_INVALIDATE_DISPLAY_LIST, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, FORCE_INVALIDATE_DISPLAY_LIST, bool)
 
-inline jboolean ADXRecyclerView_get_ALLOW_SIZE_IN_UNSPECIFIED_SPEC(void);
+inline bool ADXRecyclerView_get_ALLOW_SIZE_IN_UNSPECIFIED_SPEC(void);
 #define ADXRecyclerView_ALLOW_SIZE_IN_UNSPECIFIED_SPEC true
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, ALLOW_SIZE_IN_UNSPECIFIED_SPEC, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, ALLOW_SIZE_IN_UNSPECIFIED_SPEC, bool)
 
-inline jboolean ADXRecyclerView_get_POST_UPDATES_ON_ANIMATION(void);
+inline bool ADXRecyclerView_get_POST_UPDATES_ON_ANIMATION(void);
 #define ADXRecyclerView_POST_UPDATES_ON_ANIMATION true
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, POST_UPDATES_ON_ANIMATION, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, POST_UPDATES_ON_ANIMATION, bool)
 
-inline jboolean ADXRecyclerView_get_ALLOW_THREAD_GAP_WORK(void);
+inline bool ADXRecyclerView_get_ALLOW_THREAD_GAP_WORK(void);
 #define ADXRecyclerView_ALLOW_THREAD_GAP_WORK true
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, ALLOW_THREAD_GAP_WORK, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, ALLOW_THREAD_GAP_WORK, bool)
 
-inline jboolean ADXRecyclerView_get_DISPATCH_TEMP_DETACH(void);
+inline bool ADXRecyclerView_get_DISPATCH_TEMP_DETACH(void);
 #define ADXRecyclerView_DISPATCH_TEMP_DETACH false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, DISPATCH_TEMP_DETACH, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, DISPATCH_TEMP_DETACH, bool)
 
-inline jint ADXRecyclerView_get_HORIZONTAL(void);
+inline int32_t ADXRecyclerView_get_HORIZONTAL(void);
 #define ADXRecyclerView_HORIZONTAL 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, HORIZONTAL, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, HORIZONTAL, int32_t)
 
-inline jint ADXRecyclerView_get_VERTICAL(void);
+inline int32_t ADXRecyclerView_get_VERTICAL(void);
 #define ADXRecyclerView_VERTICAL 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, VERTICAL, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, VERTICAL, int32_t)
 
-inline jint ADXRecyclerView_get_DEFAULT_ORIENTATION(void);
+inline int32_t ADXRecyclerView_get_DEFAULT_ORIENTATION(void);
 #define ADXRecyclerView_DEFAULT_ORIENTATION 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, DEFAULT_ORIENTATION, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, DEFAULT_ORIENTATION, int32_t)
 
-inline jint ADXRecyclerView_get_NO_POSITION(void);
+inline int32_t ADXRecyclerView_get_NO_POSITION(void);
 #define ADXRecyclerView_NO_POSITION -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, NO_POSITION, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, NO_POSITION, int32_t)
 
-inline jint ADXRecyclerView_get_INVALID_TYPE(void);
+inline int32_t ADXRecyclerView_get_INVALID_TYPE(void);
 #define ADXRecyclerView_INVALID_TYPE -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, INVALID_TYPE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, INVALID_TYPE, int32_t)
 
-inline jint ADXRecyclerView_get_TOUCH_SLOP_DEFAULT(void);
+inline int32_t ADXRecyclerView_get_TOUCH_SLOP_DEFAULT(void);
 #define ADXRecyclerView_TOUCH_SLOP_DEFAULT 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, TOUCH_SLOP_DEFAULT, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, TOUCH_SLOP_DEFAULT, int32_t)
 
-inline jint ADXRecyclerView_get_TOUCH_SLOP_PAGING(void);
+inline int32_t ADXRecyclerView_get_TOUCH_SLOP_PAGING(void);
 #define ADXRecyclerView_TOUCH_SLOP_PAGING 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, TOUCH_SLOP_PAGING, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, TOUCH_SLOP_PAGING, int32_t)
 
-inline jint ADXRecyclerView_get_UNDEFINED_DURATION(void);
-#define ADXRecyclerView_UNDEFINED_DURATION ((jint) 0x80000000)
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, UNDEFINED_DURATION, jint)
+inline int32_t ADXRecyclerView_get_UNDEFINED_DURATION(void);
+#define ADXRecyclerView_UNDEFINED_DURATION ((int32_t) 0x80000000)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, UNDEFINED_DURATION, int32_t)
 
-inline jint ADXRecyclerView_get_MAX_SCROLL_DURATION(void);
+inline int32_t ADXRecyclerView_get_MAX_SCROLL_DURATION(void);
 #define ADXRecyclerView_MAX_SCROLL_DURATION 2000
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, MAX_SCROLL_DURATION, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, MAX_SCROLL_DURATION, int32_t)
 
 inline NSString *ADXRecyclerView_get_TRACE_SCROLL_TAG(void);
 /*! INTERNAL ONLY - Use accessor function from above. */
@@ -479,25 +485,25 @@ inline NSString *ADXRecyclerView_get_TRACE_CREATE_VIEW_TAG(void);
 FOUNDATION_EXPORT NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG;
 J2OBJC_STATIC_FIELD_OBJ_FINAL(ADXRecyclerView, TRACE_CREATE_VIEW_TAG, NSString *)
 
-inline jint ADXRecyclerView_get_SCROLL_STATE_IDLE(void);
+inline int32_t ADXRecyclerView_get_SCROLL_STATE_IDLE(void);
 #define ADXRecyclerView_SCROLL_STATE_IDLE 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, SCROLL_STATE_IDLE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, SCROLL_STATE_IDLE, int32_t)
 
-inline jint ADXRecyclerView_get_SCROLL_STATE_DRAGGING(void);
+inline int32_t ADXRecyclerView_get_SCROLL_STATE_DRAGGING(void);
 #define ADXRecyclerView_SCROLL_STATE_DRAGGING 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, SCROLL_STATE_DRAGGING, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, SCROLL_STATE_DRAGGING, int32_t)
 
-inline jint ADXRecyclerView_get_SCROLL_STATE_SETTLING(void);
+inline int32_t ADXRecyclerView_get_SCROLL_STATE_SETTLING(void);
 #define ADXRecyclerView_SCROLL_STATE_SETTLING 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, SCROLL_STATE_SETTLING, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, SCROLL_STATE_SETTLING, int32_t)
 
-inline jlong ADXRecyclerView_get_FOREVER_NS(void);
+inline int64_t ADXRecyclerView_get_FOREVER_NS(void);
 #define ADXRecyclerView_FOREVER_NS 9223372036854775807LL
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, FOREVER_NS, jlong)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, FOREVER_NS, int64_t)
 
-inline jint ADXRecyclerView_get_TYPE_TOUCH(void);
+inline int32_t ADXRecyclerView_get_TYPE_TOUCH(void);
 #define ADXRecyclerView_TYPE_TOUCH 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, TYPE_TOUCH, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, TYPE_TOUCH, int32_t)
 
 FOUNDATION_EXPORT ADXRecyclerView_ViewHolder *ADXRecyclerView_getChildViewHolderIntWithADView_(ADView *child);
 
@@ -517,10 +523,13 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView)
 
 @compatibility_alias AndroidxRecyclerviewWidgetRecyclerView ADXRecyclerView;
 
+
 #endif
 
 #if !defined (ADXRecyclerView_AdapterDataObserver_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_AdapterDataObserver))
 #define ADXRecyclerView_AdapterDataObserver_
+
+@class JavaLangInteger;
 
 @interface ADXRecyclerView_AdapterDataObserver : NSObject
 
@@ -530,22 +539,22 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView)
 
 - (void)onChanged;
 
-- (void)onItemRangeChangedWithInt:(jint)positionStart
-                          withInt:(jint)itemCount;
+- (void)onItemRangeChangedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount;
 
-- (void)onItemRangeChangedWithInt:(jint)positionStart
-                          withInt:(jint)itemCount
+- (void)onItemRangeChangedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount
                            withId:(id)payload;
 
-- (void)onItemRangeInsertedWithInt:(jint)positionStart
-                           withInt:(jint)itemCount;
+- (void)onItemRangeInsertedWithInt:(int32_t)positionStart
+                           withInt:(int32_t)itemCount;
 
-- (void)onItemRangeMovedWithInt:(jint)fromPosition
-                        withInt:(jint)toPosition
-                        withInt:(jint)itemCount;
+- (void)onItemRangeMovedWithInt:(int32_t)fromPosition
+                        withInt:(int32_t)toPosition
+                        withInt:(int32_t)itemCount;
 
-- (void)onItemRangeRemovedWithInt:(jint)positionStart
-                          withInt:(jint)itemCount;
+- (void)onItemRangeRemovedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount;
 
 - (void)onStateRestorationPolicyChanged;
 
@@ -557,6 +566,7 @@ FOUNDATION_EXPORT void ADXRecyclerView_AdapterDataObserver_init(ADXRecyclerView_
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_AdapterDataObserver)
 
+
 #endif
 
 #if !defined (ADXRecyclerView_RecycledViewPool_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_RecycledViewPool))
@@ -565,6 +575,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_AdapterDataObserver)
 @class ADSparseArray;
 @class ADXRecyclerView_Adapter;
 @class ADXRecyclerView_ViewHolder;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 @interface ADXRecyclerView_RecycledViewPool : NSObject {
  @public
@@ -577,14 +590,14 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_AdapterDataObserver)
 
 - (void)clear;
 
-- (ADXRecyclerView_ViewHolder *)getRecycledViewWithInt:(jint)viewType;
+- (ADXRecyclerView_ViewHolder *)getRecycledViewWithInt:(int32_t)viewType;
 
-- (jint)getRecycledViewCountWithInt:(jint)viewType;
+- (int32_t)getRecycledViewCountWithInt:(int32_t)viewType;
 
 - (void)putRecycledViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)scrap;
 
-- (void)setMaxRecycledViewsWithInt:(jint)viewType
-                           withInt:(jint)max;
+- (void)setMaxRecycledViewsWithInt:(int32_t)viewType
+                           withInt:(int32_t)max;
 
 #pragma mark Package-Private
 
@@ -592,28 +605,28 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_AdapterDataObserver)
 
 - (void)detach;
 
-- (void)factorInBindTimeWithInt:(jint)viewType
-                       withLong:(jlong)bindTimeNs;
+- (void)factorInBindTimeWithInt:(int32_t)viewType
+                       withLong:(int64_t)bindTimeNs;
 
-- (void)factorInCreateTimeWithInt:(jint)viewType
-                         withLong:(jlong)createTimeNs;
+- (void)factorInCreateTimeWithInt:(int32_t)viewType
+                         withLong:(int64_t)createTimeNs;
 
 - (void)onAdapterChangedWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)oldAdapter
                         withADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)newAdapter
-                                        withBoolean:(jboolean)compatibleWithPrevious;
+                                        withBoolean:(bool)compatibleWithPrevious;
 
-- (jlong)runningAverageWithLong:(jlong)oldAverage
-                       withLong:(jlong)newValue;
+- (int64_t)runningAverageWithLong:(int64_t)oldAverage
+                         withLong:(int64_t)newValue;
 
-- (jint)size;
+- (int32_t)size;
 
-- (jboolean)willBindInTimeWithInt:(jint)viewType
-                         withLong:(jlong)approxCurrentNs
-                         withLong:(jlong)deadlineNs;
+- (bool)willBindInTimeWithInt:(int32_t)viewType
+                     withLong:(int64_t)approxCurrentNs
+                     withLong:(int64_t)deadlineNs;
 
-- (jboolean)willCreateInTimeWithInt:(jint)viewType
-                           withLong:(jlong)approxCurrentNs
-                           withLong:(jlong)deadlineNs;
+- (bool)willCreateInTimeWithInt:(int32_t)viewType
+                       withLong:(int64_t)approxCurrentNs
+                       withLong:(int64_t)deadlineNs;
 
 @end
 
@@ -629,19 +642,22 @@ FOUNDATION_EXPORT ADXRecyclerView_RecycledViewPool *create_ADXRecyclerView_Recyc
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_RecycledViewPool)
 
+
 #endif
 
 #if !defined (ADXRecyclerView_RecycledViewPool_ScrapData_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_RecycledViewPool_ScrapData))
 #define ADXRecyclerView_RecycledViewPool_ScrapData_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilArrayList;
 
 @interface ADXRecyclerView_RecycledViewPool_ScrapData : NSObject {
  @public
   JavaUtilArrayList *mScrapHeap_;
-  jint mMaxScrap_;
-  jlong mCreateRunningAverageNs_;
-  jlong mBindRunningAverageNs_;
+  int32_t mMaxScrap_;
+  int64_t mCreateRunningAverageNs_;
+  int64_t mBindRunningAverageNs_;
 }
 
 #pragma mark Package-Private
@@ -662,6 +678,7 @@ FOUNDATION_EXPORT ADXRecyclerView_RecycledViewPool_ScrapData *create_ADXRecycler
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_RecycledViewPool_ScrapData)
 
+
 #endif
 
 #if !defined (ADXRecyclerView_Recycler_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_Recycler))
@@ -673,6 +690,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_RecycledViewPool_ScrapData)
 @class ADXRecyclerView_RecycledViewPool;
 @class ADXRecyclerView_ViewCacheExtension;
 @class ADXRecyclerView_ViewHolder;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilArrayList;
 @protocol JavaUtilList;
 
@@ -681,7 +701,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_RecycledViewPool_ScrapData)
   JavaUtilArrayList *mAttachedScrap_;
   JavaUtilArrayList *mChangedScrap_;
   JavaUtilArrayList *mCachedViews_;
-  jint mViewCacheMax_;
+  int32_t mViewCacheMax_;
   ADXRecyclerView_RecycledViewPool *mRecyclerPool_;
 }
 
@@ -690,24 +710,24 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_RecycledViewPool_ScrapData)
 - (instancetype)initWithADXRecyclerView:(ADXRecyclerView *)outer$;
 
 - (void)bindViewToPositionWithADView:(ADView *)view
-                             withInt:(jint)position;
+                             withInt:(int32_t)position;
 
 - (void)clear;
 
-- (jint)convertPreLayoutPositionToPostLayoutWithInt:(jint)position;
+- (int32_t)convertPreLayoutPositionToPostLayoutWithInt:(int32_t)position;
 
 - (id<JavaUtilList>)getScrapList;
 
-- (ADView *)getViewForPositionWithInt:(jint)position;
+- (ADView *)getViewForPositionWithInt:(int32_t)position;
 
 - (void)recycleViewWithADView:(ADView *)view;
 
-- (void)setViewCacheSizeWithInt:(jint)viewCount;
+- (void)setViewCacheSizeWithInt:(int32_t)viewCount;
 
 #pragma mark Package-Private
 
 - (void)addViewHolderToRecycledViewPoolWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                                          withBoolean:(jboolean)dispatchRecycled;
+                                                          withBoolean:(bool)dispatchRecycled;
 
 - (void)clearOldPositions;
 
@@ -715,47 +735,47 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_RecycledViewPool_ScrapData)
 
 - (void)dispatchViewRecycledWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
-- (ADXRecyclerView_ViewHolder *)getChangedScrapViewForPositionWithInt:(jint)position;
+- (ADXRecyclerView_ViewHolder *)getChangedScrapViewForPositionWithInt:(int32_t)position;
 
 - (ADXRecyclerView_RecycledViewPool *)getRecycledViewPool;
 
-- (jint)getScrapCount;
+- (int32_t)getScrapCount;
 
-- (ADXRecyclerView_ViewHolder *)getScrapOrCachedViewForIdWithLong:(jlong)id_
-                                                          withInt:(jint)type
-                                                      withBoolean:(jboolean)dryRun;
+- (ADXRecyclerView_ViewHolder *)getScrapOrCachedViewForIdWithLong:(int64_t)id_
+                                                          withInt:(int32_t)type
+                                                      withBoolean:(bool)dryRun;
 
-- (ADXRecyclerView_ViewHolder *)getScrapOrHiddenOrCachedHolderForPositionWithInt:(jint)position
-                                                                     withBoolean:(jboolean)dryRun;
+- (ADXRecyclerView_ViewHolder *)getScrapOrHiddenOrCachedHolderForPositionWithInt:(int32_t)position
+                                                                     withBoolean:(bool)dryRun;
 
-- (ADView *)getScrapViewAtWithInt:(jint)index;
+- (ADView *)getScrapViewAtWithInt:(int32_t)index;
 
-- (ADView *)getViewForPositionWithInt:(jint)position
-                          withBoolean:(jboolean)dryRun;
+- (ADView *)getViewForPositionWithInt:(int32_t)position
+                          withBoolean:(bool)dryRun;
 
 - (void)markItemDecorInsetsDirty;
 
 - (void)markKnownViewsInvalid;
 
-- (void)offsetPositionRecordsForInsertWithInt:(jint)insertedAt
-                                      withInt:(jint)count;
+- (void)offsetPositionRecordsForInsertWithInt:(int32_t)insertedAt
+                                      withInt:(int32_t)count;
 
-- (void)offsetPositionRecordsForMoveWithInt:(jint)from
-                                    withInt:(jint)to;
+- (void)offsetPositionRecordsForMoveWithInt:(int32_t)from
+                                    withInt:(int32_t)to;
 
-- (void)offsetPositionRecordsForRemoveWithInt:(jint)removedFrom
-                                      withInt:(jint)count
-                                  withBoolean:(jboolean)applyToPreLayout;
+- (void)offsetPositionRecordsForRemoveWithInt:(int32_t)removedFrom
+                                      withInt:(int32_t)count
+                                  withBoolean:(bool)applyToPreLayout;
 
 - (void)onAdapterChangedWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)oldAdapter
                         withADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)newAdapter
-                                        withBoolean:(jboolean)compatibleWithPrevious;
+                                        withBoolean:(bool)compatibleWithPrevious;
 
 - (void)quickRecycleScrapViewWithADView:(ADView *)view;
 
 - (void)recycleAndClearCachedViews;
 
-- (void)recycleCachedViewAtWithInt:(jint)cachedViewIndex;
+- (void)recycleCachedViewAtWithInt:(int32_t)cachedViewIndex;
 
 - (void)recycleViewHolderInternalWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
@@ -765,18 +785,18 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_RecycledViewPool_ScrapData)
 
 - (void)setViewCacheExtensionWithADXRecyclerView_ViewCacheExtension:(ADXRecyclerView_ViewCacheExtension *)extension;
 
-- (ADXRecyclerView_ViewHolder *)tryGetViewHolderForPositionByDeadlineWithInt:(jint)position
-                                                                 withBoolean:(jboolean)dryRun
-                                                                    withLong:(jlong)deadlineNs;
+- (ADXRecyclerView_ViewHolder *)tryGetViewHolderForPositionByDeadlineWithInt:(int32_t)position
+                                                                 withBoolean:(bool)dryRun
+                                                                    withLong:(int64_t)deadlineNs;
 
 - (void)unscrapViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
 - (void)updateViewCacheSize;
 
-- (jboolean)validateViewHolderForOffsetPositionWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
+- (bool)validateViewHolderForOffsetPositionWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
-- (void)viewRangeUpdateWithInt:(jint)positionStart
-                       withInt:(jint)itemCount;
+- (void)viewRangeUpdateWithInt:(int32_t)positionStart
+                       withInt:(int32_t)itemCount;
 
 // Disallowed inherited constructors, do not use.
 
@@ -791,9 +811,9 @@ J2OBJC_FIELD_SETTER(ADXRecyclerView_Recycler, mChangedScrap_, JavaUtilArrayList 
 J2OBJC_FIELD_SETTER(ADXRecyclerView_Recycler, mCachedViews_, JavaUtilArrayList *)
 J2OBJC_FIELD_SETTER(ADXRecyclerView_Recycler, mRecyclerPool_, ADXRecyclerView_RecycledViewPool *)
 
-inline jint ADXRecyclerView_Recycler_get_DEFAULT_CACHE_SIZE(void);
+inline int32_t ADXRecyclerView_Recycler_get_DEFAULT_CACHE_SIZE(void);
 #define ADXRecyclerView_Recycler_DEFAULT_CACHE_SIZE 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_Recycler, DEFAULT_CACHE_SIZE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_Recycler, DEFAULT_CACHE_SIZE, int32_t)
 
 FOUNDATION_EXPORT void ADXRecyclerView_Recycler_initWithADXRecyclerView_(ADXRecyclerView_Recycler *self, ADXRecyclerView *outer$);
 
@@ -803,6 +823,7 @@ FOUNDATION_EXPORT ADXRecyclerView_Recycler *create_ADXRecyclerView_Recycler_init
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_Recycler)
 
+
 #endif
 
 #if !defined (ADXRecyclerView_ViewCacheExtension_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_ViewCacheExtension))
@@ -810,6 +831,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_Recycler)
 
 @class ADView;
 @class ADXRecyclerView_Recycler;
+@class JavaLangInteger;
 
 @interface ADXRecyclerView_ViewCacheExtension : NSObject
 
@@ -818,8 +840,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_Recycler)
 - (instancetype)init;
 
 - (ADView *)getViewForPositionAndTypeWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                                          withInt:(jint)position
-                                                          withInt:(jint)type;
+                                                          withInt:(int32_t)position
+                                                          withInt:(int32_t)type;
 
 @end
 
@@ -828,6 +850,7 @@ J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_ViewCacheExtension)
 FOUNDATION_EXPORT void ADXRecyclerView_ViewCacheExtension_init(ADXRecyclerView_ViewCacheExtension *self);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ViewCacheExtension)
+
 
 #endif
 
@@ -838,6 +861,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ViewCacheExtension)
 @class ADXRecyclerView;
 @class ADXRecyclerView_AdapterDataObserver;
 @class ADXRecyclerView_ViewHolder;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilList;
 
 @interface ADXRecyclerView_Adapter : NSObject
@@ -847,67 +873,67 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ViewCacheExtension)
 - (instancetype)init;
 
 - (void)bindViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                             withInt:(jint)position;
+                                             withInt:(int32_t)position;
 
 - (ADXRecyclerView_ViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                        withInt:(jint)viewType;
+                                                        withInt:(int32_t)viewType;
 
-- (jint)findRelativeAdapterPositionInWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)adapter
-                                  withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-                                                         withInt:(jint)localPosition;
+- (int32_t)findRelativeAdapterPositionInWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)adapter
+                                     withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                            withInt:(int32_t)localPosition;
 
-- (jint)getItemCount;
+- (int32_t)getItemCount;
 
-- (jlong)getItemIdWithInt:(jint)position;
+- (int64_t)getItemIdWithInt:(int32_t)position;
 
-- (jint)getItemViewTypeWithInt:(jint)position;
+- (int32_t)getItemViewTypeWithInt:(int32_t)position;
 
-- (jboolean)hasObservers;
+- (bool)hasObservers;
 
-- (jboolean)hasStableIds;
+- (bool)hasStableIds;
 
 - (void)notifyDataSetChanged;
 
-- (void)notifyItemChangedWithInt:(jint)position;
+- (void)notifyItemChangedWithInt:(int32_t)position;
 
-- (void)notifyItemChangedWithInt:(jint)position
+- (void)notifyItemChangedWithInt:(int32_t)position
                           withId:(id)payload;
 
-- (void)notifyItemInsertedWithInt:(jint)position;
+- (void)notifyItemInsertedWithInt:(int32_t)position;
 
-- (void)notifyItemMovedWithInt:(jint)fromPosition
-                       withInt:(jint)toPosition;
+- (void)notifyItemMovedWithInt:(int32_t)fromPosition
+                       withInt:(int32_t)toPosition;
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount;
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount;
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount
                                withId:(id)payload;
 
-- (void)notifyItemRangeInsertedWithInt:(jint)positionStart
-                               withInt:(jint)itemCount;
+- (void)notifyItemRangeInsertedWithInt:(int32_t)positionStart
+                               withInt:(int32_t)itemCount;
 
-- (void)notifyItemRangeRemovedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount;
+- (void)notifyItemRangeRemovedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount;
 
-- (void)notifyItemRemovedWithInt:(jint)position;
+- (void)notifyItemRemovedWithInt:(int32_t)position;
 
 - (void)onAttachedToRecyclerViewWithADXRecyclerView:(ADXRecyclerView *)recyclerView;
 
 - (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                               withInt:(jint)position;
+                                               withInt:(int32_t)position;
 
 - (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                               withInt:(jint)position
+                                               withInt:(int32_t)position
                                       withJavaUtilList:(id<JavaUtilList>)payloads;
 
 - (ADXRecyclerView_ViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                          withInt:(jint)viewType;
+                                                          withInt:(int32_t)viewType;
 
 - (void)onDetachedFromRecyclerViewWithADXRecyclerView:(ADXRecyclerView *)recyclerView;
 
-- (jboolean)onFailedToRecycleViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
+- (bool)onFailedToRecycleViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
 - (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
@@ -917,7 +943,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ViewCacheExtension)
 
 - (void)registerAdapterDataObserverWithADXRecyclerView_AdapterDataObserver:(ADXRecyclerView_AdapterDataObserver *)observer;
 
-- (void)setHasStableIdsWithBoolean:(jboolean)hasStableIds;
+- (void)setHasStableIdsWithBoolean:(bool)hasStableIds;
 
 - (void)unregisterAdapterDataObserverWithADXRecyclerView_AdapterDataObserver:(ADXRecyclerView_AdapterDataObserver *)observer;
 
@@ -929,6 +955,7 @@ FOUNDATION_EXPORT void ADXRecyclerView_Adapter_init(ADXRecyclerView_Adapter *sel
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_Adapter)
 
+
 #endif
 
 #if !defined (ADXRecyclerView_Adapter_StateRestorationPolicy_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_Adapter_StateRestorationPolicy))
@@ -939,12 +966,20 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_Adapter)
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class NSString;
 
-typedef NS_ENUM(NSUInteger, ADXRecyclerView_Adapter_StateRestorationPolicy_Enum) {
-  ADXRecyclerView_Adapter_StateRestorationPolicy_Enum_ALLOW = 0,
-  ADXRecyclerView_Adapter_StateRestorationPolicy_Enum_PREVENT_WHEN_EMPTY = 1,
-  ADXRecyclerView_Adapter_StateRestorationPolicy_Enum_PREVENT = 2,
+typedef NS_ENUM(int32_t, ADXRecyclerView_Adapter_StateRestorationPolicy_Enum) {
+  ADXRecyclerView_Adapter_StateRestorationPolicy_Enum_ALLOW NS_SWIFT_NAME(allow) = 0,
+  ADXRecyclerView_Adapter_StateRestorationPolicy_Enum_PREVENT_WHEN_EMPTY NS_SWIFT_NAME(preventWhenEmpty) = 1,
+  ADXRecyclerView_Adapter_StateRestorationPolicy_Enum_PREVENT NS_SWIFT_NAME(prevent) = 2,
 };
+
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define ADXRecyclerView_Adapter_StateRestorationPolicy_ORDINAL int32_t
+#else
+#define ADXRecyclerView_Adapter_StateRestorationPolicy_ORDINAL ADXRecyclerView_Adapter_StateRestorationPolicy_Enum
+#endif
+
 
 @interface ADXRecyclerView_Adapter_StateRestorationPolicy : JavaLangEnum
 
@@ -957,6 +992,13 @@ typedef NS_ENUM(NSUInteger, ADXRecyclerView_Adapter_StateRestorationPolicy_Enum)
 #pragma mark Package-Private
 
 - (ADXRecyclerView_Adapter_StateRestorationPolicy_Enum)toNSEnum;
+
+@property(readonly) ADXRecyclerView_Adapter_StateRestorationPolicy_Enum enumValue;
++ (ADXRecyclerView_Adapter_StateRestorationPolicy *)fromNSEnum:(ADXRecyclerView_Adapter_StateRestorationPolicy_Enum)value;
+
+- (ADXRecyclerView_Adapter_StateRestorationPolicy_ORDINAL)ordinal NS_SWIFT_UNAVAILABLE("Use .enumValue");
+
+- (nullable instancetype)initWithStateRestorationPolicy:(ADXRecyclerView_Adapter_StateRestorationPolicy_Enum)value;
 
 @end
 
@@ -978,9 +1020,10 @@ FOUNDATION_EXPORT IOSObjectArray *ADXRecyclerView_Adapter_StateRestorationPolicy
 
 FOUNDATION_EXPORT ADXRecyclerView_Adapter_StateRestorationPolicy *ADXRecyclerView_Adapter_StateRestorationPolicy_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT ADXRecyclerView_Adapter_StateRestorationPolicy *ADXRecyclerView_Adapter_StateRestorationPolicy_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT ADXRecyclerView_Adapter_StateRestorationPolicy *ADXRecyclerView_Adapter_StateRestorationPolicy_fromOrdinal(ADXRecyclerView_Adapter_StateRestorationPolicy_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_Adapter_StateRestorationPolicy)
+
 
 #endif
 
@@ -996,7 +1039,10 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_Adapter_StateRestorationPolicy)
 @class ADXRecyclerView_Recycler;
 @class ADXRecyclerView_State;
 @class ADXViewBoundsCheck;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilArrayList;
+@class NSString;
 @protocol ADParcelable;
 @protocol ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;
 @protocol JavaLangRunnable;
@@ -1007,11 +1053,11 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_Adapter_StateRestorationPolicy)
   ADXRecyclerView *mRecyclerView_;
   ADXViewBoundsCheck *mHorizontalBoundCheck_;
   ADXViewBoundsCheck *mVerticalBoundCheck_;
-  jboolean mRequestedSimpleAnimations_;
-  jboolean mIsAttachedToWindow_;
-  jboolean mAutoMeasure_;
-  jint mPrefetchMaxCountObserved_;
-  jboolean mPrefetchMaxObservedInInitialPrefetch_;
+  bool mRequestedSimpleAnimations_;
+  bool mIsAttachedToWindow_;
+  bool mAutoMeasure_;
+  int32_t mPrefetchMaxCountObserved_;
+  bool mPrefetchMaxObservedInInitialPrefetch_;
 }
 
 #pragma mark Public
@@ -1021,12 +1067,12 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_Adapter_StateRestorationPolicy)
 - (void)addDisappearingViewWithADView:(ADView *)child;
 
 - (void)addDisappearingViewWithADView:(ADView *)child
-                              withInt:(jint)index;
+                              withInt:(int32_t)index;
 
 - (void)addViewWithADView:(ADView *)child;
 
 - (void)addViewWithADView:(ADView *)child
-                  withInt:(jint)index;
+                  withInt:(int32_t)index;
 
 - (void)assertInLayoutOrScrollWithNSString:(NSString *)message;
 
@@ -1035,200 +1081,200 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_Adapter_StateRestorationPolicy)
 - (void)attachViewWithADView:(ADView *)child;
 
 - (void)attachViewWithADView:(ADView *)child
-                     withInt:(jint)index;
+                     withInt:(int32_t)index;
 
 - (void)attachViewWithADView:(ADView *)child
-                     withInt:(jint)index
+                     withInt:(int32_t)index
 withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp;
 
 - (void)calculateItemDecorationsForChildWithADView:(ADView *)child
                                         withADRect:(ADRect *)outRect;
 
-- (jboolean)canScrollHorizontally;
+- (bool)canScrollHorizontally;
 
-- (jboolean)canScrollVertically;
+- (bool)canScrollVertically;
 
-- (jboolean)checkLayoutParamsWithADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp;
+- (bool)checkLayoutParamsWithADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp;
 
-+ (jint)chooseSizeWithInt:(jint)spec
-                  withInt:(jint)desired
-                  withInt:(jint)min;
++ (int32_t)chooseSizeWithInt:(int32_t)spec
+                     withInt:(int32_t)desired
+                     withInt:(int32_t)min;
 
-- (void)collectAdjacentPrefetchPositionsWithInt:(jint)dx
-                                        withInt:(jint)dy
+- (void)collectAdjacentPrefetchPositionsWithInt:(int32_t)dx
+                                        withInt:(int32_t)dy
                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
 withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>)layoutPrefetchRegistry;
 
-- (void)collectInitialPrefetchPositionsWithInt:(jint)adapterItemCount
+- (void)collectInitialPrefetchPositionsWithInt:(int32_t)adapterItemCount
 withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>)layoutPrefetchRegistry;
 
-- (jint)computeHorizontalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeHorizontalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeVerticalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeVerticalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 - (void)detachAndScrapAttachedViewsWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler;
 
 - (void)detachAndScrapViewWithADView:(ADView *)child
         withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler;
 
-- (void)detachAndScrapViewAtWithInt:(jint)index
+- (void)detachAndScrapViewAtWithInt:(int32_t)index
        withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler;
 
 - (void)detachViewWithADView:(ADView *)child;
 
-- (void)detachViewAtWithInt:(jint)index;
+- (void)detachViewAtWithInt:(int32_t)index;
 
 - (void)endAnimationWithADView:(ADView *)view;
 
 - (ADView *)findContainingItemViewWithADView:(ADView *)view;
 
-- (ADView *)findViewByPositionWithInt:(jint)position;
+- (ADView *)findViewByPositionWithInt:(int32_t)position;
 
 - (ADXRecyclerView_LayoutParams *)generateDefaultLayoutParams;
 
-- (jint)getBaseline;
+- (int32_t)getBaseline;
 
-- (jint)getBottomDecorationHeightWithADView:(ADView *)child;
+- (int32_t)getBottomDecorationHeightWithADView:(ADView *)child;
 
-- (ADView *)getChildAtWithInt:(jint)index;
+- (ADView *)getChildAtWithInt:(int32_t)index;
 
-- (jint)getChildCount;
+- (int32_t)getChildCount;
 
-+ (jint)getChildMeasureSpecWithInt:(jint)parentSize
-                           withInt:(jint)padding
-                           withInt:(jint)childDimension
-                       withBoolean:(jboolean)canScroll;
++ (int32_t)getChildMeasureSpecWithInt:(int32_t)parentSize
+                              withInt:(int32_t)padding
+                              withInt:(int32_t)childDimension
+                          withBoolean:(bool)canScroll;
 
-+ (jint)getChildMeasureSpecWithInt:(jint)parentSize
-                           withInt:(jint)parentMode
-                           withInt:(jint)padding
-                           withInt:(jint)childDimension
-                       withBoolean:(jboolean)canScroll;
++ (int32_t)getChildMeasureSpecWithInt:(int32_t)parentSize
+                              withInt:(int32_t)parentMode
+                              withInt:(int32_t)padding
+                              withInt:(int32_t)childDimension
+                          withBoolean:(bool)canScroll;
 
-- (jboolean)getClipToPadding;
+- (bool)getClipToPadding;
 
-- (jint)getColumnCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                         withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)getColumnCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                                            withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)getDecoratedBottomWithADView:(ADView *)child;
+- (int32_t)getDecoratedBottomWithADView:(ADView *)child;
 
 - (void)getDecoratedBoundsWithMarginsWithADView:(ADView *)view
                                      withADRect:(ADRect *)outBounds;
 
-- (jint)getDecoratedLeftWithADView:(ADView *)child;
+- (int32_t)getDecoratedLeftWithADView:(ADView *)child;
 
-- (jint)getDecoratedMeasuredHeightWithADView:(ADView *)child;
+- (int32_t)getDecoratedMeasuredHeightWithADView:(ADView *)child;
 
-- (jint)getDecoratedMeasuredWidthWithADView:(ADView *)child;
+- (int32_t)getDecoratedMeasuredWidthWithADView:(ADView *)child;
 
-- (jint)getDecoratedRightWithADView:(ADView *)child;
+- (int32_t)getDecoratedRightWithADView:(ADView *)child;
 
-- (jint)getDecoratedTopWithADView:(ADView *)child;
+- (int32_t)getDecoratedTopWithADView:(ADView *)child;
 
-- (jint)getHeight;
+- (int32_t)getHeight;
 
-- (jint)getHeightMode;
+- (int32_t)getHeightMode;
 
-- (jint)getItemCount;
+- (int32_t)getItemCount;
 
-- (jint)getItemViewTypeWithADView:(ADView *)view;
+- (int32_t)getItemViewTypeWithADView:(ADView *)view;
 
-- (jint)getLayoutDirection;
+- (int32_t)getLayoutDirection;
 
-- (jint)getLeftDecorationWidthWithADView:(ADView *)child;
+- (int32_t)getLeftDecorationWidthWithADView:(ADView *)child;
 
-- (jint)getMinimumHeight;
+- (int32_t)getMinimumHeight;
 
-- (jint)getMinimumWidth;
+- (int32_t)getMinimumWidth;
 
-- (jint)getPaddingBottom;
+- (int32_t)getPaddingBottom;
 
-- (jint)getPaddingEnd;
+- (int32_t)getPaddingEnd;
 
-- (jint)getPaddingLeft;
+- (int32_t)getPaddingLeft;
 
-- (jint)getPaddingRight;
+- (int32_t)getPaddingRight;
 
-- (jint)getPaddingStart;
+- (int32_t)getPaddingStart;
 
-- (jint)getPaddingTop;
+- (int32_t)getPaddingTop;
 
-- (jint)getPositionWithADView:(ADView *)view;
+- (int32_t)getPositionWithADView:(ADView *)view;
 
-- (jint)getRightDecorationWidthWithADView:(ADView *)child;
+- (int32_t)getRightDecorationWidthWithADView:(ADView *)child;
 
-- (jint)getRowCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                      withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)getRowCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                                         withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)getTopDecorationHeightWithADView:(ADView *)child;
+- (int32_t)getTopDecorationHeightWithADView:(ADView *)child;
 
 - (void)getTransformedBoundingBoxWithADView:(ADView *)child
-                                withBoolean:(jboolean)includeDecorInsets
+                                withBoolean:(bool)includeDecorInsets
                                  withADRect:(ADRect *)outArg;
 
-- (jint)getWidth;
+- (int32_t)getWidth;
 
-- (jint)getWidthMode;
+- (int32_t)getWidthMode;
 
-- (jboolean)hasFocus;
+- (bool)hasFocus;
 
 - (void)ignoreViewWithADView:(ADView *)view;
 
-- (jboolean)isAttachedToWindow;
+- (bool)isAttachedToWindow;
 
-- (jboolean)isAutoMeasureEnabled;
+- (bool)isAutoMeasureEnabled;
 
-- (jboolean)isFocused;
+- (bool)isFocused;
 
-- (jboolean)isItemPrefetchEnabled;
+- (bool)isItemPrefetchEnabled;
 
-- (jboolean)isLayoutHierarchicalWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                   withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (bool)isLayoutHierarchicalWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                               withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jboolean)isMeasurementCacheEnabled;
+- (bool)isMeasurementCacheEnabled;
 
 - (void)layoutDecoratedWithADView:(ADView *)child
-                          withInt:(jint)left
-                          withInt:(jint)top
-                          withInt:(jint)right
-                          withInt:(jint)bottom;
+                          withInt:(int32_t)left
+                          withInt:(int32_t)top
+                          withInt:(int32_t)right
+                          withInt:(int32_t)bottom;
 
 - (void)layoutDecoratedWithMarginsWithADView:(ADView *)child
-                                     withInt:(jint)left
-                                     withInt:(jint)top
-                                     withInt:(jint)right
-                                     withInt:(jint)bottom;
+                                     withInt:(int32_t)left
+                                     withInt:(int32_t)top
+                                     withInt:(int32_t)right
+                                     withInt:(int32_t)bottom;
 
 - (void)measureChildWithADView:(ADView *)child
-                       withInt:(jint)widthUsed
-                       withInt:(jint)heightUsed;
+                       withInt:(int32_t)widthUsed
+                       withInt:(int32_t)heightUsed;
 
 - (void)measureChildWithMarginsWithADView:(ADView *)child
-                                  withInt:(jint)widthUsed
-                                  withInt:(jint)heightUsed;
+                                  withInt:(int32_t)widthUsed
+                                  withInt:(int32_t)heightUsed;
 
-- (void)moveViewWithInt:(jint)fromIndex
-                withInt:(jint)toIndex;
+- (void)moveViewWithInt:(int32_t)fromIndex
+                withInt:(int32_t)toIndex;
 
-- (void)offsetChildrenHorizontalWithInt:(jint)dx;
+- (void)offsetChildrenHorizontalWithInt:(int32_t)dx;
 
-- (void)offsetChildrenVerticalWithInt:(jint)dy;
+- (void)offsetChildrenVerticalWithInt:(int32_t)dy;
 
 - (void)onAdapterChangedWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)oldAdapter
                         withADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)newAdapter;
 
-- (jboolean)onAddFocusablesWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                         withJavaUtilArrayList:(JavaUtilArrayList *)views
-                                       withInt:(jint)direction
-                                       withInt:(jint)focusableMode;
+- (bool)onAddFocusablesWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                     withJavaUtilArrayList:(JavaUtilArrayList *)views
+                                   withInt:(int32_t)direction
+                                   withInt:(int32_t)focusableMode;
 
 - (void)onAttachedToWindowWithADXRecyclerView:(ADXRecyclerView *)view;
 
@@ -1238,35 +1284,35 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
                    withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler;
 
 - (ADView *)onFocusSearchFailedWithADView:(ADView *)focused
-                                  withInt:(jint)direction
+                                  withInt:(int32_t)direction
              withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                 withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 - (ADView *)onInterceptFocusSearchWithADView:(ADView *)focused
-                                     withInt:(jint)direction;
+                                     withInt:(int32_t)direction;
 
 - (void)onItemsAddedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                withInt:(jint)positionStart
-                                withInt:(jint)itemCount;
+                                withInt:(int32_t)positionStart
+                                withInt:(int32_t)itemCount;
 
 - (void)onItemsChangedWithADXRecyclerView:(ADXRecyclerView *)recyclerView;
 
 - (void)onItemsMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                withInt:(jint)from
-                                withInt:(jint)to
-                                withInt:(jint)itemCount;
+                                withInt:(int32_t)from
+                                withInt:(int32_t)to
+                                withInt:(int32_t)itemCount;
 
 - (void)onItemsRemovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount;
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount;
 
 - (void)onItemsUpdatedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount;
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount;
 
 - (void)onItemsUpdatedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount
                                    withId:(id)payload;
 
 - (void)onLayoutChildrenWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
@@ -1276,14 +1322,14 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
 
 - (void)onMeasureWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                     withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                      withInt:(jint)widthSpec
-                                      withInt:(jint)heightSpec;
+                                      withInt:(int32_t)widthSpec
+                                      withInt:(int32_t)heightSpec;
 
 - (void)onRestoreInstanceStateWithADParcelable:(id<ADParcelable>)state;
 
 - (id<ADParcelable>)onSaveInstanceState;
 
-- (void)onScrollStateChangedWithInt:(jint)state;
+- (void)onScrollStateChangedWithInt:(int32_t)state;
 
 - (void)postOnAnimationWithJavaLangRunnable:(id<JavaLangRunnable>)action;
 
@@ -1294,51 +1340,51 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
 - (void)removeAndRecycleViewWithADView:(ADView *)child
           withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler;
 
-- (void)removeAndRecycleViewAtWithInt:(jint)index
+- (void)removeAndRecycleViewAtWithInt:(int32_t)index
          withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler;
 
-- (jboolean)removeCallbacksWithJavaLangRunnable:(id<JavaLangRunnable>)action;
+- (bool)removeCallbacksWithJavaLangRunnable:(id<JavaLangRunnable>)action;
 
 - (void)removeDetachedViewWithADView:(ADView *)child;
 
 - (void)removeViewWithADView:(ADView *)child;
 
-- (void)removeViewAtWithInt:(jint)index;
+- (void)removeViewAtWithInt:(int32_t)index;
 
 - (void)requestLayout;
 
 - (void)requestSimpleAnimationsInNextLayout;
 
-- (jint)scrollHorizontallyByWithInt:(jint)dx
-       withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-          withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)scrollHorizontallyByWithInt:(int32_t)dx
+          withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+             withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (void)scrollToPositionWithInt:(jint)position;
+- (void)scrollToPositionWithInt:(int32_t)position;
 
-- (jint)scrollVerticallyByWithInt:(jint)dy
-     withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-        withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)scrollVerticallyByWithInt:(int32_t)dy
+        withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+           withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (void)setAutoMeasureEnabledWithBoolean:(jboolean)enabled;
+- (void)setAutoMeasureEnabledWithBoolean:(bool)enabled;
 
-- (void)setItemPrefetchEnabledWithBoolean:(jboolean)enabled;
+- (void)setItemPrefetchEnabledWithBoolean:(bool)enabled;
 
-- (void)setMeasuredDimensionWithInt:(jint)widthSize
-                            withInt:(jint)heightSize;
+- (void)setMeasuredDimensionWithInt:(int32_t)widthSize
+                            withInt:(int32_t)heightSize;
 
 - (void)setMeasuredDimensionWithADRect:(ADRect *)childrenBounds
-                               withInt:(jint)wSpec
-                               withInt:(jint)hSpec;
+                               withInt:(int32_t)wSpec
+                               withInt:(int32_t)hSpec;
 
-- (void)setMeasurementCacheEnabledWithBoolean:(jboolean)measurementCacheEnabled;
+- (void)setMeasurementCacheEnabledWithBoolean:(bool)measurementCacheEnabled;
 
 - (void)smoothScrollToPositionWithADXRecyclerView:(ADXRecyclerView *)recyclerView
                         withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                          withInt:(jint)position;
+                                          withInt:(int32_t)position;
 
 - (void)stopIgnoringViewWithADView:(ADView *)view;
 
-- (jboolean)supportsPredictiveItemAnimations;
+- (bool)supportsPredictiveItemAnimations;
 
 #pragma mark Package-Private
 
@@ -1347,31 +1393,31 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
 - (void)dispatchDetachedFromWindowWithADXRecyclerView:(ADXRecyclerView *)view
                          withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler;
 
-- (jboolean)hasFlexibleChildInBothOrientations;
+- (bool)hasFlexibleChildInBothOrientations;
 
 - (void)removeAndRecycleScrapIntWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler;
 
 - (void)setExactMeasureSpecsFromWithADXRecyclerView:(ADXRecyclerView *)recyclerView;
 
-- (void)setMeasuredDimensionFromChildrenWithInt:(jint)widthSpec
-                                        withInt:(jint)heightSpec;
+- (void)setMeasuredDimensionFromChildrenWithInt:(int32_t)widthSpec
+                                        withInt:(int32_t)heightSpec;
 
-- (void)setMeasureSpecsWithInt:(jint)wSpec
-                       withInt:(jint)hSpec;
+- (void)setMeasureSpecsWithInt:(int32_t)wSpec
+                       withInt:(int32_t)hSpec;
 
 - (void)setRecyclerViewWithADXRecyclerView:(ADXRecyclerView *)recyclerView;
 
-- (jboolean)shouldMeasureChildWithADView:(ADView *)child
-                                 withInt:(jint)widthSpec
-                                 withInt:(jint)heightSpec
-        withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp;
+- (bool)shouldMeasureChildWithADView:(ADView *)child
+                             withInt:(int32_t)widthSpec
+                             withInt:(int32_t)heightSpec
+    withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp;
 
-- (jboolean)shouldMeasureTwice;
+- (bool)shouldMeasureTwice;
 
-- (jboolean)shouldReMeasureChildWithADView:(ADView *)child
-                                   withInt:(jint)widthSpec
-                                   withInt:(jint)heightSpec
-          withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp;
+- (bool)shouldReMeasureChildWithADView:(ADView *)child
+                               withInt:(int32_t)widthSpec
+                               withInt:(int32_t)heightSpec
+      withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp;
 
 @end
 
@@ -1384,29 +1430,33 @@ J2OBJC_FIELD_SETTER(ADXRecyclerView_LayoutManager, mVerticalBoundCheck_, ADXView
 
 FOUNDATION_EXPORT void ADXRecyclerView_LayoutManager_init(ADXRecyclerView_LayoutManager *self);
 
-FOUNDATION_EXPORT jint ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(jint spec, jint desired, jint min);
+FOUNDATION_EXPORT int32_t ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(int32_t spec, int32_t desired, int32_t min);
 
-FOUNDATION_EXPORT jint ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withBoolean_(jint parentSize, jint padding, jint childDimension, jboolean canScroll);
+FOUNDATION_EXPORT int32_t ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withBoolean_(int32_t parentSize, int32_t padding, int32_t childDimension, bool canScroll);
 
-FOUNDATION_EXPORT jint ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_(jint parentSize, jint parentMode, jint padding, jint childDimension, jboolean canScroll);
+FOUNDATION_EXPORT int32_t ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_(int32_t parentSize, int32_t parentMode, int32_t padding, int32_t childDimension, bool canScroll);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_LayoutManager)
+
 
 #endif
 
 #if !defined (ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry))
 #define ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry_
 
+@class JavaLangInteger;
+
 @protocol ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry < JavaObject >
 
-- (void)addPositionWithInt:(jint)layoutPosition
-                   withInt:(jint)pixelDistance;
+- (void)addPositionWithInt:(int32_t)layoutPosition
+                   withInt:(int32_t)pixelDistance;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry)
+
 
 #endif
 
@@ -1417,6 +1467,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry)
 @class ADView;
 @class ADXRecyclerView;
 @class ADXRecyclerView_State;
+@class JavaLangInteger;
 
 @interface ADXRecyclerView_ItemDecoration : NSObject
 
@@ -1425,7 +1476,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry)
 - (instancetype)init;
 
 - (void)getItemOffsetsWithADRect:(ADRect *)outRect
-                         withInt:(jint)itemPosition
+                         withInt:(int32_t)itemPosition
              withADXRecyclerView:(ADXRecyclerView *)parent;
 
 - (void)getItemOffsetsWithADRect:(ADRect *)outRect
@@ -1441,12 +1492,14 @@ FOUNDATION_EXPORT void ADXRecyclerView_ItemDecoration_init(ADXRecyclerView_ItemD
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ItemDecoration)
 
+
 #endif
 
 #if !defined (ADXRecyclerView_OnScrollListener_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_OnScrollListener))
 #define ADXRecyclerView_OnScrollListener_
 
 @class ADXRecyclerView;
+@class JavaLangInteger;
 
 @interface ADXRecyclerView_OnScrollListener : NSObject
 
@@ -1455,11 +1508,11 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ItemDecoration)
 - (instancetype)init;
 
 - (void)onScrolledWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                              withInt:(jint)dx
-                              withInt:(jint)dy;
+                              withInt:(int32_t)dx
+                              withInt:(int32_t)dy;
 
 - (void)onScrollStateChangedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                        withInt:(jint)newState;
+                                        withInt:(int32_t)newState;
 
 @end
 
@@ -1468,6 +1521,7 @@ J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_OnScrollListener)
 FOUNDATION_EXPORT void ADXRecyclerView_OnScrollListener_init(ADXRecyclerView_OnScrollListener *self);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_OnScrollListener)
+
 
 #endif
 
@@ -1485,6 +1539,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_OnScrollListener)
 J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_RecyclerListener)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_RecyclerListener)
+
 
 #endif
 
@@ -1505,6 +1560,7 @@ J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_OnChildAttachStateChangeListener)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_OnChildAttachStateChangeListener)
 
+
 #endif
 
 #if !defined (ADXRecyclerView_ViewHolder_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_ViewHolder))
@@ -1514,26 +1570,30 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_OnChildAttachStateChangeListener)
 @class ADXRecyclerView;
 @class ADXRecyclerView_Adapter;
 @class ADXRecyclerView_Recycler;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangRefWeakReference;
+@class NSString;
 @protocol JavaUtilList;
 
 @interface ADXRecyclerView_ViewHolder : NSObject {
  @public
   ADView *itemView_;
   JavaLangRefWeakReference *mNestedRecyclerView_;
-  jint mPosition_;
-  jint mOldPosition_;
-  jlong mItemId_;
-  jint mItemViewType_;
-  jint mPreLayoutPosition_;
+  int32_t mPosition_;
+  int32_t mOldPosition_;
+  int64_t mItemId_;
+  int32_t mItemViewType_;
+  int32_t mPreLayoutPosition_;
   ADXRecyclerView_ViewHolder *mShadowedHolder_;
   ADXRecyclerView_ViewHolder *mShadowingHolder_;
-  jint mFlags_;
+  int32_t mFlags_;
   id<JavaUtilList> mPayloads_;
   id<JavaUtilList> mUnmodifiedPayloads_;
   ADXRecyclerView_Recycler *mScrapContainer_;
-  jboolean mInChangeScrap_;
-  jint mPendingAccessibilityState_;
+  bool mInChangeScrap_;
+  int32_t mPendingAccessibilityState_;
   ADXRecyclerView *mOwnerRecyclerView_;
   ADXRecyclerView_Adapter *mBindingAdapter_;
 }
@@ -1542,27 +1602,27 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_OnChildAttachStateChangeListener)
 
 - (instancetype)initWithADView:(ADView *)itemView;
 
-- (jint)getAbsoluteAdapterPosition;
+- (int32_t)getAbsoluteAdapterPosition;
 
-- (jint)getAdapterPosition;
+- (int32_t)getAdapterPosition;
 
 - (ADXRecyclerView_Adapter *)getBindingAdapter;
 
-- (jint)getBindingAdapterPosition;
+- (int32_t)getBindingAdapterPosition;
 
-- (jlong)getItemId;
+- (int64_t)getItemId;
 
-- (jint)getItemViewType;
+- (int32_t)getItemViewType;
 
-- (jint)getLayoutPosition;
+- (int32_t)getLayoutPosition;
 
-- (jint)getOldPosition;
+- (int32_t)getOldPosition;
 
-- (jint)getPosition;
+- (int32_t)getPosition;
 
-- (jboolean)isRecyclable;
+- (bool)isRecyclable;
 
-- (void)setIsRecyclableWithBoolean:(jboolean)recyclable;
+- (void)setIsRecyclableWithBoolean:(bool)recyclable;
 
 - (NSString *)description;
 
@@ -1570,7 +1630,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_OnChildAttachStateChangeListener)
 
 - (void)addChangePayloadWithId:(id)payload;
 
-- (void)addFlagsWithInt:(jint)flags;
+- (void)addFlagsWithInt:(int32_t)flags;
 
 - (void)clearOldPosition;
 
@@ -1580,36 +1640,36 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_OnChildAttachStateChangeListener)
 
 - (void)clearTmpDetachFlag;
 
-- (jboolean)doesTransientStatePreventRecycling;
+- (bool)doesTransientStatePreventRecycling;
 
-- (void)flagRemovedAndOffsetPositionWithInt:(jint)mNewPosition
-                                    withInt:(jint)offset
-                                withBoolean:(jboolean)applyToPreLayout;
+- (void)flagRemovedAndOffsetPositionWithInt:(int32_t)mNewPosition
+                                    withInt:(int32_t)offset
+                                withBoolean:(bool)applyToPreLayout;
 
 - (id<JavaUtilList>)getUnmodifiedPayloads;
 
-- (jboolean)hasAnyOfTheFlagsWithInt:(jint)flags;
+- (bool)hasAnyOfTheFlagsWithInt:(int32_t)flags;
 
-- (jboolean)isAdapterPositionUnknown;
+- (bool)isAdapterPositionUnknown;
 
-- (jboolean)isAttachedToTransitionOverlay;
+- (bool)isAttachedToTransitionOverlay;
 
-- (jboolean)isBound;
+- (bool)isBound;
 
-- (jboolean)isInvalid;
+- (bool)isInvalid;
 
-- (jboolean)isRemoved;
+- (bool)isRemoved;
 
-- (jboolean)isScrap;
+- (bool)isScrap;
 
-- (jboolean)isTmpDetached;
+- (bool)isTmpDetached;
 
-- (jboolean)isUpdated;
+- (bool)isUpdated;
 
-- (jboolean)needsUpdate;
+- (bool)needsUpdate;
 
-- (void)offsetPositionWithInt:(jint)offset
-                  withBoolean:(jboolean)applyToPreLayout;
+- (void)offsetPositionWithInt:(int32_t)offset
+                  withBoolean:(bool)applyToPreLayout;
 
 - (void)onEnteredHiddenStateWithADXRecyclerView:(ADXRecyclerView *)parent;
 
@@ -1619,21 +1679,21 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_OnChildAttachStateChangeListener)
 
 - (void)saveOldPosition;
 
-- (void)setFlagsWithInt:(jint)flags
-                withInt:(jint)mask;
+- (void)setFlagsWithInt:(int32_t)flags
+                withInt:(int32_t)mask;
 
 - (void)setScrapContainerWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                          withBoolean:(jboolean)isChangeScrap;
+                                          withBoolean:(bool)isChangeScrap;
 
-- (jboolean)shouldBeKeptAsChild;
+- (bool)shouldBeKeptAsChild;
 
-- (jboolean)shouldIgnore;
+- (bool)shouldIgnore;
 
 - (void)stopIgnoring;
 
 - (void)unScrap;
 
-- (jboolean)wasReturnedFromScrap;
+- (bool)wasReturnedFromScrap;
 
 // Disallowed inherited constructors, do not use.
 
@@ -1653,65 +1713,66 @@ J2OBJC_FIELD_SETTER(ADXRecyclerView_ViewHolder, mScrapContainer_, ADXRecyclerVie
 J2OBJC_FIELD_SETTER(ADXRecyclerView_ViewHolder, mOwnerRecyclerView_, ADXRecyclerView *)
 J2OBJC_FIELD_SETTER(ADXRecyclerView_ViewHolder, mBindingAdapter_, ADXRecyclerView_Adapter *)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_BOUND(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_BOUND(void);
 #define ADXRecyclerView_ViewHolder_FLAG_BOUND 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_BOUND, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_BOUND, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_UPDATE(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_UPDATE(void);
 #define ADXRecyclerView_ViewHolder_FLAG_UPDATE 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_UPDATE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_UPDATE, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_INVALID(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_INVALID(void);
 #define ADXRecyclerView_ViewHolder_FLAG_INVALID 4
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_INVALID, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_INVALID, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_REMOVED(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_REMOVED(void);
 #define ADXRecyclerView_ViewHolder_FLAG_REMOVED 8
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_REMOVED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_REMOVED, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_NOT_RECYCLABLE(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_NOT_RECYCLABLE(void);
 #define ADXRecyclerView_ViewHolder_FLAG_NOT_RECYCLABLE 16
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_NOT_RECYCLABLE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_NOT_RECYCLABLE, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_RETURNED_FROM_SCRAP(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_RETURNED_FROM_SCRAP(void);
 #define ADXRecyclerView_ViewHolder_FLAG_RETURNED_FROM_SCRAP 32
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_RETURNED_FROM_SCRAP, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_RETURNED_FROM_SCRAP, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_IGNORE(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_IGNORE(void);
 #define ADXRecyclerView_ViewHolder_FLAG_IGNORE 128
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_IGNORE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_IGNORE, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_TMP_DETACHED(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_TMP_DETACHED(void);
 #define ADXRecyclerView_ViewHolder_FLAG_TMP_DETACHED 256
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_TMP_DETACHED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_TMP_DETACHED, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_ADAPTER_POSITION_UNKNOWN(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_ADAPTER_POSITION_UNKNOWN(void);
 #define ADXRecyclerView_ViewHolder_FLAG_ADAPTER_POSITION_UNKNOWN 512
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_ADAPTER_POSITION_UNKNOWN, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_ADAPTER_POSITION_UNKNOWN, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_ADAPTER_FULLUPDATE(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_ADAPTER_FULLUPDATE(void);
 #define ADXRecyclerView_ViewHolder_FLAG_ADAPTER_FULLUPDATE 1024
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_ADAPTER_FULLUPDATE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_ADAPTER_FULLUPDATE, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_MOVED(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_MOVED(void);
 #define ADXRecyclerView_ViewHolder_FLAG_MOVED 2048
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_MOVED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_MOVED, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_APPEARED_IN_PRE_LAYOUT(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_APPEARED_IN_PRE_LAYOUT(void);
 #define ADXRecyclerView_ViewHolder_FLAG_APPEARED_IN_PRE_LAYOUT 4096
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_APPEARED_IN_PRE_LAYOUT, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_APPEARED_IN_PRE_LAYOUT, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_PENDING_ACCESSIBILITY_STATE_NOT_SET(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_PENDING_ACCESSIBILITY_STATE_NOT_SET(void);
 #define ADXRecyclerView_ViewHolder_PENDING_ACCESSIBILITY_STATE_NOT_SET -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, PENDING_ACCESSIBILITY_STATE_NOT_SET, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, PENDING_ACCESSIBILITY_STATE_NOT_SET, int32_t)
 
-inline jint ADXRecyclerView_ViewHolder_get_FLAG_BOUNCED_FROM_HIDDEN_LIST(void);
+inline int32_t ADXRecyclerView_ViewHolder_get_FLAG_BOUNCED_FROM_HIDDEN_LIST(void);
 #define ADXRecyclerView_ViewHolder_FLAG_BOUNCED_FROM_HIDDEN_LIST 8192
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_BOUNCED_FROM_HIDDEN_LIST, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ViewHolder, FLAG_BOUNCED_FROM_HIDDEN_LIST, int32_t)
 
 FOUNDATION_EXPORT void ADXRecyclerView_ViewHolder_initWithADView_(ADXRecyclerView_ViewHolder *self, ADView *itemView);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ViewHolder)
+
 
 #endif
 
@@ -1725,31 +1786,33 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ViewHolder)
 @class ADRect;
 @class ADViewGroup_LayoutParams;
 @class ADXRecyclerView_ViewHolder;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 @interface ADXRecyclerView_LayoutParams : ADViewGroup_MarginLayoutParams {
  @public
   ADXRecyclerView_ViewHolder *mViewHolder_;
   ADRect *mDecorInsets_;
-  jboolean mInsetsDirty_;
-  jboolean mPendingInvalidate_;
+  bool mInsetsDirty_;
+  bool mPendingInvalidate_;
 }
 
 #pragma mark Public
 
-- (instancetype)initWithInt:(jint)width
-                    withInt:(jint)height;
+- (instancetype)initWithInt:(int32_t)width
+                    withInt:(int32_t)height;
 
 - (instancetype)initWithADViewGroup_LayoutParams:(ADViewGroup_LayoutParams *)source;
 
 - (instancetype)initWithADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)source;
 
-- (jint)getViewLayoutPosition;
+- (int32_t)getViewLayoutPosition;
 
-- (jboolean)isItemChanged;
+- (bool)isItemChanged;
 
-- (jboolean)isItemRemoved;
+- (bool)isItemRemoved;
 
-- (jboolean)isViewInvalid;
+- (bool)isViewInvalid;
 
 // Disallowed inherited constructors, do not use.
 
@@ -1762,11 +1825,11 @@ J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_LayoutParams)
 J2OBJC_FIELD_SETTER(ADXRecyclerView_LayoutParams, mViewHolder_, ADXRecyclerView_ViewHolder *)
 J2OBJC_FIELD_SETTER(ADXRecyclerView_LayoutParams, mDecorInsets_, ADRect *)
 
-FOUNDATION_EXPORT void ADXRecyclerView_LayoutParams_initWithInt_withInt_(ADXRecyclerView_LayoutParams *self, jint width, jint height);
+FOUNDATION_EXPORT void ADXRecyclerView_LayoutParams_initWithInt_withInt_(ADXRecyclerView_LayoutParams *self, int32_t width, int32_t height);
 
-FOUNDATION_EXPORT ADXRecyclerView_LayoutParams *new_ADXRecyclerView_LayoutParams_initWithInt_withInt_(jint width, jint height) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXRecyclerView_LayoutParams *new_ADXRecyclerView_LayoutParams_initWithInt_withInt_(int32_t width, int32_t height) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXRecyclerView_LayoutParams *create_ADXRecyclerView_LayoutParams_initWithInt_withInt_(jint width, jint height);
+FOUNDATION_EXPORT ADXRecyclerView_LayoutParams *create_ADXRecyclerView_LayoutParams_initWithInt_withInt_(int32_t width, int32_t height);
 
 FOUNDATION_EXPORT void ADXRecyclerView_LayoutParams_initWithADViewGroup_LayoutParams_(ADXRecyclerView_LayoutParams *self, ADViewGroup_LayoutParams *source);
 
@@ -1781,6 +1844,7 @@ FOUNDATION_EXPORT ADXRecyclerView_LayoutParams *new_ADXRecyclerView_LayoutParams
 FOUNDATION_EXPORT ADXRecyclerView_LayoutParams *create_ADXRecyclerView_LayoutParams_initWithADXRecyclerView_LayoutParams_(ADXRecyclerView_LayoutParams *source);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_LayoutParams)
+
 
 #endif
 
@@ -1818,34 +1882,38 @@ FOUNDATION_EXPORT ADXRecyclerView_Observable *create_ADXRecyclerView_Observable_
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_Observable)
 
+
 #endif
 
 #if !defined (ADXRecyclerView_AdapterDataObservable_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_AdapterDataObservable))
 #define ADXRecyclerView_AdapterDataObservable_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 @interface ADXRecyclerView_AdapterDataObservable : ADXRecyclerView_Observable
 
 #pragma mark Public
 
-- (jboolean)hasObservers;
+- (bool)hasObservers;
 
 - (void)notifyChanged;
 
-- (void)notifyItemMovedWithInt:(jint)fromPosition
-                       withInt:(jint)toPosition;
+- (void)notifyItemMovedWithInt:(int32_t)fromPosition
+                       withInt:(int32_t)toPosition;
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount;
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount;
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount
                                withId:(id)payload;
 
-- (void)notifyItemRangeInsertedWithInt:(jint)positionStart
-                               withInt:(jint)itemCount;
+- (void)notifyItemRangeInsertedWithInt:(int32_t)positionStart
+                               withInt:(int32_t)itemCount;
 
-- (void)notifyItemRangeRemovedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount;
+- (void)notifyItemRangeRemovedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount;
 
 - (void)notifyStateRestorationPolicyChanged;
 
@@ -1865,68 +1933,72 @@ FOUNDATION_EXPORT ADXRecyclerView_AdapterDataObservable *create_ADXRecyclerView_
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_AdapterDataObservable)
 
+
 #endif
 
 #if !defined (ADXRecyclerView_State_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_State))
 #define ADXRecyclerView_State_
 
 @class ADXRecyclerView_Adapter;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class NSString;
 
 @interface ADXRecyclerView_State : NSObject {
  @public
-  jint mTargetPosition_;
-  jint mPreviousLayoutItemCount_;
-  jint mDeletedInvisibleItemCountSincePreviousLayout_;
-  jint mLayoutStep_;
-  jint mItemCount_;
-  jboolean mStructureChanged_;
-  jboolean mInPreLayout_;
-  jboolean mTrackOldChangeHolders_;
-  jboolean mIsMeasuring_;
-  jboolean mRunSimpleAnimations_;
-  jboolean mRunPredictiveAnimations_;
-  jint mFocusedItemPosition_;
-  jint mFocusedSubChildId_;
-  jint mRemainingScrollHorizontal_;
-  jint mRemainingScrollVertical_;
+  int32_t mTargetPosition_;
+  int32_t mPreviousLayoutItemCount_;
+  int32_t mDeletedInvisibleItemCountSincePreviousLayout_;
+  int32_t mLayoutStep_;
+  int32_t mItemCount_;
+  bool mStructureChanged_;
+  bool mInPreLayout_;
+  bool mTrackOldChangeHolders_;
+  bool mIsMeasuring_;
+  bool mRunSimpleAnimations_;
+  bool mRunPredictiveAnimations_;
+  int32_t mFocusedItemPosition_;
+  int32_t mFocusedSubChildId_;
+  int32_t mRemainingScrollHorizontal_;
+  int32_t mRemainingScrollVertical_;
 }
 
 #pragma mark Public
 
 - (instancetype)init;
 
-- (jboolean)didStructureChange;
+- (bool)didStructureChange;
 
-- (id)getWithInt:(jint)resourceId;
+- (id)getWithInt:(int32_t)resourceId;
 
-- (jint)getItemCount;
+- (int32_t)getItemCount;
 
-- (jint)getRemainingScrollHorizontal;
+- (int32_t)getRemainingScrollHorizontal;
 
-- (jint)getRemainingScrollVertical;
+- (int32_t)getRemainingScrollVertical;
 
-- (jint)getTargetScrollPosition;
+- (int32_t)getTargetScrollPosition;
 
-- (jboolean)hasTargetScrollPosition;
+- (bool)hasTargetScrollPosition;
 
-- (jboolean)isMeasuring;
+- (bool)isMeasuring;
 
-- (jboolean)isPreLayout;
+- (bool)isPreLayout;
 
-- (void)putWithInt:(jint)resourceId
+- (void)putWithInt:(int32_t)resourceId
             withId:(id)data;
 
-- (void)removeWithInt:(jint)resourceId;
+- (void)removeWithInt:(int32_t)resourceId;
 
 - (NSString *)description;
 
-- (jboolean)willRunPredictiveAnimations;
+- (bool)willRunPredictiveAnimations;
 
-- (jboolean)willRunSimpleAnimations;
+- (bool)willRunSimpleAnimations;
 
 #pragma mark Package-Private
 
-- (void)assertLayoutStepWithInt:(jint)accepted;
+- (void)assertLayoutStepWithInt:(int32_t)accepted;
 
 - (void)prepareForNestedPrefetchWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)adapter;
 
@@ -1934,17 +2006,17 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_AdapterDataObservable)
 
 J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_State)
 
-inline jint ADXRecyclerView_State_get_STEP_START(void);
+inline int32_t ADXRecyclerView_State_get_STEP_START(void);
 #define ADXRecyclerView_State_STEP_START 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_State, STEP_START, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_State, STEP_START, int32_t)
 
-inline jint ADXRecyclerView_State_get_STEP_LAYOUT(void);
+inline int32_t ADXRecyclerView_State_get_STEP_LAYOUT(void);
 #define ADXRecyclerView_State_STEP_LAYOUT 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_State, STEP_LAYOUT, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_State, STEP_LAYOUT, int32_t)
 
-inline jint ADXRecyclerView_State_get_STEP_ANIMATIONS(void);
+inline int32_t ADXRecyclerView_State_get_STEP_ANIMATIONS(void);
 #define ADXRecyclerView_State_STEP_ANIMATIONS 4
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_State, STEP_ANIMATIONS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_State, STEP_ANIMATIONS, int32_t)
 
 FOUNDATION_EXPORT void ADXRecyclerView_State_init(ADXRecyclerView_State *self);
 
@@ -1954,6 +2026,7 @@ FOUNDATION_EXPORT ADXRecyclerView_State *create_ADXRecyclerView_State_init(void)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_State)
 
+
 #endif
 
 #if !defined (ADXRecyclerView_ItemAnimator_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_ItemAnimator))
@@ -1962,6 +2035,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_State)
 @class ADXRecyclerView_ItemAnimator_ItemHolderInfo;
 @class ADXRecyclerView_State;
 @class ADXRecyclerView_ViewHolder;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilList;
 
 @interface ADXRecyclerView_ItemAnimator : NSObject
@@ -1970,39 +2046,39 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_State)
 
 - (instancetype)init;
 
-- (jboolean)animateAppearanceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-            withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
-            withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo;
-
-- (jboolean)animateChangeWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)oldHolder
-                         withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)newHolder
+- (bool)animateAppearanceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
         withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
         withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo;
 
-- (jboolean)animateDisappearanceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-               withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
-               withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo;
+- (bool)animateChangeWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)oldHolder
+                     withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)newHolder
+    withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
+    withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo;
 
-- (jboolean)animatePersistenceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-             withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
-             withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo;
+- (bool)animateDisappearanceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+           withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
+           withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo;
 
-- (jboolean)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+- (bool)animatePersistenceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+         withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
+         withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo;
 
-- (jboolean)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-                                                   withJavaUtilList:(id<JavaUtilList>)payloads;
+- (bool)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+
+- (bool)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                               withJavaUtilList:(id<JavaUtilList>)payloads;
 
 - (void)endAnimationWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)item;
 
 - (void)endAnimations;
 
-- (jlong)getAddDuration;
+- (int64_t)getAddDuration;
 
-- (jlong)getChangeDuration;
+- (int64_t)getChangeDuration;
 
-- (jlong)getMoveDuration;
+- (int64_t)getMoveDuration;
 
-- (jlong)getRemoveDuration;
+- (int64_t)getRemoveDuration;
 
 - (ADXRecyclerView_ItemAnimator_ItemHolderInfo *)obtainHolderInfo;
 
@@ -2015,52 +2091,53 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_State)
 
 - (ADXRecyclerView_ItemAnimator_ItemHolderInfo *)recordPreLayoutInformationWithADXRecyclerView_State:(ADXRecyclerView_State *)state
                                                                       withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-                                                                                             withInt:(jint)changeFlags
+                                                                                             withInt:(int32_t)changeFlags
                                                                                     withJavaUtilList:(id<JavaUtilList>)payloads;
 
 - (void)runPendingAnimations;
 
-- (void)setAddDurationWithLong:(jlong)addDuration;
+- (void)setAddDurationWithLong:(int64_t)addDuration;
 
-- (void)setChangeDurationWithLong:(jlong)changeDuration;
+- (void)setChangeDurationWithLong:(int64_t)changeDuration;
 
-- (void)setMoveDurationWithLong:(jlong)moveDuration;
+- (void)setMoveDurationWithLong:(int64_t)moveDuration;
 
-- (void)setRemoveDurationWithLong:(jlong)removeDuration;
+- (void)setRemoveDurationWithLong:(int64_t)removeDuration;
 
 #pragma mark Package-Private
 
-+ (jint)buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
++ (int32_t)buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_ItemAnimator)
 
-inline jint ADXRecyclerView_ItemAnimator_get_FLAG_CHANGED(void);
+inline int32_t ADXRecyclerView_ItemAnimator_get_FLAG_CHANGED(void);
 #define ADXRecyclerView_ItemAnimator_FLAG_CHANGED 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ItemAnimator, FLAG_CHANGED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ItemAnimator, FLAG_CHANGED, int32_t)
 
-inline jint ADXRecyclerView_ItemAnimator_get_FLAG_REMOVED(void);
+inline int32_t ADXRecyclerView_ItemAnimator_get_FLAG_REMOVED(void);
 #define ADXRecyclerView_ItemAnimator_FLAG_REMOVED 8
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ItemAnimator, FLAG_REMOVED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ItemAnimator, FLAG_REMOVED, int32_t)
 
-inline jint ADXRecyclerView_ItemAnimator_get_FLAG_INVALIDATED(void);
+inline int32_t ADXRecyclerView_ItemAnimator_get_FLAG_INVALIDATED(void);
 #define ADXRecyclerView_ItemAnimator_FLAG_INVALIDATED 4
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ItemAnimator, FLAG_INVALIDATED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ItemAnimator, FLAG_INVALIDATED, int32_t)
 
-inline jint ADXRecyclerView_ItemAnimator_get_FLAG_MOVED(void);
+inline int32_t ADXRecyclerView_ItemAnimator_get_FLAG_MOVED(void);
 #define ADXRecyclerView_ItemAnimator_FLAG_MOVED 2048
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ItemAnimator, FLAG_MOVED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ItemAnimator, FLAG_MOVED, int32_t)
 
-inline jint ADXRecyclerView_ItemAnimator_get_FLAG_APPEARED_IN_PRE_LAYOUT(void);
+inline int32_t ADXRecyclerView_ItemAnimator_get_FLAG_APPEARED_IN_PRE_LAYOUT(void);
 #define ADXRecyclerView_ItemAnimator_FLAG_APPEARED_IN_PRE_LAYOUT 4096
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ItemAnimator, FLAG_APPEARED_IN_PRE_LAYOUT, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_ItemAnimator, FLAG_APPEARED_IN_PRE_LAYOUT, int32_t)
 
 FOUNDATION_EXPORT void ADXRecyclerView_ItemAnimator_init(ADXRecyclerView_ItemAnimator *self);
 
-FOUNDATION_EXPORT jint ADXRecyclerView_ItemAnimator_buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder_(ADXRecyclerView_ViewHolder *viewHolder);
+FOUNDATION_EXPORT int32_t ADXRecyclerView_ItemAnimator_buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder_(ADXRecyclerView_ViewHolder *viewHolder);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ItemAnimator)
+
 
 #endif
 
@@ -2068,14 +2145,15 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ItemAnimator)
 #define ADXRecyclerView_ItemAnimator_ItemHolderInfo_
 
 @class ADXRecyclerView_ViewHolder;
+@class JavaLangInteger;
 
 @interface ADXRecyclerView_ItemAnimator_ItemHolderInfo : NSObject {
  @public
-  jint left_;
-  jint top_;
-  jint right_;
-  jint bottom_;
-  jint changeFlags_;
+  int32_t left_;
+  int32_t top_;
+  int32_t right_;
+  int32_t bottom_;
+  int32_t changeFlags_;
 }
 
 #pragma mark Public
@@ -2085,7 +2163,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ItemAnimator)
 - (ADXRecyclerView_ItemAnimator_ItemHolderInfo *)setFromWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
 - (ADXRecyclerView_ItemAnimator_ItemHolderInfo *)setFromWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                                                               withInt:(jint)flags;
+                                                                               withInt:(int32_t)flags;
 
 @end
 
@@ -2098,6 +2176,7 @@ FOUNDATION_EXPORT ADXRecyclerView_ItemAnimator_ItemHolderInfo *new_ADXRecyclerVi
 FOUNDATION_EXPORT ADXRecyclerView_ItemAnimator_ItemHolderInfo *create_ADXRecyclerView_ItemAnimator_ItemHolderInfo_init(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ItemAnimator_ItemHolderInfo)
+
 
 #endif
 
@@ -2129,19 +2208,22 @@ FOUNDATION_EXPORT ADXRecyclerView_SavedState *create_ADXRecyclerView_SavedState_
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_SavedState)
 
+
 #endif
 
 #if !defined (ADXRecyclerView_MotionEventCompat_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_MotionEventCompat))
 #define ADXRecyclerView_MotionEventCompat_
 
 @class ADMotionEvent;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 @interface ADXRecyclerView_MotionEventCompat : NSObject
 
 #pragma mark Public
 
-+ (jboolean)isFromSourceWithADMotionEvent:(ADMotionEvent *)ev
-                                  withInt:(jint)source;
++ (bool)isFromSourceWithADMotionEvent:(ADMotionEvent *)ev
+                              withInt:(int32_t)source;
 
 #pragma mark Package-Private
 
@@ -2157,14 +2239,17 @@ FOUNDATION_EXPORT ADXRecyclerView_MotionEventCompat *new_ADXRecyclerView_MotionE
 
 FOUNDATION_EXPORT ADXRecyclerView_MotionEventCompat *create_ADXRecyclerView_MotionEventCompat_init(void);
 
-FOUNDATION_EXPORT jboolean ADXRecyclerView_MotionEventCompat_isFromSourceWithADMotionEvent_withInt_(ADMotionEvent *ev, jint source);
+FOUNDATION_EXPORT bool ADXRecyclerView_MotionEventCompat_isFromSourceWithADMotionEvent_withInt_(ADMotionEvent *ev, int32_t source);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_MotionEventCompat)
+
 
 #endif
 
 #if !defined (ADXRecyclerView_InputDevice_) && (INCLUDE_ALL_RecyclerView || defined(INCLUDE_ADXRecyclerView_InputDevice))
 #define ADXRecyclerView_InputDevice_
+
+@class JavaLangInteger;
 
 @interface ADXRecyclerView_InputDevice : NSObject
 
@@ -2176,9 +2261,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_MotionEventCompat)
 
 J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_InputDevice)
 
-inline jint ADXRecyclerView_InputDevice_get_SOURCE_MOUSE(void);
+inline int32_t ADXRecyclerView_InputDevice_get_SOURCE_MOUSE(void);
 #define ADXRecyclerView_InputDevice_SOURCE_MOUSE 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_InputDevice, SOURCE_MOUSE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_InputDevice, SOURCE_MOUSE, int32_t)
 
 FOUNDATION_EXPORT void ADXRecyclerView_InputDevice_init(ADXRecyclerView_InputDevice *self);
 
@@ -2187,6 +2272,7 @@ FOUNDATION_EXPORT ADXRecyclerView_InputDevice *new_ADXRecyclerView_InputDevice_i
 FOUNDATION_EXPORT ADXRecyclerView_InputDevice *create_ADXRecyclerView_InputDevice_init(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_InputDevice)
+
 
 #endif
 

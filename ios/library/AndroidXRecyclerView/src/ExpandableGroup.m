@@ -3,34 +3,45 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\ExpandableGroup.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "ExpandableGroup.h"
 #include "ExpandableItem.h"
 #include "GroupUtils.h"
 #include "J2ObjC_source.h"
 #include "NestedGroup.h"
 #include "RVGroup.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Integer.h"
 #include "java/util/ArrayList.h"
 #include "java/util/Collection.h"
 #include "java/util/List.h"
 
-@protocol JavaUtilList;
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXExpandableGroup () {
  @public
-  jboolean isExpanded_;
+  bool isExpanded_;
   id<ADXRVGroup> parent_;
   id<JavaUtilList> children_;
 }
 
-- (jboolean)dispatchChildChangesWithADXRVGroup:(id<ADXRVGroup>)group;
+- (bool)dispatchChildChangesWithADXRVGroup:(id<ADXRVGroup>)group;
 
 @end
 
 J2OBJC_FIELD_SETTER(ADXExpandableGroup, parent_, id<ADXRVGroup>)
 J2OBJC_FIELD_SETTER(ADXExpandableGroup, children_, id<JavaUtilList>)
 
-__attribute__((unused)) static jboolean ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(ADXExpandableGroup *self, id<ADXRVGroup> group);
+__attribute__((unused)) static bool ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(ADXExpandableGroup *self, id<ADXRVGroup> group);
 
 @implementation ADXExpandableGroup
 
@@ -40,17 +51,17 @@ __attribute__((unused)) static jboolean ADXExpandableGroup_dispatchChildChangesW
 }
 
 - (instancetype)initWithADXRVGroup:(id<ADXRVGroup, ADXExpandableItem>)expandableItem
-                       withBoolean:(jboolean)isExpanded {
+                       withBoolean:(bool)isExpanded {
   ADXExpandableGroup_initWithADXRVGroup_withBoolean_(self, expandableItem, isExpanded);
   return self;
 }
 
-- (void)addWithInt:(jint)position
+- (void)addWithInt:(int32_t)position
     withADXRVGroup:(id<ADXRVGroup>)group {
   [super addWithInt:position withADXRVGroup:group];
   [((id<JavaUtilList>) nil_chk(children_)) addWithInt:position withId:group];
   if (isExpanded_) {
-    jint notifyPosition = 1 + ADXGroupUtils_getItemCountWithJavaUtilCollection_([children_ subListWithInt:0 withInt:position]);
+    int32_t notifyPosition = 1 + ADXGroupUtils_getItemCountWithJavaUtilCollection_([children_ subListWithInt:0 withInt:position]);
     [self notifyItemRangeInsertedWithInt:notifyPosition withInt:[((id<ADXRVGroup>) nil_chk(group)) getItemCount]];
   }
 }
@@ -58,7 +69,7 @@ __attribute__((unused)) static jboolean ADXExpandableGroup_dispatchChildChangesW
 - (void)addWithADXRVGroup:(id<ADXRVGroup>)group {
   [super addWithADXRVGroup:group];
   if (isExpanded_) {
-    jint itemCount = [self getItemCount];
+    int32_t itemCount = [self getItemCount];
     [((id<JavaUtilList>) nil_chk(children_)) addWithId:group];
     [self notifyItemRangeInsertedWithInt:itemCount withInt:[((id<ADXRVGroup>) nil_chk(group)) getItemCount]];
   }
@@ -73,7 +84,7 @@ __attribute__((unused)) static jboolean ADXExpandableGroup_dispatchChildChangesW
   }
   [super addAllWithJavaUtilCollection:groups];
   if (isExpanded_) {
-    jint itemCount = [self getItemCount];
+    int32_t itemCount = [self getItemCount];
     [((id<JavaUtilList>) nil_chk(self->children_)) addAllWithJavaUtilCollection:groups];
     [self notifyItemRangeInsertedWithInt:itemCount withInt:ADXGroupUtils_getItemCountWithJavaUtilCollection_(groups)];
   }
@@ -82,7 +93,7 @@ __attribute__((unused)) static jboolean ADXExpandableGroup_dispatchChildChangesW
   }
 }
 
-- (void)addAllWithInt:(jint)position
+- (void)addAllWithInt:(int32_t)position
 withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   if ([((id<JavaUtilCollection>) nil_chk(groups)) isEmpty]) {
     return;
@@ -90,7 +101,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   [super addAllWithInt:position withJavaUtilCollection:groups];
   [((id<JavaUtilList>) nil_chk(self->children_)) addAllWithInt:position withJavaUtilCollection:groups];
   if (isExpanded_) {
-    jint notifyPosition = 1 + ADXGroupUtils_getItemCountWithJavaUtilCollection_([children_ subListWithInt:0 withInt:position]);
+    int32_t notifyPosition = 1 + ADXGroupUtils_getItemCountWithJavaUtilCollection_([children_ subListWithInt:0 withInt:position]);
     [self notifyItemRangeInsertedWithInt:notifyPosition withInt:ADXGroupUtils_getItemCountWithJavaUtilCollection_(groups)];
   }
 }
@@ -99,7 +110,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   if (![((id<JavaUtilList>) nil_chk(self->children_)) containsWithId:group]) return;
   [super removeWithADXRVGroup:group];
   if (isExpanded_) {
-    jint position = [self getItemCountBeforeGroupWithADXRVGroup:group];
+    int32_t position = [self getItemCountBeforeGroupWithADXRVGroup:group];
     [children_ removeWithId:group];
     [self notifyItemRangeRemovedWithInt:position withInt:[((id<ADXRVGroup>) nil_chk(group)) getItemCount]];
   }
@@ -127,7 +138,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   if (isExpanded_) {
     [((id<JavaUtilList>) nil_chk(self->children_)) removeAllWithJavaUtilCollection:groups];
     for (id<ADXRVGroup> __strong group in groups) {
-      jint position = [self getItemCountBeforeGroupWithADXRVGroup:group];
+      int32_t position = [self getItemCountBeforeGroupWithADXRVGroup:group];
       [children_ removeWithId:group];
       [self notifyItemRangeRemovedWithInt:position withInt:[((id<ADXRVGroup>) nil_chk(group)) getItemCount]];
     }
@@ -137,11 +148,11 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   }
 }
 
-- (jboolean)isExpanded {
+- (bool)isExpanded {
   return isExpanded_;
 }
 
-- (id<ADXRVGroup>)getGroupWithInt:(jint)position {
+- (id<ADXRVGroup>)getGroupWithInt:(int32_t)position {
   if (position == 0) {
     return parent_;
   }
@@ -150,29 +161,29 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   }
 }
 
-- (jint)getPositionWithADXRVGroup:(id<ADXRVGroup>)group {
-  if (group == parent_) {
+- (int32_t)getPositionWithADXRVGroup:(id<ADXRVGroup>)group {
+  if (JreObjectEqualsEquals(group, parent_)) {
     return 0;
   }
-  jint index = [((id<JavaUtilList>) nil_chk(children_)) indexOfWithId:group];
+  int32_t index = [((id<JavaUtilList>) nil_chk(children_)) indexOfWithId:group];
   if (index >= 0) {
     return index + 1;
   }
   return -1;
 }
 
-- (jint)getGroupCount {
+- (int32_t)getGroupCount {
   return 1 + (isExpanded_ ? [((id<JavaUtilList>) nil_chk(children_)) size] : 0);
 }
 
-- (jint)getChildCount {
+- (int32_t)getChildCount {
   return [((id<JavaUtilList>) nil_chk(children_)) size];
 }
 
 - (void)onToggleExpanded {
-  jint oldSize = [self getItemCount];
+  int32_t oldSize = [self getItemCount];
   isExpanded_ = !isExpanded_;
-  jint newSize = [self getItemCount];
+  int32_t newSize = [self getItemCount];
   if (oldSize > newSize) {
     [self notifyItemRangeRemovedWithInt:newSize withInt:oldSize - newSize];
   }
@@ -181,13 +192,13 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
   }
 }
 
-- (void)setExpandedWithBoolean:(jboolean)isExpanded {
+- (void)setExpandedWithBoolean:(bool)isExpanded {
   if (self->isExpanded_ != isExpanded) {
     [self onToggleExpanded];
   }
 }
 
-- (jboolean)dispatchChildChangesWithADXRVGroup:(id<ADXRVGroup>)group {
+- (bool)dispatchChildChangesWithADXRVGroup:(id<ADXRVGroup>)group {
   return ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(self, group);
 }
 
@@ -198,21 +209,21 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
 }
 
 - (void)onItemInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                             withInt:(jint)position {
+                             withInt:(int32_t)position {
   if (ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(self, group)) {
     [super onItemInsertedWithADXRVGroup:group withInt:position];
   }
 }
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position {
+                            withInt:(int32_t)position {
   if (ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(self, group)) {
     [super onItemChangedWithADXRVGroup:group withInt:position];
   }
 }
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position
+                            withInt:(int32_t)position
                              withId:(id)payload {
   if (ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(self, group)) {
     [super onItemChangedWithADXRVGroup:group withInt:position withId:payload];
@@ -220,23 +231,23 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
 }
 
 - (void)onItemRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position {
+                            withInt:(int32_t)position {
   if (ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(self, group)) {
     [super onItemRemovedWithADXRVGroup:group withInt:position];
   }
 }
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount {
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount {
   if (ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(self, group)) {
     [super onItemRangeChangedWithADXRVGroup:group withInt:positionStart withInt:itemCount];
   }
 }
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount
                                   withId:(id)payload {
   if (ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(self, group)) {
     [super onItemRangeChangedWithADXRVGroup:group withInt:positionStart withInt:itemCount withId:payload];
@@ -244,24 +255,24 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups {
 }
 
 - (void)onItemRangeInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount {
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount {
   if (ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(self, group)) {
     [super onItemRangeInsertedWithADXRVGroup:group withInt:positionStart withInt:itemCount];
   }
 }
 
 - (void)onItemRangeRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount {
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount {
   if (ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(self, group)) {
     [super onItemRangeRemovedWithADXRVGroup:group withInt:positionStart withInt:itemCount];
   }
 }
 
 - (void)onItemMovedWithADXRVGroup:(id<ADXRVGroup>)group
-                          withInt:(jint)fromPosition
-                          withInt:(jint)toPosition {
+                          withInt:(int32_t)fromPosition
+                          withInt:(int32_t)toPosition {
   if (ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(self, group)) {
     [super onItemMovedWithADXRVGroup:group withInt:fromPosition withInt:toPosition];
   }
@@ -370,7 +381,7 @@ ADXExpandableGroup *create_ADXExpandableGroup_initWithADXRVGroup_(id<ADXRVGroup,
   J2OBJC_CREATE_IMPL(ADXExpandableGroup, initWithADXRVGroup_, expandableItem)
 }
 
-void ADXExpandableGroup_initWithADXRVGroup_withBoolean_(ADXExpandableGroup *self, id<ADXRVGroup, ADXExpandableItem> expandableItem, jboolean isExpanded) {
+void ADXExpandableGroup_initWithADXRVGroup_withBoolean_(ADXExpandableGroup *self, id<ADXRVGroup, ADXExpandableItem> expandableItem, bool isExpanded) {
   ADXNestedGroup_init(self);
   self->isExpanded_ = false;
   JreStrongAssignAndConsume(&self->children_, new_JavaUtilArrayList_init());
@@ -379,16 +390,18 @@ void ADXExpandableGroup_initWithADXRVGroup_withBoolean_(ADXExpandableGroup *self
   self->isExpanded_ = isExpanded;
 }
 
-ADXExpandableGroup *new_ADXExpandableGroup_initWithADXRVGroup_withBoolean_(id<ADXRVGroup, ADXExpandableItem> expandableItem, jboolean isExpanded) {
+ADXExpandableGroup *new_ADXExpandableGroup_initWithADXRVGroup_withBoolean_(id<ADXRVGroup, ADXExpandableItem> expandableItem, bool isExpanded) {
   J2OBJC_NEW_IMPL(ADXExpandableGroup, initWithADXRVGroup_withBoolean_, expandableItem, isExpanded)
 }
 
-ADXExpandableGroup *create_ADXExpandableGroup_initWithADXRVGroup_withBoolean_(id<ADXRVGroup, ADXExpandableItem> expandableItem, jboolean isExpanded) {
+ADXExpandableGroup *create_ADXExpandableGroup_initWithADXRVGroup_withBoolean_(id<ADXRVGroup, ADXExpandableItem> expandableItem, bool isExpanded) {
   J2OBJC_CREATE_IMPL(ADXExpandableGroup, initWithADXRVGroup_withBoolean_, expandableItem, isExpanded)
 }
 
-jboolean ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(ADXExpandableGroup *self, id<ADXRVGroup> group) {
-  return self->isExpanded_ || group == self->parent_;
+bool ADXExpandableGroup_dispatchChildChangesWithADXRVGroup_(ADXExpandableGroup *self, id<ADXRVGroup> group) {
+  return self->isExpanded_ || JreObjectEqualsEquals(group, self->parent_);
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXExpandableGroup)
+
+J2OBJC_NAME_MAPPING(ADXExpandableGroup, "com.xwray.groupie", "ADX")

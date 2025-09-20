@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-ios-widgets\IOSRecycleViewPlugin\src\main\java\com\ashera\recycleview\InsetItemDecoration.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "GridLayoutManager.h"
 #include "IWidget.h"
 #include "InsetItemDecoration.h"
@@ -13,7 +18,14 @@
 #include "View.h"
 #include "ViewGroup.h"
 #include "WidgetViewHolder.h"
+#include "java/lang/Float.h"
 #include "java/lang/Integer.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ASInsetItemDecoration ()
@@ -46,15 +58,15 @@ J2OBJC_IGNORE_DESIGNATED_END
   id insets = ASInsetItemDecoration_getMarginWithADView_withADXRecyclerView_(self, view, parent);
   if (insets == nil || [(JavaLangInteger *) cast_chk(insets, [JavaLangInteger class]) intValue] == 0) return;
   if ([[((ADXRecyclerView *) nil_chk(parent)) getLayoutManager] isKindOfClass:[ADXGridLayoutManager class]]) {
-    jint padding = [(JavaLangInteger *) cast_chk(insets, [JavaLangInteger class]) intValue];
+    int32_t padding = [(JavaLangInteger *) cast_chk(insets, [JavaLangInteger class]) intValue];
     ADXGridLayoutManager_LayoutParams *layoutParams = (ADXGridLayoutManager_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXGridLayoutManager_LayoutParams class]);
     ADXGridLayoutManager *gridLayoutManager = (ADXGridLayoutManager *) cast_chk([parent getLayoutManager], [ADXGridLayoutManager class]);
-    jfloat spanSize = [((ADXGridLayoutManager_LayoutParams *) nil_chk(layoutParams)) getSpanSize];
-    jfloat totalSpanSize = [((ADXGridLayoutManager *) nil_chk(gridLayoutManager)) getSpanCount];
-    jfloat n = totalSpanSize / spanSize;
-    jfloat c = [layoutParams getSpanIndex] / spanSize;
-    jfloat leftPadding = padding * ((n - c) / n);
-    jfloat rightPadding = padding * ((c + 1) / n);
+    float spanSize = [((ADXGridLayoutManager_LayoutParams *) nil_chk(layoutParams)) getSpanSize];
+    float totalSpanSize = [((ADXGridLayoutManager *) nil_chk(gridLayoutManager)) getSpanCount];
+    float n = totalSpanSize / spanSize;
+    float c = [layoutParams getSpanIndex] / spanSize;
+    float leftPadding = padding * ((n - c) / n);
+    float rightPadding = padding * ((c + 1) / n);
     ((ADRect *) nil_chk(outRect))->left_ = JreFpToInt(leftPadding);
     outRect->right_ = JreFpToInt(rightPadding);
     outRect->bottom_ = padding;
@@ -102,3 +114,5 @@ id ASInsetItemDecoration_getMarginWithADView_withADXRecyclerView_(ASInsetItemDec
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASInsetItemDecoration)
+
+J2OBJC_NAME_MAPPING(ASInsetItemDecoration, "com.ashera.recycleview", "AS")

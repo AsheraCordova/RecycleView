@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\DiffTask.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_DiffTask")
@@ -30,6 +31,8 @@
 @class ADXDiffUtil_Callback;
 @class ADXDiffUtil_DiffResult;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol ADXOnAsyncUpdateListener;
 
 /*!
@@ -51,8 +54,8 @@
 
 - (instancetype)initPackagePrivateWithADXAsyncDiffUtil:(ADXAsyncDiffUtil *)asyncDiffUtil
                               withADXDiffUtil_Callback:(ADXDiffUtil_Callback *)callback
-                                               withInt:(jint)runGeneration
-                                           withBoolean:(jboolean)detectMoves
+                                               withInt:(int32_t)runGeneration
+                                           withBoolean:(bool)detectMoves
                           withADXOnAsyncUpdateListener:(id<ADXOnAsyncUpdateListener>)onAsyncUpdateListener;
 
 // Disallowed inherited constructors, do not use.
@@ -63,15 +66,16 @@
 
 J2OBJC_EMPTY_STATIC_INIT(ADXDiffTask)
 
-FOUNDATION_EXPORT void ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXDiffTask *self, ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, jint runGeneration, jboolean detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener);
+FOUNDATION_EXPORT void ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXDiffTask *self, ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, int32_t runGeneration, bool detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener);
 
-FOUNDATION_EXPORT ADXDiffTask *new_ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, jint runGeneration, jboolean detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXDiffTask *new_ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, int32_t runGeneration, bool detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXDiffTask *create_ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, jint runGeneration, jboolean detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener);
+FOUNDATION_EXPORT ADXDiffTask *create_ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, int32_t runGeneration, bool detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXDiffTask)
 
 @compatibility_alias ComXwrayGroupieDiffTask ADXDiffTask;
+
 
 #endif
 

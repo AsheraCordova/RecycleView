@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\Section.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_Section")
@@ -27,6 +28,8 @@
 #include "NestedGroup.h"
 
 @class ADXDiffUtil_DiffResult;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol ADXRVGroup;
 @protocol JavaUtilCollection;
 @protocol JavaUtilList;
@@ -47,14 +50,14 @@
 - (instancetype)initWithADXRVGroup:(id<ADXRVGroup>)header
             withJavaUtilCollection:(id<JavaUtilCollection>)children;
 
-- (void)addWithInt:(jint)position
+- (void)addWithInt:(int32_t)position
     withADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)addWithADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)addAllWithJavaUtilCollection:(id<JavaUtilCollection>)groups;
 
-- (void)addAllWithInt:(jint)position
+- (void)addAllWithInt:(int32_t)position
 withJavaUtilCollection:(id<JavaUtilCollection>)groups;
 
 /*!
@@ -62,9 +65,9 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups;
  */
 - (void)clear;
 
-- (id<ADXRVGroup>)getGroupWithInt:(jint)position;
+- (id<ADXRVGroup>)getGroupWithInt:(int32_t)position;
 
-- (jint)getGroupCount;
+- (int32_t)getGroupCount;
 
 /*!
  @brief Get the list of all groups in this section, wrapped in a new <code>ArrayList</code>.This
@@ -73,21 +76,21 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups;
  */
 - (id<JavaUtilList>)getGroups;
 
-- (jint)getPositionWithADXRVGroup:(id<ADXRVGroup>)group;
+- (int32_t)getPositionWithADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)onItemInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                             withInt:(jint)position;
+                             withInt:(int32_t)position;
 
 - (void)onItemRangeInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount;
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount;
 
 - (void)onItemRangeRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount;
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount;
 
 - (void)onItemRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position;
+                            withInt:(int32_t)position;
 
 - (void)removeWithADXRVGroup:(id<ADXRVGroup>)group;
 
@@ -105,7 +108,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups;
 
 - (void)setHeaderWithADXRVGroup:(id<ADXRVGroup>)header;
 
-- (void)setHideWhenEmptyWithBoolean:(jboolean)hide;
+- (void)setHideWhenEmptyWithBoolean:(bool)hide;
 
 /*!
  @brief Optional.Set a placeholder for when the section's body is empty.
@@ -146,7 +149,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups;
                       don't want DiffUtil to detect moved items.
  */
 - (void)updateWithJavaUtilCollection:(id<JavaUtilCollection>)newBodyGroups
-                         withBoolean:(jboolean)detectMoves;
+                         withBoolean:(bool)detectMoves;
 
 /*!
  @brief Overloaded version of update method in which you can pass your own DiffUtil.DiffResult
@@ -161,7 +164,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups;
 /*!
  @brief Whether a section's contents are visually empty
  */
-- (jboolean)isEmpty;
+- (bool)isEmpty;
 
 - (void)refreshEmptyState;
 
@@ -196,6 +199,7 @@ FOUNDATION_EXPORT ADXSection *create_ADXSection_initWithADXRVGroup_withJavaUtilC
 J2OBJC_TYPE_LITERAL_HEADER(ADXSection)
 
 @compatibility_alias ComXwrayGroupieSection ADXSection;
+
 
 #endif
 

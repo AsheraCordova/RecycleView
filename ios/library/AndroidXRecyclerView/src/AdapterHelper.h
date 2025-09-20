@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\AdapterHelper.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_AdapterHelper")
@@ -23,6 +24,8 @@
 @class ADXAdapterHelper_UpdateOp;
 @class ADXOpReorderer;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilArrayList;
 @protocol ADXAdapterHelper_Callback;
 @protocol JavaLangRunnable;
@@ -52,17 +55,17 @@
   JavaUtilArrayList *mPostponedList_;
   id<ADXAdapterHelper_Callback> mCallback_;
   id<JavaLangRunnable> mOnItemProcessedCallback_;
-  jboolean mDisableRecycler_;
+  bool mDisableRecycler_;
   ADXOpReorderer *mOpReorderer_;
 }
 
 #pragma mark Public
 
-- (jint)applyPendingUpdatesToPositionWithInt:(jint)position;
+- (int32_t)applyPendingUpdatesToPositionWithInt:(int32_t)position;
 
-- (ADXAdapterHelper_UpdateOp *)obtainUpdateOpWithInt:(jint)cmd
-                                             withInt:(jint)positionStart
-                                             withInt:(jint)itemCount
+- (ADXAdapterHelper_UpdateOp *)obtainUpdateOpWithInt:(int32_t)cmd
+                                             withInt:(int32_t)positionStart
+                                             withInt:(int32_t)itemCount
                                               withId:(id)payload;
 
 - (void)recycleUpdateOpWithADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)op;
@@ -72,7 +75,7 @@
 - (instancetype)initPackagePrivateWithADXAdapterHelper_Callback:(id<ADXAdapterHelper_Callback>)callback;
 
 - (instancetype)initPackagePrivateWithADXAdapterHelper_Callback:(id<ADXAdapterHelper_Callback>)callback
-                                                    withBoolean:(jboolean)disableRecycler;
+                                                    withBoolean:(bool)disableRecycler;
 
 - (ADXAdapterHelper *)addUpdateOpWithADXAdapterHelper_UpdateOpArray:(IOSObjectArray *)ops;
 
@@ -84,44 +87,44 @@
 - (void)consumeUpdatesInOnePass;
 
 - (void)dispatchFirstPassAndUpdateViewHoldersWithADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)op
-                                                                   withInt:(jint)offsetStart;
+                                                                   withInt:(int32_t)offsetStart;
 
-- (jint)findPositionOffsetWithInt:(jint)position;
+- (int32_t)findPositionOffsetWithInt:(int32_t)position;
 
-- (jint)findPositionOffsetWithInt:(jint)position
-                          withInt:(jint)firstPostponedItem;
+- (int32_t)findPositionOffsetWithInt:(int32_t)position
+                             withInt:(int32_t)firstPostponedItem;
 
-- (jboolean)hasAnyUpdateTypesWithInt:(jint)updateTypes;
+- (bool)hasAnyUpdateTypesWithInt:(int32_t)updateTypes;
 
-- (jboolean)hasPendingUpdates;
+- (bool)hasPendingUpdates;
 
-- (jboolean)hasUpdates;
-
-/*!
- @return True if updates should be processed.
- */
-- (jboolean)onItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount
-                               withId:(id)payload;
+- (bool)hasUpdates;
 
 /*!
  @return True if updates should be processed.
  */
-- (jboolean)onItemRangeInsertedWithInt:(jint)positionStart
-                               withInt:(jint)itemCount;
+- (bool)onItemRangeChangedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount
+                           withId:(id)payload;
 
 /*!
  @return True if updates should be processed.
  */
-- (jboolean)onItemRangeMovedWithInt:(jint)from
-                            withInt:(jint)to
-                            withInt:(jint)itemCount;
+- (bool)onItemRangeInsertedWithInt:(int32_t)positionStart
+                           withInt:(int32_t)itemCount;
 
 /*!
  @return True if updates should be processed.
  */
-- (jboolean)onItemRangeRemovedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount;
+- (bool)onItemRangeMovedWithInt:(int32_t)from
+                        withInt:(int32_t)to
+                        withInt:(int32_t)itemCount;
+
+/*!
+ @return True if updates should be processed.
+ */
+- (bool)onItemRangeRemovedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount;
 
 - (void)preProcess;
 
@@ -143,13 +146,13 @@ J2OBJC_FIELD_SETTER(ADXAdapterHelper, mCallback_, id<ADXAdapterHelper_Callback>)
 J2OBJC_FIELD_SETTER(ADXAdapterHelper, mOnItemProcessedCallback_, id<JavaLangRunnable>)
 J2OBJC_FIELD_SETTER(ADXAdapterHelper, mOpReorderer_, ADXOpReorderer *)
 
-inline jint ADXAdapterHelper_get_POSITION_TYPE_INVISIBLE(void);
+inline int32_t ADXAdapterHelper_get_POSITION_TYPE_INVISIBLE(void);
 #define ADXAdapterHelper_POSITION_TYPE_INVISIBLE 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper, POSITION_TYPE_INVISIBLE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper, POSITION_TYPE_INVISIBLE, int32_t)
 
-inline jint ADXAdapterHelper_get_POSITION_TYPE_NEW_OR_LAID_OUT(void);
+inline int32_t ADXAdapterHelper_get_POSITION_TYPE_NEW_OR_LAID_OUT(void);
 #define ADXAdapterHelper_POSITION_TYPE_NEW_OR_LAID_OUT 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper, POSITION_TYPE_NEW_OR_LAID_OUT, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper, POSITION_TYPE_NEW_OR_LAID_OUT, int32_t)
 
 FOUNDATION_EXPORT void ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_(ADXAdapterHelper *self, id<ADXAdapterHelper_Callback> callback);
 
@@ -157,35 +160,40 @@ FOUNDATION_EXPORT ADXAdapterHelper *new_ADXAdapterHelper_initPackagePrivateWithA
 
 FOUNDATION_EXPORT ADXAdapterHelper *create_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_(id<ADXAdapterHelper_Callback> callback);
 
-FOUNDATION_EXPORT void ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(ADXAdapterHelper *self, id<ADXAdapterHelper_Callback> callback, jboolean disableRecycler);
+FOUNDATION_EXPORT void ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(ADXAdapterHelper *self, id<ADXAdapterHelper_Callback> callback, bool disableRecycler);
 
-FOUNDATION_EXPORT ADXAdapterHelper *new_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(id<ADXAdapterHelper_Callback> callback, jboolean disableRecycler) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXAdapterHelper *new_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(id<ADXAdapterHelper_Callback> callback, bool disableRecycler) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXAdapterHelper *create_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(id<ADXAdapterHelper_Callback> callback, jboolean disableRecycler);
+FOUNDATION_EXPORT ADXAdapterHelper *create_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(id<ADXAdapterHelper_Callback> callback, bool disableRecycler);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXAdapterHelper)
 
 @compatibility_alias AndroidxRecyclerviewWidgetAdapterHelper ADXAdapterHelper;
+
 
 #endif
 
 #if !defined (ADXAdapterHelper_UpdateOp_) && (INCLUDE_ALL_AdapterHelper || defined(INCLUDE_ADXAdapterHelper_UpdateOp))
 #define ADXAdapterHelper_UpdateOp_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class NSString;
+
 /*!
  @brief Queued operation to happen when child views are updated.
  */
 @interface ADXAdapterHelper_UpdateOp : NSObject {
  @public
-  jint cmd_;
-  jint positionStart_;
+  int32_t cmd_;
+  int32_t positionStart_;
   id payload_;
-  jint itemCount_;
+  int32_t itemCount_;
 }
 
 #pragma mark Public
 
-- (jboolean)isEqual:(id)o;
+- (bool)isEqual:(id)o;
 
 - (NSUInteger)hash;
 
@@ -193,9 +201,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXAdapterHelper)
 
 #pragma mark Package-Private
 
-- (instancetype)initWithInt:(jint)cmd
-                    withInt:(jint)positionStart
-                    withInt:(jint)itemCount
+- (instancetype)initWithInt:(int32_t)cmd
+                    withInt:(int32_t)positionStart
+                    withInt:(int32_t)itemCount
                      withId:(id)payload;
 
 - (NSString *)cmdToString;
@@ -210,33 +218,34 @@ J2OBJC_EMPTY_STATIC_INIT(ADXAdapterHelper_UpdateOp)
 
 J2OBJC_FIELD_SETTER(ADXAdapterHelper_UpdateOp, payload_, id)
 
-inline jint ADXAdapterHelper_UpdateOp_get_ADD(void);
+inline int32_t ADXAdapterHelper_UpdateOp_get_ADD(void);
 #define ADXAdapterHelper_UpdateOp_ADD 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper_UpdateOp, ADD, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper_UpdateOp, ADD, int32_t)
 
-inline jint ADXAdapterHelper_UpdateOp_get_REMOVE(void);
+inline int32_t ADXAdapterHelper_UpdateOp_get_REMOVE(void);
 #define ADXAdapterHelper_UpdateOp_REMOVE 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper_UpdateOp, REMOVE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper_UpdateOp, REMOVE, int32_t)
 
-inline jint ADXAdapterHelper_UpdateOp_get_UPDATE(void);
+inline int32_t ADXAdapterHelper_UpdateOp_get_UPDATE(void);
 #define ADXAdapterHelper_UpdateOp_UPDATE 4
-J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper_UpdateOp, UPDATE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper_UpdateOp, UPDATE, int32_t)
 
-inline jint ADXAdapterHelper_UpdateOp_get_MOVE(void);
+inline int32_t ADXAdapterHelper_UpdateOp_get_MOVE(void);
 #define ADXAdapterHelper_UpdateOp_MOVE 8
-J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper_UpdateOp, MOVE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper_UpdateOp, MOVE, int32_t)
 
-inline jint ADXAdapterHelper_UpdateOp_get_POOL_SIZE(void);
+inline int32_t ADXAdapterHelper_UpdateOp_get_POOL_SIZE(void);
 #define ADXAdapterHelper_UpdateOp_POOL_SIZE 30
-J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper_UpdateOp, POOL_SIZE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper_UpdateOp, POOL_SIZE, int32_t)
 
-FOUNDATION_EXPORT void ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(ADXAdapterHelper_UpdateOp *self, jint cmd, jint positionStart, jint itemCount, id payload);
+FOUNDATION_EXPORT void ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(ADXAdapterHelper_UpdateOp *self, int32_t cmd, int32_t positionStart, int32_t itemCount, id payload);
 
-FOUNDATION_EXPORT ADXAdapterHelper_UpdateOp *new_ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(jint cmd, jint positionStart, jint itemCount, id payload) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXAdapterHelper_UpdateOp *new_ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(int32_t cmd, int32_t positionStart, int32_t itemCount, id payload) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXAdapterHelper_UpdateOp *create_ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(jint cmd, jint positionStart, jint itemCount, id payload);
+FOUNDATION_EXPORT ADXAdapterHelper_UpdateOp *create_ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(int32_t cmd, int32_t positionStart, int32_t itemCount, id payload);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXAdapterHelper_UpdateOp)
+
 
 #endif
 
@@ -245,39 +254,41 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXAdapterHelper_UpdateOp)
 
 @class ADXAdapterHelper_UpdateOp;
 @class ADXRecyclerView_ViewHolder;
+@class JavaLangInteger;
 
 /*!
  @brief Contract between AdapterHelper and RecyclerView.
  */
 @protocol ADXAdapterHelper_Callback < JavaObject >
 
-- (ADXRecyclerView_ViewHolder *)findViewHolderWithInt:(jint)position;
+- (ADXRecyclerView_ViewHolder *)findViewHolderWithInt:(int32_t)position;
 
-- (void)offsetPositionsForRemovingInvisibleWithInt:(jint)positionStart
-                                           withInt:(jint)itemCount;
+- (void)offsetPositionsForRemovingInvisibleWithInt:(int32_t)positionStart
+                                           withInt:(int32_t)itemCount;
 
-- (void)offsetPositionsForRemovingLaidOutOrNewViewWithInt:(jint)positionStart
-                                                  withInt:(jint)itemCount;
+- (void)offsetPositionsForRemovingLaidOutOrNewViewWithInt:(int32_t)positionStart
+                                                  withInt:(int32_t)itemCount;
 
-- (void)markViewHoldersUpdatedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount
+- (void)markViewHoldersUpdatedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount
                                withId:(id)payloads;
 
 - (void)onDispatchFirstPassWithADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)updateOp;
 
 - (void)onDispatchSecondPassWithADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)updateOp;
 
-- (void)offsetPositionsForAddWithInt:(jint)positionStart
-                             withInt:(jint)itemCount;
+- (void)offsetPositionsForAddWithInt:(int32_t)positionStart
+                             withInt:(int32_t)itemCount;
 
-- (void)offsetPositionsForMoveWithInt:(jint)from
-                              withInt:(jint)to;
+- (void)offsetPositionsForMoveWithInt:(int32_t)from
+                              withInt:(int32_t)to;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(ADXAdapterHelper_Callback)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXAdapterHelper_Callback)
+
 
 #endif
 

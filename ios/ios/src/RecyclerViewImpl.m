@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-ios-widgets\IOSRecycleViewPlugin\src\main\java\com\ashera\recycleview\RecyclerViewImpl.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "AbstractEnumToIntConverter.h"
 #include "BaseHasWidgets.h"
 #include "CommonConverters.h"
@@ -56,9 +61,12 @@
 #include "WidgetViewHolder.h"
 #include "java/io/PrintStream.h"
 #include "java/lang/Boolean.h"
+#include "java/lang/Double.h"
 #include "java/lang/Enum.h"
+#include "java/lang/Float.h"
 #include "java/lang/IllegalArgumentException.h"
 #include "java/lang/Integer.h"
+#include "java/lang/Long.h"
 #include "java/lang/Math.h"
 #include "java/lang/Runnable.h"
 #include "java/lang/System.h"
@@ -75,8 +83,12 @@
 
 #include "ASUIScrollView.h"
 
-@protocol JavaUtilList;
-@protocol JavaUtilMap;
+
+@class NSString;
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 #pragma clang diagnostic ignored "-Wprotocol"
@@ -86,13 +98,13 @@
  @public
   id uiView_;
   ADXRecyclerView *recyclerView_;
-  jboolean disableUpdate_;
+  bool disableUpdate_;
   id scrollProvider_;
-  jint scrollBarIncrement_;
-  jint nestedScrollStopDelay_;
-  jint oldScrollPos_;
-  jint prevRange_;
-  jlong lastScrollEvent_;
+  int32_t scrollBarIncrement_;
+  int32_t nestedScrollStopDelay_;
+  int32_t oldScrollPos_;
+  int32_t prevRange_;
+  int64_t lastScrollEvent_;
   ASRecyclerViewImpl_ScrollProviderType *scrollProviderType_;
   ADHandler *nestedScrollHandler_;
   ADXRecyclerView_Adapter *adapter_;
@@ -101,14 +113,14 @@
   id<JavaUtilList> viewHolderIds_;
   id<JavaUtilList> headerViewHolderIds_;
   id<JavaUtilList> footerViewHolderIds_;
-  jint spanCount_;
-  jint orientation_;
+  int32_t spanCount_;
+  int32_t orientation_;
   id<JavaUtilMap> sectionMap_;
   id<JavaUtilMap> itemConfigMap_;
-  jboolean headerDisabled_;
-  jboolean footerDisabled_;
+  bool headerDisabled_;
+  bool footerDisabled_;
   NSString *query_;
-  jint filterDelay_;
+  int32_t filterDelay_;
   ADHandler *handler_;
   NSString *filterId_;
   IOSObjectArray *filterSectionPaths_;
@@ -116,11 +128,11 @@
   ASModelExpressionParser_ModelVarScopeHolder *filterQuerySetPath_;
   ASModelExpressionParser_ModelVarScopeHolder *filterQueryGetPath_;
   id recyclerWrapperView_;
-  jint oldScrollY_;
-  jint oldScrollX_;
-  jboolean overScrollTop_;
-  jint oldOverScroll_;
-  jint overScrollDpos_;
+  int32_t oldScrollY_;
+  int32_t oldScrollX_;
+  bool overScrollTop_;
+  int32_t oldOverScroll_;
+  int32_t overScrollDpos_;
 }
 
 - (void)setWidgetOnNativeClass;
@@ -135,23 +147,23 @@
 
 - (void)setScrollBarIncrementWithId:(id)objValue;
 
-- (void)setNestedScrollStopDelayWithInt:(jint)delay;
+- (void)setNestedScrollStopDelayWithInt:(int32_t)delay;
 
 - (void)handleScroll;
 
-- (jfloat)getScrollBarDimenWithInt:(jint)range
-                           withInt:(jint)extent;
+- (float)getScrollBarDimenWithInt:(int32_t)range
+                          withInt:(int32_t)extent;
 
-- (void)nativeMakeFrameForChildWidgetWithInt:(jint)l
-                                     withInt:(jint)t
-                                     withInt:(jint)r
-                                     withInt:(jint)b;
+- (void)nativeMakeFrameForChildWidgetWithInt:(int32_t)l
+                                     withInt:(int32_t)t
+                                     withInt:(int32_t)r
+                                     withInt:(int32_t)b;
 
-- (jint)getExtent;
+- (int32_t)getExtent;
 
-- (jint)getOffset;
+- (int32_t)getOffset;
 
-- (jint)getRange;
+- (int32_t)getRange;
 
 - (void)setOnScrollWithASWidgetAttribute:(ASWidgetAttribute *)key
                             withNSString:(NSString *)strValue
@@ -175,7 +187,7 @@
 
 - (void)setOrientationWithId:(id)objValue;
 
-- (jint)getOrientation;
+- (int32_t)getOrientation;
 
 - (void)setLayoutWithId:(id)objValue;
 
@@ -252,7 +264,7 @@
 
 - (void)setReverseLayoutWithId:(id)objValue;
 
-- (jboolean)isReverseLayout;
+- (bool)isReverseLayout;
 
 - (void)setFooterDisabledWithId:(id)objValue;
 
@@ -264,8 +276,8 @@
 
 - (void)setFilterIdWithId:(id)objValue;
 
-- (jboolean)filterDataWithId:(id)model
-           withNSStringArray:(IOSObjectArray *)paths;
+- (bool)filterDataWithId:(id)model
+       withNSStringArray:(IOSObjectArray *)paths;
 
 - (void)setFilterSectionItemPathWithId:(id)objValue;
 
@@ -281,7 +293,7 @@
 
 - (void)stopScrollStartWithId:(id)scrollView;
 
-- (void)updateContentSizeWithInt:(jint)range
+- (void)updateContentSizeWithInt:(int32_t)range
                           withId:(id)uiView;
 
 - (void)applyTransformWithId:(id)uiView
@@ -296,58 +308,58 @@
 
 - (void)showHorizontalScrollBar;
 
-- (void)setCustomHandleScrollWithInt:(jint)dpos
-                             withInt:(jint)range
-                             withInt:(jint)offset
-                             withInt:(jint)extent;
+- (void)setCustomHandleScrollWithInt:(int32_t)dpos
+                             withInt:(int32_t)range
+                             withInt:(int32_t)offset
+                             withInt:(int32_t)extent;
 
-- (jint)setSelectionWithInt:(jint)percoffset
-                    withInt:(jint)offset
-                     withId:(id)view;
+- (int32_t)setSelectionWithInt:(int32_t)percoffset
+                       withInt:(int32_t)offset
+                        withId:(id)view;
 
-- (void)setContentSizeWidthWithInt:(jint)range
+- (void)setContentSizeWidthWithInt:(int32_t)range
                             withId:(id)uiView;
 
-- (void)setContentSizeHeightWithInt:(jint)range
+- (void)setContentSizeHeightWithInt:(int32_t)range
                              withId:(id)uiView;
 
-- (void)setMaximumWithInt:(jint)maxiumum;
+- (void)setMaximumWithInt:(int32_t)maxiumum;
 
-- (jint)getMaximum;
+- (int32_t)getMaximum;
 
-- (jint)getSelection;
+- (int32_t)getSelection;
 
 - (void)flashScrollIndicatorsWithId:(id)uiView;
 
-- (void)setContentOffsetXWithInt:(jint)range
+- (void)setContentOffsetXWithInt:(int32_t)range
                           withId:(id)uiView;
 
-- (void)setContentOffsetYWithInt:(jint)range
+- (void)setContentOffsetYWithInt:(int32_t)range
                           withId:(id)uiView;
 
-- (jint)getContentOffsetXWithId:(id)uiView;
+- (int32_t)getContentOffsetXWithId:(id)uiView;
 
-- (jint)getContentOffsetYWithId:(id)uiView;
+- (int32_t)getContentOffsetYWithId:(id)uiView;
 
-- (jint)getContentHeightWithId:(id)uiView;
+- (int32_t)getContentHeightWithId:(id)uiView;
 
-- (jint)getContentWidthWithId:(id)uiView;
+- (int32_t)getContentWidthWithId:(id)uiView;
 
-- (jint)getThumbWidth;
+- (int32_t)getThumbWidth;
 
-- (void)setMinimumWithInt:(jint)i;
+- (void)setMinimumWithInt:(int32_t)i;
 
-- (void)setCustomMakeFrameForChildWidgetWithInt:(jint)range
-                                        withInt:(jint)rangeDiff
-                                        withInt:(jint)l
-                                        withInt:(jint)t
-                                        withInt:(jint)r
-                                        withInt:(jint)b;
+- (void)setCustomMakeFrameForChildWidgetWithInt:(int32_t)range
+                                        withInt:(int32_t)rangeDiff
+                                        withInt:(int32_t)l
+                                        withInt:(int32_t)t
+                                        withInt:(int32_t)r
+                                        withInt:(int32_t)b;
 
-- (void)updateContentSizeWithInt:(jint)rangeDiff;
+- (void)updateContentSizeWithInt:(int32_t)rangeDiff;
 
-- (jint)getScrollBarMaxWithId:(id)view
-                    withFloat:(jfloat)scrollBarDimen;
+- (int32_t)getScrollBarMaxWithId:(id)view
+                       withFloat:(float)scrollBarDimen;
 
 @end
 
@@ -385,19 +397,19 @@ __attribute__((unused)) static void ASRecyclerViewImpl_initScrollBars(ASRecycler
 
 __attribute__((unused)) static void ASRecyclerViewImpl_setScrollBarIncrementWithId_(ASRecyclerViewImpl *self, id objValue);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_setNestedScrollStopDelayWithInt_(ASRecyclerViewImpl *self, jint delay);
+__attribute__((unused)) static void ASRecyclerViewImpl_setNestedScrollStopDelayWithInt_(ASRecyclerViewImpl *self, int32_t delay);
 
 __attribute__((unused)) static void ASRecyclerViewImpl_handleScroll(ASRecyclerViewImpl *self);
 
-__attribute__((unused)) static jfloat ASRecyclerViewImpl_getScrollBarDimenWithInt_withInt_(ASRecyclerViewImpl *self, jint range, jint extent);
+__attribute__((unused)) static float ASRecyclerViewImpl_getScrollBarDimenWithInt_withInt_(ASRecyclerViewImpl *self, int32_t range, int32_t extent);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_nativeMakeFrameForChildWidgetWithInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, jint l, jint t, jint r, jint b);
+__attribute__((unused)) static void ASRecyclerViewImpl_nativeMakeFrameForChildWidgetWithInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, int32_t l, int32_t t, int32_t r, int32_t b);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getExtent(ASRecyclerViewImpl *self);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getExtent(ASRecyclerViewImpl *self);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getOffset(ASRecyclerViewImpl *self);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getOffset(ASRecyclerViewImpl *self);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getRange(ASRecyclerViewImpl *self);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getRange(ASRecyclerViewImpl *self);
 
 __attribute__((unused)) static void ASRecyclerViewImpl_setOnScrollWithASWidgetAttribute_withNSString_withId_withASILifeCycleDecorator_(ASRecyclerViewImpl *self, ASWidgetAttribute *key, NSString *strValue, id objValue, id<ASILifeCycleDecorator> decorator);
 
@@ -415,7 +427,7 @@ __attribute__((unused)) static void ASRecyclerViewImpl_setSpanCountWithId_(ASRec
 
 __attribute__((unused)) static void ASRecyclerViewImpl_setOrientationWithId_(ASRecyclerViewImpl *self, id objValue);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getOrientation(ASRecyclerViewImpl *self);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getOrientation(ASRecyclerViewImpl *self);
 
 __attribute__((unused)) static void ASRecyclerViewImpl_setLayoutWithId_(ASRecyclerViewImpl *self, id objValue);
 
@@ -463,7 +475,7 @@ __attribute__((unused)) static void ASRecyclerViewImpl_setStackFromBottomWithId_
 
 __attribute__((unused)) static void ASRecyclerViewImpl_setReverseLayoutWithId_(ASRecyclerViewImpl *self, id objValue);
 
-__attribute__((unused)) static jboolean ASRecyclerViewImpl_isReverseLayout(ASRecyclerViewImpl *self);
+__attribute__((unused)) static bool ASRecyclerViewImpl_isReverseLayout(ASRecyclerViewImpl *self);
 
 __attribute__((unused)) static void ASRecyclerViewImpl_setFooterDisabledWithId_(ASRecyclerViewImpl *self, id objValue);
 
@@ -475,7 +487,7 @@ __attribute__((unused)) static void ASRecyclerViewImpl_setFilterDelayWithId_(ASR
 
 __attribute__((unused)) static void ASRecyclerViewImpl_setFilterIdWithId_(ASRecyclerViewImpl *self, id objValue);
 
-__attribute__((unused)) static jboolean ASRecyclerViewImpl_filterDataWithId_withNSStringArray_(ASRecyclerViewImpl *self, id model, IOSObjectArray *paths);
+__attribute__((unused)) static bool ASRecyclerViewImpl_filterDataWithId_withNSStringArray_(ASRecyclerViewImpl *self, id model, IOSObjectArray *paths);
 
 __attribute__((unused)) static void ASRecyclerViewImpl_setFilterSectionItemPathWithId_(ASRecyclerViewImpl *self, id objValue);
 
@@ -491,7 +503,7 @@ __attribute__((unused)) static void ASRecyclerViewImpl_stopScrollEndWithId_(ASRe
 
 __attribute__((unused)) static void ASRecyclerViewImpl_stopScrollStartWithId_(ASRecyclerViewImpl *self, id scrollView);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_updateContentSizeWithInt_withId_(ASRecyclerViewImpl *self, jint range, id uiView);
+__attribute__((unused)) static void ASRecyclerViewImpl_updateContentSizeWithInt_withId_(ASRecyclerViewImpl *self, int32_t range, id uiView);
 
 __attribute__((unused)) static void ASRecyclerViewImpl_applyTransformWithId_withId_(ASRecyclerViewImpl *self, id uiView, id view);
 
@@ -501,43 +513,43 @@ __attribute__((unused)) static void ASRecyclerViewImpl_showVerticalScrollBar(ASR
 
 __attribute__((unused)) static void ASRecyclerViewImpl_showHorizontalScrollBar(ASRecyclerViewImpl *self);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_setCustomHandleScrollWithInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, jint dpos, jint range, jint offset, jint extent);
+__attribute__((unused)) static void ASRecyclerViewImpl_setCustomHandleScrollWithInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, int32_t dpos, int32_t range, int32_t offset, int32_t extent);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_setSelectionWithInt_withInt_withId_(ASRecyclerViewImpl *self, jint percoffset, jint offset, id view);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_setSelectionWithInt_withInt_withId_(ASRecyclerViewImpl *self, int32_t percoffset, int32_t offset, id view);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_setContentSizeWidthWithInt_withId_(ASRecyclerViewImpl *self, jint range, id uiView);
+__attribute__((unused)) static void ASRecyclerViewImpl_setContentSizeWidthWithInt_withId_(ASRecyclerViewImpl *self, int32_t range, id uiView);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_setContentSizeHeightWithInt_withId_(ASRecyclerViewImpl *self, jint range, id uiView);
+__attribute__((unused)) static void ASRecyclerViewImpl_setContentSizeHeightWithInt_withId_(ASRecyclerViewImpl *self, int32_t range, id uiView);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_setMaximumWithInt_(ASRecyclerViewImpl *self, jint maxiumum);
+__attribute__((unused)) static void ASRecyclerViewImpl_setMaximumWithInt_(ASRecyclerViewImpl *self, int32_t maxiumum);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getMaximum(ASRecyclerViewImpl *self);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getMaximum(ASRecyclerViewImpl *self);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getSelection(ASRecyclerViewImpl *self);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getSelection(ASRecyclerViewImpl *self);
 
 __attribute__((unused)) static void ASRecyclerViewImpl_flashScrollIndicatorsWithId_(ASRecyclerViewImpl *self, id uiView);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_setContentOffsetXWithInt_withId_(ASRecyclerViewImpl *self, jint range, id uiView);
+__attribute__((unused)) static void ASRecyclerViewImpl_setContentOffsetXWithInt_withId_(ASRecyclerViewImpl *self, int32_t range, id uiView);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_setContentOffsetYWithInt_withId_(ASRecyclerViewImpl *self, jint range, id uiView);
+__attribute__((unused)) static void ASRecyclerViewImpl_setContentOffsetYWithInt_withId_(ASRecyclerViewImpl *self, int32_t range, id uiView);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getContentOffsetXWithId_(ASRecyclerViewImpl *self, id uiView);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getContentOffsetXWithId_(ASRecyclerViewImpl *self, id uiView);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getContentOffsetYWithId_(ASRecyclerViewImpl *self, id uiView);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getContentOffsetYWithId_(ASRecyclerViewImpl *self, id uiView);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getContentHeightWithId_(ASRecyclerViewImpl *self, id uiView);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getContentHeightWithId_(ASRecyclerViewImpl *self, id uiView);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getContentWidthWithId_(ASRecyclerViewImpl *self, id uiView);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getContentWidthWithId_(ASRecyclerViewImpl *self, id uiView);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getThumbWidth(ASRecyclerViewImpl *self);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getThumbWidth(ASRecyclerViewImpl *self);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_setMinimumWithInt_(ASRecyclerViewImpl *self, jint i);
+__attribute__((unused)) static void ASRecyclerViewImpl_setMinimumWithInt_(ASRecyclerViewImpl *self, int32_t i);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_setCustomMakeFrameForChildWidgetWithInt_withInt_withInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, jint range, jint rangeDiff, jint l, jint t, jint r, jint b);
+__attribute__((unused)) static void ASRecyclerViewImpl_setCustomMakeFrameForChildWidgetWithInt_withInt_withInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, int32_t range, int32_t rangeDiff, int32_t l, int32_t t, int32_t r, int32_t b);
 
-__attribute__((unused)) static void ASRecyclerViewImpl_updateContentSizeWithInt_(ASRecyclerViewImpl *self, jint rangeDiff);
+__attribute__((unused)) static void ASRecyclerViewImpl_updateContentSizeWithInt_(ASRecyclerViewImpl *self, int32_t rangeDiff);
 
-__attribute__((unused)) static jint ASRecyclerViewImpl_getScrollBarMaxWithId_withFloat_(ASRecyclerViewImpl *self, id view, jfloat scrollBarDimen);
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_getScrollBarMaxWithId_withFloat_(ASRecyclerViewImpl *self, id view, float scrollBarDimen);
 
 @interface ASRecyclerViewImpl_Orientation () {
  @public
@@ -550,12 +562,12 @@ J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_Orientation, mapping_, id<JavaUtilMap>)
 
 @interface ASRecyclerViewImpl_RecyclerViewExt () {
  @public
-  __unsafe_unretained ASRecyclerViewImpl *this$0_;
+  WEAK_ ASRecyclerViewImpl *this$0_;
   ASMeasureEvent *measureFinished_;
   ASOnLayoutEvent *onLayoutEvent_;
   id<JavaUtilList> overlays_;
-  jint mMaxWidth_;
-  jint mMaxHeight_;
+  int32_t mMaxWidth_;
+  int32_t mMaxHeight_;
   id<JavaUtilMap> templates_;
 }
 
@@ -566,24 +578,24 @@ J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_RecyclerViewExt, onLayoutEvent_, ASOnLayo
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_RecyclerViewExt, overlays_, id<JavaUtilList>)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_RecyclerViewExt, templates_, id<JavaUtilMap>)
 
-__attribute__((unused)) static void ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(ASRecyclerViewImpl_ScrollProviderType *self, NSString *__name, jint __ordinal);
+__attribute__((unused)) static void ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(ASRecyclerViewImpl_ScrollProviderType *self, NSString *__name, int32_t __ordinal);
 
-__attribute__((unused)) static ASRecyclerViewImpl_ScrollProviderType *new_ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(NSString *__name, jint __ordinal) NS_RETURNS_RETAINED;
+__attribute__((unused)) static ASRecyclerViewImpl_ScrollProviderType *new_ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(NSString *__name, int32_t __ordinal) NS_RETURNS_RETAINED;
 
 @interface ASRecyclerViewImpl_ListAdapter () {
  @public
   ASRecyclerViewImpl *this$0_;
 }
 
-- (jboolean)isFooterWithInt:(jint)position;
+- (bool)isFooterWithInt:(int32_t)position;
 
-- (jboolean)isHeaderWithInt:(jint)position;
+- (bool)isHeaderWithInt:(int32_t)position;
 
 @end
 
-__attribute__((unused)) static jboolean ASRecyclerViewImpl_ListAdapter_isFooterWithInt_(ASRecyclerViewImpl_ListAdapter *self, jint position);
+__attribute__((unused)) static bool ASRecyclerViewImpl_ListAdapter_isFooterWithInt_(ASRecyclerViewImpl_ListAdapter *self, int32_t position);
 
-__attribute__((unused)) static jboolean ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(ASRecyclerViewImpl_ListAdapter *self, jint position);
+__attribute__((unused)) static bool ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(ASRecyclerViewImpl_ListAdapter *self, int32_t position);
 
 @interface ASRecyclerViewImpl_1 : ADXGridLayoutManager_SpanSizeLookup {
  @public
@@ -592,7 +604,7 @@ __attribute__((unused)) static jboolean ASRecyclerViewImpl_ListAdapter_isHeaderW
 
 - (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$;
 
-- (jint)getSpanSizeWithInt:(jint)position;
+- (int32_t)getSpanSizeWithInt:(int32_t)position;
 
 @end
 
@@ -604,6 +616,7 @@ __attribute__((unused)) static ASRecyclerViewImpl_1 *new_ASRecyclerViewImpl_1_in
 
 __attribute__((unused)) static ASRecyclerViewImpl_1 *create_ASRecyclerViewImpl_1_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$);
 
+
 @interface ASRecyclerViewImpl_2 : ADXGridLayoutManager_SpanSizeLookup {
  @public
   ASRecyclerViewImpl *this$0_;
@@ -611,7 +624,7 @@ __attribute__((unused)) static ASRecyclerViewImpl_1 *create_ASRecyclerViewImpl_1
 
 - (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$;
 
-- (jint)getSpanSizeWithInt:(jint)position;
+- (int32_t)getSpanSizeWithInt:(int32_t)position;
 
 @end
 
@@ -623,6 +636,7 @@ __attribute__((unused)) static ASRecyclerViewImpl_2 *new_ASRecyclerViewImpl_2_in
 
 __attribute__((unused)) static ASRecyclerViewImpl_2 *create_ASRecyclerViewImpl_2_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$);
 
+
 @interface ASRecyclerViewImpl_GenericItem () {
  @public
   ASRecyclerViewImpl *this$0_;
@@ -630,8 +644,8 @@ __attribute__((unused)) static ASRecyclerViewImpl_2 *create_ASRecyclerViewImpl_2
   ASLoopParam *loopParam_;
   id<JavaUtilList> viewHolderIds_;
   NSString *layout_;
-  jint margin_;
-  jboolean modified_;
+  int32_t margin_;
+  bool modified_;
 }
 
 @end
@@ -641,11 +655,11 @@ J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_GenericItem, loopParam_, ASLoopParam *)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_GenericItem, viewHolderIds_, id<JavaUtilList>)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_GenericItem, layout_, NSString *)
 
-__attribute__((unused)) static void ASRecyclerViewImpl_GenericItem_bindWithASRecyclerViewImpl_GroupieViewHolder_withInt_(ASRecyclerViewImpl_GenericItem *self, ASRecyclerViewImpl_GroupieViewHolder *viewHolder, jint position);
+__attribute__((unused)) static void ASRecyclerViewImpl_GenericItem_bindWithASRecyclerViewImpl_GroupieViewHolder_withInt_(ASRecyclerViewImpl_GenericItem *self, ASRecyclerViewImpl_GroupieViewHolder *viewHolder, int32_t position);
 
 @interface ASRecyclerViewImpl_GenericExpandableItem () {
  @public
-  __unsafe_unretained ASRecyclerViewImpl *this$1_;
+  WEAK_ ASRecyclerViewImpl *this$1_;
   ADXExpandableGroup *expandableGroup_;
   id<JavaUtilList> onClickIds_;
 }
@@ -657,13 +671,13 @@ J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_GenericExpandableItem, onClickIds_, id<Ja
 
 @interface ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener : NSObject < ADView_OnClickListener > {
  @public
-  __unsafe_unretained ASRecyclerViewImpl_GenericExpandableItem *this$0_;
-  jint position_;
+  WEAK_ ASRecyclerViewImpl_GenericExpandableItem *this$0_;
+  int32_t position_;
   id<ASIWidget> widget_;
 }
 
 - (instancetype)initWithASRecyclerViewImpl_GenericExpandableItem:(ASRecyclerViewImpl_GenericExpandableItem *)outer$
-                                                         withInt:(jint)position
+                                                         withInt:(int32_t)position
                                                    withASIWidget:(id<ASIWidget>)widget;
 
 - (void)onClickWithADView:(ADView *)arg0;
@@ -674,13 +688,14 @@ J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_GenericExpandableItem_ExpandableClic
 
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener, widget_, id<ASIWidget>)
 
-__attribute__((unused)) static void ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *self, ASRecyclerViewImpl_GenericExpandableItem *outer$, jint position, id<ASIWidget> widget);
+__attribute__((unused)) static void ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *self, ASRecyclerViewImpl_GenericExpandableItem *outer$, int32_t position, id<ASIWidget> widget);
 
-__attribute__((unused)) static ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *new_ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem *outer$, jint position, id<ASIWidget> widget) NS_RETURNS_RETAINED;
+__attribute__((unused)) static ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *new_ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem *outer$, int32_t position, id<ASIWidget> widget) NS_RETURNS_RETAINED;
 
-__attribute__((unused)) static ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *create_ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem *outer$, jint position, id<ASIWidget> widget);
+__attribute__((unused)) static ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *create_ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem *outer$, int32_t position, id<ASIWidget> widget);
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener)
+
 
 @interface ASRecyclerViewImpl_GroupieAdapter () {
  @public
@@ -707,18 +722,18 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericExpandableItem_ExpandableCl
                      withNSString:(NSString *)action;
 
 - (void)onScrollStateChangedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                        withInt:(jint)newState;
+                                        withInt:(int32_t)newState;
 
 - (void)onScrolledWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                              withInt:(jint)dx
-                              withInt:(jint)dy;
+                              withInt:(int32_t)dx
+                              withInt:(int32_t)dy;
 
 - (id<JavaUtilMap>)getOnScrolledEventObjWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                                    withInt:(jint)dx
-                                                    withInt:(jint)dy;
+                                                    withInt:(int32_t)dx
+                                                    withInt:(int32_t)dy;
 
 - (id<JavaUtilMap>)getOnScrollStateChangeEventObjWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                                             withInt:(jint)newState;
+                                                             withInt:(int32_t)newState;
 
 @end
 
@@ -743,6 +758,7 @@ __attribute__((unused)) static ASRecyclerViewImpl_OnScrollListener *create_ASRec
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_OnScrollListener)
 
+
 @interface ASRecyclerViewImpl_3 : NSObject < ASViewImpl_PanCallBack > {
  @public
   ASRecyclerViewImpl *this$0_;
@@ -752,18 +768,18 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_OnScrollListener)
 
 - (void)handlePanStartWithASIWidget:(id<ASIWidget>)widget
                              withId:(id)eventWidget
-                            withInt:(jint)x
-                            withInt:(jint)y;
+                            withInt:(int32_t)x
+                            withInt:(int32_t)y;
 
 - (void)handlePanDragWithASIWidget:(id<ASIWidget>)widget
                             withId:(id)eventWidget
-                           withInt:(jint)x
-                           withInt:(jint)y;
+                           withInt:(int32_t)x
+                           withInt:(int32_t)y;
 
 - (void)handlePanEndWithASIWidget:(id<ASIWidget>)widget
                            withId:(id)eventWidget
-                          withInt:(jint)x
-                          withInt:(jint)y;
+                          withInt:(int32_t)x
+                          withInt:(int32_t)y;
 
 @end
 
@@ -775,9 +791,10 @@ __attribute__((unused)) static ASRecyclerViewImpl_3 *new_ASRecyclerViewImpl_3_in
 
 __attribute__((unused)) static ASRecyclerViewImpl_3 *create_ASRecyclerViewImpl_3_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$);
 
+
 @interface ASRecyclerViewImpl_UIScrollViewDelegate () {
  @public
-  __unsafe_unretained ASRecyclerViewImpl *this$0_;
+  WEAK_ ASRecyclerViewImpl *this$0_;
 }
 
 @end
@@ -799,6 +816,7 @@ __attribute__((unused)) static ASRecyclerViewImpl_$Lambda$1 *new_ASRecyclerViewI
 
 __attribute__((unused)) static ASRecyclerViewImpl_$Lambda$1 *create_ASRecyclerViewImpl_$Lambda$1_initWithASIWidget_(id<ASIWidget> capture$0);
 
+
 @interface ASRecyclerViewImpl_$Lambda$2 : NSObject < JavaLangRunnable > {
  @public
   ASRecyclerViewImpl *this$0_;
@@ -816,6 +834,7 @@ __attribute__((unused)) static ASRecyclerViewImpl_$Lambda$2 *new_ASRecyclerViewI
 
 __attribute__((unused)) static ASRecyclerViewImpl_$Lambda$2 *create_ASRecyclerViewImpl_$Lambda$2_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$);
 
+
 @interface ASRecyclerViewImpl_$Lambda$3 : NSObject < JavaLangRunnable > {
  @public
   ASRecyclerViewImpl *this$0_;
@@ -832,6 +851,7 @@ __attribute__((unused)) static void ASRecyclerViewImpl_$Lambda$3_initWithASRecyc
 __attribute__((unused)) static ASRecyclerViewImpl_$Lambda$3 *new_ASRecyclerViewImpl_$Lambda$3_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$) NS_RETURNS_RETAINED;
 
 __attribute__((unused)) static ASRecyclerViewImpl_$Lambda$3 *create_ASRecyclerViewImpl_$Lambda$3_initWithASRecyclerViewImpl_(ASRecyclerViewImpl *outer$);
+
 
 NSString *ASRecyclerViewImpl_LOCAL_NAME = @"androidx.recyclerview.widget.RecyclerView";
 NSString *ASRecyclerViewImpl_GROUP_NAME = @"androidx.recyclerview.widget.RecyclerView";
@@ -916,7 +936,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (void)addWithASIWidget:(id<ASIWidget>)w
-                 withInt:(jint)index {
+                 withInt:(int32_t)index {
   if (index != -2) {
     ADView *view = (ADView *) cast_chk([((id<ASIWidget>) nil_chk(w)) asWidget], [ADView class]);
     ASRecyclerViewImpl_createLayoutParamsWithADView_(self, view);
@@ -1216,7 +1236,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   return uiView_;
 }
 
-- (jboolean)checkIosVersionWithNSString:(NSString *)v {
+- (bool)checkIosVersionWithNSString:(NSString *)v {
   return ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending);
 }
 
@@ -1234,7 +1254,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)addObjectWithASLoopParam:(ASLoopParam *)childModel
                     withNSString:(NSString *)modelIdPath
-                         withInt:(jint)index
+                         withInt:(int32_t)index
                     withNSString:(NSString *)currentLoopVar {
   NSString *id_ = nil;
   if (modelIdPath != nil) {
@@ -1266,7 +1286,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   ASRecyclerViewImpl_reloadTable(self);
 }
 
-- (jboolean)removeWithInt:(jint)index {
+- (bool)removeWithInt:(int32_t)index {
   if (index + 1 <= [((id<JavaUtilList>) nil_chk(ids_)) size]) {
     (void) [((id<JavaUtilList>) nil_chk(ids_)) removeWithInt:index];
   }
@@ -1277,7 +1297,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   return true;
 }
 
-- (jboolean)areWidgetItemsRecycled {
+- (bool)areWidgetItemsRecycled {
   return true;
 }
 
@@ -1307,7 +1327,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   ASRecyclerViewImpl_setScrollBarIncrementWithId_(self, objValue);
 }
 
-- (void)setNestedScrollStopDelayWithInt:(jint)delay {
+- (void)setNestedScrollStopDelayWithInt:(int32_t)delay {
   ASRecyclerViewImpl_setNestedScrollStopDelayWithInt_(self, delay);
 }
 
@@ -1315,27 +1335,27 @@ J2OBJC_IGNORE_DESIGNATED_END
   ASRecyclerViewImpl_handleScroll(self);
 }
 
-- (jfloat)getScrollBarDimenWithInt:(jint)range
-                           withInt:(jint)extent {
+- (float)getScrollBarDimenWithInt:(int32_t)range
+                          withInt:(int32_t)extent {
   return ASRecyclerViewImpl_getScrollBarDimenWithInt_withInt_(self, range, extent);
 }
 
-- (void)nativeMakeFrameForChildWidgetWithInt:(jint)l
-                                     withInt:(jint)t
-                                     withInt:(jint)r
-                                     withInt:(jint)b {
+- (void)nativeMakeFrameForChildWidgetWithInt:(int32_t)l
+                                     withInt:(int32_t)t
+                                     withInt:(int32_t)r
+                                     withInt:(int32_t)b {
   ASRecyclerViewImpl_nativeMakeFrameForChildWidgetWithInt_withInt_withInt_withInt_(self, l, t, r, b);
 }
 
-- (jint)getExtent {
+- (int32_t)getExtent {
   return ASRecyclerViewImpl_getExtent(self);
 }
 
-- (jint)getOffset {
+- (int32_t)getOffset {
   return ASRecyclerViewImpl_getOffset(self);
 }
 
-- (jint)getRange {
+- (int32_t)getRange {
   return ASRecyclerViewImpl_getRange(self);
 }
 
@@ -1377,11 +1397,11 @@ J2OBJC_IGNORE_DESIGNATED_END
   ASRecyclerViewImpl_setOrientationWithId_(self, objValue);
 }
 
-- (jint)getOrientation {
+- (int32_t)getOrientation {
   return ASRecyclerViewImpl_getOrientation(self);
 }
 
-- (jboolean)isHorizontal {
+- (bool)isHorizontal {
   return ASRecyclerViewImpl_getOrientation(self) == ADXRecyclerView_HORIZONTAL;
 }
 
@@ -1442,17 +1462,17 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)setItemViewParamsWithASIWidget:(id<ASIWidget>)widget
                             withADView:(ADView *)itemView {
-  jint itemViewWidth = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[((id<ASIWidget>) nil_chk(widget)) getAttributeValueWithNSString:@"layout_width"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
-  jint itemViewHeight = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_height"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
+  int32_t itemViewWidth = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[((id<ASIWidget>) nil_chk(widget)) getAttributeValueWithNSString:@"layout_width"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
+  int32_t itemViewHeight = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_height"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
   ADViewGroup_LayoutParams *lp = new_ADXGridLayoutManager_LayoutParams_initWithInt_withInt_(itemViewWidth, itemViewHeight);
-  jint itemMargin = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_margin"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
+  int32_t itemMargin = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_margin"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
   if (itemMargin != -2) {
     ASViewGroupImpl_setMarginWithId_withId_withASIWidget_(JavaLangInteger_valueOfWithInt_(itemMargin), lp, widget);
   }
-  jint itemMarginTop = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_marginTop"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
-  jint itemMarginBottom = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_marginBottom"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
-  jint itemMarginLeft = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_marginStart"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
-  jint itemMarginRight = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_marginEnd"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
+  int32_t itemMarginTop = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_marginTop"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
+  int32_t itemMarginBottom = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_marginBottom"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
+  int32_t itemMarginLeft = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_marginStart"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
+  int32_t itemMarginRight = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([((id<ASIConverter>) nil_chk(ASConverterFactory_getWithNSString_(ASCommonConverters_dimension))) convertFromWithId:[widget getAttributeValueWithNSString:@"layout_marginEnd"] withJavaUtilMap:nil withASIFragment:fragment_], [JavaLangInteger class]))) intValue];
   if (itemMarginTop != -2) {
     ASViewGroupImpl_setTopMarginWithId_withId_(JavaLangInteger_valueOfWithInt_(itemMarginTop), lp);
   }
@@ -1544,7 +1564,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   ASRecyclerViewImpl_setReverseLayoutWithId_(self, objValue);
 }
 
-- (jboolean)isReverseLayout {
+- (bool)isReverseLayout {
   return ASRecyclerViewImpl_isReverseLayout(self);
 }
 
@@ -1584,12 +1604,12 @@ J2OBJC_IGNORE_DESIGNATED_END
   ASRecyclerViewImpl_setFilterIdWithId_(self, objValue);
 }
 
-- (jboolean)filterDataWithId:(id)model {
+- (bool)filterDataWithId:(id)model {
   return ASRecyclerViewImpl_filterDataWithId_withNSStringArray_(self, model, filterItemPaths_);
 }
 
-- (jboolean)filterDataWithId:(id)model
-           withNSStringArray:(IOSObjectArray *)paths {
+- (bool)filterDataWithId:(id)model
+       withNSStringArray:(IOSObjectArray *)paths {
   return ASRecyclerViewImpl_filterDataWithId_withNSStringArray_(self, model, paths);
 }
 
@@ -1616,7 +1636,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (void)setVisibleWithBoolean:(jboolean)b {
+- (void)setVisibleWithBoolean:(bool)b {
   [((ADView *) nil_chk(((ADView *) cast_chk([self asWidget], [ADView class])))) setVisibilityWithInt:b ? ADView_VISIBLE : ADView_GONE];
 }
 
@@ -1631,9 +1651,9 @@ J2OBJC_IGNORE_DESIGNATED_END
   return uiView;
 }
 
-- (id)nativescrollViewCreateWithBoolean:(jboolean)scrollIndicator
-                            withBoolean:(jboolean)userInteractionEnabled
-                            withBoolean:(jboolean)infiniteScroll {
+- (id)nativescrollViewCreateWithBoolean:(bool)scrollIndicator
+                            withBoolean:(bool)userInteractionEnabled
+                            withBoolean:(bool)infiniteScroll {
   ASUIScrollView* uiView = [ASUIScrollView new];
   uiView.backgroundColor = [UIColor clearColor];
   uiView.showsVerticalScrollIndicator=scrollIndicator;
@@ -1655,7 +1675,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   ASRecyclerViewImpl_stopScrollStartWithId_(self, scrollView);
 }
 
-- (void)updateContentSizeWithInt:(jint)range
+- (void)updateContentSizeWithInt:(int32_t)range
                           withId:(id)uiView {
   ASRecyclerViewImpl_updateContentSizeWithInt_withId_(self, range, uiView);
 }
@@ -1680,38 +1700,38 @@ J2OBJC_IGNORE_DESIGNATED_END
   ASRecyclerViewImpl_showHorizontalScrollBar(self);
 }
 
-- (void)setCustomHandleScrollWithInt:(jint)dpos
-                             withInt:(jint)range
-                             withInt:(jint)offset
-                             withInt:(jint)extent {
+- (void)setCustomHandleScrollWithInt:(int32_t)dpos
+                             withInt:(int32_t)range
+                             withInt:(int32_t)offset
+                             withInt:(int32_t)extent {
   ASRecyclerViewImpl_setCustomHandleScrollWithInt_withInt_withInt_withInt_(self, dpos, range, offset, extent);
 }
 
-- (jint)setSelectionWithInt:(jint)percoffset
-                    withInt:(jint)offset
-                     withId:(id)view {
+- (int32_t)setSelectionWithInt:(int32_t)percoffset
+                       withInt:(int32_t)offset
+                        withId:(id)view {
   return ASRecyclerViewImpl_setSelectionWithInt_withInt_withId_(self, percoffset, offset, view);
 }
 
-- (void)setContentSizeWidthWithInt:(jint)range
+- (void)setContentSizeWidthWithInt:(int32_t)range
                             withId:(id)uiView {
   ASRecyclerViewImpl_setContentSizeWidthWithInt_withId_(self, range, uiView);
 }
 
-- (void)setContentSizeHeightWithInt:(jint)range
+- (void)setContentSizeHeightWithInt:(int32_t)range
                              withId:(id)uiView {
   ASRecyclerViewImpl_setContentSizeHeightWithInt_withId_(self, range, uiView);
 }
 
-- (void)setMaximumWithInt:(jint)maxiumum {
+- (void)setMaximumWithInt:(int32_t)maxiumum {
   ASRecyclerViewImpl_setMaximumWithInt_(self, maxiumum);
 }
 
-- (jint)getMaximum {
+- (int32_t)getMaximum {
   return ASRecyclerViewImpl_getMaximum(self);
 }
 
-- (jint)getSelection {
+- (int32_t)getSelection {
   return ASRecyclerViewImpl_getSelection(self);
 }
 
@@ -1719,50 +1739,50 @@ J2OBJC_IGNORE_DESIGNATED_END
   ASRecyclerViewImpl_flashScrollIndicatorsWithId_(self, uiView);
 }
 
-- (void)setContentOffsetXWithInt:(jint)range
+- (void)setContentOffsetXWithInt:(int32_t)range
                           withId:(id)uiView {
   ASRecyclerViewImpl_setContentOffsetXWithInt_withId_(self, range, uiView);
 }
 
-- (void)setContentOffsetYWithInt:(jint)range
+- (void)setContentOffsetYWithInt:(int32_t)range
                           withId:(id)uiView {
   ASRecyclerViewImpl_setContentOffsetYWithInt_withId_(self, range, uiView);
 }
 
-- (jint)getContentOffsetXWithId:(id)uiView {
+- (int32_t)getContentOffsetXWithId:(id)uiView {
   return ASRecyclerViewImpl_getContentOffsetXWithId_(self, uiView);
 }
 
-- (jint)getContentOffsetYWithId:(id)uiView {
+- (int32_t)getContentOffsetYWithId:(id)uiView {
   return ASRecyclerViewImpl_getContentOffsetYWithId_(self, uiView);
 }
 
-- (jint)getContentHeightWithId:(id)uiView {
+- (int32_t)getContentHeightWithId:(id)uiView {
   return ASRecyclerViewImpl_getContentHeightWithId_(self, uiView);
 }
 
-- (jint)getContentWidthWithId:(id)uiView {
+- (int32_t)getContentWidthWithId:(id)uiView {
   return ASRecyclerViewImpl_getContentWidthWithId_(self, uiView);
 }
 
-- (jint)getThumbWidth {
+- (int32_t)getThumbWidth {
   return ASRecyclerViewImpl_getThumbWidth(self);
 }
 
-- (void)setMinimumWithInt:(jint)i {
+- (void)setMinimumWithInt:(int32_t)i {
   ASRecyclerViewImpl_setMinimumWithInt_(self, i);
 }
 
-- (void)setCustomMakeFrameForChildWidgetWithInt:(jint)range
-                                        withInt:(jint)rangeDiff
-                                        withInt:(jint)l
-                                        withInt:(jint)t
-                                        withInt:(jint)r
-                                        withInt:(jint)b {
+- (void)setCustomMakeFrameForChildWidgetWithInt:(int32_t)range
+                                        withInt:(int32_t)rangeDiff
+                                        withInt:(int32_t)l
+                                        withInt:(int32_t)t
+                                        withInt:(int32_t)r
+                                        withInt:(int32_t)b {
   ASRecyclerViewImpl_setCustomMakeFrameForChildWidgetWithInt_withInt_withInt_withInt_withInt_withInt_(self, range, rangeDiff, l, t, r, b);
 }
 
-- (void)updateContentSizeOfScrolledProviderWithInt:(jint)range {
+- (void)updateContentSizeOfScrolledProviderWithInt:(int32_t)range {
   if ([self isHorizontal]) {
     ASRecyclerViewImpl_setContentSizeWidthWithInt_withId_(self, range, scrollProvider_);
   }
@@ -1771,16 +1791,16 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (void)updateContentSizeWithInt:(jint)rangeDiff {
+- (void)updateContentSizeWithInt:(int32_t)rangeDiff {
   ASRecyclerViewImpl_updateContentSizeWithInt_(self, rangeDiff);
 }
 
-- (jint)getScrollBarMaxWithId:(id)view
-                    withFloat:(jfloat)scrollBarDimen {
+- (int32_t)getScrollBarMaxWithId:(id)view
+                       withFloat:(float)scrollBarDimen {
   return ASRecyclerViewImpl_getScrollBarMaxWithId_withFloat_(self, view, scrollBarDimen);
 }
 
-- (void)adjustScrollOffsetWhenEdgeReachedWithInt:(jint)dpos {
+- (void)adjustScrollOffsetWhenEdgeReachedWithInt:(int32_t)dpos {
   if (dpos >= 0) {
     if ([self isHorizontal]) {
       if (![((ADXRecyclerView *) nil_chk(recyclerView_)) canScrollHorizontallyWithInt:1]) {
@@ -2233,7 +2253,7 @@ void ASRecyclerViewImpl_setScrollBarIncrementWithId_(ASRecyclerViewImpl *self, i
   self->scrollBarIncrement_ = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk(objValue, [JavaLangInteger class]))) intValue];
 }
 
-void ASRecyclerViewImpl_setNestedScrollStopDelayWithInt_(ASRecyclerViewImpl *self, jint delay) {
+void ASRecyclerViewImpl_setNestedScrollStopDelayWithInt_(ASRecyclerViewImpl *self, int32_t delay) {
   self->nestedScrollStopDelay_ = delay;
 }
 
@@ -2241,20 +2261,20 @@ void ASRecyclerViewImpl_handleScroll(ASRecyclerViewImpl *self) {
   @try {
     [((id<ASIFragment>) nil_chk(self->fragment_)) disableRemeasure];
     [((ADHandler *) nil_chk(self->nestedScrollHandler_)) removeCallbacksAndMessagesWithId:nil];
-    jlong currentTime = JavaLangSystem_currentTimeMillis();
+    int64_t currentTime = JavaLangSystem_currentTimeMillis();
     if (currentTime - self->lastScrollEvent_ >= self->nestedScrollStopDelay_) {
       [((ADXRecyclerView *) nil_chk(self->recyclerView_)) startNestedScroll];
     }
     [((ADHandler *) nil_chk(self->nestedScrollHandler_)) postDelayedWithJavaLangRunnable:new_ASRecyclerViewImpl_$Lambda$2_initWithASRecyclerViewImpl_(self) withLong:self->nestedScrollStopDelay_];
     self->lastScrollEvent_ = JavaLangSystem_currentTimeMillis();
-    jint range = ASRecyclerViewImpl_getRange(self);
-    jint offset = ASRecyclerViewImpl_getOffset(self);
-    jint extent = ASRecyclerViewImpl_getExtent(self);
-    jfloat scrollBarDimen = ASRecyclerViewImpl_getScrollBarDimenWithInt_withInt_(self, range, extent);
-    jint rangeDiff = range - self->prevRange_;
+    int32_t range = ASRecyclerViewImpl_getRange(self);
+    int32_t offset = ASRecyclerViewImpl_getOffset(self);
+    int32_t extent = ASRecyclerViewImpl_getExtent(self);
+    float scrollBarDimen = ASRecyclerViewImpl_getScrollBarDimenWithInt_withInt_(self, range, extent);
+    int32_t rangeDiff = range - self->prevRange_;
     self->prevRange_ = range;
-    jint selection = ASRecyclerViewImpl_getSelection(self);
-    jint dpos = selection - self->oldScrollPos_;
+    int32_t selection = ASRecyclerViewImpl_getSelection(self);
+    int32_t dpos = selection - self->oldScrollPos_;
     if (self->scrollProviderType_ == JreLoadEnum(ASRecyclerViewImpl_ScrollProviderType, DRAGABBLE)) {
       if (selection >= ASRecyclerViewImpl_getScrollBarMaxWithId_withFloat_(self, self->scrollProvider_, scrollBarDimen) - 20) {
         dpos = self->scrollBarIncrement_ * 1000;
@@ -2286,16 +2306,16 @@ void ASRecyclerViewImpl_handleScroll(ASRecyclerViewImpl *self) {
   }
 }
 
-jfloat ASRecyclerViewImpl_getScrollBarDimenWithInt_withInt_(ASRecyclerViewImpl *self, jint range, jint extent) {
-  return (extent / (jfloat) range) * extent;
+float ASRecyclerViewImpl_getScrollBarDimenWithInt_withInt_(ASRecyclerViewImpl *self, int32_t range, int32_t extent) {
+  return (extent / (float) range) * extent;
 }
 
-void ASRecyclerViewImpl_nativeMakeFrameForChildWidgetWithInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, jint l, jint t, jint r, jint b) {
+void ASRecyclerViewImpl_nativeMakeFrameForChildWidgetWithInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, int32_t l, int32_t t, int32_t r, int32_t b) {
   ASRecyclerViewImpl_setMinimumWithInt_(self, 0);
-  jint range = ASRecyclerViewImpl_getRange(self);
-  jint offset = ASRecyclerViewImpl_getOffset(self);
-  jint extent = ASRecyclerViewImpl_getExtent(self);
-  jint rangeDiff = range - self->prevRange_;
+  int32_t range = ASRecyclerViewImpl_getRange(self);
+  int32_t offset = ASRecyclerViewImpl_getOffset(self);
+  int32_t extent = ASRecyclerViewImpl_getExtent(self);
+  int32_t rangeDiff = range - self->prevRange_;
   self->prevRange_ = range;
   if (self->scrollProviderType_ == JreLoadEnum(ASRecyclerViewImpl_ScrollProviderType, DRAGABBLE)) {
     if (ASRecyclerViewImpl_getMaximum(self) < range) {
@@ -2323,9 +2343,9 @@ void ASRecyclerViewImpl_nativeMakeFrameForChildWidgetWithInt_withInt_withInt_wit
   }
   ASRecyclerViewImpl_setCustomMakeFrameForChildWidgetWithInt_withInt_withInt_withInt_withInt_withInt_(self, range, rangeDiff, l, t, r, b);
   if ((range - extent) > 0) {
-    jfloat percentage = (offset / (jfloat) (range - extent));
-    jfloat scrollBarDimen = ASRecyclerViewImpl_getScrollBarDimenWithInt_withInt_(self, range, extent);
-    jint selection = ASRecyclerViewImpl_setSelectionWithInt_withInt_withId_(self, JreFpToInt((ASRecyclerViewImpl_getScrollBarMaxWithId_withFloat_(self, self->scrollProvider_, scrollBarDimen) * percentage)), offset, self->scrollProvider_);
+    float percentage = (offset / (float) (range - extent));
+    float scrollBarDimen = ASRecyclerViewImpl_getScrollBarDimenWithInt_withInt_(self, range, extent);
+    int32_t selection = ASRecyclerViewImpl_setSelectionWithInt_withInt_withId_(self, JreFpToInt((ASRecyclerViewImpl_getScrollBarMaxWithId_withFloat_(self, self->scrollProvider_, scrollBarDimen) * percentage)), offset, self->scrollProvider_);
     if (selection >= 0) {
       self->oldScrollPos_ = selection;
     }
@@ -2337,7 +2357,7 @@ void ASRecyclerViewImpl_nativeMakeFrameForChildWidgetWithInt_withInt_withInt_wit
         }
       }
       else {
-        jint currentSelection = ASRecyclerViewImpl_getSelection(self);
+        int32_t currentSelection = ASRecyclerViewImpl_getSelection(self);
         if (currentSelection >= 0) {
           self->oldScrollPos_ = currentSelection;
         }
@@ -2349,15 +2369,15 @@ void ASRecyclerViewImpl_nativeMakeFrameForChildWidgetWithInt_withInt_withInt_wit
   }
 }
 
-jint ASRecyclerViewImpl_getExtent(ASRecyclerViewImpl *self) {
+int32_t ASRecyclerViewImpl_getExtent(ASRecyclerViewImpl *self) {
   return [self isHorizontal] ? [((ADXRecyclerView *) nil_chk(self->recyclerView_)) computeHorizontalScrollExtent] : [((ADXRecyclerView *) nil_chk(self->recyclerView_)) computeVerticalScrollExtent];
 }
 
-jint ASRecyclerViewImpl_getOffset(ASRecyclerViewImpl *self) {
+int32_t ASRecyclerViewImpl_getOffset(ASRecyclerViewImpl *self) {
   return [self isHorizontal] ? [((ADXRecyclerView *) nil_chk(self->recyclerView_)) computeHorizontalScrollOffset] : [((ADXRecyclerView *) nil_chk(self->recyclerView_)) computeVerticalScrollOffset];
 }
 
-jint ASRecyclerViewImpl_getRange(ASRecyclerViewImpl *self) {
+int32_t ASRecyclerViewImpl_getRange(ASRecyclerViewImpl *self) {
   return [self isHorizontal] ? [((ADXRecyclerView *) nil_chk(self->recyclerView_)) computeHorizontalScrollRange] : [((ADXRecyclerView *) nil_chk(self->recyclerView_)) computeVerticalScrollRange];
 }
 
@@ -2459,7 +2479,7 @@ void ASRecyclerViewImpl_setOrientationWithId_(ASRecyclerViewImpl *self, id objVa
   }
 }
 
-jint ASRecyclerViewImpl_getOrientation(ASRecyclerViewImpl *self) {
+int32_t ASRecyclerViewImpl_getOrientation(ASRecyclerViewImpl *self) {
   return self->orientation_;
 }
 
@@ -2592,7 +2612,7 @@ void ASRecyclerViewImpl_createExpandableWithJavaUtilMap_withADXSection_withASLoo
     if (viewHolderId != nil) {
       viewHolderIds = (id<JavaUtilList>) cast_check([self quickConvertWithId:viewHolderId withNSString:ASCommonConverters_array withNSString:@"list" withNSString:nil], JavaUtilList_class_());
     }
-    jint margin = 0;
+    int32_t margin = 0;
     if ([itemMap containsKeyWithId:@"@gridInsets"]) {
       margin = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:[itemMap getWithId:@"@gridInsets"] withNSString:ASCommonConverters_dimension], [JavaLangInteger class]))) intValue];
     }
@@ -2656,7 +2676,7 @@ void ASRecyclerViewImpl_createItemsWithJavaUtilMap_withADXSection_withASLoopPara
 }
 
 void ASRecyclerViewImpl_createItemWithADXSection_withJavaUtilMap_withASLoopParam_withId_(ASRecyclerViewImpl *self, ADXSection *section, id<JavaUtilMap> itemMap, ASLoopParam *pLoopParam, id myitem) {
-  jint numberOfColumns = 1;
+  int32_t numberOfColumns = 1;
   if ([((id<JavaUtilMap>) nil_chk(itemMap)) containsKeyWithId:@"@numberOfColumns"]) {
     numberOfColumns = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:[itemMap getWithId:@"@numberOfColumns"] withNSString:ASCommonConverters_intconverter], [JavaLangInteger class]))) intValue];
   }
@@ -2667,7 +2687,7 @@ void ASRecyclerViewImpl_createItemWithADXSection_withJavaUtilMap_withASLoopParam
   if (viewHolderId != nil) {
     viewHolderIds = (id<JavaUtilList>) cast_check([self quickConvertWithId:viewHolderId withNSString:ASCommonConverters_array withNSString:@"list" withNSString:nil], JavaUtilList_class_());
   }
-  jint margin = 0;
+  int32_t margin = 0;
   if ([itemMap containsKeyWithId:@"@gridInsets"]) {
     margin = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:[itemMap getWithId:@"@gridInsets"] withNSString:ASCommonConverters_dimension], [JavaLangInteger class]))) intValue];
   }
@@ -2824,7 +2844,7 @@ void ASRecyclerViewImpl_removeSectionItemWithNSString_withNSString_withNSString_
         if ([itemConfig containsKeyWithId:@"@idPath"]) {
           NSString *path = ASPluginInvoker_getStringWithId_([itemConfig getWithId:@"@idPath"]);
           ASModelExpressionParser_ModelFromScopeHolder *modelFromScopeHolder = ASModelExpressionParser_parseModelFromScopeWithNSString_(path);
-          for (jint i = 0; i < [((id<JavaUtilList>) nil_chk(list)) size]; i++) {
+          for (int32_t i = 0; i < [((id<JavaUtilList>) nil_chk(list)) size]; i++) {
             id obj = [self getModelByPathWithNSString:((ASModelExpressionParser_ModelFromScopeHolder *) nil_chk(modelFromScopeHolder))->varPath_ withId:[list getWithInt:i]];
             if ([((NSString *) nil_chk(itemId)) isEqual:obj]) {
               (void) [list removeWithInt:i];
@@ -2835,7 +2855,7 @@ void ASRecyclerViewImpl_removeSectionItemWithNSString_withNSString_withNSString_
         ASRecyclerViewImpl_notifyDataSetChangedWithASRecyclerViewImpl_SectionHolder_(self, sectionHolder);
       }
       else {
-        jint itemCount = [((ADXSection *) nil_chk(((ASRecyclerViewImpl_SectionHolder *) nil_chk(sectionHolder))->section_)) getItemCount];
+        int32_t itemCount = [((ADXSection *) nil_chk(((ASRecyclerViewImpl_SectionHolder *) nil_chk(sectionHolder))->section_)) getItemCount];
         if ([itemConfig containsKeyWithId:@"@idPath"]) {
           NSString *path = ASPluginInvoker_getStringWithId_([itemConfig getWithId:@"@idPath"]);
           ASModelExpressionParser_ModelFromScopeHolder *modelFromScopeHolder = ASModelExpressionParser_parseModelFromScopeWithNSString_(path);
@@ -2843,7 +2863,7 @@ void ASRecyclerViewImpl_removeSectionItemWithNSString_withNSString_withNSString_
             id<JavaUtilList> list = ASRecyclerViewImpl_getModelChildItemsWithJavaUtilMap_withASLoopParam_(self, itemConfig, sectionHolder->loopParam_);
             ASRecyclerViewImpl_syncObjectRemoveSectionItemWithNSString_withNSString_withJavaUtilList_(self, itemId, ((ASModelExpressionParser_ModelFromScopeHolder *) nil_chk(modelFromScopeHolder))->varPath_, list);
           }
-          for (jint i = itemCount - 1; i >= 0; i--) {
+          for (int32_t i = itemCount - 1; i >= 0; i--) {
             ADXItem *item = [((ADXSection *) nil_chk(sectionHolder->section_)) getItemWithInt:i];
             if ([item isKindOfClass:[ASRecyclerViewImpl_GenericItem class]]) {
               id obj = [self getModelFromScopeWithNSString:((ASModelExpressionParser_ModelFromScopeHolder *) nil_chk(modelFromScopeHolder))->varName_ withASModelScope:modelFromScopeHolder->varScope_ withASLoopParam:[((ASRecyclerViewImpl_GenericItem *) nil_chk(((ASRecyclerViewImpl_GenericItem *) item))) getLoopParam]];
@@ -2860,7 +2880,7 @@ void ASRecyclerViewImpl_removeSectionItemWithNSString_withNSString_withNSString_
 }
 
 void ASRecyclerViewImpl_syncObjectRemoveSectionItemWithNSString_withNSString_withJavaUtilList_(ASRecyclerViewImpl *self, NSString *itemId, NSString *idPath, id<JavaUtilList> list) {
-  for (jint j = [((id<JavaUtilList>) nil_chk(list)) size] - 1; j >= 0; j--) {
+  for (int32_t j = [((id<JavaUtilList>) nil_chk(list)) size] - 1; j >= 0; j--) {
     id model = [list getWithInt:j];
     id id_ = [self getModelByPathWithNSString:idPath withId:model];
     if ([((NSString *) nil_chk(itemId)) isEqual:id_]) {
@@ -2870,7 +2890,7 @@ void ASRecyclerViewImpl_syncObjectRemoveSectionItemWithNSString_withNSString_wit
 }
 
 void ASRecyclerViewImpl_syncObjectUpdateSectionItemWithNSString_withNSString_withJavaUtilList_withId_(ASRecyclerViewImpl *self, NSString *itemId, NSString *idPath, id<JavaUtilList> list, id item) {
-  for (jint j = [((id<JavaUtilList>) nil_chk(list)) size] - 1; j >= 0; j--) {
+  for (int32_t j = [((id<JavaUtilList>) nil_chk(list)) size] - 1; j >= 0; j--) {
     id model = [list getWithInt:j];
     id id_ = [self getModelByPathWithNSString:idPath withId:model];
     if ([((NSString *) nil_chk(itemId)) isEqual:id_]) {
@@ -2890,7 +2910,7 @@ void ASRecyclerViewImpl_removeAllItemsWithNSString_withNSString_(ASRecyclerViewI
           NSString * const *b__ = ((IOSObjectArray *) nil_chk(a__))->buffer_;
           NSString * const *e__ = b__ + a__->size_;
           while (b__ < e__) {
-            NSString *itemConfigId = *b__++;
+            NSString *itemConfigId = RETAIN_AND_AUTORELEASE(*b__++);
             id<JavaUtilMap> itemConfig = [((id<JavaUtilMap>) nil_chk(self->itemConfigMap_)) getWithId:itemConfigId];
             if ([((id<JavaUtilMap>) nil_chk(itemConfig)) containsKeyWithId:@"@itemsPath"]) {
               id<JavaUtilList> list = [self getChildItemsWithASRecyclerViewImpl_SectionHolder:sectionHolder withJavaUtilMap:itemConfig];
@@ -2927,7 +2947,7 @@ void ASRecyclerViewImpl_updateSectionItemWithNSString_withNSString_withNSString_
         if ([itemConfig containsKeyWithId:@"@idPath"]) {
           NSString *path = ASPluginInvoker_getStringWithId_([itemConfig getWithId:@"@idPath"]);
           ASModelExpressionParser_ModelFromScopeHolder *modelFromScopeHolder = ASModelExpressionParser_parseModelFromScopeWithNSString_(path);
-          for (jint i = 0; i < [((id<JavaUtilList>) nil_chk(list)) size]; i++) {
+          for (int32_t i = 0; i < [((id<JavaUtilList>) nil_chk(list)) size]; i++) {
             id obj = [self getModelByPathWithNSString:((ASModelExpressionParser_ModelFromScopeHolder *) nil_chk(modelFromScopeHolder))->varPath_ withId:[list getWithInt:i]];
             if ([((NSString *) nil_chk(itemId)) isEqual:obj]) {
               (void) [list setWithInt:i withId:newData];
@@ -2945,10 +2965,10 @@ void ASRecyclerViewImpl_updateSectionItemWithNSString_withNSString_withNSString_
             id<JavaUtilList> list = ASRecyclerViewImpl_getModelChildItemsWithJavaUtilMap_withASLoopParam_(self, itemConfig, ((ASRecyclerViewImpl_SectionHolder *) nil_chk(sectionHolder))->loopParam_);
             ASRecyclerViewImpl_syncObjectUpdateSectionItemWithNSString_withNSString_withJavaUtilList_withId_(self, itemId, ((ASModelExpressionParser_ModelFromScopeHolder *) nil_chk(modelFromScopeHolder))->varPath_, list, newData);
           }
-          jint itemCount = [((ADXSection *) nil_chk(((ASRecyclerViewImpl_SectionHolder *) nil_chk(sectionHolder))->section_)) getItemCount];
-          jint layoutId = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:ASPluginInvoker_getStringWithId_([itemConfig getWithId:@"@layout"]) withNSString:@"id"], [JavaLangInteger class]))) intValue];
+          int32_t itemCount = [((ADXSection *) nil_chk(((ASRecyclerViewImpl_SectionHolder *) nil_chk(sectionHolder))->section_)) getItemCount];
+          int32_t layoutId = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:ASPluginInvoker_getStringWithId_([itemConfig getWithId:@"@layout"]) withNSString:@"id"], [JavaLangInteger class]))) intValue];
           JavaUtilArrayList *items = new_JavaUtilArrayList_init();
-          for (jint i = itemCount - 1; i >= 0; i--) {
+          for (int32_t i = itemCount - 1; i >= 0; i--) {
             ADXItem *item = [((ADXSection *) nil_chk(sectionHolder->section_)) getItemWithInt:i];
             if ([item isKindOfClass:[ASRecyclerViewImpl_GenericItem class]]) {
               if ([((ASRecyclerViewImpl_GenericItem *) nil_chk(((ASRecyclerViewImpl_GenericItem *) item))) getLayout] == layoutId) {
@@ -2997,7 +3017,7 @@ void ASRecyclerViewImpl_setReverseLayoutWithId_(ASRecyclerViewImpl *self, id obj
   }
 }
 
-jboolean ASRecyclerViewImpl_isReverseLayout(ASRecyclerViewImpl *self) {
+bool ASRecyclerViewImpl_isReverseLayout(ASRecyclerViewImpl *self) {
   ADXRecyclerView_LayoutManager *layoutManager = [((ADXRecyclerView *) nil_chk(self->recyclerView_)) getLayoutManager];
   if ([layoutManager isKindOfClass:[ADXLinearLayoutManager class]]) {
     return [((ADXLinearLayoutManager *) nil_chk(((ADXLinearLayoutManager *) layoutManager))) getReverseLayout];
@@ -3040,7 +3060,7 @@ void ASRecyclerViewImpl_setFilterIdWithId_(ASRecyclerViewImpl *self, id objValue
   self->filterId_ = (NSString *) cast_chk(objValue, [NSString class]);
 }
 
-jboolean ASRecyclerViewImpl_filterDataWithId_withNSStringArray_(ASRecyclerViewImpl *self, id model, IOSObjectArray *paths) {
+bool ASRecyclerViewImpl_filterDataWithId_withNSStringArray_(ASRecyclerViewImpl *self, id model, IOSObjectArray *paths) {
   if (self->filterQueryGetPath_ != nil) {
     self->query_ = (NSString *) cast_chk([self getModelFromScopeWithNSString:self->filterQueryGetPath_->varName_ withASModelScope:self->filterQueryGetPath_->varScope_], [NSString class]);
   }
@@ -3052,7 +3072,7 @@ jboolean ASRecyclerViewImpl_filterDataWithId_withNSStringArray_(ASRecyclerViewIm
     NSString * const *b__ = a__->buffer_;
     NSString * const *e__ = b__ + a__->size_;
     while (b__ < e__) {
-      NSString *path = *b__++;
+      NSString *path = RETAIN_AND_AUTORELEASE(*b__++);
       id modelVal = [self getModelByPathWithNSString:path withId:model];
       id<ASIFilter> filter = ASFilterFactory_getWithNSString_(self->filterId_);
       if (filter == nil) {
@@ -3103,7 +3123,7 @@ void ASRecyclerViewImpl_stopScrollStartWithId_(ASRecyclerViewImpl *self, id scro
   [((UIScrollView*) scrollView) setContentOffset:CGPointZero animated:NO];
 }
 
-void ASRecyclerViewImpl_updateContentSizeWithInt_withId_(ASRecyclerViewImpl *self, jint range, id uiView) {
+void ASRecyclerViewImpl_updateContentSizeWithInt_withId_(ASRecyclerViewImpl *self, int32_t range, id uiView) {
   UIScrollView* scrollView = ((UIScrollView*) uiView);
   
   if ([self isHorizontal]) {
@@ -3159,16 +3179,16 @@ void ASRecyclerViewImpl_showHorizontalScrollBar(ASRecyclerViewImpl *self) {
   scrollView.showsHorizontalScrollIndicator=YES;
 }
 
-void ASRecyclerViewImpl_setCustomHandleScrollWithInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, jint dpos, jint range, jint offset, jint extent) {
+void ASRecyclerViewImpl_setCustomHandleScrollWithInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, int32_t dpos, int32_t range, int32_t offset, int32_t extent) {
   [self updateContentSizeOfScrolledProviderWithInt:range];
   ASRecyclerViewImpl_setSelectionWithInt_withInt_withId_(self, offset, offset, self->scrollProvider_);
   [self adjustScrollOffsetWhenEdgeReachedWithInt:dpos];
 }
 
-jint ASRecyclerViewImpl_setSelectionWithInt_withInt_withId_(ASRecyclerViewImpl *self, jint percoffset, jint offset, id view) {
-  jint selection = percoffset;
-  jint oldScrollCorrect = percoffset;
-  if (view == self->scrollProvider_) {
+int32_t ASRecyclerViewImpl_setSelectionWithInt_withInt_withId_(ASRecyclerViewImpl *self, int32_t percoffset, int32_t offset, id view) {
+  int32_t selection = percoffset;
+  int32_t oldScrollCorrect = percoffset;
+  if (JreObjectEqualsEquals(view, self->scrollProvider_)) {
     selection = offset;
     oldScrollCorrect = -1;
   }
@@ -3179,7 +3199,7 @@ jint ASRecyclerViewImpl_setSelectionWithInt_withInt_withId_(ASRecyclerViewImpl *
     else {
       ASRecyclerViewImpl_setContentOffsetYWithInt_withId_(self, selection, view);
     }
-    if (ASRecyclerViewImpl_getSelection(self) > 0 && view == self->scrollProvider_) {
+    if (ASRecyclerViewImpl_getSelection(self) > 0 && JreObjectEqualsEquals(view, self->scrollProvider_)) {
       ASViewImpl_nativeBringToFrontWithId_(view);
       ASRecyclerViewImpl_flashScrollIndicatorsWithId_(self, view);
     }
@@ -3187,24 +3207,24 @@ jint ASRecyclerViewImpl_setSelectionWithInt_withInt_withId_(ASRecyclerViewImpl *
   return oldScrollCorrect;
 }
 
-void ASRecyclerViewImpl_setContentSizeWidthWithInt_withId_(ASRecyclerViewImpl *self, jint range, id uiView) {
+void ASRecyclerViewImpl_setContentSizeWidthWithInt_withId_(ASRecyclerViewImpl *self, int32_t range, id uiView) {
   UIScrollView* scrollView = ((UIScrollView*) uiView);
   scrollView.contentSize = CGSizeMake(range, scrollView.contentSize.height);
 }
 
-void ASRecyclerViewImpl_setContentSizeHeightWithInt_withId_(ASRecyclerViewImpl *self, jint range, id uiView) {
+void ASRecyclerViewImpl_setContentSizeHeightWithInt_withId_(ASRecyclerViewImpl *self, int32_t range, id uiView) {
   UIScrollView* scrollView = ((UIScrollView*) uiView);
   scrollView.contentSize = CGSizeMake(scrollView.contentSize.width, range);
 }
 
-void ASRecyclerViewImpl_setMaximumWithInt_(ASRecyclerViewImpl *self, jint maxiumum) {
+void ASRecyclerViewImpl_setMaximumWithInt_(ASRecyclerViewImpl *self, int32_t maxiumum) {
 }
 
-jint ASRecyclerViewImpl_getMaximum(ASRecyclerViewImpl *self) {
+int32_t ASRecyclerViewImpl_getMaximum(ASRecyclerViewImpl *self) {
   return 0;
 }
 
-jint ASRecyclerViewImpl_getSelection(ASRecyclerViewImpl *self) {
+int32_t ASRecyclerViewImpl_getSelection(ASRecyclerViewImpl *self) {
   return [self isHorizontal] ? ASRecyclerViewImpl_getContentOffsetXWithId_(self, self->uiView_) : ASRecyclerViewImpl_getContentOffsetYWithId_(self, self->uiView_);
 }
 
@@ -3215,58 +3235,58 @@ void ASRecyclerViewImpl_flashScrollIndicatorsWithId_(ASRecyclerViewImpl *self, i
   }];
 }
 
-void ASRecyclerViewImpl_setContentOffsetXWithInt_withId_(ASRecyclerViewImpl *self, jint range, id uiView) {
+void ASRecyclerViewImpl_setContentOffsetXWithInt_withId_(ASRecyclerViewImpl *self, int32_t range, id uiView) {
   UIScrollView* scrollView = ((UIScrollView*) uiView);
   [scrollView setContentOffset:CGPointMake(range, scrollView.contentOffset.y) animated:NO];
 }
 
-void ASRecyclerViewImpl_setContentOffsetYWithInt_withId_(ASRecyclerViewImpl *self, jint range, id uiView) {
+void ASRecyclerViewImpl_setContentOffsetYWithInt_withId_(ASRecyclerViewImpl *self, int32_t range, id uiView) {
   UIScrollView* scrollView = ((UIScrollView*) uiView);
   [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, range) animated:NO];
 }
 
-jint ASRecyclerViewImpl_getContentOffsetXWithId_(ASRecyclerViewImpl *self, id uiView) {
+int32_t ASRecyclerViewImpl_getContentOffsetXWithId_(ASRecyclerViewImpl *self, id uiView) {
   UIScrollView* scrollView = ((UIScrollView*) uiView);
   return scrollView.contentOffset.x;
 }
 
-jint ASRecyclerViewImpl_getContentOffsetYWithId_(ASRecyclerViewImpl *self, id uiView) {
+int32_t ASRecyclerViewImpl_getContentOffsetYWithId_(ASRecyclerViewImpl *self, id uiView) {
   UIScrollView* scrollView = ((UIScrollView*) uiView);
   return scrollView.contentOffset.y;
 }
 
-jint ASRecyclerViewImpl_getContentHeightWithId_(ASRecyclerViewImpl *self, id uiView) {
+int32_t ASRecyclerViewImpl_getContentHeightWithId_(ASRecyclerViewImpl *self, id uiView) {
   UIScrollView* scrollView = ((UIScrollView*) uiView);
   return scrollView.contentSize.height;
 }
 
-jint ASRecyclerViewImpl_getContentWidthWithId_(ASRecyclerViewImpl *self, id uiView) {
+int32_t ASRecyclerViewImpl_getContentWidthWithId_(ASRecyclerViewImpl *self, id uiView) {
   UIScrollView* scrollView = ((UIScrollView*) uiView);
   return scrollView.contentSize.width;
 }
 
-jint ASRecyclerViewImpl_getThumbWidth(ASRecyclerViewImpl *self) {
+int32_t ASRecyclerViewImpl_getThumbWidth(ASRecyclerViewImpl *self) {
   return 10;
 }
 
-void ASRecyclerViewImpl_setMinimumWithInt_(ASRecyclerViewImpl *self, jint i) {
+void ASRecyclerViewImpl_setMinimumWithInt_(ASRecyclerViewImpl *self, int32_t i) {
 }
 
-void ASRecyclerViewImpl_setCustomMakeFrameForChildWidgetWithInt_withInt_withInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, jint range, jint rangeDiff, jint l, jint t, jint r, jint b) {
+void ASRecyclerViewImpl_setCustomMakeFrameForChildWidgetWithInt_withInt_withInt_withInt_withInt_withInt_(ASRecyclerViewImpl *self, int32_t range, int32_t rangeDiff, int32_t l, int32_t t, int32_t r, int32_t b) {
   ASViewImpl_nativeMakeFrameWithId_withInt_withInt_withInt_withInt_(self->recyclerWrapperView_, l, t, r, b);
   ASRecyclerViewImpl_updateContentSizeWithInt_(self, rangeDiff);
   [self updateContentSizeOfScrolledProviderWithInt:range];
   ASRecyclerViewImpl_applyTransformWithId_withId_(self, self->uiView_, self->recyclerWrapperView_);
 }
 
-void ASRecyclerViewImpl_updateContentSizeWithInt_(ASRecyclerViewImpl *self, jint rangeDiff) {
+void ASRecyclerViewImpl_updateContentSizeWithInt_(ASRecyclerViewImpl *self, int32_t rangeDiff) {
   if ([self isHorizontal]) {
-    jint screenWidth = ASPluginInvoker_getScreenWidth();
-    jint contentWidth = ASRecyclerViewImpl_getContentWidthWithId_(self, self->uiView_);
+    int32_t screenWidth = ASPluginInvoker_getScreenWidth();
+    int32_t contentWidth = ASRecyclerViewImpl_getContentWidthWithId_(self, self->uiView_);
     if (ASRecyclerViewImpl_getContentOffsetXWithId_(self, self->uiView_) + screenWidth + 200 > contentWidth) {
       ASRecyclerViewImpl_setContentSizeWidthWithInt_withId_(self, contentWidth + screenWidth * 2, self->uiView_);
     }
-    jboolean isReverseLayout = ASRecyclerViewImpl_isReverseLayout(self);
+    bool isReverseLayout = ASRecyclerViewImpl_isReverseLayout(self);
     if (isReverseLayout) {
       if (rangeDiff > 0) {
         ASRecyclerViewImpl_setContentSizeWidthWithInt_withId_(self, ASRecyclerViewImpl_getContentWidthWithId_(self, self->uiView_) + rangeDiff, self->uiView_);
@@ -3276,12 +3296,12 @@ void ASRecyclerViewImpl_updateContentSizeWithInt_(ASRecyclerViewImpl *self, jint
     }
   }
   else {
-    jint screenHeight = ASPluginInvoker_getScreenHeight();
-    jint contentHeight = ASRecyclerViewImpl_getContentHeightWithId_(self, self->uiView_);
+    int32_t screenHeight = ASPluginInvoker_getScreenHeight();
+    int32_t contentHeight = ASRecyclerViewImpl_getContentHeightWithId_(self, self->uiView_);
     if (ASRecyclerViewImpl_getContentOffsetYWithId_(self, self->uiView_) + screenHeight + 200 > contentHeight) {
       ASRecyclerViewImpl_setContentSizeHeightWithInt_withId_(self, contentHeight + screenHeight * 2, self->uiView_);
     }
-    jboolean isReverseLayout = ASRecyclerViewImpl_isReverseLayout(self);
+    bool isReverseLayout = ASRecyclerViewImpl_isReverseLayout(self);
     if (isReverseLayout) {
       if (rangeDiff > 0) {
         ASRecyclerViewImpl_setContentSizeHeightWithInt_withId_(self, ASRecyclerViewImpl_getContentHeightWithId_(self, self->uiView_) + rangeDiff, self->uiView_);
@@ -3292,9 +3312,9 @@ void ASRecyclerViewImpl_updateContentSizeWithInt_(ASRecyclerViewImpl *self, jint
   }
 }
 
-jint ASRecyclerViewImpl_getScrollBarMaxWithId_withFloat_(ASRecyclerViewImpl *self, id view, jfloat scrollBarDimen) {
-  jint contentDimen = [self isHorizontal] ? ASRecyclerViewImpl_getContentWidthWithId_(self, view) : ASRecyclerViewImpl_getContentHeightWithId_(self, view);
-  jfloat maxVal = contentDimen - scrollBarDimen;
+int32_t ASRecyclerViewImpl_getScrollBarMaxWithId_withFloat_(ASRecyclerViewImpl *self, id view, float scrollBarDimen) {
+  int32_t contentDimen = [self isHorizontal] ? ASRecyclerViewImpl_getContentWidthWithId_(self, view) : ASRecyclerViewImpl_getContentHeightWithId_(self, view);
+  float maxVal = contentDimen - scrollBarDimen;
   if (maxVal < 0) {
     return 0;
   }
@@ -3302,6 +3322,8 @@ jint ASRecyclerViewImpl_getScrollBarMaxWithId_withFloat_(ASRecyclerViewImpl *sel
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl)
+
+J2OBJC_NAME_MAPPING(ASRecyclerViewImpl, "com.ashera.recycleview", "AS")
 
 @implementation ASRecyclerViewImpl_Orientation
 
@@ -3347,8 +3369,8 @@ void ASRecyclerViewImpl_Orientation_init(ASRecyclerViewImpl_Orientation *self) {
   ASAbstractEnumToIntConverter_init(self);
   self->mapping_ = new_JavaUtilHashMap_init();
   {
-    (void) [self->mapping_ putWithId:@"horizontal" withId:JavaLangInteger_valueOfWithInt_((jint) 0x0)];
-    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"vertical" withId:JavaLangInteger_valueOfWithInt_((jint) 0x1)];
+    (void) [self->mapping_ putWithId:@"horizontal" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x0)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"vertical" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x1)];
   }
 }
 
@@ -3368,19 +3390,19 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_Orientation)
   return this$0_;
 }
 
-- (void)setMaxWidthWithInt:(jint)width {
+- (void)setMaxWidthWithInt:(int32_t)width {
   mMaxWidth_ = width;
 }
 
-- (void)setMaxHeightWithInt:(jint)height {
+- (void)setMaxHeightWithInt:(int32_t)height {
   mMaxHeight_ = height;
 }
 
-- (jint)getMaxWidth {
+- (int32_t)getMaxWidth {
   return mMaxWidth_;
 }
 
-- (jint)getMaxHeight {
+- (int32_t)getMaxHeight {
   return mMaxHeight_;
 }
 
@@ -3389,8 +3411,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_Orientation)
   return self;
 }
 
-- (void)onMeasureWithInt:(jint)widthMeasureSpec
-                 withInt:(jint)heightMeasureSpec {
+- (void)onMeasureWithInt:(int32_t)widthMeasureSpec
+                 withInt:(int32_t)heightMeasureSpec {
   if (mMaxWidth_ > 0) {
     widthMeasureSpec = ADView_MeasureSpec_makeMeasureSpecWithInt_withInt_(mMaxWidth_, ADView_MeasureSpec_AT_MOST);
   }
@@ -3406,11 +3428,11 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_Orientation)
   }
 }
 
-- (void)onLayoutWithBoolean:(jboolean)changed
-                    withInt:(jint)l
-                    withInt:(jint)t
-                    withInt:(jint)r
-                    withInt:(jint)b {
+- (void)onLayoutWithBoolean:(bool)changed
+                    withInt:(int32_t)l
+                    withInt:(int32_t)t
+                    withInt:(int32_t)r
+                    withInt:(int32_t)b {
   [super onLayoutWithBoolean:changed withInt:l withInt:t withInt:r withInt:b];
   ASViewImpl_setDrawableBoundsWithASIWidget_withInt_withInt_withInt_withInt_(this$0_, l, t, r, b);
   if (![self isOverlay]) {
@@ -3438,8 +3460,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_Orientation)
           withNSObjectArray:(IOSObjectArray *)canvas {
 }
 
-- (void)updateMeasuredDimensionWithInt:(jint)width
-                               withInt:(jint)height {
+- (void)updateMeasuredDimensionWithInt:(int32_t)width
+                               withInt:(int32_t)height {
   [self setMeasuredDimensionWithInt:width withInt:height];
 }
 
@@ -3507,12 +3529,12 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_Orientation)
   displayFrame->bottom_ = displayFrame->top_ + [self getHeight];
 }
 
-- (void)offsetTopAndBottomWithInt:(jint)offset {
+- (void)offsetTopAndBottomWithInt:(int32_t)offset {
   [super offsetTopAndBottomWithInt:offset];
   ASViewImpl_nativeMakeFrameWithId_withInt_withInt_withInt_withInt_([this$0_ asNativeWidget], [self getLeft], [self getTop], [self getRight], [self getBottom]);
 }
 
-- (void)offsetLeftAndRightWithInt:(jint)offset {
+- (void)offsetLeftAndRightWithInt:(int32_t)offset {
   [super offsetLeftAndRightWithInt:offset];
   ASViewImpl_nativeMakeFrameWithId_withInt_withInt_withInt_withInt_([this$0_ asNativeWidget], [self getLeft], [self getTop], [self getRight], [self getBottom]);
 }
@@ -3542,7 +3564,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_Orientation)
   [this$0_ setAttributeWithNSString:name withId:value withBoolean:!([value isKindOfClass:[NSString class]])];
 }
 
-- (void)setVisibilityWithInt:(jint)visibility {
+- (void)setVisibilityWithInt:(int32_t)visibility {
   [super setVisibilityWithInt:visibility];
   ASViewImpl_nativeSetVisibilityWithId_withBoolean_([this$0_ asNativeWidget], visibility != ADView_VISIBLE);
 }
@@ -3741,6 +3763,24 @@ ASRecyclerViewImpl_ScrollProviderType *ASRecyclerViewImpl_ScrollProviderType_val
   return (ASRecyclerViewImpl_ScrollProviderType_Enum)[self ordinal];
 }
 
+- (ASRecyclerViewImpl_ScrollProviderType_Enum)enumValue {
+  return (ASRecyclerViewImpl_ScrollProviderType_Enum)[self ordinal];
+}
+
++ (ASRecyclerViewImpl_ScrollProviderType *)fromNSEnum:(ASRecyclerViewImpl_ScrollProviderType_Enum)nativeValue {
+  ASRecyclerViewImpl_ScrollProviderType *javaEnum = ASRecyclerViewImpl_ScrollProviderType_fromOrdinal(nativeValue);
+  if (!javaEnum) @throw create_JavaLangIllegalArgumentException_initWithNSString_(@"NSEnum ASRecyclerViewImpl_ScrollProviderType_Enum out of range.");
+  return javaEnum;
+}
+
+- (ASRecyclerViewImpl_ScrollProviderType_ORDINAL)ordinal {
+  return (ASRecyclerViewImpl_ScrollProviderType_ORDINAL)[super ordinal];
+}
+
+- (nullable instancetype)initWithScrollProviderType:(ASRecyclerViewImpl_ScrollProviderType_Enum)value {
+  return RETAIN_(ASRecyclerViewImpl_ScrollProviderType_fromOrdinal((ASRecyclerViewImpl_ScrollProviderType_ORDINAL)value));
+}
+
 + (const J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { NULL, "[LASRecyclerViewImpl_ScrollProviderType;", 0x9, -1, -1, -1, -1, -1, -1 },
@@ -3763,19 +3803,19 @@ ASRecyclerViewImpl_ScrollProviderType *ASRecyclerViewImpl_ScrollProviderType_val
 
 + (void)initialize {
   if (self == [ASRecyclerViewImpl_ScrollProviderType class]) {
-    JreEnum(ASRecyclerViewImpl_ScrollProviderType, READ_ONLY) = new_ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(JreEnumConstantName(ASRecyclerViewImpl_ScrollProviderType_class_(), 0), 0);
-    JreEnum(ASRecyclerViewImpl_ScrollProviderType, DRAGABBLE) = new_ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(JreEnumConstantName(ASRecyclerViewImpl_ScrollProviderType_class_(), 1), 1);
+    JreEnum(ASRecyclerViewImpl_ScrollProviderType, READ_ONLY) = new_ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(@"READ_ONLY", 0);
+    JreEnum(ASRecyclerViewImpl_ScrollProviderType, DRAGABBLE) = new_ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(@"DRAGABBLE", 1);
     J2OBJC_SET_INITIALIZED(ASRecyclerViewImpl_ScrollProviderType)
   }
 }
 
 @end
 
-void ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(ASRecyclerViewImpl_ScrollProviderType *self, NSString *__name, jint __ordinal) {
+void ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(ASRecyclerViewImpl_ScrollProviderType *self, NSString *__name, int32_t __ordinal) {
   JavaLangEnum_initWithNSString_withInt_(self, __name, __ordinal);
 }
 
-ASRecyclerViewImpl_ScrollProviderType *new_ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(NSString *__name, jint __ordinal) {
+ASRecyclerViewImpl_ScrollProviderType *new_ASRecyclerViewImpl_ScrollProviderType_initWithNSString_withInt_(NSString *__name, int32_t __ordinal) {
   J2OBJC_NEW_IMPL(ASRecyclerViewImpl_ScrollProviderType, initWithNSString_withInt_, __name, __ordinal)
 }
 
@@ -3793,12 +3833,11 @@ ASRecyclerViewImpl_ScrollProviderType *ASRecyclerViewImpl_ScrollProviderType_val
     }
   }
   @throw create_JavaLangIllegalArgumentException_initWithNSString_(name);
-  return nil;
 }
 
-ASRecyclerViewImpl_ScrollProviderType *ASRecyclerViewImpl_ScrollProviderType_fromOrdinal(NSUInteger ordinal) {
+ASRecyclerViewImpl_ScrollProviderType *ASRecyclerViewImpl_ScrollProviderType_fromOrdinal(ASRecyclerViewImpl_ScrollProviderType_ORDINAL ordinal) {
   ASRecyclerViewImpl_ScrollProviderType_initialize();
-  if (ordinal >= 2) {
+  if (ordinal < 0 || ordinal >= 2) {
     return nil;
   }
   return ASRecyclerViewImpl_ScrollProviderType_values_[ordinal];
@@ -3813,7 +3852,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
   return self;
 }
 
-- (jlong)getItemIdWithInt:(jint)position {
+- (int64_t)getItemIdWithInt:(int32_t)position {
   if (ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(self, position) || ASRecyclerViewImpl_ListAdapter_isFooterWithInt_(self, position)) {
     return [super getItemIdWithInt:position];
   }
@@ -3824,7 +3863,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
   if (id_ == nil) {
     id_ = JavaLangInteger_valueOfWithInt_(0);
   }
-  return [(JavaLangInteger *) cast_chk(id_, [JavaLangInteger class]) intValue];
+  return [(JavaLangInteger *) cast_chk(id_, [JavaLangInteger class]) longLongValue];
 }
 
 - (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_ViewHolder *)holder {
@@ -3837,7 +3876,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
   [((ADView *) nil_chk(((ASRecyclerViewImpl_ViewHolder *) nil_chk(holder))->itemView_)) setVisibilityWithInt:ADView_GONE];
 }
 
-- (jint)getItemViewTypeWithInt:(jint)position {
+- (int32_t)getItemViewTypeWithInt:(int32_t)position {
   if (ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(self, position)) {
     return 1;
   }
@@ -3847,16 +3886,16 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
   return 0;
 }
 
-- (jboolean)isFooterWithInt:(jint)position {
+- (bool)isFooterWithInt:(int32_t)position {
   return ASRecyclerViewImpl_ListAdapter_isFooterWithInt_(self, position);
 }
 
-- (jboolean)isHeaderWithInt:(jint)position {
+- (bool)isHeaderWithInt:(int32_t)position {
   return ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(self, position);
 }
 
 - (ASRecyclerViewImpl_ViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                             withInt:(jint)viewType {
+                                                             withInt:(int32_t)viewType {
   id<ASIWidget> listItem = nil;
   id<JavaUtilList> viewHolderIds;
   if (viewType == 1) {
@@ -3882,7 +3921,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
 }
 
 - (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_ViewHolder *)viewHolder
-                                               withInt:(jint)position {
+                                               withInt:(int32_t)position {
   if (ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(self, position) || ASRecyclerViewImpl_ListAdapter_isFooterWithInt_(self, position)) {
     [this$0_ setAttributeOnViewHolderWithASWidgetViewHolder:((ASRecyclerViewImpl_ViewHolder *) nil_chk(viewHolder))->widgetViewHolder_ withASLoopParam:nil];
     return;
@@ -3893,8 +3932,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
   [this$0_ setAttributeOnViewHolderWithASWidgetViewHolder:((ASRecyclerViewImpl_ViewHolder *) nil_chk(viewHolder))->widgetViewHolder_ withInt:position];
 }
 
-- (jint)getItemCount {
-  jint size = [((id<JavaUtilList>) nil_chk(this$0_->dataList_)) size];
+- (int32_t)getItemCount {
+  int32_t size = [((id<JavaUtilList>) nil_chk(this$0_->dataList_)) size];
   if (this$0_->headerTemplate_ != nil && !this$0_->headerDisabled_) {
     size++;
   }
@@ -3954,11 +3993,11 @@ ASRecyclerViewImpl_ListAdapter *create_ASRecyclerViewImpl_ListAdapter_initWithAS
   J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_ListAdapter, initWithASRecyclerViewImpl_, outer$)
 }
 
-jboolean ASRecyclerViewImpl_ListAdapter_isFooterWithInt_(ASRecyclerViewImpl_ListAdapter *self, jint position) {
+bool ASRecyclerViewImpl_ListAdapter_isFooterWithInt_(ASRecyclerViewImpl_ListAdapter *self, int32_t position) {
   return !self->this$0_->footerDisabled_ && self->this$0_->footerTemplate_ != nil && position == [self getItemCount] - 1;
 }
 
-jboolean ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(ASRecyclerViewImpl_ListAdapter *self, jint position) {
+bool ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(ASRecyclerViewImpl_ListAdapter *self, int32_t position) {
   return !self->this$0_->headerDisabled_ && self->this$0_->headerTemplate_ != nil && position == 0;
 }
 
@@ -4017,7 +4056,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ViewHolder)
   return self;
 }
 
-- (jint)getSpanSizeWithInt:(jint)position {
+- (int32_t)getSpanSizeWithInt:(int32_t)position {
   if (this$0_->headerTemplate_ != nil && position == 0) {
     return this$0_->spanCount_;
   }
@@ -4039,7 +4078,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ViewHolder)
     { "this$0_", "LASRecyclerViewImpl;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LASRecyclerViewImpl;", "getSpanSize", "I", "setLayoutManagerWithId:" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl_1 = { "", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x8010, 2, 1, 0, -1, 3, -1, -1 };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_1 = { "", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x8000, 2, 1, 0, -1, 3, -1, -1 };
   return &_ASRecyclerViewImpl_1;
 }
 
@@ -4065,7 +4104,7 @@ ASRecyclerViewImpl_1 *create_ASRecyclerViewImpl_1_initWithASRecyclerViewImpl_(AS
   return self;
 }
 
-- (jint)getSpanSizeWithInt:(jint)position {
+- (int32_t)getSpanSizeWithInt:(int32_t)position {
   if (this$0_->headerTemplate_ != nil && position == 0) {
     return this$0_->spanCount_;
   }
@@ -4090,7 +4129,7 @@ ASRecyclerViewImpl_1 *create_ASRecyclerViewImpl_1_initWithASRecyclerViewImpl_(AS
     { "this$0_", "LASRecyclerViewImpl;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LASRecyclerViewImpl;", "getSpanSize", "I", "setLayoutWithId:" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl_2 = { "", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x8010, 2, 1, 0, -1, 3, -1, -1 };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_2 = { "", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x8000, 2, 1, 0, -1, 3, -1, -1 };
   return &_ASRecyclerViewImpl_2;
 }
 
@@ -4153,28 +4192,28 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_SectionHolder)
 
 @implementation ASRecyclerViewImpl_GenericItem
 
-- (jboolean)isModified {
+- (bool)isModified {
   return modified_;
 }
 
-- (void)setModifiedWithBoolean:(jboolean)modified {
+- (void)setModifiedWithBoolean:(bool)modified {
   self->modified_ = modified;
 }
 
-- (void)setNumberOfColumsWithInt:(jint)numberOfColums {
+- (void)setNumberOfColumsWithInt:(int32_t)numberOfColums {
   self->numberOfColums_ = numberOfColums;
 }
 
-- (jint)getSpanSizeWithInt:(jint)spanCount
-                   withInt:(jint)position {
+- (int32_t)getSpanSizeWithInt:(int32_t)spanCount
+                      withInt:(int32_t)position {
   return JreIntDiv(spanCount, numberOfColums_);
 }
 
-- (jint)getMargin {
+- (int32_t)getMargin {
   return margin_;
 }
 
-- (void)setMarginWithInt:(jint)margin {
+- (void)setMarginWithInt:(int32_t)margin {
   self->margin_ = margin;
 }
 
@@ -4196,11 +4235,11 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_SectionHolder)
 }
 
 - (void)bindWithADXGroupieViewHolder:(ASRecyclerViewImpl_GroupieViewHolder *)viewHolder
-                             withInt:(jint)position {
+                             withInt:(int32_t)position {
   ASRecyclerViewImpl_GenericItem_bindWithASRecyclerViewImpl_GroupieViewHolder_withInt_(self, viewHolder, position);
 }
 
-- (jint)getLayout {
+- (int32_t)getLayout {
   return [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([this$0_ quickConvertWithId:layout_ withNSString:@"id"], [JavaLangInteger class]))) intValue];
 }
 
@@ -4274,7 +4313,7 @@ ASRecyclerViewImpl_GenericItem *create_ASRecyclerViewImpl_GenericItem_initWithAS
   J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_GenericItem, initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_, outer$, layout, template_, loopParam, viewHolderIds)
 }
 
-void ASRecyclerViewImpl_GenericItem_bindWithASRecyclerViewImpl_GroupieViewHolder_withInt_(ASRecyclerViewImpl_GenericItem *self, ASRecyclerViewImpl_GroupieViewHolder *viewHolder, jint position) {
+void ASRecyclerViewImpl_GenericItem_bindWithASRecyclerViewImpl_GroupieViewHolder_withInt_(ASRecyclerViewImpl_GenericItem *self, ASRecyclerViewImpl_GroupieViewHolder *viewHolder, int32_t position) {
   [self->this$0_ setAttributeOnViewHolderWithASWidgetViewHolder:((ASRecyclerViewImpl_GroupieViewHolder *) nil_chk(viewHolder))->widgetViewHolder_ withASLoopParam:self->loopParam_ withBoolean:self->modified_];
   self->modified_ = false;
 }
@@ -4298,7 +4337,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GenericItem)
 }
 
 - (void)bindWithADXGroupieViewHolder:(ASRecyclerViewImpl_GroupieViewHolder *)viewHolder
-                             withInt:(jint)position {
+                             withInt:(int32_t)position {
   ASRecyclerViewImpl_GenericItem_bindWithASRecyclerViewImpl_GroupieViewHolder_withInt_(self, viewHolder, position);
   if (onClickIds_ != nil) {
     id<ASIWidget> widget = ((ASWidgetViewHolder *) nil_chk(((ASRecyclerViewImpl_GroupieViewHolder *) nil_chk(viewHolder))->widgetViewHolder_))->widget_;
@@ -4365,7 +4404,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GenericExpandableItem)
 @implementation ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener
 
 - (instancetype)initWithASRecyclerViewImpl_GenericExpandableItem:(ASRecyclerViewImpl_GenericExpandableItem *)outer$
-                                                         withInt:(jint)position
+                                                         withInt:(int32_t)position
                                                    withASIWidget:(id<ASIWidget>)widget {
   ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(self, outer$, position, widget);
   return self;
@@ -4406,18 +4445,18 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GenericExpandableItem)
 
 @end
 
-void ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *self, ASRecyclerViewImpl_GenericExpandableItem *outer$, jint position, id<ASIWidget> widget) {
+void ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *self, ASRecyclerViewImpl_GenericExpandableItem *outer$, int32_t position, id<ASIWidget> widget) {
   self->this$0_ = outer$;
   NSObject_init(self);
   self->position_ = position;
   self->widget_ = widget;
 }
 
-ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *new_ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem *outer$, jint position, id<ASIWidget> widget) {
+ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *new_ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem *outer$, int32_t position, id<ASIWidget> widget) {
   J2OBJC_NEW_IMPL(ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener, initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_, outer$, position, widget)
 }
 
-ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *create_ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem *outer$, jint position, id<ASIWidget> widget) {
+ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener *create_ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener_initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_(ASRecyclerViewImpl_GenericExpandableItem *outer$, int32_t position, id<ASIWidget> widget) {
   J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_GenericExpandableItem_ExpandableClickListener, initWithASRecyclerViewImpl_GenericExpandableItem_withInt_withASIWidget_, outer$, position, widget)
 }
 
@@ -4441,7 +4480,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GenericExpandableItem_Expand
 }
 
 - (ASRecyclerViewImpl_GroupieViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                                    withInt:(jint)viewType {
+                                                                    withInt:(int32_t)viewType {
   ASRecyclerViewImpl_GenericItem *item = (ASRecyclerViewImpl_GenericItem *) cast_chk([self getItemForViewTypeWithInt:viewType], [ASRecyclerViewImpl_GenericItem class]);
   id<ASIWidget> widget = [((id<ASIWidget>) nil_chk([((ASRecyclerViewImpl_GenericItem *) nil_chk(item)) getTemplate])) loadLazyWidgetsWithASHasWidgets:this$0_ withInt:-1 withNSString:nil withASLoopParam:[item getLoopParam]];
   if ([((id<JavaUtilList>) nil_chk(this$0_->widgets_)) indexOfWithId:widget] == -1) {
@@ -4560,7 +4599,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
 }
 
 - (void)onScrollStateChangedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                        withInt:(jint)newState {
+                                        withInt:(int32_t)newState {
   if (action_ == nil || [action_ isEqual:@"onScrollStateChange"]) {
     [((id<ASIWidget>) nil_chk(w_)) syncModelFromUiToPojoWithNSString:@"onScrollStateChange"];
     id<JavaUtilMap> obj = [self getOnScrollStateChangeEventObjWithADXRecyclerView:recyclerView withInt:newState];
@@ -4582,7 +4621,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
     if ([((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds] != nil) {
       ASViewImpl_refreshUiFromModelWithASIWidget_withId_withBoolean_(w_, [((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds], true);
     }
-    if (strValue_ != nil && ![strValue_ java_isEmpty] && ![((NSString *) nil_chk([((NSString *) nil_chk(strValue_)) java_trim])) java_hasPrefix:@"+"]) {
+    if (strValue_ != nil && ![strValue_ isEmpty] && ![((NSString *) nil_chk([((NSString *) nil_chk(strValue_)) java_trim])) java_hasPrefix:@"+"]) {
       id<ASIActivity> activity = [((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getRootActivity];
       if (activity != nil) {
         [activity sendEventMessageWithJavaUtilMap:obj];
@@ -4593,8 +4632,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
 }
 
 - (void)onScrolledWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                              withInt:(jint)dx
-                              withInt:(jint)dy {
+                              withInt:(int32_t)dx
+                              withInt:(int32_t)dy {
   if (action_ == nil || [action_ isEqual:@"onScrolled"]) {
     [((id<ASIWidget>) nil_chk(w_)) syncModelFromUiToPojoWithNSString:@"onScrolled"];
     id<JavaUtilMap> obj = [self getOnScrolledEventObjWithADXRecyclerView:recyclerView withInt:dx withInt:dy];
@@ -4616,7 +4655,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
     if ([((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds] != nil) {
       ASViewImpl_refreshUiFromModelWithASIWidget_withId_withBoolean_(w_, [((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds], true);
     }
-    if (strValue_ != nil && ![strValue_ java_isEmpty] && ![((NSString *) nil_chk([((NSString *) nil_chk(strValue_)) java_trim])) java_hasPrefix:@"+"]) {
+    if (strValue_ != nil && ![strValue_ isEmpty] && ![((NSString *) nil_chk([((NSString *) nil_chk(strValue_)) java_trim])) java_hasPrefix:@"+"]) {
       id<ASIActivity> activity = [((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getRootActivity];
       if (activity != nil) {
         [activity sendEventMessageWithJavaUtilMap:obj];
@@ -4627,8 +4666,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
 }
 
 - (id<JavaUtilMap>)getOnScrolledEventObjWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                                    withInt:(jint)dx
-                                                    withInt:(jint)dy {
+                                                    withInt:(int32_t)dx
+                                                    withInt:(int32_t)dy {
   id<JavaUtilMap> obj = ASPluginInvoker_getJSONCompatMap();
   (void) [((id<JavaUtilMap>) nil_chk(obj)) putWithId:@"action" withId:@"action"];
   (void) [obj putWithId:@"eventType" withId:@"scrolled"];
@@ -4647,7 +4686,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
 }
 
 - (id<JavaUtilMap>)getOnScrollStateChangeEventObjWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                                             withInt:(jint)newState {
+                                                             withInt:(int32_t)newState {
   id<JavaUtilMap> obj = ASPluginInvoker_getJSONCompatMap();
   (void) [((id<JavaUtilMap>) nil_chk(obj)) putWithId:@"action" withId:@"action"];
   (void) [obj putWithId:@"eventType" withId:@"scrollstatechange"];
@@ -4738,8 +4777,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_OnScrollListener)
 
 - (void)handlePanStartWithASIWidget:(id<ASIWidget>)widget
                              withId:(id)eventWidget
-                            withInt:(jint)x
-                            withInt:(jint)y {
+                            withInt:(int32_t)x
+                            withInt:(int32_t)y {
   if ([this$0_ isHorizontal]) {
     this$0_->oldOverScroll_ = x;
   }
@@ -4751,9 +4790,9 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_OnScrollListener)
 
 - (void)handlePanDragWithASIWidget:(id<ASIWidget>)widget
                             withId:(id)eventWidget
-                           withInt:(jint)x
-                           withInt:(jint)y {
-  jint selection = ASRecyclerViewImpl_getSelection(this$0_);
+                           withInt:(int32_t)x
+                           withInt:(int32_t)y {
+  int32_t selection = ASRecyclerViewImpl_getSelection(this$0_);
   if (selection == 0) {
     this$0_->overScrollTop_ = true;
     if ([this$0_ isHorizontal]) {
@@ -4782,8 +4821,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_OnScrollListener)
 
 - (void)handlePanEndWithASIWidget:(id<ASIWidget>)widget
                            withId:(id)eventWidget
-                          withInt:(jint)x
-                          withInt:(jint)y {
+                          withInt:(int32_t)x
+                          withInt:(int32_t)y {
 }
 
 + (const J2ObjcClassInfo *)__metadata {
@@ -4805,7 +4844,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_OnScrollListener)
     { "this$0_", "LASRecyclerViewImpl;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LASRecyclerViewImpl;", "handlePanStart", "LASIWidget;LNSObject;II", "handlePanDrag", "handlePanEnd", "nativeCreateWithJavaUtilMap:" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl_3 = { "", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x8010, 4, 1, 0, -1, 5, -1, -1 };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_3 = { "", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x8000, 4, 1, 0, -1, 5, -1, -1 };
   return &_ASRecyclerViewImpl_3;
 }
 
@@ -4836,8 +4875,8 @@ ASRecyclerViewImpl_3 *create_ASRecyclerViewImpl_3_initWithASRecyclerViewImpl_(AS
   scrollview.delegate = self;
 }
 
-- (void)onscrollWithInt:(jint)scrollX
-                withInt:(jint)scrollY {
+- (void)onscrollWithInt:(int32_t)scrollX
+                withInt:(int32_t)scrollY {
   if (scrollY < 0 || scrollX < 0) {
     return;
   }

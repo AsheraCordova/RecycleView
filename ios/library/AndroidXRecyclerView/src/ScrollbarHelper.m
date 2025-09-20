@@ -3,12 +3,26 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\ScrollbarHelper.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "J2ObjC_source.h"
 #include "OrientationHelper.h"
 #include "RecyclerView.h"
 #include "ScrollbarHelper.h"
 #include "View.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Float.h"
+#include "java/lang/Integer.h"
 #include "java/lang/Math.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXScrollbarHelper ()
@@ -25,31 +39,31 @@ __attribute__((unused)) static ADXScrollbarHelper *create_ADXScrollbarHelper_ini
 
 @implementation ADXScrollbarHelper
 
-+ (jint)computeScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state
-                            withADXOrientationHelper:(ADXOrientationHelper *)orientation
-                                          withADView:(ADView *)startChild
-                                          withADView:(ADView *)endChild
-                   withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
-                                         withBoolean:(jboolean)smoothScrollbarEnabled
-                                         withBoolean:(jboolean)reverseLayout {
++ (int32_t)computeScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state
+                               withADXOrientationHelper:(ADXOrientationHelper *)orientation
+                                             withADView:(ADView *)startChild
+                                             withADView:(ADView *)endChild
+                      withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
+                                            withBoolean:(bool)smoothScrollbarEnabled
+                                            withBoolean:(bool)reverseLayout {
   return ADXScrollbarHelper_computeScrollOffsetWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_withBoolean_(state, orientation, startChild, endChild, lm, smoothScrollbarEnabled, reverseLayout);
 }
 
-+ (jint)computeScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state
-                            withADXOrientationHelper:(ADXOrientationHelper *)orientation
-                                          withADView:(ADView *)startChild
-                                          withADView:(ADView *)endChild
-                   withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
-                                         withBoolean:(jboolean)smoothScrollbarEnabled {
++ (int32_t)computeScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state
+                               withADXOrientationHelper:(ADXOrientationHelper *)orientation
+                                             withADView:(ADView *)startChild
+                                             withADView:(ADView *)endChild
+                      withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
+                                            withBoolean:(bool)smoothScrollbarEnabled {
   return ADXScrollbarHelper_computeScrollExtentWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(state, orientation, startChild, endChild, lm, smoothScrollbarEnabled);
 }
 
-+ (jint)computeScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state
-                           withADXOrientationHelper:(ADXOrientationHelper *)orientation
-                                         withADView:(ADView *)startChild
-                                         withADView:(ADView *)endChild
-                  withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
-                                        withBoolean:(jboolean)smoothScrollbarEnabled {
++ (int32_t)computeScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state
+                              withADXOrientationHelper:(ADXOrientationHelper *)orientation
+                                            withADView:(ADView *)startChild
+                                            withADView:(ADView *)endChild
+                     withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
+                                           withBoolean:(bool)smoothScrollbarEnabled {
   return ADXScrollbarHelper_computeScrollRangeWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(state, orientation, startChild, endChild, lm, smoothScrollbarEnabled);
 }
 
@@ -80,24 +94,24 @@ __attribute__((unused)) static ADXScrollbarHelper *create_ADXScrollbarHelper_ini
 
 @end
 
-jint ADXScrollbarHelper_computeScrollOffsetWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, jboolean smoothScrollbarEnabled, jboolean reverseLayout) {
+int32_t ADXScrollbarHelper_computeScrollOffsetWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, bool smoothScrollbarEnabled, bool reverseLayout) {
   ADXScrollbarHelper_initialize();
   if ([((ADXRecyclerView_LayoutManager *) nil_chk(lm)) getChildCount] == 0 || [((ADXRecyclerView_State *) nil_chk(state)) getItemCount] == 0 || startChild == nil || endChild == nil) {
     return 0;
   }
-  jint minPosition = JavaLangMath_minWithInt_withInt_([lm getPositionWithADView:startChild], [lm getPositionWithADView:endChild]);
-  jint maxPosition = JavaLangMath_maxWithInt_withInt_([lm getPositionWithADView:startChild], [lm getPositionWithADView:endChild]);
-  jint itemsBefore = reverseLayout ? JavaLangMath_maxWithInt_withInt_(0, [((ADXRecyclerView_State *) nil_chk(state)) getItemCount] - maxPosition - 1) : JavaLangMath_maxWithInt_withInt_(0, minPosition);
+  int32_t minPosition = JavaLangMath_minWithInt_withInt_([lm getPositionWithADView:startChild], [lm getPositionWithADView:endChild]);
+  int32_t maxPosition = JavaLangMath_maxWithInt_withInt_([lm getPositionWithADView:startChild], [lm getPositionWithADView:endChild]);
+  int32_t itemsBefore = reverseLayout ? JavaLangMath_maxWithInt_withInt_(0, [((ADXRecyclerView_State *) nil_chk(state)) getItemCount] - maxPosition - 1) : JavaLangMath_maxWithInt_withInt_(0, minPosition);
   if (!smoothScrollbarEnabled) {
     return itemsBefore;
   }
-  jint laidOutArea = JavaLangMath_absWithInt_([((ADXOrientationHelper *) nil_chk(orientation)) getDecoratedEndWithADView:endChild] - [orientation getDecoratedStartWithADView:startChild]);
-  jint itemRange = JavaLangMath_absWithInt_([lm getPositionWithADView:startChild] - [lm getPositionWithADView:endChild]) + 1;
-  jfloat avgSizePerRow = (jfloat) laidOutArea / itemRange;
+  int32_t laidOutArea = JavaLangMath_absWithInt_([((ADXOrientationHelper *) nil_chk(orientation)) getDecoratedEndWithADView:endChild] - [orientation getDecoratedStartWithADView:startChild]);
+  int32_t itemRange = JavaLangMath_absWithInt_([lm getPositionWithADView:startChild] - [lm getPositionWithADView:endChild]) + 1;
+  float avgSizePerRow = (float) laidOutArea / itemRange;
   return JavaLangMath_roundWithFloat_(itemsBefore * avgSizePerRow + ([orientation getStartAfterPadding] - [orientation getDecoratedStartWithADView:startChild]));
 }
 
-jint ADXScrollbarHelper_computeScrollExtentWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, jboolean smoothScrollbarEnabled) {
+int32_t ADXScrollbarHelper_computeScrollExtentWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, bool smoothScrollbarEnabled) {
   ADXScrollbarHelper_initialize();
   if ([((ADXRecyclerView_LayoutManager *) nil_chk(lm)) getChildCount] == 0 || [((ADXRecyclerView_State *) nil_chk(state)) getItemCount] == 0 || startChild == nil || endChild == nil) {
     return 0;
@@ -105,11 +119,11 @@ jint ADXScrollbarHelper_computeScrollExtentWithADXRecyclerView_State_withADXOrie
   if (!smoothScrollbarEnabled) {
     return JavaLangMath_absWithInt_([lm getPositionWithADView:startChild] - [lm getPositionWithADView:endChild]) + 1;
   }
-  jint extend = [((ADXOrientationHelper *) nil_chk(orientation)) getDecoratedEndWithADView:endChild] - [orientation getDecoratedStartWithADView:startChild];
+  int32_t extend = [((ADXOrientationHelper *) nil_chk(orientation)) getDecoratedEndWithADView:endChild] - [orientation getDecoratedStartWithADView:startChild];
   return JavaLangMath_minWithInt_withInt_([orientation getTotalSpace], extend);
 }
 
-jint ADXScrollbarHelper_computeScrollRangeWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, jboolean smoothScrollbarEnabled) {
+int32_t ADXScrollbarHelper_computeScrollRangeWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, bool smoothScrollbarEnabled) {
   ADXScrollbarHelper_initialize();
   if ([((ADXRecyclerView_LayoutManager *) nil_chk(lm)) getChildCount] == 0 || [((ADXRecyclerView_State *) nil_chk(state)) getItemCount] == 0 || startChild == nil || endChild == nil) {
     return 0;
@@ -117,9 +131,9 @@ jint ADXScrollbarHelper_computeScrollRangeWithADXRecyclerView_State_withADXOrien
   if (!smoothScrollbarEnabled) {
     return [((ADXRecyclerView_State *) nil_chk(state)) getItemCount];
   }
-  jint laidOutArea = [((ADXOrientationHelper *) nil_chk(orientation)) getDecoratedEndWithADView:endChild] - [orientation getDecoratedStartWithADView:startChild];
-  jint laidOutRange = JavaLangMath_absWithInt_([lm getPositionWithADView:startChild] - [lm getPositionWithADView:endChild]) + 1;
-  return JreFpToInt(((jfloat) laidOutArea / laidOutRange * [((ADXRecyclerView_State *) nil_chk(state)) getItemCount]));
+  int32_t laidOutArea = [((ADXOrientationHelper *) nil_chk(orientation)) getDecoratedEndWithADView:endChild] - [orientation getDecoratedStartWithADView:startChild];
+  int32_t laidOutRange = JavaLangMath_absWithInt_([lm getPositionWithADView:startChild] - [lm getPositionWithADView:endChild]) + 1;
+  return JreFpToInt(((float) laidOutArea / laidOutRange * [((ADXRecyclerView_State *) nil_chk(state)) getItemCount]));
 }
 
 void ADXScrollbarHelper_initPackagePrivate(ADXScrollbarHelper *self) {

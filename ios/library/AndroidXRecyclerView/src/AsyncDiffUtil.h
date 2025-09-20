@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\AsyncDiffUtil.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_AsyncDiffUtil")
@@ -23,6 +24,8 @@
 #define ADXAsyncDiffUtil_
 
 @class ADXDiffUtil_Callback;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol ADXAsyncDiffUtil_Callback;
 @protocol ADXOnAsyncUpdateListener;
 @protocol JavaUtilCollection;
@@ -39,13 +42,13 @@
 - (void)calculateDiffWithJavaUtilCollection:(id<JavaUtilCollection>)newGroups
                    withADXDiffUtil_Callback:(ADXDiffUtil_Callback *)diffUtilCallback
                withADXOnAsyncUpdateListener:(id<ADXOnAsyncUpdateListener>)onAsyncUpdateListener
-                                withBoolean:(jboolean)detectMoves;
+                                withBoolean:(bool)detectMoves;
 
 - (id<ADXAsyncDiffUtil_Callback>)getAsyncDiffUtilCallback;
 
 - (id<JavaUtilCollection>)getGroups;
 
-- (jint)getMaxScheduledGeneration;
+- (int32_t)getMaxScheduledGeneration;
 
 // Disallowed inherited constructors, do not use.
 
@@ -64,6 +67,7 @@ FOUNDATION_EXPORT ADXAsyncDiffUtil *create_ADXAsyncDiffUtil_initPackagePrivateWi
 J2OBJC_TYPE_LITERAL_HEADER(ADXAsyncDiffUtil)
 
 @compatibility_alias ComXwrayGroupieAsyncDiffUtil ADXAsyncDiffUtil;
+
 
 #endif
 
@@ -88,6 +92,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXAsyncDiffUtil)
 J2OBJC_EMPTY_STATIC_INIT(ADXAsyncDiffUtil_Callback)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXAsyncDiffUtil_Callback)
+
 
 #endif
 

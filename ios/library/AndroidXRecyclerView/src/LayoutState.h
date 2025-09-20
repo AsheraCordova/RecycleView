@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\LayoutState.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_LayoutState")
@@ -19,6 +20,9 @@
 @class ADView;
 @class ADXRecyclerView_Recycler;
 @class ADXRecyclerView_State;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class NSString;
 
 /*!
  @brief Helper class that keeps temporary state while {LayoutManager} is filling out the empty
@@ -29,41 +33,41 @@
   /*!
    @brief We may not want to recycle children in some cases (e.g.layout)
    */
-  jboolean mRecycle_;
+  bool mRecycle_;
   /*!
    @brief Number of pixels that we should fill, in the layout direction.
    */
-  jint mAvailable_;
+  int32_t mAvailable_;
   /*!
    @brief Current position on the adapter to get the next item.
    */
-  jint mCurrentPosition_;
+  int32_t mCurrentPosition_;
   /*!
    @brief Defines the direction in which the data adapter is traversed.
    Should be <code>ITEM_DIRECTION_HEAD</code> or <code>ITEM_DIRECTION_TAIL</code>
    */
-  jint mItemDirection_;
+  int32_t mItemDirection_;
   /*!
    @brief Defines the direction in which the layout is filled.
    Should be <code>LAYOUT_START</code> or <code>LAYOUT_END</code>
    */
-  jint mLayoutDirection_;
+  int32_t mLayoutDirection_;
   /*!
    @brief This is the target pixel closest to the start of the layout that we are trying to fill
    */
-  jint mStartLine_;
+  int32_t mStartLine_;
   /*!
    @brief This is the target pixel closest to the end of the layout that we are trying to fill
    */
-  jint mEndLine_;
+  int32_t mEndLine_;
   /*!
    @brief If true, layout should stop if a focusable view is added
    */
-  jboolean mStopInFocusable_;
+  bool mStopInFocusable_;
   /*!
    @brief If the content is not wrapped with any value
    */
-  jboolean mInfinite_;
+  bool mInfinite_;
 }
 
 #pragma mark Public
@@ -77,7 +81,7 @@
 /*!
  @return true if there are more items in the data adapter
  */
-- (jboolean)hasMoreWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (bool)hasMoreWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 /*!
  @brief Gets the view for the next element that we should render.
@@ -94,25 +98,25 @@
 
 J2OBJC_EMPTY_STATIC_INIT(ADXLayoutState)
 
-inline jint ADXLayoutState_get_LAYOUT_START(void);
+inline int32_t ADXLayoutState_get_LAYOUT_START(void);
 #define ADXLayoutState_LAYOUT_START -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLayoutState, LAYOUT_START, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLayoutState, LAYOUT_START, int32_t)
 
-inline jint ADXLayoutState_get_LAYOUT_END(void);
+inline int32_t ADXLayoutState_get_LAYOUT_END(void);
 #define ADXLayoutState_LAYOUT_END 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLayoutState, LAYOUT_END, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLayoutState, LAYOUT_END, int32_t)
 
-inline jint ADXLayoutState_get_INVALID_LAYOUT(void);
-#define ADXLayoutState_INVALID_LAYOUT ((jint) 0x80000000)
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLayoutState, INVALID_LAYOUT, jint)
+inline int32_t ADXLayoutState_get_INVALID_LAYOUT(void);
+#define ADXLayoutState_INVALID_LAYOUT ((int32_t) 0x80000000)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLayoutState, INVALID_LAYOUT, int32_t)
 
-inline jint ADXLayoutState_get_ITEM_DIRECTION_HEAD(void);
+inline int32_t ADXLayoutState_get_ITEM_DIRECTION_HEAD(void);
 #define ADXLayoutState_ITEM_DIRECTION_HEAD -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLayoutState, ITEM_DIRECTION_HEAD, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLayoutState, ITEM_DIRECTION_HEAD, int32_t)
 
-inline jint ADXLayoutState_get_ITEM_DIRECTION_TAIL(void);
+inline int32_t ADXLayoutState_get_ITEM_DIRECTION_TAIL(void);
 #define ADXLayoutState_ITEM_DIRECTION_TAIL 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLayoutState, ITEM_DIRECTION_TAIL, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLayoutState, ITEM_DIRECTION_TAIL, int32_t)
 
 FOUNDATION_EXPORT void ADXLayoutState_initPackagePrivate(ADXLayoutState *self);
 
@@ -123,6 +127,7 @@ FOUNDATION_EXPORT ADXLayoutState *create_ADXLayoutState_initPackagePrivate(void)
 J2OBJC_TYPE_LITERAL_HEADER(ADXLayoutState)
 
 @compatibility_alias AndroidxRecyclerviewWidgetLayoutState ADXLayoutState;
+
 
 #endif
 

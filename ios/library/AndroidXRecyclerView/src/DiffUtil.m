@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\DiffUtil.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "AdapterListUpdateCallback.h"
 #include "BatchingListUpdateCallback.h"
 #include "DiffUtil.h"
@@ -10,7 +15,9 @@
 #include "J2ObjC_source.h"
 #include "ListUpdateCallback.h"
 #include "RecyclerView.h"
+#include "java/lang/Boolean.h"
 #include "java/lang/IndexOutOfBoundsException.h"
+#include "java/lang/Integer.h"
 #include "java/lang/Math.h"
 #include "java/util/ArrayDeque.h"
 #include "java/util/ArrayList.h"
@@ -25,14 +32,12 @@
 #include "java/util/function/ToIntFunction.h"
 #include "java/util/function/ToLongFunction.h"
 
+
 @class ADXDiffUtil_PostponedUpdate;
-@protocol JavaUtilCollection;
-@protocol JavaUtilComparator;
-@protocol JavaUtilFunctionFunction;
-@protocol JavaUtilFunctionToDoubleFunction;
-@protocol JavaUtilFunctionToIntFunction;
-@protocol JavaUtilFunctionToLongFunction;
-@protocol JavaUtilList;
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 #pragma clang diagnostic ignored "-Wprotocol"
@@ -53,13 +58,13 @@
                            withADXDiffUtil_Callback:(ADXDiffUtil_Callback *)cb
                       withADXDiffUtil_CenteredArray:(ADXDiffUtil_CenteredArray *)forward
                       withADXDiffUtil_CenteredArray:(ADXDiffUtil_CenteredArray *)backward
-                                            withInt:(jint)d;
+                                            withInt:(int32_t)d;
 
 + (ADXDiffUtil_Snake *)backwardWithADXDiffUtil_Range:(ADXDiffUtil_Range *)range
                             withADXDiffUtil_Callback:(ADXDiffUtil_Callback *)cb
                        withADXDiffUtil_CenteredArray:(ADXDiffUtil_CenteredArray *)forward
                        withADXDiffUtil_CenteredArray:(ADXDiffUtil_CenteredArray *)backward
-                                             withInt:(jint)d;
+                                             withInt:(int32_t)d;
 
 @end
 
@@ -75,16 +80,16 @@ __attribute__((unused)) static ADXDiffUtil *create_ADXDiffUtil_init(void);
 
 __attribute__((unused)) static ADXDiffUtil_Snake *ADXDiffUtil_midPointWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_(ADXDiffUtil_Range *range, ADXDiffUtil_Callback *cb, ADXDiffUtil_CenteredArray *forward, ADXDiffUtil_CenteredArray *backward);
 
-__attribute__((unused)) static ADXDiffUtil_Snake *ADXDiffUtil_forwardWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_withInt_(ADXDiffUtil_Range *range, ADXDiffUtil_Callback *cb, ADXDiffUtil_CenteredArray *forward, ADXDiffUtil_CenteredArray *backward, jint d);
+__attribute__((unused)) static ADXDiffUtil_Snake *ADXDiffUtil_forwardWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_withInt_(ADXDiffUtil_Range *range, ADXDiffUtil_Callback *cb, ADXDiffUtil_CenteredArray *forward, ADXDiffUtil_CenteredArray *backward, int32_t d);
 
-__attribute__((unused)) static ADXDiffUtil_Snake *ADXDiffUtil_backwardWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_withInt_(ADXDiffUtil_Range *range, ADXDiffUtil_Callback *cb, ADXDiffUtil_CenteredArray *forward, ADXDiffUtil_CenteredArray *backward, jint d);
+__attribute__((unused)) static ADXDiffUtil_Snake *ADXDiffUtil_backwardWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_withInt_(ADXDiffUtil_Range *range, ADXDiffUtil_Callback *cb, ADXDiffUtil_CenteredArray *forward, ADXDiffUtil_CenteredArray *backward, int32_t d);
 
 @interface ADXDiffUtil_1 : NSObject < JavaUtilComparator >
 
 - (instancetype)init;
 
-- (jint)compareWithId:(ADXDiffUtil_Diagonal *)o1
-               withId:(ADXDiffUtil_Diagonal *)o2;
+- (int32_t)compareWithId:(ADXDiffUtil_Diagonal *)o1
+                  withId:(ADXDiffUtil_Diagonal *)o2;
 
 @end
 
@@ -96,15 +101,16 @@ __attribute__((unused)) static ADXDiffUtil_1 *new_ADXDiffUtil_1_init(void) NS_RE
 
 __attribute__((unused)) static ADXDiffUtil_1 *create_ADXDiffUtil_1_init(void);
 
+
 @interface ADXDiffUtil_DiffResult () {
  @public
   id<JavaUtilList> mDiagonals_;
   IOSIntArray *mOldItemStatuses_;
   IOSIntArray *mNewItemStatuses_;
   ADXDiffUtil_Callback *mCallback_;
-  jint mOldListSize_;
-  jint mNewListSize_;
-  jboolean mDetectMoves_;
+  int32_t mOldListSize_;
+  int32_t mNewListSize_;
+  bool mDetectMoves_;
 }
 
 /*!
@@ -126,11 +132,11 @@ __attribute__((unused)) static ADXDiffUtil_1 *create_ADXDiffUtil_1_init(void);
  @brief Search the whole list to find the addition for the given removal of position posX
  @param posX position in the old list
  */
-- (void)findMatchingAdditionWithInt:(jint)posX;
+- (void)findMatchingAdditionWithInt:(int32_t)posX;
 
 + (ADXDiffUtil_PostponedUpdate *)getPostponedUpdateWithJavaUtilCollection:(id<JavaUtilCollection>)postponedUpdates
-                                                                  withInt:(jint)posInList
-                                                              withBoolean:(jboolean)removal;
+                                                                  withInt:(int32_t)posInList
+                                                              withBoolean:(bool)removal;
 
 @end
 
@@ -149,33 +155,33 @@ J2OBJC_FIELD_SETTER(ADXDiffUtil_DiffResult, mCallback_, ADXDiffUtil_Callback *)
   dispatch a move/add/remove for it, it DOES NOT mean the item is still in the same
   position.
  */
-inline jint ADXDiffUtil_DiffResult_get_FLAG_NOT_CHANGED(void);
+inline int32_t ADXDiffUtil_DiffResult_get_FLAG_NOT_CHANGED(void);
 #define ADXDiffUtil_DiffResult_FLAG_NOT_CHANGED 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_NOT_CHANGED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_NOT_CHANGED, int32_t)
 
-inline jint ADXDiffUtil_DiffResult_get_FLAG_CHANGED(void);
+inline int32_t ADXDiffUtil_DiffResult_get_FLAG_CHANGED(void);
 #define ADXDiffUtil_DiffResult_FLAG_CHANGED 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_CHANGED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_CHANGED, int32_t)
 
-inline jint ADXDiffUtil_DiffResult_get_FLAG_MOVED_CHANGED(void);
+inline int32_t ADXDiffUtil_DiffResult_get_FLAG_MOVED_CHANGED(void);
 #define ADXDiffUtil_DiffResult_FLAG_MOVED_CHANGED 4
-J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_MOVED_CHANGED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_MOVED_CHANGED, int32_t)
 
-inline jint ADXDiffUtil_DiffResult_get_FLAG_MOVED_NOT_CHANGED(void);
+inline int32_t ADXDiffUtil_DiffResult_get_FLAG_MOVED_NOT_CHANGED(void);
 #define ADXDiffUtil_DiffResult_FLAG_MOVED_NOT_CHANGED 8
-J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_MOVED_NOT_CHANGED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_MOVED_NOT_CHANGED, int32_t)
 
-inline jint ADXDiffUtil_DiffResult_get_FLAG_MOVED(void);
+inline int32_t ADXDiffUtil_DiffResult_get_FLAG_MOVED(void);
 #define ADXDiffUtil_DiffResult_FLAG_MOVED 12
-J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_MOVED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_MOVED, int32_t)
 
-inline jint ADXDiffUtil_DiffResult_get_FLAG_OFFSET(void);
+inline int32_t ADXDiffUtil_DiffResult_get_FLAG_OFFSET(void);
 #define ADXDiffUtil_DiffResult_FLAG_OFFSET 4
-J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_OFFSET, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_OFFSET, int32_t)
 
-inline jint ADXDiffUtil_DiffResult_get_FLAG_MASK(void);
+inline int32_t ADXDiffUtil_DiffResult_get_FLAG_MASK(void);
 #define ADXDiffUtil_DiffResult_FLAG_MASK 15
-J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_MASK, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXDiffUtil_DiffResult, FLAG_MASK, int32_t)
 
 __attribute__((unused)) static void ADXDiffUtil_DiffResult_addEdgeDiagonals(ADXDiffUtil_DiffResult *self);
 
@@ -183,9 +189,9 @@ __attribute__((unused)) static void ADXDiffUtil_DiffResult_findMatchingItems(ADX
 
 __attribute__((unused)) static void ADXDiffUtil_DiffResult_findMoveMatches(ADXDiffUtil_DiffResult *self);
 
-__attribute__((unused)) static void ADXDiffUtil_DiffResult_findMatchingAdditionWithInt_(ADXDiffUtil_DiffResult *self, jint posX);
+__attribute__((unused)) static void ADXDiffUtil_DiffResult_findMatchingAdditionWithInt_(ADXDiffUtil_DiffResult *self, int32_t posX);
 
-__attribute__((unused)) static ADXDiffUtil_PostponedUpdate *ADXDiffUtil_DiffResult_getPostponedUpdateWithJavaUtilCollection_withInt_withBoolean_(id<JavaUtilCollection> postponedUpdates, jint posInList, jboolean removal);
+__attribute__((unused)) static ADXDiffUtil_PostponedUpdate *ADXDiffUtil_DiffResult_getPostponedUpdateWithJavaUtilCollection_withInt_withBoolean_(id<JavaUtilCollection> postponedUpdates, int32_t posInList, bool removal);
 
 /*!
  @brief Represents an update that we skipped because it was a move.
@@ -199,37 +205,38 @@ __attribute__((unused)) static ADXDiffUtil_PostponedUpdate *ADXDiffUtil_DiffResu
   /*!
    @brief position in the list that owns this item
    */
-  jint posInOwnerList_;
+  int32_t posInOwnerList_;
   /*!
    @brief position wrt to the end of the list
    */
-  jint currentPos_;
+  int32_t currentPos_;
   /*!
    @brief true if this is a removal, false otherwise
    */
-  jboolean removal_;
+  bool removal_;
 }
 
-- (instancetype)initWithInt:(jint)posInOwnerList
-                    withInt:(jint)currentPos
-                withBoolean:(jboolean)removal;
+- (instancetype)initWithInt:(int32_t)posInOwnerList
+                    withInt:(int32_t)currentPos
+                withBoolean:(bool)removal;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(ADXDiffUtil_PostponedUpdate)
 
-__attribute__((unused)) static void ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(ADXDiffUtil_PostponedUpdate *self, jint posInOwnerList, jint currentPos, jboolean removal);
+__attribute__((unused)) static void ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(ADXDiffUtil_PostponedUpdate *self, int32_t posInOwnerList, int32_t currentPos, bool removal);
 
-__attribute__((unused)) static ADXDiffUtil_PostponedUpdate *new_ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(jint posInOwnerList, jint currentPos, jboolean removal) NS_RETURNS_RETAINED;
+__attribute__((unused)) static ADXDiffUtil_PostponedUpdate *new_ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(int32_t posInOwnerList, int32_t currentPos, bool removal) NS_RETURNS_RETAINED;
 
-__attribute__((unused)) static ADXDiffUtil_PostponedUpdate *create_ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(jint posInOwnerList, jint currentPos, jboolean removal);
+__attribute__((unused)) static ADXDiffUtil_PostponedUpdate *create_ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(int32_t posInOwnerList, int32_t currentPos, bool removal);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXDiffUtil_PostponedUpdate)
+
 
 @interface ADXDiffUtil_CenteredArray () {
  @public
   IOSIntArray *mData_;
-  jint mMid_;
+  int32_t mMid_;
 }
 
 @end
@@ -252,7 +259,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 + (ADXDiffUtil_DiffResult *)calculateDiffWithADXDiffUtil_Callback:(ADXDiffUtil_Callback *)cb
-                                                      withBoolean:(jboolean)detectMoves {
+                                                      withBoolean:(bool)detectMoves {
   return ADXDiffUtil_calculateDiffWithADXDiffUtil_Callback_withBoolean_(cb, detectMoves);
 }
 
@@ -267,7 +274,7 @@ J2OBJC_IGNORE_DESIGNATED_END
                            withADXDiffUtil_Callback:(ADXDiffUtil_Callback *)cb
                       withADXDiffUtil_CenteredArray:(ADXDiffUtil_CenteredArray *)forward
                       withADXDiffUtil_CenteredArray:(ADXDiffUtil_CenteredArray *)backward
-                                            withInt:(jint)d {
+                                            withInt:(int32_t)d {
   return ADXDiffUtil_forwardWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_withInt_(range, cb, forward, backward, d);
 }
 
@@ -275,7 +282,7 @@ J2OBJC_IGNORE_DESIGNATED_END
                             withADXDiffUtil_Callback:(ADXDiffUtil_Callback *)cb
                        withADXDiffUtil_CenteredArray:(ADXDiffUtil_CenteredArray *)forward
                        withADXDiffUtil_CenteredArray:(ADXDiffUtil_CenteredArray *)backward
-                                             withInt:(jint)d {
+                                             withInt:(int32_t)d {
   return ADXDiffUtil_backwardWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_withInt_(range, cb, forward, backward, d);
 }
 
@@ -332,14 +339,14 @@ ADXDiffUtil_DiffResult *ADXDiffUtil_calculateDiffWithADXDiffUtil_Callback_(ADXDi
   return ADXDiffUtil_calculateDiffWithADXDiffUtil_Callback_withBoolean_(cb, true);
 }
 
-ADXDiffUtil_DiffResult *ADXDiffUtil_calculateDiffWithADXDiffUtil_Callback_withBoolean_(ADXDiffUtil_Callback *cb, jboolean detectMoves) {
+ADXDiffUtil_DiffResult *ADXDiffUtil_calculateDiffWithADXDiffUtil_Callback_withBoolean_(ADXDiffUtil_Callback *cb, bool detectMoves) {
   ADXDiffUtil_initialize();
-  jint oldSize = [((ADXDiffUtil_Callback *) nil_chk(cb)) getOldListSize];
-  jint newSize = [cb getNewListSize];
+  int32_t oldSize = [((ADXDiffUtil_Callback *) nil_chk(cb)) getOldListSize];
+  int32_t newSize = [cb getNewListSize];
   id<JavaUtilList> diagonals = create_JavaUtilArrayList_init();
   id<JavaUtilList> stack = create_JavaUtilArrayList_init();
   [stack addWithId:create_ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(0, oldSize, 0, newSize)];
-  jint max = JreIntDiv((oldSize + newSize + 1), 2);
+  int32_t max = JreIntDiv((oldSize + newSize + 1), 2);
   ADXDiffUtil_CenteredArray *forward = create_ADXDiffUtil_CenteredArray_initWithInt_(max * 2 + 1);
   ADXDiffUtil_CenteredArray *backward = create_ADXDiffUtil_CenteredArray_initWithInt_(max * 2 + 1);
   id<JavaUtilList> rangePool = create_JavaUtilArrayList_init();
@@ -376,10 +383,10 @@ ADXDiffUtil_Snake *ADXDiffUtil_midPointWithADXDiffUtil_Range_withADXDiffUtil_Cal
   if ([((ADXDiffUtil_Range *) nil_chk(range)) oldSize] < 1 || [range newSize] < 1) {
     return nil;
   }
-  jint max = JreIntDiv(([range oldSize] + [range newSize] + 1), 2);
+  int32_t max = JreIntDiv(([range oldSize] + [range newSize] + 1), 2);
   [((ADXDiffUtil_CenteredArray *) nil_chk(forward)) setWithInt:1 withInt:range->oldListStart_];
   [((ADXDiffUtil_CenteredArray *) nil_chk(backward)) setWithInt:1 withInt:range->oldListEnd_];
-  for (jint d = 0; d < max; d++) {
+  for (int32_t d = 0; d < max; d++) {
     ADXDiffUtil_Snake *snake = ADXDiffUtil_forwardWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_withInt_(range, cb, forward, backward, d);
     if (snake != nil) {
       return snake;
@@ -392,15 +399,15 @@ ADXDiffUtil_Snake *ADXDiffUtil_midPointWithADXDiffUtil_Range_withADXDiffUtil_Cal
   return nil;
 }
 
-ADXDiffUtil_Snake *ADXDiffUtil_forwardWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_withInt_(ADXDiffUtil_Range *range, ADXDiffUtil_Callback *cb, ADXDiffUtil_CenteredArray *forward, ADXDiffUtil_CenteredArray *backward, jint d) {
+ADXDiffUtil_Snake *ADXDiffUtil_forwardWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_withInt_(ADXDiffUtil_Range *range, ADXDiffUtil_Callback *cb, ADXDiffUtil_CenteredArray *forward, ADXDiffUtil_CenteredArray *backward, int32_t d) {
   ADXDiffUtil_initialize();
-  jboolean checkForSnake = JreIntMod(JavaLangMath_absWithInt_([((ADXDiffUtil_Range *) nil_chk(range)) oldSize] - [range newSize]), 2) == 1;
-  jint delta = [range oldSize] - [range newSize];
-  for (jint k = -d; k <= d; k += 2) {
-    jint startX;
-    jint startY;
-    jint x;
-    jint y;
+  bool checkForSnake = JreIntMod(JavaLangMath_absWithInt_([((ADXDiffUtil_Range *) nil_chk(range)) oldSize] - [range newSize]), 2) == 1;
+  int32_t delta = [range oldSize] - [range newSize];
+  for (int32_t k = -d; k <= d; k += 2) {
+    int32_t startX;
+    int32_t startY;
+    int32_t x;
+    int32_t y;
     if (k == -d || (k != d && [((ADXDiffUtil_CenteredArray *) nil_chk(forward)) getWithInt:k + 1] > [forward getWithInt:k - 1])) {
       x = startX = [((ADXDiffUtil_CenteredArray *) nil_chk(forward)) getWithInt:k + 1];
     }
@@ -416,7 +423,7 @@ ADXDiffUtil_Snake *ADXDiffUtil_forwardWithADXDiffUtil_Range_withADXDiffUtil_Call
     }
     [forward setWithInt:k withInt:x];
     if (checkForSnake) {
-      jint backwardsK = delta - k;
+      int32_t backwardsK = delta - k;
       if (backwardsK >= -d + 1 && backwardsK <= d - 1 && [((ADXDiffUtil_CenteredArray *) nil_chk(backward)) getWithInt:backwardsK] <= x) {
         ADXDiffUtil_Snake *snake = create_ADXDiffUtil_Snake_init();
         snake->startX_ = startX;
@@ -431,15 +438,15 @@ ADXDiffUtil_Snake *ADXDiffUtil_forwardWithADXDiffUtil_Range_withADXDiffUtil_Call
   return nil;
 }
 
-ADXDiffUtil_Snake *ADXDiffUtil_backwardWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_withInt_(ADXDiffUtil_Range *range, ADXDiffUtil_Callback *cb, ADXDiffUtil_CenteredArray *forward, ADXDiffUtil_CenteredArray *backward, jint d) {
+ADXDiffUtil_Snake *ADXDiffUtil_backwardWithADXDiffUtil_Range_withADXDiffUtil_Callback_withADXDiffUtil_CenteredArray_withADXDiffUtil_CenteredArray_withInt_(ADXDiffUtil_Range *range, ADXDiffUtil_Callback *cb, ADXDiffUtil_CenteredArray *forward, ADXDiffUtil_CenteredArray *backward, int32_t d) {
   ADXDiffUtil_initialize();
-  jboolean checkForSnake = JreIntMod(([((ADXDiffUtil_Range *) nil_chk(range)) oldSize] - [range newSize]), 2) == 0;
-  jint delta = [range oldSize] - [range newSize];
-  for (jint k = -d; k <= d; k += 2) {
-    jint startX;
-    jint startY;
-    jint x;
-    jint y;
+  bool checkForSnake = JreIntMod(([((ADXDiffUtil_Range *) nil_chk(range)) oldSize] - [range newSize]), 2) == 0;
+  int32_t delta = [range oldSize] - [range newSize];
+  for (int32_t k = -d; k <= d; k += 2) {
+    int32_t startX;
+    int32_t startY;
+    int32_t x;
+    int32_t y;
     if (k == -d || (k != d && [((ADXDiffUtil_CenteredArray *) nil_chk(backward)) getWithInt:k + 1] < [backward getWithInt:k - 1])) {
       x = startX = [((ADXDiffUtil_CenteredArray *) nil_chk(backward)) getWithInt:k + 1];
     }
@@ -455,7 +462,7 @@ ADXDiffUtil_Snake *ADXDiffUtil_backwardWithADXDiffUtil_Range_withADXDiffUtil_Cal
     }
     [backward setWithInt:k withInt:x];
     if (checkForSnake) {
-      jint forwardsK = delta - k;
+      int32_t forwardsK = delta - k;
       if (forwardsK >= -d && forwardsK <= d && [((ADXDiffUtil_CenteredArray *) nil_chk(forward)) getWithInt:forwardsK] >= x) {
         ADXDiffUtil_Snake *snake = create_ADXDiffUtil_Snake_init();
         snake->startX_ = x;
@@ -472,6 +479,8 @@ ADXDiffUtil_Snake *ADXDiffUtil_backwardWithADXDiffUtil_Range_withADXDiffUtil_Cal
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil)
 
+J2OBJC_NAME_MAPPING(ADXDiffUtil, "androidx.recyclerview.widget", "ADX")
+
 @implementation ADXDiffUtil_1
 
 J2OBJC_IGNORE_DESIGNATED_BEGIN
@@ -481,8 +490,8 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jint)compareWithId:(ADXDiffUtil_Diagonal *)o1
-               withId:(ADXDiffUtil_Diagonal *)o2 {
+- (int32_t)compareWithId:(ADXDiffUtil_Diagonal *)o1
+                  withId:(ADXDiffUtil_Diagonal *)o2 {
   return ((ADXDiffUtil_Diagonal *) nil_chk(o1))->x_ - ((ADXDiffUtil_Diagonal *) nil_chk(o2))->x_;
 }
 
@@ -527,7 +536,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   methods[1].selector = @selector(compareWithId:withId:);
   #pragma clang diagnostic pop
   static const void *ptrTable[] = { "compare", "LADXDiffUtil_Diagonal;LADXDiffUtil_Diagonal;", "LADXDiffUtil;", "Ljava/lang/Object;Ljava/util/Comparator<Landroidx/recyclerview/widget/DiffUtil$Diagonal;>;" };
-  static const J2ObjcClassInfo _ADXDiffUtil_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8018, 2, 0, 2, -1, -1, 3, -1 };
+  static const J2ObjcClassInfo _ADXDiffUtil_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8000, 2, 0, 2, -1, -1, 3, -1 };
   return &_ADXDiffUtil_1;
 }
 
@@ -554,34 +563,34 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jint)getOldListSize {
+- (int32_t)getOldListSize {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jint)getNewListSize {
+- (int32_t)getNewListSize {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jboolean)areItemsTheSameWithInt:(jint)oldItemPosition
-                           withInt:(jint)newItemPosition {
+- (bool)areItemsTheSameWithInt:(int32_t)oldItemPosition
+                       withInt:(int32_t)newItemPosition {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jboolean)areContentsTheSameWithInt:(jint)oldItemPosition
-                              withInt:(jint)newItemPosition {
+- (bool)areContentsTheSameWithInt:(int32_t)oldItemPosition
+                          withInt:(int32_t)newItemPosition {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (id)getChangePayloadWithInt:(jint)oldItemPosition
-                      withInt:(jint)newItemPosition {
+- (id)getChangePayloadWithInt:(int32_t)oldItemPosition
+                      withInt:(int32_t)newItemPosition {
   return nil;
 }
 
@@ -626,15 +635,15 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jboolean)areItemsTheSameWithId:(id)oldItem
-                           withId:(id)newItem {
+- (bool)areItemsTheSameWithId:(id)oldItem
+                       withId:(id)newItem {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jboolean)areContentsTheSameWithId:(id)oldItem
-                              withId:(id)newItem {
+- (bool)areContentsTheSameWithId:(id)oldItem
+                          withId:(id)newItem {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
@@ -675,18 +684,18 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_ItemCallback)
 
 @implementation ADXDiffUtil_Diagonal
 
-- (instancetype)initWithInt:(jint)x
-                    withInt:(jint)y
-                    withInt:(jint)size {
+- (instancetype)initWithInt:(int32_t)x
+                    withInt:(int32_t)y
+                    withInt:(int32_t)size {
   ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(self, x, y, size);
   return self;
 }
 
-- (jint)endX {
+- (int32_t)endX {
   return x_ + size_;
 }
 
-- (jint)endY {
+- (int32_t)endY {
   return y_ + size_;
 }
 
@@ -715,18 +724,18 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_ItemCallback)
 
 @end
 
-void ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(ADXDiffUtil_Diagonal *self, jint x, jint y, jint size) {
+void ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(ADXDiffUtil_Diagonal *self, int32_t x, int32_t y, int32_t size) {
   NSObject_init(self);
   self->x_ = x;
   self->y_ = y;
   self->size_ = size;
 }
 
-ADXDiffUtil_Diagonal *new_ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(jint x, jint y, jint size) {
+ADXDiffUtil_Diagonal *new_ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(int32_t x, int32_t y, int32_t size) {
   J2OBJC_NEW_IMPL(ADXDiffUtil_Diagonal, initWithInt_withInt_withInt_, x, y, size)
 }
 
-ADXDiffUtil_Diagonal *create_ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(jint x, jint y, jint size) {
+ADXDiffUtil_Diagonal *create_ADXDiffUtil_Diagonal_initWithInt_withInt_withInt_(int32_t x, int32_t y, int32_t size) {
   J2OBJC_CREATE_IMPL(ADXDiffUtil_Diagonal, initWithInt_withInt_withInt_, x, y, size)
 }
 
@@ -741,15 +750,15 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jboolean)hasAdditionOrRemoval {
+- (bool)hasAdditionOrRemoval {
   return endY_ - startY_ != endX_ - startX_;
 }
 
-- (jboolean)isAddition {
+- (bool)isAddition {
   return endY_ - startY_ > endX_ - startX_;
 }
 
-- (jint)diagonalSize {
+- (int32_t)diagonalSize {
   return JavaLangMath_minWithInt_withInt_(endX_ - startX_, endY_ - startY_);
 }
 
@@ -826,19 +835,19 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (instancetype)initWithInt:(jint)oldListStart
-                    withInt:(jint)oldListEnd
-                    withInt:(jint)newListStart
-                    withInt:(jint)newListEnd {
+- (instancetype)initWithInt:(int32_t)oldListStart
+                    withInt:(int32_t)oldListEnd
+                    withInt:(int32_t)newListStart
+                    withInt:(int32_t)newListEnd {
   ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(self, oldListStart, oldListEnd, newListStart, newListEnd);
   return self;
 }
 
-- (jint)oldSize {
+- (int32_t)oldSize {
   return oldListEnd_ - oldListStart_;
 }
 
-- (jint)newSize {
+- (int32_t)newSize {
   return newListEnd_ - newListStart_;
 }
 
@@ -882,7 +891,7 @@ ADXDiffUtil_Range *create_ADXDiffUtil_Range_init() {
   J2OBJC_CREATE_IMPL(ADXDiffUtil_Range, init)
 }
 
-void ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(ADXDiffUtil_Range *self, jint oldListStart, jint oldListEnd, jint newListStart, jint newListEnd) {
+void ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(ADXDiffUtil_Range *self, int32_t oldListStart, int32_t oldListEnd, int32_t newListStart, int32_t newListEnd) {
   NSObject_init(self);
   self->oldListStart_ = oldListStart;
   self->oldListEnd_ = oldListEnd;
@@ -890,11 +899,11 @@ void ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(ADXDiffUtil_Range *s
   self->newListEnd_ = newListEnd;
 }
 
-ADXDiffUtil_Range *new_ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(jint oldListStart, jint oldListEnd, jint newListStart, jint newListEnd) {
+ADXDiffUtil_Range *new_ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(int32_t oldListStart, int32_t oldListEnd, int32_t newListStart, int32_t newListEnd) {
   J2OBJC_NEW_IMPL(ADXDiffUtil_Range, initWithInt_withInt_withInt_withInt_, oldListStart, oldListEnd, newListStart, newListEnd)
 }
 
-ADXDiffUtil_Range *create_ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(jint oldListStart, jint oldListEnd, jint newListStart, jint newListEnd) {
+ADXDiffUtil_Range *create_ADXDiffUtil_Range_initWithInt_withInt_withInt_withInt_(int32_t oldListStart, int32_t oldListEnd, int32_t newListStart, int32_t newListEnd) {
   J2OBJC_CREATE_IMPL(ADXDiffUtil_Range, initWithInt_withInt_withInt_withInt_, oldListStart, oldListEnd, newListStart, newListEnd)
 }
 
@@ -906,7 +915,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_Range)
                             withJavaUtilList:(id<JavaUtilList>)diagonals
                                 withIntArray:(IOSIntArray *)oldItemStatuses
                                 withIntArray:(IOSIntArray *)newItemStatuses
-                                 withBoolean:(jboolean)detectMoves {
+                                 withBoolean:(bool)detectMoves {
   ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(self, callback, diagonals, oldItemStatuses, newItemStatuses, detectMoves);
   return self;
 }
@@ -923,15 +932,15 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_Range)
   ADXDiffUtil_DiffResult_findMoveMatches(self);
 }
 
-- (void)findMatchingAdditionWithInt:(jint)posX {
+- (void)findMatchingAdditionWithInt:(int32_t)posX {
   ADXDiffUtil_DiffResult_findMatchingAdditionWithInt_(self, posX);
 }
 
-- (jint)convertOldPositionToNewWithInt:(jint)oldListPosition {
+- (int32_t)convertOldPositionToNewWithInt:(int32_t)oldListPosition {
   if (oldListPosition < 0 || oldListPosition >= mOldListSize_) {
     @throw create_JavaLangIndexOutOfBoundsException_initWithNSString_(JreStrcat("$I$I", @"Index out of bounds - passed position = ", oldListPosition, @", old list size = ", mOldListSize_));
   }
-  jint status = IOSIntArray_Get(nil_chk(mOldItemStatuses_), oldListPosition);
+  int32_t status = IOSIntArray_Get(nil_chk(mOldItemStatuses_), oldListPosition);
   if ((status & ADXDiffUtil_DiffResult_FLAG_MASK) == 0) {
     return ADXDiffUtil_DiffResult_NO_POSITION;
   }
@@ -940,11 +949,11 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_Range)
   }
 }
 
-- (jint)convertNewPositionToOldWithInt:(jint)newListPosition {
+- (int32_t)convertNewPositionToOldWithInt:(int32_t)newListPosition {
   if (newListPosition < 0 || newListPosition >= mNewListSize_) {
     @throw create_JavaLangIndexOutOfBoundsException_initWithNSString_(JreStrcat("$I$I", @"Index out of bounds - passed position = ", newListPosition, @", new list size = ", mNewListSize_));
   }
-  jint status = IOSIntArray_Get(nil_chk(mNewItemStatuses_), newListPosition);
+  int32_t status = IOSIntArray_Get(nil_chk(mNewItemStatuses_), newListPosition);
   if ((status & ADXDiffUtil_DiffResult_FLAG_MASK) == 0) {
     return ADXDiffUtil_DiffResult_NO_POSITION;
   }
@@ -966,22 +975,22 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_Range)
     batchingCallback = create_ADXBatchingListUpdateCallback_initWithADXListUpdateCallback_(updateCallback);
     updateCallback = batchingCallback;
   }
-  jint currentListSize = mOldListSize_;
+  int32_t currentListSize = mOldListSize_;
   id<JavaUtilCollection> postponedUpdates = create_JavaUtilArrayDeque_init();
-  jint posX = mOldListSize_;
-  jint posY = mNewListSize_;
-  for (jint diagonalIndex = [((id<JavaUtilList>) nil_chk(mDiagonals_)) size] - 1; diagonalIndex >= 0; diagonalIndex--) {
+  int32_t posX = mOldListSize_;
+  int32_t posY = mNewListSize_;
+  for (int32_t diagonalIndex = [((id<JavaUtilList>) nil_chk(mDiagonals_)) size] - 1; diagonalIndex >= 0; diagonalIndex--) {
     ADXDiffUtil_Diagonal *diagonal = [mDiagonals_ getWithInt:diagonalIndex];
-    jint endX = [((ADXDiffUtil_Diagonal *) nil_chk(diagonal)) endX];
-    jint endY = [diagonal endY];
+    int32_t endX = [((ADXDiffUtil_Diagonal *) nil_chk(diagonal)) endX];
+    int32_t endY = [diagonal endY];
     while (posX > endX) {
       posX--;
-      jint status = IOSIntArray_Get(nil_chk(mOldItemStatuses_), posX);
+      int32_t status = IOSIntArray_Get(nil_chk(mOldItemStatuses_), posX);
       if ((status & ADXDiffUtil_DiffResult_FLAG_MOVED) != 0) {
-        jint newPos = JreRShift32(status, ADXDiffUtil_DiffResult_FLAG_OFFSET);
+        int32_t newPos = JreRShift32(status, ADXDiffUtil_DiffResult_FLAG_OFFSET);
         ADXDiffUtil_PostponedUpdate *postponedUpdate = ADXDiffUtil_DiffResult_getPostponedUpdateWithJavaUtilCollection_withInt_withBoolean_(postponedUpdates, newPos, false);
         if (postponedUpdate != nil) {
-          jint updatedNewPos = currentListSize - postponedUpdate->currentPos_;
+          int32_t updatedNewPos = currentListSize - postponedUpdate->currentPos_;
           [((ADXBatchingListUpdateCallback *) nil_chk(batchingCallback)) onMovedWithInt:posX withInt:updatedNewPos - 1];
           if ((status & ADXDiffUtil_DiffResult_FLAG_MOVED_CHANGED) != 0) {
             id changePayload = JreRetainedLocalValue([((ADXDiffUtil_Callback *) nil_chk(mCallback_)) getChangePayloadWithInt:posX withInt:newPos]);
@@ -999,15 +1008,15 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_Range)
     }
     while (posY > endY) {
       posY--;
-      jint status = IOSIntArray_Get(nil_chk(mNewItemStatuses_), posY);
+      int32_t status = IOSIntArray_Get(nil_chk(mNewItemStatuses_), posY);
       if ((status & ADXDiffUtil_DiffResult_FLAG_MOVED) != 0) {
-        jint oldPos = JreRShift32(status, ADXDiffUtil_DiffResult_FLAG_OFFSET);
+        int32_t oldPos = JreRShift32(status, ADXDiffUtil_DiffResult_FLAG_OFFSET);
         ADXDiffUtil_PostponedUpdate *postponedUpdate = ADXDiffUtil_DiffResult_getPostponedUpdateWithJavaUtilCollection_withInt_withBoolean_(postponedUpdates, oldPos, true);
         if (postponedUpdate == nil) {
           [postponedUpdates addWithId:create_ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(posY, currentListSize - posX, false)];
         }
         else {
-          jint updatedOldPos = currentListSize - postponedUpdate->currentPos_ - 1;
+          int32_t updatedOldPos = currentListSize - postponedUpdate->currentPos_ - 1;
           [((ADXBatchingListUpdateCallback *) nil_chk(batchingCallback)) onMovedWithInt:updatedOldPos withInt:posX];
           if ((status & ADXDiffUtil_DiffResult_FLAG_MOVED_CHANGED) != 0) {
             id changePayload = JreRetainedLocalValue([((ADXDiffUtil_Callback *) nil_chk(mCallback_)) getChangePayloadWithInt:oldPos withInt:posY]);
@@ -1022,7 +1031,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_Range)
     }
     posX = diagonal->x_;
     posY = diagonal->y_;
-    for (jint i = 0; i < diagonal->size_; i++) {
+    for (int32_t i = 0; i < diagonal->size_; i++) {
       if ((IOSIntArray_Get(nil_chk(mOldItemStatuses_), posX) & ADXDiffUtil_DiffResult_FLAG_MASK) == ADXDiffUtil_DiffResult_FLAG_CHANGED) {
         id changePayload = JreRetainedLocalValue([((ADXDiffUtil_Callback *) nil_chk(mCallback_)) getChangePayloadWithInt:posX withInt:posY]);
         [((ADXBatchingListUpdateCallback *) nil_chk(batchingCallback)) onChangedWithInt:posX withInt:1 withId:changePayload];
@@ -1037,8 +1046,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_Range)
 }
 
 + (ADXDiffUtil_PostponedUpdate *)getPostponedUpdateWithJavaUtilCollection:(id<JavaUtilCollection>)postponedUpdates
-                                                                  withInt:(jint)posInList
-                                                              withBoolean:(jboolean)removal {
+                                                                  withInt:(int32_t)posInList
+                                                              withBoolean:(bool)removal {
   return ADXDiffUtil_DiffResult_getPostponedUpdateWithJavaUtilCollection_withInt_withBoolean_(postponedUpdates, posInList, removal);
 }
 
@@ -1101,7 +1110,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_Range)
 
 @end
 
-void ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_DiffResult *self, ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, jboolean detectMoves) {
+void ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_DiffResult *self, ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, bool detectMoves) {
   NSObject_init(self);
   JreStrongAssign(&self->mDiagonals_, diagonals);
   JreStrongAssign(&self->mOldItemStatuses_, oldItemStatuses);
@@ -1116,11 +1125,11 @@ void ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIn
   ADXDiffUtil_DiffResult_findMatchingItems(self);
 }
 
-ADXDiffUtil_DiffResult *new_ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, jboolean detectMoves) {
+ADXDiffUtil_DiffResult *new_ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, bool detectMoves) {
   J2OBJC_NEW_IMPL(ADXDiffUtil_DiffResult, initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_, callback, diagonals, oldItemStatuses, newItemStatuses, detectMoves)
 }
 
-ADXDiffUtil_DiffResult *create_ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, jboolean detectMoves) {
+ADXDiffUtil_DiffResult *create_ADXDiffUtil_DiffResult_initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_(ADXDiffUtil_Callback *callback, id<JavaUtilList> diagonals, IOSIntArray *oldItemStatuses, IOSIntArray *newItemStatuses, bool detectMoves) {
   J2OBJC_CREATE_IMPL(ADXDiffUtil_DiffResult, initWithADXDiffUtil_Callback_withJavaUtilList_withIntArray_withIntArray_withBoolean_, callback, diagonals, oldItemStatuses, newItemStatuses, detectMoves)
 }
 
@@ -1134,11 +1143,11 @@ void ADXDiffUtil_DiffResult_addEdgeDiagonals(ADXDiffUtil_DiffResult *self) {
 
 void ADXDiffUtil_DiffResult_findMatchingItems(ADXDiffUtil_DiffResult *self) {
   for (ADXDiffUtil_Diagonal * __strong diagonal in nil_chk(self->mDiagonals_)) {
-    for (jint offset = 0; offset < ((ADXDiffUtil_Diagonal *) nil_chk(diagonal))->size_; offset++) {
-      jint posX = diagonal->x_ + offset;
-      jint posY = diagonal->y_ + offset;
-      jboolean theSame = [((ADXDiffUtil_Callback *) nil_chk(self->mCallback_)) areContentsTheSameWithInt:posX withInt:posY];
-      jint changeFlag = theSame ? ADXDiffUtil_DiffResult_FLAG_NOT_CHANGED : ADXDiffUtil_DiffResult_FLAG_CHANGED;
+    for (int32_t offset = 0; offset < ((ADXDiffUtil_Diagonal *) nil_chk(diagonal))->size_; offset++) {
+      int32_t posX = diagonal->x_ + offset;
+      int32_t posY = diagonal->y_ + offset;
+      bool theSame = [((ADXDiffUtil_Callback *) nil_chk(self->mCallback_)) areContentsTheSameWithInt:posX withInt:posY];
+      int32_t changeFlag = theSame ? ADXDiffUtil_DiffResult_FLAG_NOT_CHANGED : ADXDiffUtil_DiffResult_FLAG_CHANGED;
       *IOSIntArray_GetRef(nil_chk(self->mOldItemStatuses_), posX) = (JreLShift32(posY, ADXDiffUtil_DiffResult_FLAG_OFFSET)) | changeFlag;
       *IOSIntArray_GetRef(nil_chk(self->mNewItemStatuses_), posY) = (JreLShift32(posX, ADXDiffUtil_DiffResult_FLAG_OFFSET)) | changeFlag;
     }
@@ -1149,7 +1158,7 @@ void ADXDiffUtil_DiffResult_findMatchingItems(ADXDiffUtil_DiffResult *self) {
 }
 
 void ADXDiffUtil_DiffResult_findMoveMatches(ADXDiffUtil_DiffResult *self) {
-  jint posX = 0;
+  int32_t posX = 0;
   for (ADXDiffUtil_Diagonal * __strong diagonal in nil_chk(self->mDiagonals_)) {
     while (posX < ((ADXDiffUtil_Diagonal *) nil_chk(diagonal))->x_) {
       if (IOSIntArray_Get(nil_chk(self->mOldItemStatuses_), posX) == 0) {
@@ -1161,17 +1170,17 @@ void ADXDiffUtil_DiffResult_findMoveMatches(ADXDiffUtil_DiffResult *self) {
   }
 }
 
-void ADXDiffUtil_DiffResult_findMatchingAdditionWithInt_(ADXDiffUtil_DiffResult *self, jint posX) {
-  jint posY = 0;
-  jint diagonalsSize = [((id<JavaUtilList>) nil_chk(self->mDiagonals_)) size];
-  for (jint i = 0; i < diagonalsSize; i++) {
+void ADXDiffUtil_DiffResult_findMatchingAdditionWithInt_(ADXDiffUtil_DiffResult *self, int32_t posX) {
+  int32_t posY = 0;
+  int32_t diagonalsSize = [((id<JavaUtilList>) nil_chk(self->mDiagonals_)) size];
+  for (int32_t i = 0; i < diagonalsSize; i++) {
     ADXDiffUtil_Diagonal *diagonal = [self->mDiagonals_ getWithInt:i];
     while (posY < ((ADXDiffUtil_Diagonal *) nil_chk(diagonal))->y_) {
       if (IOSIntArray_Get(nil_chk(self->mNewItemStatuses_), posY) == 0) {
-        jboolean matching = [((ADXDiffUtil_Callback *) nil_chk(self->mCallback_)) areItemsTheSameWithInt:posX withInt:posY];
+        bool matching = [((ADXDiffUtil_Callback *) nil_chk(self->mCallback_)) areItemsTheSameWithInt:posX withInt:posY];
         if (matching) {
-          jboolean contentsMatching = [self->mCallback_ areContentsTheSameWithInt:posX withInt:posY];
-          jint changeFlag = contentsMatching ? ADXDiffUtil_DiffResult_FLAG_MOVED_NOT_CHANGED : ADXDiffUtil_DiffResult_FLAG_MOVED_CHANGED;
+          bool contentsMatching = [self->mCallback_ areContentsTheSameWithInt:posX withInt:posY];
+          int32_t changeFlag = contentsMatching ? ADXDiffUtil_DiffResult_FLAG_MOVED_NOT_CHANGED : ADXDiffUtil_DiffResult_FLAG_MOVED_CHANGED;
           *IOSIntArray_GetRef(nil_chk(self->mOldItemStatuses_), posX) = (JreLShift32(posY, ADXDiffUtil_DiffResult_FLAG_OFFSET)) | changeFlag;
           *IOSIntArray_GetRef(self->mNewItemStatuses_, posY) = (JreLShift32(posX, ADXDiffUtil_DiffResult_FLAG_OFFSET)) | changeFlag;
           return;
@@ -1183,7 +1192,7 @@ void ADXDiffUtil_DiffResult_findMatchingAdditionWithInt_(ADXDiffUtil_DiffResult 
   }
 }
 
-ADXDiffUtil_PostponedUpdate *ADXDiffUtil_DiffResult_getPostponedUpdateWithJavaUtilCollection_withInt_withBoolean_(id<JavaUtilCollection> postponedUpdates, jint posInList, jboolean removal) {
+ADXDiffUtil_PostponedUpdate *ADXDiffUtil_DiffResult_getPostponedUpdateWithJavaUtilCollection_withInt_withBoolean_(id<JavaUtilCollection> postponedUpdates, int32_t posInList, bool removal) {
   ADXDiffUtil_DiffResult_initialize();
   ADXDiffUtil_PostponedUpdate *postponedUpdate = nil;
   id<JavaUtilIterator> itr = JreRetainedLocalValue([((id<JavaUtilCollection>) nil_chk(postponedUpdates)) iterator]);
@@ -1211,9 +1220,9 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_DiffResult)
 
 @implementation ADXDiffUtil_PostponedUpdate
 
-- (instancetype)initWithInt:(jint)posInOwnerList
-                    withInt:(jint)currentPos
-                withBoolean:(jboolean)removal {
+- (instancetype)initWithInt:(int32_t)posInOwnerList
+                    withInt:(int32_t)currentPos
+                withBoolean:(bool)removal {
   ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(self, posInOwnerList, currentPos, removal);
   return self;
 }
@@ -1239,18 +1248,18 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_DiffResult)
 
 @end
 
-void ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(ADXDiffUtil_PostponedUpdate *self, jint posInOwnerList, jint currentPos, jboolean removal) {
+void ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(ADXDiffUtil_PostponedUpdate *self, int32_t posInOwnerList, int32_t currentPos, bool removal) {
   NSObject_init(self);
   self->posInOwnerList_ = posInOwnerList;
   self->currentPos_ = currentPos;
   self->removal_ = removal;
 }
 
-ADXDiffUtil_PostponedUpdate *new_ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(jint posInOwnerList, jint currentPos, jboolean removal) {
+ADXDiffUtil_PostponedUpdate *new_ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(int32_t posInOwnerList, int32_t currentPos, bool removal) {
   J2OBJC_NEW_IMPL(ADXDiffUtil_PostponedUpdate, initWithInt_withInt_withBoolean_, posInOwnerList, currentPos, removal)
 }
 
-ADXDiffUtil_PostponedUpdate *create_ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(jint posInOwnerList, jint currentPos, jboolean removal) {
+ADXDiffUtil_PostponedUpdate *create_ADXDiffUtil_PostponedUpdate_initWithInt_withInt_withBoolean_(int32_t posInOwnerList, int32_t currentPos, bool removal) {
   J2OBJC_CREATE_IMPL(ADXDiffUtil_PostponedUpdate, initWithInt_withInt_withBoolean_, posInOwnerList, currentPos, removal)
 }
 
@@ -1258,12 +1267,12 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_PostponedUpdate)
 
 @implementation ADXDiffUtil_CenteredArray
 
-- (instancetype)initWithInt:(jint)size {
+- (instancetype)initWithInt:(int32_t)size {
   ADXDiffUtil_CenteredArray_initWithInt_(self, size);
   return self;
 }
 
-- (jint)getWithInt:(jint)index {
+- (int32_t)getWithInt:(int32_t)index {
   return IOSIntArray_Get(nil_chk(mData_), index + mMid_);
 }
 
@@ -1271,12 +1280,12 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_PostponedUpdate)
   return mData_;
 }
 
-- (void)setWithInt:(jint)index
-           withInt:(jint)value {
+- (void)setWithInt:(int32_t)index
+           withInt:(int32_t)value {
   *IOSIntArray_GetRef(nil_chk(mData_), index + mMid_) = value;
 }
 
-- (void)fillWithInt:(jint)value {
+- (void)fillWithInt:(int32_t)value {
   JavaUtilArrays_fillWithIntArray_withInt_(mData_, value);
 }
 
@@ -1313,17 +1322,17 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXDiffUtil_PostponedUpdate)
 
 @end
 
-void ADXDiffUtil_CenteredArray_initWithInt_(ADXDiffUtil_CenteredArray *self, jint size) {
+void ADXDiffUtil_CenteredArray_initWithInt_(ADXDiffUtil_CenteredArray *self, int32_t size) {
   NSObject_init(self);
   JreStrongAssignAndConsume(&self->mData_, [IOSIntArray newArrayWithLength:size]);
   self->mMid_ = JreIntDiv(self->mData_->size_, 2);
 }
 
-ADXDiffUtil_CenteredArray *new_ADXDiffUtil_CenteredArray_initWithInt_(jint size) {
+ADXDiffUtil_CenteredArray *new_ADXDiffUtil_CenteredArray_initWithInt_(int32_t size) {
   J2OBJC_NEW_IMPL(ADXDiffUtil_CenteredArray, initWithInt_, size)
 }
 
-ADXDiffUtil_CenteredArray *create_ADXDiffUtil_CenteredArray_initWithInt_(jint size) {
+ADXDiffUtil_CenteredArray *create_ADXDiffUtil_CenteredArray_initWithInt_(int32_t size) {
   J2OBJC_CREATE_IMPL(ADXDiffUtil_CenteredArray, initWithInt_, size)
 }
 

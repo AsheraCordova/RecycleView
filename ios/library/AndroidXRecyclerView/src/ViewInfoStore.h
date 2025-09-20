@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\ViewInfoStore.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_ViewInfoStore")
@@ -26,6 +27,8 @@
 @class ADXRecyclerView_ItemAnimator_ItemHolderInfo;
 @class ADXRecyclerView_ViewHolder;
 @class ADXSimpleArrayMap;
+@class JavaLangBoolean;
+@class JavaLangLong;
 @protocol ADXViewInfoStore_ProcessCallback;
 
 /*!
@@ -72,7 +75,7 @@
  @param key The key to identify the ViewHolder.
  @param holder The ViewHolder to store
  */
-- (void)addToOldChangeHoldersWithLong:(jlong)key
+- (void)addToOldChangeHoldersWithLong:(int64_t)key
        withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
 /*!
@@ -102,16 +105,16 @@
  @param key The key to be used to find the ViewHolder.
  @return A ViewHolder if exists or null if it does not exist.
  */
-- (ADXRecyclerView_ViewHolder *)getFromOldChangeHoldersWithLong:(jlong)key;
+- (ADXRecyclerView_ViewHolder *)getFromOldChangeHoldersWithLong:(int64_t)key;
 
-- (jboolean)isDisappearingWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
+- (bool)isDisappearingWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
 /*!
  @brief Checks whether the given ViewHolder is in preLayout list
  @param viewHolder The ViewHolder to query
  @return True if the ViewHolder is present in preLayout, false otherwise
  */
-- (jboolean)isInPreLayoutWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+- (bool)isInPreLayoutWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
 
 - (void)onDetach;
 
@@ -164,6 +167,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXViewInfoStore)
 
 @compatibility_alias AndroidxRecyclerviewWidgetViewInfoStore ADXViewInfoStore;
 
+
 #endif
 
 #if !defined (ADXViewInfoStore_ProcessCallback_) && (INCLUDE_ALL_ViewInfoStore || defined(INCLUDE_ADXViewInfoStore_ProcessCallback))
@@ -194,17 +198,19 @@ J2OBJC_EMPTY_STATIC_INIT(ADXViewInfoStore_ProcessCallback)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXViewInfoStore_ProcessCallback)
 
+
 #endif
 
 #if !defined (ADXViewInfoStore_InfoRecord_) && (INCLUDE_ALL_ViewInfoStore || defined(INCLUDE_ADXViewInfoStore_InfoRecord))
 #define ADXViewInfoStore_InfoRecord_
 
 @class ADXRecyclerView_ItemAnimator_ItemHolderInfo;
+@class JavaLangInteger;
 @protocol ADPools_Pool;
 
 @interface ADXViewInfoStore_InfoRecord : NSObject {
  @public
-  jint flags_;
+  int32_t flags_;
   ADXRecyclerView_ItemAnimator_ItemHolderInfo *preInfo_;
   ADXRecyclerView_ItemAnimator_ItemHolderInfo *postInfo_;
 }
@@ -224,33 +230,33 @@ J2OBJC_STATIC_INIT(ADXViewInfoStore_InfoRecord)
 J2OBJC_FIELD_SETTER(ADXViewInfoStore_InfoRecord, preInfo_, ADXRecyclerView_ItemAnimator_ItemHolderInfo *)
 J2OBJC_FIELD_SETTER(ADXViewInfoStore_InfoRecord, postInfo_, ADXRecyclerView_ItemAnimator_ItemHolderInfo *)
 
-inline jint ADXViewInfoStore_InfoRecord_get_FLAG_DISAPPEARED(void);
+inline int32_t ADXViewInfoStore_InfoRecord_get_FLAG_DISAPPEARED(void);
 #define ADXViewInfoStore_InfoRecord_FLAG_DISAPPEARED 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_DISAPPEARED, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_DISAPPEARED, int32_t)
 
-inline jint ADXViewInfoStore_InfoRecord_get_FLAG_APPEAR(void);
+inline int32_t ADXViewInfoStore_InfoRecord_get_FLAG_APPEAR(void);
 #define ADXViewInfoStore_InfoRecord_FLAG_APPEAR 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_APPEAR, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_APPEAR, int32_t)
 
-inline jint ADXViewInfoStore_InfoRecord_get_FLAG_PRE(void);
+inline int32_t ADXViewInfoStore_InfoRecord_get_FLAG_PRE(void);
 #define ADXViewInfoStore_InfoRecord_FLAG_PRE 4
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_PRE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_PRE, int32_t)
 
-inline jint ADXViewInfoStore_InfoRecord_get_FLAG_POST(void);
+inline int32_t ADXViewInfoStore_InfoRecord_get_FLAG_POST(void);
 #define ADXViewInfoStore_InfoRecord_FLAG_POST 8
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_POST, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_POST, int32_t)
 
-inline jint ADXViewInfoStore_InfoRecord_get_FLAG_APPEAR_AND_DISAPPEAR(void);
+inline int32_t ADXViewInfoStore_InfoRecord_get_FLAG_APPEAR_AND_DISAPPEAR(void);
 #define ADXViewInfoStore_InfoRecord_FLAG_APPEAR_AND_DISAPPEAR 3
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_APPEAR_AND_DISAPPEAR, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_APPEAR_AND_DISAPPEAR, int32_t)
 
-inline jint ADXViewInfoStore_InfoRecord_get_FLAG_PRE_AND_POST(void);
+inline int32_t ADXViewInfoStore_InfoRecord_get_FLAG_PRE_AND_POST(void);
 #define ADXViewInfoStore_InfoRecord_FLAG_PRE_AND_POST 12
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_PRE_AND_POST, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_PRE_AND_POST, int32_t)
 
-inline jint ADXViewInfoStore_InfoRecord_get_FLAG_APPEAR_PRE_AND_POST(void);
+inline int32_t ADXViewInfoStore_InfoRecord_get_FLAG_APPEAR_PRE_AND_POST(void);
 #define ADXViewInfoStore_InfoRecord_FLAG_APPEAR_PRE_AND_POST 14
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_APPEAR_PRE_AND_POST, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore_InfoRecord, FLAG_APPEAR_PRE_AND_POST, int32_t)
 
 inline id<ADPools_Pool> ADXViewInfoStore_InfoRecord_get_sPool(void);
 inline id<ADPools_Pool> ADXViewInfoStore_InfoRecord_set_sPool(id<ADPools_Pool> value);
@@ -265,6 +271,7 @@ FOUNDATION_EXPORT void ADXViewInfoStore_InfoRecord_recycleWithADXViewInfoStore_I
 FOUNDATION_EXPORT void ADXViewInfoStore_InfoRecord_drainCache(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXViewInfoStore_InfoRecord)
+
 
 #endif
 

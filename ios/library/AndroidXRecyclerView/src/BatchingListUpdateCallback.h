@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\BatchingListUpdateCallback.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_BatchingListUpdateCallback")
@@ -26,6 +27,8 @@
 #define INCLUDE_ADXListUpdateCallback 1
 #include "ListUpdateCallback.h"
 
+@class JavaLangInteger;
+
 /*!
  @brief Wraps a <code>ListUpdateCallback</code> callback and batches operations that can be merged.
  <p>
@@ -42,9 +45,9 @@
 @interface ADXBatchingListUpdateCallback : NSObject < ADXListUpdateCallback > {
  @public
   id<ADXListUpdateCallback> mWrapped_;
-  jint mLastEventType_;
-  jint mLastEventPosition_;
-  jint mLastEventCount_;
+  int32_t mLastEventType_;
+  int32_t mLastEventPosition_;
+  int32_t mLastEventCount_;
   id mLastEventPayload_;
 }
 
@@ -59,18 +62,18 @@
  */
 - (void)dispatchLastEvent;
 
-- (void)onChangedWithInt:(jint)position
-                 withInt:(jint)count
+- (void)onChangedWithInt:(int32_t)position
+                 withInt:(int32_t)count
                   withId:(id)payload;
 
-- (void)onInsertedWithInt:(jint)position
-                  withInt:(jint)count;
+- (void)onInsertedWithInt:(int32_t)position
+                  withInt:(int32_t)count;
 
-- (void)onMovedWithInt:(jint)fromPosition
-               withInt:(jint)toPosition;
+- (void)onMovedWithInt:(int32_t)fromPosition
+               withInt:(int32_t)toPosition;
 
-- (void)onRemovedWithInt:(jint)position
-                 withInt:(jint)count;
+- (void)onRemovedWithInt:(int32_t)position
+                 withInt:(int32_t)count;
 
 // Disallowed inherited constructors, do not use.
 
@@ -92,6 +95,7 @@ FOUNDATION_EXPORT ADXBatchingListUpdateCallback *create_ADXBatchingListUpdateCal
 J2OBJC_TYPE_LITERAL_HEADER(ADXBatchingListUpdateCallback)
 
 @compatibility_alias AndroidxRecyclerviewWidgetBatchingListUpdateCallback ADXBatchingListUpdateCallback;
+
 
 #endif
 

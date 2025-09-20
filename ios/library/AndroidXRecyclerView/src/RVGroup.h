@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\RVGroup.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_RVGroup")
@@ -23,6 +24,7 @@
 #define ADXRVGroup_
 
 @class ADXItem;
+@class JavaLangInteger;
 @protocol ADXGroupDataObserver;
 
 /*!
@@ -30,16 +32,16 @@
  */
 @protocol ADXRVGroup < JavaObject >
 
-- (jint)getItemCount;
+- (int32_t)getItemCount;
 
-- (ADXItem *)getItemWithInt:(jint)position;
+- (ADXItem *)getItemWithInt:(int32_t)position;
 
 /*!
  @brief Gets the position of an item inside this Group
  @param item item to return position of
  @return The position of the item or -1 if not present
  */
-- (jint)getPositionWithADXItem:(ADXItem *)item;
+- (int32_t)getPositionWithADXItem:(ADXItem *)item;
 
 - (void)registerGroupDataObserverWithADXGroupDataObserver:(id<ADXGroupDataObserver>)groupDataObserver;
 
@@ -52,6 +54,7 @@ J2OBJC_EMPTY_STATIC_INIT(ADXRVGroup)
 J2OBJC_TYPE_LITERAL_HEADER(ADXRVGroup)
 
 #define ComXwrayGroupieRVGroup ADXRVGroup
+
 
 #endif
 

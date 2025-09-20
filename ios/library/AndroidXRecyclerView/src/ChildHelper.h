@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\ChildHelper.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_ChildHelper")
@@ -19,6 +20,9 @@
 @class ADView;
 @class ADViewGroup_LayoutParams;
 @class ADXChildHelper_Bucket;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class NSString;
 @protocol ADXChildHelper_Callback;
 @protocol JavaUtilList;
 
@@ -53,7 +57,7 @@
  @param hidden If set to true, this item will be invisible from regular methods.
  */
 - (void)addViewWithADView:(ADView *)child
-              withBoolean:(jboolean)hidden;
+              withBoolean:(bool)hidden;
 
 /*!
  @brief Add a view to the ViewGroup at an index
@@ -62,8 +66,8 @@
  @param hidden If set to true, this item will be invisible from regular methods.
  */
 - (void)addViewWithADView:(ADView *)child
-                  withInt:(jint)index
-              withBoolean:(jboolean)hidden;
+                  withInt:(int32_t)index
+              withBoolean:(bool)hidden;
 
 /*!
  @brief Attaches the provided view to the underlying ViewGroup.
@@ -73,49 +77,49 @@
  @param hidden If set to true, this item will be invisible to the regular methods.
  */
 - (void)attachViewToParentWithADView:(ADView *)child
-                             withInt:(jint)index
+                             withInt:(int32_t)index
         withADViewGroup_LayoutParams:(ADViewGroup_LayoutParams *)layoutParams
-                         withBoolean:(jboolean)hidden;
+                         withBoolean:(bool)hidden;
 
 /*!
  @brief Detaches the view at the provided index.
  @param index Index of the child to return in regular perspective.
  */
-- (void)detachViewFromParentWithInt:(jint)index;
+- (void)detachViewFromParentWithInt:(int32_t)index;
 
 /*!
  @brief This can be used to find a disappearing view by position.
  @param position The adapter position of the item.
  @return A hidden view with a valid ViewHolder that matches the position.
  */
-- (ADView *)findHiddenNonRemovedViewWithInt:(jint)position;
+- (ADView *)findHiddenNonRemovedViewWithInt:(int32_t)position;
 
 /*!
  @brief Returns the child at provided index.
  @param index Index of the child to return in regular perspective.
  */
-- (ADView *)getChildAtWithInt:(jint)index;
+- (ADView *)getChildAtWithInt:(int32_t)index;
 
 /*!
  @brief Returns the number of children that are not hidden.
  @return Number of children that are not hidden.
  - seealso: #getChildAt(int)
  */
-- (jint)getChildCount;
+- (int32_t)getChildCount;
 
 /*!
  @brief Returns a child by ViewGroup offset.ChildHelper won't offset this index.
  @param index ViewGroup index of the child to return.
  @return The view in the provided index.
  */
-- (ADView *)getUnfilteredChildAtWithInt:(jint)index;
+- (ADView *)getUnfilteredChildAtWithInt:(int32_t)index;
 
 /*!
  @brief Returns the total number of children.
  @return The total number of children including the hidden views.
  - seealso: #getUnfilteredChildAt(int)
  */
-- (jint)getUnfilteredChildCount;
+- (int32_t)getUnfilteredChildCount;
 
 /*!
  @brief Marks a child view as hidden.
@@ -128,14 +132,14 @@
  @param child The child whose index will be returned.
  @return The regular perspective index of the child or -1 if it does not exists.
  */
-- (jint)indexOfChildWithADView:(ADView *)child;
+- (int32_t)indexOfChildWithADView:(ADView *)child;
 
 /*!
  @brief Returns whether a View is visible to LayoutManager or not.
  @param view The child view to check. Should be a child of the Callback.
  @return True if the View is not visible to LayoutManager
  */
-- (jboolean)isHiddenWithADView:(ADView *)view;
+- (bool)isHiddenWithADView:(ADView *)view;
 
 /*!
  @brief Removes all views from the ViewGroup including the hidden ones.
@@ -152,14 +156,14 @@
  @brief Removes the view at the provided index from RecyclerView.
  @param index Index of the child from the regular perspective (excluding hidden views).               ChildHelper offsets this index to actual ViewGroup index.
  */
-- (void)removeViewAtWithInt:(jint)index;
+- (void)removeViewAtWithInt:(int32_t)index;
 
 /*!
  @brief Removes a view from the ViewGroup if it is hidden.
  @param view The view to remove.
  @return True if the View is found and it is hidden. False otherwise.
  */
-- (jboolean)removeViewIfHiddenWithADView:(ADView *)view;
+- (bool)removeViewIfHiddenWithADView:(ADView *)view;
 
 /*!
  @brief Moves a child view from hidden list to regular list.
@@ -191,17 +195,23 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXChildHelper)
 
 @compatibility_alias AndroidxRecyclerviewWidgetChildHelper ADXChildHelper;
 
+
 #endif
 
 #if !defined (ADXChildHelper_Bucket_) && (INCLUDE_ALL_ChildHelper || defined(INCLUDE_ADXChildHelper_Bucket))
 #define ADXChildHelper_Bucket_
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class NSString;
 
 /*!
  @brief Bitset implementation that provides methods to offset indices.
  */
 @interface ADXChildHelper_Bucket : NSObject {
  @public
-  jlong mData_;
+  int64_t mData_;
   ADXChildHelper_Bucket *mNext_;
 }
 
@@ -213,20 +223,20 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXChildHelper)
 
 - (instancetype)init;
 
-- (void)clearWithInt:(jint)index;
+- (void)clearWithInt:(int32_t)index;
 
-- (jint)countOnesBeforeWithInt:(jint)index;
+- (int32_t)countOnesBeforeWithInt:(int32_t)index;
 
-- (jboolean)getWithInt:(jint)index;
+- (bool)getWithInt:(int32_t)index;
 
-- (void)insertWithInt:(jint)index
-          withBoolean:(jboolean)value;
+- (void)insertWithInt:(int32_t)index
+          withBoolean:(bool)value;
 
-- (jboolean)removeWithInt:(jint)index;
+- (bool)removeWithInt:(int32_t)index;
 
 - (void)reset;
 
-- (void)setWithInt:(jint)index;
+- (void)setWithInt:(int32_t)index;
 
 @end
 
@@ -234,13 +244,13 @@ J2OBJC_EMPTY_STATIC_INIT(ADXChildHelper_Bucket)
 
 J2OBJC_FIELD_SETTER(ADXChildHelper_Bucket, mNext_, ADXChildHelper_Bucket *)
 
-inline jint ADXChildHelper_Bucket_get_BITS_PER_WORD(void);
+inline int32_t ADXChildHelper_Bucket_get_BITS_PER_WORD(void);
 #define ADXChildHelper_Bucket_BITS_PER_WORD 64
-J2OBJC_STATIC_FIELD_CONSTANT(ADXChildHelper_Bucket, BITS_PER_WORD, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXChildHelper_Bucket, BITS_PER_WORD, int32_t)
 
-inline jlong ADXChildHelper_Bucket_get_LAST_BIT(void);
-#define ADXChildHelper_Bucket_LAST_BIT ((jlong) 0x8000000000000000LL)
-J2OBJC_STATIC_FIELD_CONSTANT(ADXChildHelper_Bucket, LAST_BIT, jlong)
+inline int64_t ADXChildHelper_Bucket_get_LAST_BIT(void);
+#define ADXChildHelper_Bucket_LAST_BIT ((int64_t) 0x8000000000000000LL)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXChildHelper_Bucket, LAST_BIT, int64_t)
 
 FOUNDATION_EXPORT void ADXChildHelper_Bucket_init(ADXChildHelper_Bucket *self);
 
@@ -250,6 +260,7 @@ FOUNDATION_EXPORT ADXChildHelper_Bucket *create_ADXChildHelper_Bucket_init(void)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXChildHelper_Bucket)
 
+
 #endif
 
 #if !defined (ADXChildHelper_Callback_) && (INCLUDE_ALL_ChildHelper || defined(INCLUDE_ADXChildHelper_Callback))
@@ -258,29 +269,30 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXChildHelper_Bucket)
 @class ADView;
 @class ADViewGroup_LayoutParams;
 @class ADXRecyclerView_ViewHolder;
+@class JavaLangInteger;
 
 @protocol ADXChildHelper_Callback < JavaObject >
 
-- (jint)getChildCount;
+- (int32_t)getChildCount;
 
 - (void)addViewWithADView:(ADView *)child
-                  withInt:(jint)index;
+                  withInt:(int32_t)index;
 
-- (jint)indexOfChildWithADView:(ADView *)view;
+- (int32_t)indexOfChildWithADView:(ADView *)view;
 
-- (void)removeViewAtWithInt:(jint)index;
+- (void)removeViewAtWithInt:(int32_t)index;
 
-- (ADView *)getChildAtWithInt:(jint)offset;
+- (ADView *)getChildAtWithInt:(int32_t)offset;
 
 - (void)removeAllViews;
 
 - (ADXRecyclerView_ViewHolder *)getChildViewHolderWithADView:(ADView *)view;
 
 - (void)attachViewToParentWithADView:(ADView *)child
-                             withInt:(jint)index
+                             withInt:(int32_t)index
         withADViewGroup_LayoutParams:(ADViewGroup_LayoutParams *)layoutParams;
 
-- (void)detachViewFromParentWithInt:(jint)offset;
+- (void)detachViewFromParentWithInt:(int32_t)offset;
 
 - (void)onEnteredHiddenStateWithADView:(ADView *)child;
 
@@ -291,6 +303,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXChildHelper_Bucket)
 J2OBJC_EMPTY_STATIC_INIT(ADXChildHelper_Callback)
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXChildHelper_Callback)
+
 
 #endif
 

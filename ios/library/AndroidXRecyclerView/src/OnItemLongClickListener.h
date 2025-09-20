@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\OnItemLongClickListener.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_OnItemLongClickListener")
@@ -24,11 +25,12 @@
 
 @class ADView;
 @class ADXItem;
+@class JavaLangBoolean;
 
 @protocol ADXOnItemLongClickListener < JavaObject >
 
-- (jboolean)onItemLongClickWithADXItem:(ADXItem *)item
-                            withADView:(ADView *)view;
+- (bool)onItemLongClickWithADXItem:(ADXItem *)item
+                        withADView:(ADView *)view;
 
 @end
 
@@ -37,6 +39,7 @@ J2OBJC_EMPTY_STATIC_INIT(ADXOnItemLongClickListener)
 J2OBJC_TYPE_LITERAL_HEADER(ADXOnItemLongClickListener)
 
 #define ComXwrayGroupieOnItemLongClickListener ADXOnItemLongClickListener
+
 
 #endif
 

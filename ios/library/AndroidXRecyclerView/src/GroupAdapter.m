@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\GroupAdapter.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "AsyncDiffUtil.h"
 #include "Context.h"
 #include "DiffCallback.h"
@@ -21,15 +26,21 @@
 #include "RecyclerView.h"
 #include "View.h"
 #include "ViewGroup.h"
+#include "java/lang/Boolean.h"
 #include "java/lang/IllegalStateException.h"
 #include "java/lang/IndexOutOfBoundsException.h"
+#include "java/lang/Integer.h"
+#include "java/lang/Long.h"
 #include "java/lang/RuntimeException.h"
 #include "java/util/ArrayList.h"
 #include "java/util/Collection.h"
 #include "java/util/List.h"
 
-@protocol JavaUtilCollection;
-@protocol JavaUtilList;
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
@@ -39,17 +50,17 @@
   id<JavaUtilList> groups_;
   id<ADXOnItemClickListener> onItemClickListener_;
   id<ADXOnItemLongClickListener> onItemLongClickListener_;
-  jint spanCount_;
+  int32_t spanCount_;
   ADXItem *lastItemForViewTypeLookup_;
   id<ADXAsyncDiffUtil_Callback> diffUtilCallbacks_;
   ADXAsyncDiffUtil *asyncDiffUtil_;
   ADXGridLayoutManager_SpanSizeLookup *spanSizeLookup_;
 }
 
-- (void)removeWithInt:(jint)position
+- (void)removeWithInt:(int32_t)position
        withADXRVGroup:(id<ADXRVGroup>)group;
 
-- (jint)getItemCountBeforeGroupWithInt:(jint)groupIndex;
+- (int32_t)getItemCountBeforeGroupWithInt:(int32_t)groupIndex;
 
 - (void)setNewGroupsWithJavaUtilCollection:(id<JavaUtilCollection>)newGroups;
 
@@ -63,9 +74,9 @@ J2OBJC_FIELD_SETTER(ADXGroupAdapter, diffUtilCallbacks_, id<ADXAsyncDiffUtil_Cal
 J2OBJC_FIELD_SETTER(ADXGroupAdapter, asyncDiffUtil_, ADXAsyncDiffUtil *)
 J2OBJC_FIELD_SETTER(ADXGroupAdapter, spanSizeLookup_, ADXGridLayoutManager_SpanSizeLookup *)
 
-__attribute__((unused)) static void ADXGroupAdapter_removeWithInt_withADXRVGroup_(ADXGroupAdapter *self, jint position, id<ADXRVGroup> group);
+__attribute__((unused)) static void ADXGroupAdapter_removeWithInt_withADXRVGroup_(ADXGroupAdapter *self, int32_t position, id<ADXRVGroup> group);
 
-__attribute__((unused)) static jint ADXGroupAdapter_getItemCountBeforeGroupWithInt_(ADXGroupAdapter *self, jint groupIndex);
+__attribute__((unused)) static int32_t ADXGroupAdapter_getItemCountBeforeGroupWithInt_(ADXGroupAdapter *self, int32_t groupIndex);
 
 __attribute__((unused)) static void ADXGroupAdapter_setNewGroupsWithJavaUtilCollection_(ADXGroupAdapter *self, id<JavaUtilCollection> newGroups);
 
@@ -78,17 +89,17 @@ __attribute__((unused)) static void ADXGroupAdapter_setNewGroupsWithJavaUtilColl
 
 - (void)onDispatchAsyncResultWithJavaUtilCollection:(id<JavaUtilCollection>)newGroups;
 
-- (void)onInsertedWithInt:(jint)position
-                  withInt:(jint)count;
+- (void)onInsertedWithInt:(int32_t)position
+                  withInt:(int32_t)count;
 
-- (void)onRemovedWithInt:(jint)position
-                 withInt:(jint)count;
+- (void)onRemovedWithInt:(int32_t)position
+                 withInt:(int32_t)count;
 
-- (void)onMovedWithInt:(jint)fromPosition
-               withInt:(jint)toPosition;
+- (void)onMovedWithInt:(int32_t)fromPosition
+               withInt:(int32_t)toPosition;
 
-- (void)onChangedWithInt:(jint)position
-                 withInt:(jint)count
+- (void)onChangedWithInt:(int32_t)position
+                 withInt:(int32_t)count
                   withId:(id)payload;
 
 @end
@@ -101,6 +112,7 @@ __attribute__((unused)) static ADXGroupAdapter_1 *new_ADXGroupAdapter_1_initWith
 
 __attribute__((unused)) static ADXGroupAdapter_1 *create_ADXGroupAdapter_1_initWithADXGroupAdapter_(ADXGroupAdapter *outer$);
 
+
 @interface ADXGroupAdapter_2 : ADXGridLayoutManager_SpanSizeLookup {
  @public
   ADXGroupAdapter *this$0_;
@@ -108,7 +120,7 @@ __attribute__((unused)) static ADXGroupAdapter_1 *create_ADXGroupAdapter_1_initW
 
 - (instancetype)initWithADXGroupAdapter:(ADXGroupAdapter *)outer$;
 
-- (jint)getSpanSizeWithInt:(jint)position;
+- (int32_t)getSpanSizeWithInt:(int32_t)position;
 
 @end
 
@@ -119,6 +131,7 @@ __attribute__((unused)) static void ADXGroupAdapter_2_initWithADXGroupAdapter_(A
 __attribute__((unused)) static ADXGroupAdapter_2 *new_ADXGroupAdapter_2_initWithADXGroupAdapter_(ADXGroupAdapter *outer$) NS_RETURNS_RETAINED;
 
 __attribute__((unused)) static ADXGroupAdapter_2 *create_ADXGroupAdapter_2_initWithADXGroupAdapter_(ADXGroupAdapter *outer$);
+
 
 @implementation ADXGroupAdapter
 
@@ -133,11 +146,11 @@ J2OBJC_IGNORE_DESIGNATED_END
   return spanSizeLookup_;
 }
 
-- (void)setSpanCountWithInt:(jint)spanCount {
+- (void)setSpanCountWithInt:(int32_t)spanCount {
   self->spanCount_ = spanCount;
 }
 
-- (jint)getSpanCount {
+- (int32_t)getSpanCount {
   return spanCount_;
 }
 
@@ -151,7 +164,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (void)updateAsyncWithJavaUtilList:(id<JavaUtilList>)newGroups
-                        withBoolean:(jboolean)detectMoves
+                        withBoolean:(bool)detectMoves
        withADXOnAsyncUpdateListener:(id<ADXOnAsyncUpdateListener>)onAsyncUpdateListener {
   if ([((id<JavaUtilList>) nil_chk(groups_)) isEmpty]) {
     [self updateWithJavaUtilCollection:newGroups withBoolean:detectMoves];
@@ -175,7 +188,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (void)updateWithJavaUtilCollection:(id<JavaUtilCollection>)newGroups
-                         withBoolean:(jboolean)detectMoves {
+                         withBoolean:(bool)detectMoves {
   __unused id<JavaUtilList> oldGroups = create_JavaUtilArrayList_initWithJavaUtilCollection_(groups_);
   __unused ADXDiffUtil_DiffResult *diffResult = ADXDiffUtil_calculateDiffWithADXDiffUtil_Callback_withBoolean_(create_ADXDiffCallback_initPackagePrivateWithJavaUtilCollection_withJavaUtilCollection_(oldGroups, newGroups), detectMoves);
   ADXGroupAdapter_setNewGroupsWithJavaUtilCollection_(self, newGroups);
@@ -191,7 +204,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (ADXGroupieViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                    withInt:(jint)viewType {
+                                                    withInt:(int32_t)viewType {
   ADLayoutInflater *inflater = ADLayoutInflater_fromWithADContext_([((ADViewGroup *) nil_chk(parent)) getContext]);
   ADXItem *item = JreRetainedLocalValue([self getItemForViewTypeWithInt:viewType]);
   ADView *itemView = JreRetainedLocalValue([((ADLayoutInflater *) nil_chk(inflater)) inflateWithInt:[((ADXItem *) nil_chk(item)) getLayout] withADViewGroup:parent withBoolean:false]);
@@ -199,11 +212,11 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ADXGroupieViewHolder *)holder
-                                               withInt:(jint)position {
+                                               withInt:(int32_t)position {
 }
 
 - (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ADXGroupieViewHolder *)holder
-                                               withInt:(jint)position
+                                               withInt:(int32_t)position
                                       withJavaUtilList:(id<JavaUtilList>)payloads {
   ADXItem *contentItem = JreRetainedLocalValue([self getItemWithInt:position]);
   [((ADXItem *) nil_chk(contentItem)) bindWithADXGroupieViewHolder:holder withInt:position withJavaUtilList:payloads withADXOnItemClickListener:onItemClickListener_ withADXOnItemLongClickListener:onItemLongClickListener_];
@@ -214,7 +227,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   [((ADXItem *) nil_chk(contentItem)) unbindWithADXGroupieViewHolder:holder];
 }
 
-- (jboolean)onFailedToRecycleViewWithADXRecyclerView_ViewHolder:(ADXGroupieViewHolder *)holder {
+- (bool)onFailedToRecycleViewWithADXRecyclerView_ViewHolder:(ADXGroupieViewHolder *)holder {
   ADXItem *contentItem = JreRetainedLocalValue([((ADXGroupieViewHolder *) nil_chk(holder)) getItem]);
   return [((ADXItem *) nil_chk(contentItem)) isRecyclable];
 }
@@ -231,13 +244,13 @@ J2OBJC_IGNORE_DESIGNATED_END
   [((ADXItem *) nil_chk(item)) onViewDetachedFromWindowWithADXGroupieViewHolder:holder];
 }
 
-- (jint)getItemViewTypeWithInt:(jint)position {
+- (int32_t)getItemViewTypeWithInt:(int32_t)position {
   JreStrongAssign(&lastItemForViewTypeLookup_, [self getItemWithInt:position]);
   if (lastItemForViewTypeLookup_ == nil) @throw create_JavaLangRuntimeException_initWithNSString_(JreStrcat("$I", @"Invalid position ", position));
   return [lastItemForViewTypeLookup_ getViewType];
 }
 
-- (jlong)getItemIdWithInt:(jint)position {
+- (int64_t)getItemIdWithInt:(int32_t)position {
   return [((ADXItem *) nil_chk([self getItemWithInt:position])) getId];
 }
 
@@ -245,46 +258,46 @@ J2OBJC_IGNORE_DESIGNATED_END
   return [((ADXGroupieViewHolder *) nil_chk(holder)) getItem];
 }
 
-- (ADXItem *)getItemWithInt:(jint)position {
+- (ADXItem *)getItemWithInt:(int32_t)position {
   return ADXGroupUtils_getItemWithJavaUtilCollection_withInt_(groups_, position);
 }
 
-- (jint)getAdapterPositionWithADXItem:(ADXItem *)contentItem {
-  jint count = 0;
+- (int32_t)getAdapterPositionWithADXItem:(ADXItem *)contentItem {
+  int32_t count = 0;
   for (id<ADXRVGroup> __strong group in nil_chk(groups_)) {
-    jint index = [((id<ADXRVGroup>) nil_chk(group)) getPositionWithADXItem:contentItem];
+    int32_t index = [((id<ADXRVGroup>) nil_chk(group)) getPositionWithADXItem:contentItem];
     if (index >= 0) return index + count;
     count += [group getItemCount];
   }
   return -1;
 }
 
-- (jint)getAdapterPositionWithADXRVGroup:(id<ADXRVGroup>)group {
-  jint index = [((id<JavaUtilList>) nil_chk(groups_)) indexOfWithId:group];
+- (int32_t)getAdapterPositionWithADXRVGroup:(id<ADXRVGroup>)group {
+  int32_t index = [((id<JavaUtilList>) nil_chk(groups_)) indexOfWithId:group];
   if (index == -1) return -1;
-  jint position = 0;
-  for (jint i = 0; i < index; i++) {
+  int32_t position = 0;
+  for (int32_t i = 0; i < index; i++) {
     position += [((id<ADXRVGroup>) nil_chk([groups_ getWithInt:i])) getItemCount];
   }
   return position;
 }
 
-- (jint)getGroupCount {
+- (int32_t)getGroupCount {
   return [((id<JavaUtilList>) nil_chk(groups_)) size];
 }
 
-- (jint)getItemCount {
+- (int32_t)getItemCount {
   return ADXGroupUtils_getItemCountWithJavaUtilCollection_(groups_);
 }
 
-- (jint)getItemCountForGroupWithInt:(jint)groupIndex {
+- (int32_t)getItemCountForGroupWithInt:(int32_t)groupIndex {
   if (groupIndex >= [((id<JavaUtilList>) nil_chk(groups_)) size]) {
     @throw create_JavaLangIndexOutOfBoundsException_initWithNSString_(JreStrcat("$I$I$", @"Requested group index ", groupIndex, @" but there are ", [groups_ size], @" groups"));
   }
   return [((id<ADXRVGroup>) nil_chk([groups_ getWithInt:groupIndex])) getItemCount];
 }
 
-- (jint)getItemCountWithInt:(jint)groupIndex {
+- (int32_t)getItemCountWithInt:(int32_t)groupIndex {
   return [self getItemCountForGroupWithInt:groupIndex];
 }
 
@@ -298,7 +311,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)addWithADXRVGroup:(id<ADXRVGroup>)group {
   if (group == nil) @throw create_JavaLangRuntimeException_initWithNSString_(@"Group cannot be null");
-  jint itemCountBeforeGroup = [self getItemCount];
+  int32_t itemCountBeforeGroup = [self getItemCount];
   [group registerGroupDataObserverWithADXGroupDataObserver:self];
   [((id<JavaUtilList>) nil_chk(groups_)) addWithId:group];
   [self notifyItemRangeInsertedWithInt:itemCountBeforeGroup withInt:[group getItemCount]];
@@ -306,8 +319,8 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)addAllWithJavaUtilCollection:(id<JavaUtilCollection>)groups {
   if ([((id<JavaUtilCollection>) nil_chk(groups)) containsWithId:nil]) @throw create_JavaLangRuntimeException_initWithNSString_(@"List of groups can't contain null!");
-  jint itemCountBeforeGroup = [self getItemCount];
-  jint additionalSize = 0;
+  int32_t itemCountBeforeGroup = [self getItemCount];
+  int32_t additionalSize = 0;
   for (id<ADXRVGroup> __strong group in groups) {
     additionalSize += [((id<ADXRVGroup>) nil_chk(group)) getItemCount];
     [group registerGroupDataObserverWithADXGroupDataObserver:self];
@@ -318,7 +331,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)removeWithADXRVGroup:(id<ADXRVGroup>)group {
   if (group == nil) @throw create_JavaLangRuntimeException_initWithNSString_(@"Group cannot be null");
-  jint position = [((id<JavaUtilList>) nil_chk(groups_)) indexOfWithId:group];
+  int32_t position = [((id<JavaUtilList>) nil_chk(groups_)) indexOfWithId:group];
   ADXGroupAdapter_removeWithInt_withADXRVGroup_(self, position, group);
 }
 
@@ -328,36 +341,36 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (void)removeGroupAtAdapterPositionWithInt:(jint)position {
+- (void)removeGroupAtAdapterPositionWithInt:(int32_t)position {
   id<ADXRVGroup> group = JreRetainedLocalValue([self getGroupAtAdapterPositionWithInt:position]);
   ADXGroupAdapter_removeWithInt_withADXRVGroup_(self, position, group);
 }
 
-- (void)removeGroupWithInt:(jint)adapterPosition {
+- (void)removeGroupWithInt:(int32_t)adapterPosition {
   [self removeGroupAtAdapterPositionWithInt:adapterPosition];
 }
 
-- (void)removeWithInt:(jint)position
+- (void)removeWithInt:(int32_t)position
        withADXRVGroup:(id<ADXRVGroup>)group {
   ADXGroupAdapter_removeWithInt_withADXRVGroup_(self, position, group);
 }
 
-- (void)addWithInt:(jint)index
+- (void)addWithInt:(int32_t)index
     withADXRVGroup:(id<ADXRVGroup>)group {
   if (group == nil) @throw create_JavaLangRuntimeException_initWithNSString_(@"Group cannot be null");
   [group registerGroupDataObserverWithADXGroupDataObserver:self];
   [((id<JavaUtilList>) nil_chk(groups_)) addWithInt:index withId:group];
-  jint itemCountBeforeGroup = ADXGroupAdapter_getItemCountBeforeGroupWithInt_(self, index);
+  int32_t itemCountBeforeGroup = ADXGroupAdapter_getItemCountBeforeGroupWithInt_(self, index);
   [self notifyItemRangeInsertedWithInt:itemCountBeforeGroup withInt:[group getItemCount]];
 }
 
-- (id<ADXRVGroup>)getTopLevelGroupWithInt:(jint)position {
+- (id<ADXRVGroup>)getTopLevelGroupWithInt:(int32_t)position {
   return [((id<JavaUtilList>) nil_chk(groups_)) getWithInt:position];
 }
 
-- (id<ADXRVGroup>)getGroupAtAdapterPositionWithInt:(jint)position {
-  jint previous = 0;
-  jint size;
+- (id<ADXRVGroup>)getGroupAtAdapterPositionWithInt:(int32_t)position {
+  int32_t previous = 0;
+  int32_t size;
   for (id<ADXRVGroup> __strong group in nil_chk(groups_)) {
     size = [((id<ADXRVGroup>) nil_chk(group)) getItemCount];
     if (position - previous < size) return group;
@@ -366,7 +379,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   @throw create_JavaLangIndexOutOfBoundsException_initWithNSString_(JreStrcat("$I$I$", @"Requested position ", position, @" in group adapter but there are only ", previous, @" items"));
 }
 
-- (id<ADXRVGroup>)getGroupWithInt:(jint)adapterPosition {
+- (id<ADXRVGroup>)getGroupWithInt:(int32_t)adapterPosition {
   return [self getGroupAtAdapterPositionWithInt:adapterPosition];
 }
 
@@ -384,55 +397,55 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (void)onItemInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                             withInt:(jint)position {
+                             withInt:(int32_t)position {
   [self notifyItemInsertedWithInt:[self getAdapterPositionWithADXRVGroup:group] + position];
 }
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position {
+                            withInt:(int32_t)position {
   [self notifyItemChangedWithInt:[self getAdapterPositionWithADXRVGroup:group] + position];
 }
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position
+                            withInt:(int32_t)position
                              withId:(id)payload {
   [self notifyItemChangedWithInt:[self getAdapterPositionWithADXRVGroup:group] + position withId:payload];
 }
 
 - (void)onItemRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position {
+                            withInt:(int32_t)position {
   [self notifyItemRemovedWithInt:[self getAdapterPositionWithADXRVGroup:group] + position];
 }
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount {
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount {
   [self notifyItemRangeChangedWithInt:[self getAdapterPositionWithADXRVGroup:group] + positionStart withInt:itemCount];
 }
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount
                                   withId:(id)payload {
   [self notifyItemRangeChangedWithInt:[self getAdapterPositionWithADXRVGroup:group] + positionStart withInt:itemCount withId:payload];
 }
 
 - (void)onItemRangeInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount {
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount {
   [self notifyItemRangeInsertedWithInt:[self getAdapterPositionWithADXRVGroup:group] + positionStart withInt:itemCount];
 }
 
 - (void)onItemRangeRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount {
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount {
   [self notifyItemRangeRemovedWithInt:[self getAdapterPositionWithADXRVGroup:group] + positionStart withInt:itemCount];
 }
 
 - (void)onItemMovedWithADXRVGroup:(id<ADXRVGroup>)group
-                          withInt:(jint)fromPosition
-                          withInt:(jint)toPosition {
-  jint groupAdapterPosition = [self getAdapterPositionWithADXRVGroup:group];
+                          withInt:(int32_t)fromPosition
+                          withInt:(int32_t)toPosition {
+  int32_t groupAdapterPosition = [self getAdapterPositionWithADXRVGroup:group];
   [self notifyItemMovedWithInt:groupAdapterPosition + fromPosition withInt:groupAdapterPosition + toPosition];
 }
 
@@ -440,11 +453,11 @@ J2OBJC_IGNORE_DESIGNATED_END
   [self notifyDataSetChanged];
 }
 
-- (ADXItem *)getItemForViewTypeWithInt:(jint)viewType {
+- (ADXItem *)getItemForViewTypeWithInt:(int32_t)viewType {
   if (lastItemForViewTypeLookup_ != nil && [lastItemForViewTypeLookup_ getViewType] == viewType) {
     return lastItemForViewTypeLookup_;
   }
-  for (jint i = 0; i < [self getItemCount]; i++) {
+  for (int32_t i = 0; i < [self getItemCount]; i++) {
     ADXItem *item = JreRetainedLocalValue([self getItemWithInt:i]);
     if ([((ADXItem *) nil_chk(item)) getViewType] == viewType) {
       return item;
@@ -453,7 +466,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   @throw create_JavaLangIllegalStateException_initWithNSString_(JreStrcat("$I", @"Could not find model for view type: ", viewType));
 }
 
-- (jint)getItemCountBeforeGroupWithInt:(jint)groupIndex {
+- (int32_t)getItemCountBeforeGroupWithInt:(int32_t)groupIndex {
   return ADXGroupAdapter_getItemCountBeforeGroupWithInt_(self, groupIndex);
 }
 
@@ -625,15 +638,15 @@ ADXGroupAdapter *create_ADXGroupAdapter_init() {
   J2OBJC_CREATE_IMPL(ADXGroupAdapter, init)
 }
 
-void ADXGroupAdapter_removeWithInt_withADXRVGroup_(ADXGroupAdapter *self, jint position, id<ADXRVGroup> group) {
-  jint itemCountBeforeGroup = ADXGroupAdapter_getItemCountBeforeGroupWithInt_(self, position);
+void ADXGroupAdapter_removeWithInt_withADXRVGroup_(ADXGroupAdapter *self, int32_t position, id<ADXRVGroup> group) {
+  int32_t itemCountBeforeGroup = ADXGroupAdapter_getItemCountBeforeGroupWithInt_(self, position);
   [((id<ADXRVGroup>) nil_chk(group)) unregisterGroupDataObserverWithADXGroupDataObserver:self];
   [((id<JavaUtilList>) nil_chk(self->groups_)) removeWithInt:position];
   [self notifyItemRangeRemovedWithInt:itemCountBeforeGroup withInt:[group getItemCount]];
 }
 
-jint ADXGroupAdapter_getItemCountBeforeGroupWithInt_(ADXGroupAdapter *self, jint groupIndex) {
-  jint count = 0;
+int32_t ADXGroupAdapter_getItemCountBeforeGroupWithInt_(ADXGroupAdapter *self, int32_t groupIndex) {
+  int32_t count = 0;
   for (id<ADXRVGroup> __strong group in nil_chk([((id<JavaUtilList>) nil_chk(self->groups_)) subListWithInt:0 withInt:groupIndex])) {
     count += [((id<ADXRVGroup>) nil_chk(group)) getItemCount];
   }
@@ -653,6 +666,8 @@ void ADXGroupAdapter_setNewGroupsWithJavaUtilCollection_(ADXGroupAdapter *self, 
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXGroupAdapter)
 
+J2OBJC_NAME_MAPPING(ADXGroupAdapter, "com.xwray.groupie", "ADX")
+
 @implementation ADXGroupAdapter_1
 
 - (instancetype)initWithADXGroupAdapter:(ADXGroupAdapter *)outer$ {
@@ -664,23 +679,23 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXGroupAdapter)
   ADXGroupAdapter_setNewGroupsWithJavaUtilCollection_(this$0_, newGroups);
 }
 
-- (void)onInsertedWithInt:(jint)position
-                  withInt:(jint)count {
+- (void)onInsertedWithInt:(int32_t)position
+                  withInt:(int32_t)count {
   [this$0_ notifyItemRangeInsertedWithInt:position withInt:count];
 }
 
-- (void)onRemovedWithInt:(jint)position
-                 withInt:(jint)count {
+- (void)onRemovedWithInt:(int32_t)position
+                 withInt:(int32_t)count {
   [this$0_ notifyItemRangeRemovedWithInt:position withInt:count];
 }
 
-- (void)onMovedWithInt:(jint)fromPosition
-               withInt:(jint)toPosition {
+- (void)onMovedWithInt:(int32_t)fromPosition
+               withInt:(int32_t)toPosition {
   [this$0_ notifyItemMovedWithInt:fromPosition withInt:toPosition];
 }
 
-- (void)onChangedWithInt:(jint)position
-                 withInt:(jint)count
+- (void)onChangedWithInt:(int32_t)position
+                 withInt:(int32_t)count
                   withId:(id)payload {
   [this$0_ notifyItemRangeChangedWithInt:position withInt:count withId:payload];
 }
@@ -713,7 +728,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXGroupAdapter)
     { "this$0_", "LADXGroupAdapter;", .constantValue.asLong = 0, 0x1012, -1, -1, 10, -1 },
   };
   static const void *ptrTable[] = { "LADXGroupAdapter;", "onDispatchAsyncResult", "LJavaUtilCollection;", "(Ljava/util/Collection<+Lcom/xwray/groupie/RVGroup;>;)V", "onInserted", "II", "onRemoved", "onMoved", "onChanged", "IILNSObject;", "Lcom/xwray/groupie/GroupAdapter<TVH;>;" };
-  static const J2ObjcClassInfo _ADXGroupAdapter_1 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8010, 6, 1, 0, -1, -1, -1, -1 };
+  static const J2ObjcClassInfo _ADXGroupAdapter_1 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8000, 6, 1, 0, -1, -1, -1, -1 };
   return &_ADXGroupAdapter_1;
 }
 
@@ -739,7 +754,7 @@ ADXGroupAdapter_1 *create_ADXGroupAdapter_1_initWithADXGroupAdapter_(ADXGroupAda
   return self;
 }
 
-- (jint)getSpanSizeWithInt:(jint)position {
+- (int32_t)getSpanSizeWithInt:(int32_t)position {
   @try {
     return [((ADXItem *) nil_chk([this$0_ getItemWithInt:position])) getSpanSizeWithInt:this$0_->spanCount_ withInt:position];
   }
@@ -768,7 +783,7 @@ ADXGroupAdapter_1 *create_ADXGroupAdapter_1_initWithADXGroupAdapter_(ADXGroupAda
     { "this$0_", "LADXGroupAdapter;", .constantValue.asLong = 0, 0x1012, -1, -1, 3, -1 },
   };
   static const void *ptrTable[] = { "LADXGroupAdapter;", "getSpanSize", "I", "Lcom/xwray/groupie/GroupAdapter<TVH;>;" };
-  static const J2ObjcClassInfo _ADXGroupAdapter_2 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8010, 2, 1, 0, -1, -1, -1, -1 };
+  static const J2ObjcClassInfo _ADXGroupAdapter_2 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8000, 2, 1, 0, -1, -1, -1, -1 };
   return &_ADXGroupAdapter_2;
 }
 

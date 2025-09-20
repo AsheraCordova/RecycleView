@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\UpdatingGroup.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "DiffUtil.h"
 #include "Item.h"
 #include "J2ObjC_source.h"
@@ -10,10 +15,17 @@
 #include "NestedGroup.h"
 #include "RVGroup.h"
 #include "UpdatingGroup.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Integer.h"
+#include "java/lang/Long.h"
 #include "java/util/ArrayList.h"
 #include "java/util/List.h"
 
-@protocol JavaUtilList;
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXUpdatingGroup () {
@@ -34,17 +46,17 @@ J2OBJC_FIELD_SETTER(ADXUpdatingGroup, items_, id<JavaUtilList>)
 
 - (instancetype)initWithADXUpdatingGroup:(ADXUpdatingGroup *)outer$;
 
-- (void)onInsertedWithInt:(jint)position
-                  withInt:(jint)count;
+- (void)onInsertedWithInt:(int32_t)position
+                  withInt:(int32_t)count;
 
-- (void)onRemovedWithInt:(jint)position
-                 withInt:(jint)count;
+- (void)onRemovedWithInt:(int32_t)position
+                 withInt:(int32_t)count;
 
-- (void)onMovedWithInt:(jint)fromPosition
-               withInt:(jint)toPosition;
+- (void)onMovedWithInt:(int32_t)fromPosition
+               withInt:(int32_t)toPosition;
 
-- (void)onChangedWithInt:(jint)position
-                 withInt:(jint)count
+- (void)onChangedWithInt:(int32_t)position
+                 withInt:(int32_t)count
                   withId:(id)payload;
 
 @end
@@ -57,6 +69,7 @@ __attribute__((unused)) static ADXUpdatingGroup_1 *new_ADXUpdatingGroup_1_initWi
 
 __attribute__((unused)) static ADXUpdatingGroup_1 *create_ADXUpdatingGroup_1_initWithADXUpdatingGroup_(ADXUpdatingGroup *outer$);
 
+
 @interface ADXUpdatingGroup_UpdatingCallback : ADXDiffUtil_Callback {
  @public
   ADXUpdatingGroup *this$0_;
@@ -66,15 +79,15 @@ __attribute__((unused)) static ADXUpdatingGroup_1 *create_ADXUpdatingGroup_1_ini
 - (instancetype)initWithADXUpdatingGroup:(ADXUpdatingGroup *)outer$
                         withJavaUtilList:(id<JavaUtilList>)newList;
 
-- (jint)getOldListSize;
+- (int32_t)getOldListSize;
 
-- (jint)getNewListSize;
+- (int32_t)getNewListSize;
 
-- (jboolean)areItemsTheSameWithInt:(jint)oldItemPosition
-                           withInt:(jint)newItemPosition;
+- (bool)areItemsTheSameWithInt:(int32_t)oldItemPosition
+                       withInt:(int32_t)newItemPosition;
 
-- (jboolean)areContentsTheSameWithInt:(jint)oldItemPosition
-                              withInt:(jint)newItemPosition;
+- (bool)areContentsTheSameWithInt:(int32_t)oldItemPosition
+                          withInt:(int32_t)newItemPosition;
 
 @end
 
@@ -89,6 +102,7 @@ __attribute__((unused)) static ADXUpdatingGroup_UpdatingCallback *new_ADXUpdatin
 __attribute__((unused)) static ADXUpdatingGroup_UpdatingCallback *create_ADXUpdatingGroup_UpdatingCallback_initWithADXUpdatingGroup_withJavaUtilList_(ADXUpdatingGroup *outer$, id<JavaUtilList> newList);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXUpdatingGroup_UpdatingCallback)
+
 
 @implementation ADXUpdatingGroup
 
@@ -108,15 +122,15 @@ J2OBJC_IGNORE_DESIGNATED_END
   [((ADXDiffUtil_DiffResult *) nil_chk(diffResult)) dispatchUpdatesToWithADXListUpdateCallback:listUpdateCallback_];
 }
 
-- (id<ADXRVGroup>)getGroupWithInt:(jint)position {
+- (id<ADXRVGroup>)getGroupWithInt:(int32_t)position {
   return [((id<JavaUtilList>) nil_chk(items_)) getWithInt:position];
 }
 
-- (jint)getGroupCount {
+- (int32_t)getGroupCount {
   return [((id<JavaUtilList>) nil_chk(items_)) size];
 }
 
-- (jint)getPositionWithADXRVGroup:(id<ADXRVGroup>)group {
+- (int32_t)getPositionWithADXRVGroup:(id<ADXRVGroup>)group {
   if ([group isKindOfClass:[ADXItem class]]) {
     return [((id<JavaUtilList>) nil_chk(items_)) indexOfWithId:group];
   }
@@ -175,6 +189,8 @@ ADXUpdatingGroup *create_ADXUpdatingGroup_init() {
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXUpdatingGroup)
 
+J2OBJC_NAME_MAPPING(ADXUpdatingGroup, "com.xwray.groupie", "ADX")
+
 @implementation ADXUpdatingGroup_1
 
 - (instancetype)initWithADXUpdatingGroup:(ADXUpdatingGroup *)outer$ {
@@ -182,23 +198,23 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXUpdatingGroup)
   return self;
 }
 
-- (void)onInsertedWithInt:(jint)position
-                  withInt:(jint)count {
+- (void)onInsertedWithInt:(int32_t)position
+                  withInt:(int32_t)count {
   [this$0_ notifyItemRangeInsertedWithInt:position withInt:count];
 }
 
-- (void)onRemovedWithInt:(jint)position
-                 withInt:(jint)count {
+- (void)onRemovedWithInt:(int32_t)position
+                 withInt:(int32_t)count {
   [this$0_ notifyItemRangeRemovedWithInt:position withInt:count];
 }
 
-- (void)onMovedWithInt:(jint)fromPosition
-               withInt:(jint)toPosition {
+- (void)onMovedWithInt:(int32_t)fromPosition
+               withInt:(int32_t)toPosition {
   [this$0_ notifyItemMovedWithInt:fromPosition withInt:toPosition];
 }
 
-- (void)onChangedWithInt:(jint)position
-                 withInt:(jint)count
+- (void)onChangedWithInt:(int32_t)position
+                 withInt:(int32_t)count
                   withId:(id)payload {
   [this$0_ notifyItemRangeChangedWithInt:position withInt:count];
 }
@@ -229,7 +245,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXUpdatingGroup)
     { "this$0_", "LADXUpdatingGroup;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXUpdatingGroup;", "onInserted", "II", "onRemoved", "onMoved", "onChanged", "IILNSObject;" };
-  static const J2ObjcClassInfo _ADXUpdatingGroup_1 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8010, 5, 1, 0, -1, -1, -1, -1 };
+  static const J2ObjcClassInfo _ADXUpdatingGroup_1 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8000, 5, 1, 0, -1, -1, -1, -1 };
   return &_ADXUpdatingGroup_1;
 }
 
@@ -256,16 +272,16 @@ ADXUpdatingGroup_1 *create_ADXUpdatingGroup_1_initWithADXUpdatingGroup_(ADXUpdat
   return self;
 }
 
-- (jint)getOldListSize {
+- (int32_t)getOldListSize {
   return [((id<JavaUtilList>) nil_chk(this$0_->items_)) size];
 }
 
-- (jint)getNewListSize {
+- (int32_t)getNewListSize {
   return [((id<JavaUtilList>) nil_chk(newList_)) size];
 }
 
-- (jboolean)areItemsTheSameWithInt:(jint)oldItemPosition
-                           withInt:(jint)newItemPosition {
+- (bool)areItemsTheSameWithInt:(int32_t)oldItemPosition
+                       withInt:(int32_t)newItemPosition {
   ADXItem *oldItem = JreRetainedLocalValue([((id<JavaUtilList>) nil_chk(this$0_->items_)) getWithInt:oldItemPosition]);
   ADXItem *newItem = JreRetainedLocalValue([((id<JavaUtilList>) nil_chk(newList_)) getWithInt:newItemPosition]);
   if ([((ADXItem *) nil_chk(oldItem)) getViewType] != [((ADXItem *) nil_chk(newItem)) getViewType]) {
@@ -274,8 +290,8 @@ ADXUpdatingGroup_1 *create_ADXUpdatingGroup_1_initWithADXUpdatingGroup_(ADXUpdat
   return [oldItem getId] == [newItem getId];
 }
 
-- (jboolean)areContentsTheSameWithInt:(jint)oldItemPosition
-                              withInt:(jint)newItemPosition {
+- (bool)areContentsTheSameWithInt:(int32_t)oldItemPosition
+                          withInt:(int32_t)newItemPosition {
   ADXItem *oldItem = JreRetainedLocalValue([((id<JavaUtilList>) nil_chk(this$0_->items_)) getWithInt:oldItemPosition]);
   ADXItem *newItem = JreRetainedLocalValue([((id<JavaUtilList>) nil_chk(newList_)) getWithInt:newItemPosition]);
   return [((ADXItem *) nil_chk(oldItem)) hasSameContentAsWithADXItem:newItem];

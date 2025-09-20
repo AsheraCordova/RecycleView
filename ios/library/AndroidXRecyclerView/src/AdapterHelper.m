@@ -3,12 +3,19 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\AdapterHelper.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "AdapterHelper.h"
 #include "IOSObjectArray.h"
 #include "J2ObjC_source.h"
 #include "OpReorderer.h"
 #include "Pools.h"
 #include "RecyclerView.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Character.h"
 #include "java/lang/IllegalArgumentException.h"
 #include "java/lang/Integer.h"
 #include "java/lang/Math.h"
@@ -19,10 +26,17 @@
 #include "java/util/List.h"
 
 
+@class NSString;
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
+
+
 @interface ADXAdapterHelper () {
  @public
   id<ADPools_Pool> mUpdateOpPool_;
-  jint mExistingUpdateTypes_;
+  int32_t mExistingUpdateTypes_;
 }
 
 - (void)applyMoveWithADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)op;
@@ -33,10 +47,10 @@
 
 - (void)dispatchAndUpdateViewHoldersWithADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)op;
 
-- (jint)updatePositionWithPostponedWithInt:(jint)pos
-                                   withInt:(jint)cmd;
+- (int32_t)updatePositionWithPostponedWithInt:(int32_t)pos
+                                      withInt:(int32_t)cmd;
 
-- (jboolean)canFindInPreLayoutWithInt:(jint)position;
+- (bool)canFindInPreLayoutWithInt:(int32_t)position;
 
 - (void)applyAddWithADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)op;
 
@@ -46,9 +60,9 @@
 
 J2OBJC_FIELD_SETTER(ADXAdapterHelper, mUpdateOpPool_, id<ADPools_Pool>)
 
-inline jboolean ADXAdapterHelper_get_DEBUG(void);
+inline bool ADXAdapterHelper_get_DEBUG(void);
 #define ADXAdapterHelper_DEBUG false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper, DEBUG, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXAdapterHelper, DEBUG, bool)
 
 inline NSString *ADXAdapterHelper_get_TAG(void);
 static NSString *ADXAdapterHelper_TAG = @"AHT";
@@ -62,9 +76,9 @@ __attribute__((unused)) static void ADXAdapterHelper_applyUpdateWithADXAdapterHe
 
 __attribute__((unused)) static void ADXAdapterHelper_dispatchAndUpdateViewHoldersWithADXAdapterHelper_UpdateOp_(ADXAdapterHelper *self, ADXAdapterHelper_UpdateOp *op);
 
-__attribute__((unused)) static jint ADXAdapterHelper_updatePositionWithPostponedWithInt_withInt_(ADXAdapterHelper *self, jint pos, jint cmd);
+__attribute__((unused)) static int32_t ADXAdapterHelper_updatePositionWithPostponedWithInt_withInt_(ADXAdapterHelper *self, int32_t pos, int32_t cmd);
 
-__attribute__((unused)) static jboolean ADXAdapterHelper_canFindInPreLayoutWithInt_(ADXAdapterHelper *self, jint position);
+__attribute__((unused)) static bool ADXAdapterHelper_canFindInPreLayoutWithInt_(ADXAdapterHelper *self, int32_t position);
 
 __attribute__((unused)) static void ADXAdapterHelper_applyAddWithADXAdapterHelper_UpdateOp_(ADXAdapterHelper *self, ADXAdapterHelper_UpdateOp *op);
 
@@ -82,7 +96,7 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
 }
 
 - (instancetype)initPackagePrivateWithADXAdapterHelper_Callback:(id<ADXAdapterHelper_Callback>)callback
-                                                    withBoolean:(jboolean)disableRecycler {
+                                                    withBoolean:(bool)disableRecycler {
   ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(self, callback, disableRecycler);
   return self;
 }
@@ -100,8 +114,8 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
 
 - (void)preProcess {
   [((ADXOpReorderer *) nil_chk(mOpReorderer_)) reorderOpsWithJavaUtilList:mPendingUpdates_];
-  jint count = [((JavaUtilArrayList *) nil_chk(mPendingUpdates_)) size];
-  for (jint i = 0; i < count; i++) {
+  int32_t count = [((JavaUtilArrayList *) nil_chk(mPendingUpdates_)) size];
+  for (int32_t i = 0; i < count; i++) {
     ADXAdapterHelper_UpdateOp *op = JreRetainedLocalValue([mPendingUpdates_ getWithInt:i]);
     switch (((ADXAdapterHelper_UpdateOp *) nil_chk(op))->cmd_) {
       case ADXAdapterHelper_UpdateOp_ADD:
@@ -125,8 +139,8 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
 }
 
 - (void)consumePostponedUpdates {
-  jint count = [((JavaUtilArrayList *) nil_chk(mPostponedList_)) size];
-  for (jint i = 0; i < count; i++) {
+  int32_t count = [((JavaUtilArrayList *) nil_chk(mPostponedList_)) size];
+  for (int32_t i = 0; i < count; i++) {
     [((id<ADXAdapterHelper_Callback>) nil_chk(mCallback_)) onDispatchSecondPassWithADXAdapterHelper_UpdateOp:[mPostponedList_ getWithInt:i]];
   }
   [self recycleUpdateOpsAndClearListWithJavaUtilList:mPostponedList_];
@@ -150,7 +164,7 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
 }
 
 - (void)dispatchFirstPassAndUpdateViewHoldersWithADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)op
-                                                                   withInt:(jint)offsetStart {
+                                                                   withInt:(int32_t)offsetStart {
   [((id<ADXAdapterHelper_Callback>) nil_chk(mCallback_)) onDispatchFirstPassWithADXAdapterHelper_UpdateOp:op];
   switch (((ADXAdapterHelper_UpdateOp *) nil_chk(op))->cmd_) {
     case ADXAdapterHelper_UpdateOp_REMOVE:
@@ -164,12 +178,12 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
   }
 }
 
-- (jint)updatePositionWithPostponedWithInt:(jint)pos
-                                   withInt:(jint)cmd {
+- (int32_t)updatePositionWithPostponedWithInt:(int32_t)pos
+                                      withInt:(int32_t)cmd {
   return ADXAdapterHelper_updatePositionWithPostponedWithInt_withInt_(self, pos, cmd);
 }
 
-- (jboolean)canFindInPreLayoutWithInt:(jint)position {
+- (bool)canFindInPreLayoutWithInt:(int32_t)position {
   return ADXAdapterHelper_canFindInPreLayoutWithInt_(self, position);
 }
 
@@ -181,22 +195,22 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
   ADXAdapterHelper_postponeAndUpdateViewHoldersWithADXAdapterHelper_UpdateOp_(self, op);
 }
 
-- (jboolean)hasPendingUpdates {
+- (bool)hasPendingUpdates {
   return [((JavaUtilArrayList *) nil_chk(mPendingUpdates_)) size] > 0;
 }
 
-- (jboolean)hasAnyUpdateTypesWithInt:(jint)updateTypes {
+- (bool)hasAnyUpdateTypesWithInt:(int32_t)updateTypes {
   return (mExistingUpdateTypes_ & updateTypes) != 0;
 }
 
-- (jint)findPositionOffsetWithInt:(jint)position {
+- (int32_t)findPositionOffsetWithInt:(int32_t)position {
   return [self findPositionOffsetWithInt:position withInt:0];
 }
 
-- (jint)findPositionOffsetWithInt:(jint)position
-                          withInt:(jint)firstPostponedItem {
-  jint count = [((JavaUtilArrayList *) nil_chk(mPostponedList_)) size];
-  for (jint i = firstPostponedItem; i < count; ++i) {
+- (int32_t)findPositionOffsetWithInt:(int32_t)position
+                             withInt:(int32_t)firstPostponedItem {
+  int32_t count = [((JavaUtilArrayList *) nil_chk(mPostponedList_)) size];
+  for (int32_t i = firstPostponedItem; i < count; ++i) {
     ADXAdapterHelper_UpdateOp *op = JreRetainedLocalValue([mPostponedList_ getWithInt:i]);
     if (((ADXAdapterHelper_UpdateOp *) nil_chk(op))->cmd_ == ADXAdapterHelper_UpdateOp_MOVE) {
       if (op->positionStart_ == position) {
@@ -226,9 +240,9 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
   return position;
 }
 
-- (jboolean)onItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount
-                               withId:(id)payload {
+- (bool)onItemRangeChangedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount
+                           withId:(id)payload {
   if (itemCount < 1) {
     return false;
   }
@@ -237,8 +251,8 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
   return [mPendingUpdates_ size] == 1;
 }
 
-- (jboolean)onItemRangeInsertedWithInt:(jint)positionStart
-                               withInt:(jint)itemCount {
+- (bool)onItemRangeInsertedWithInt:(int32_t)positionStart
+                           withInt:(int32_t)itemCount {
   if (itemCount < 1) {
     return false;
   }
@@ -247,8 +261,8 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
   return [mPendingUpdates_ size] == 1;
 }
 
-- (jboolean)onItemRangeRemovedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount {
+- (bool)onItemRangeRemovedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount {
   if (itemCount < 1) {
     return false;
   }
@@ -257,9 +271,9 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
   return [mPendingUpdates_ size] == 1;
 }
 
-- (jboolean)onItemRangeMovedWithInt:(jint)from
-                            withInt:(jint)to
-                            withInt:(jint)itemCount {
+- (bool)onItemRangeMovedWithInt:(int32_t)from
+                        withInt:(int32_t)to
+                        withInt:(int32_t)itemCount {
   if (from == to) {
     return false;
   }
@@ -273,8 +287,8 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
 
 - (void)consumeUpdatesInOnePass {
   [self consumePostponedUpdates];
-  jint count = [((JavaUtilArrayList *) nil_chk(mPendingUpdates_)) size];
-  for (jint i = 0; i < count; i++) {
+  int32_t count = [((JavaUtilArrayList *) nil_chk(mPendingUpdates_)) size];
+  for (int32_t i = 0; i < count; i++) {
     ADXAdapterHelper_UpdateOp *op = JreRetainedLocalValue([mPendingUpdates_ getWithInt:i]);
     switch (((ADXAdapterHelper_UpdateOp *) nil_chk(op))->cmd_) {
       case ADXAdapterHelper_UpdateOp_ADD:
@@ -302,9 +316,9 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
   mExistingUpdateTypes_ = 0;
 }
 
-- (jint)applyPendingUpdatesToPositionWithInt:(jint)position {
-  jint size = [((JavaUtilArrayList *) nil_chk(mPendingUpdates_)) size];
-  for (jint i = 0; i < size; i++) {
+- (int32_t)applyPendingUpdatesToPositionWithInt:(int32_t)position {
+  int32_t size = [((JavaUtilArrayList *) nil_chk(mPendingUpdates_)) size];
+  for (int32_t i = 0; i < size; i++) {
     ADXAdapterHelper_UpdateOp *op = JreRetainedLocalValue([mPendingUpdates_ getWithInt:i]);
     switch (((ADXAdapterHelper_UpdateOp *) nil_chk(op))->cmd_) {
       case ADXAdapterHelper_UpdateOp_ADD:
@@ -314,7 +328,7 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
       break;
       case ADXAdapterHelper_UpdateOp_REMOVE:
       if (op->positionStart_ <= position) {
-        jint end = op->positionStart_ + op->itemCount_;
+        int32_t end = op->positionStart_ + op->itemCount_;
         if (end > position) {
           return ADXRecyclerView_NO_POSITION;
         }
@@ -339,13 +353,13 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
   return position;
 }
 
-- (jboolean)hasUpdates {
+- (bool)hasUpdates {
   return ![((JavaUtilArrayList *) nil_chk(mPostponedList_)) isEmpty] && ![((JavaUtilArrayList *) nil_chk(mPendingUpdates_)) isEmpty];
 }
 
-- (ADXAdapterHelper_UpdateOp *)obtainUpdateOpWithInt:(jint)cmd
-                                             withInt:(jint)positionStart
-                                             withInt:(jint)itemCount
+- (ADXAdapterHelper_UpdateOp *)obtainUpdateOpWithInt:(int32_t)cmd
+                                             withInt:(int32_t)positionStart
+                                             withInt:(int32_t)itemCount
                                               withId:(id)payload {
   ADXAdapterHelper_UpdateOp *op = JreRetainedLocalValue([((id<ADPools_Pool>) nil_chk(mUpdateOpPool_)) acquire]);
   if (op == nil) {
@@ -368,8 +382,8 @@ __attribute__((unused)) static void ADXAdapterHelper_postponeAndUpdateViewHolder
 }
 
 - (void)recycleUpdateOpsAndClearListWithJavaUtilList:(id<JavaUtilList>)ops {
-  jint count = [((id<JavaUtilList>) nil_chk(ops)) size];
-  for (jint i = 0; i < count; i++) {
+  int32_t count = [((id<JavaUtilList>) nil_chk(ops)) size];
+  for (int32_t i = 0; i < count; i++) {
     [self recycleUpdateOpWithADXAdapterHelper_UpdateOp:[ops getWithInt:i]];
   }
   [ops clear];
@@ -483,7 +497,7 @@ ADXAdapterHelper *create_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper
   J2OBJC_CREATE_IMPL(ADXAdapterHelper, initPackagePrivateWithADXAdapterHelper_Callback_, callback)
 }
 
-void ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(ADXAdapterHelper *self, id<ADXAdapterHelper_Callback> callback, jboolean disableRecycler) {
+void ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(ADXAdapterHelper *self, id<ADXAdapterHelper_Callback> callback, bool disableRecycler) {
   NSObject_init(self);
   JreStrongAssignAndConsume(&self->mUpdateOpPool_, new_ADPools_SimplePool_initWithInt_(ADXAdapterHelper_UpdateOp_POOL_SIZE));
   JreStrongAssignAndConsume(&self->mPendingUpdates_, new_JavaUtilArrayList_init());
@@ -494,11 +508,11 @@ void ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolea
   JreStrongAssignAndConsume(&self->mOpReorderer_, new_ADXOpReorderer_initPackagePrivateWithADXOpReorderer_Callback_(self));
 }
 
-ADXAdapterHelper *new_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(id<ADXAdapterHelper_Callback> callback, jboolean disableRecycler) {
+ADXAdapterHelper *new_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(id<ADXAdapterHelper_Callback> callback, bool disableRecycler) {
   J2OBJC_NEW_IMPL(ADXAdapterHelper, initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_, callback, disableRecycler)
 }
 
-ADXAdapterHelper *create_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(id<ADXAdapterHelper_Callback> callback, jboolean disableRecycler) {
+ADXAdapterHelper *create_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_(id<ADXAdapterHelper_Callback> callback, bool disableRecycler) {
   J2OBJC_CREATE_IMPL(ADXAdapterHelper, initPackagePrivateWithADXAdapterHelper_Callback_withBoolean_, callback, disableRecycler)
 }
 
@@ -507,12 +521,12 @@ void ADXAdapterHelper_applyMoveWithADXAdapterHelper_UpdateOp_(ADXAdapterHelper *
 }
 
 void ADXAdapterHelper_applyRemoveWithADXAdapterHelper_UpdateOp_(ADXAdapterHelper *self, ADXAdapterHelper_UpdateOp *op) {
-  jint tmpStart = ((ADXAdapterHelper_UpdateOp *) nil_chk(op))->positionStart_;
-  jint tmpCount = 0;
-  jint tmpEnd = op->positionStart_ + op->itemCount_;
-  jint type = -1;
-  for (jint position = op->positionStart_; position < tmpEnd; position++) {
-    jboolean typeChanged = false;
+  int32_t tmpStart = ((ADXAdapterHelper_UpdateOp *) nil_chk(op))->positionStart_;
+  int32_t tmpCount = 0;
+  int32_t tmpEnd = op->positionStart_ + op->itemCount_;
+  int32_t type = -1;
+  for (int32_t position = op->positionStart_; position < tmpEnd; position++) {
+    bool typeChanged = false;
     ADXRecyclerView_ViewHolder *vh = JreRetainedLocalValue([((id<ADXAdapterHelper_Callback>) nil_chk(self->mCallback_)) findViewHolderWithInt:position]);
     if (vh != nil || ADXAdapterHelper_canFindInPreLayoutWithInt_(self, position)) {
       if (type == ADXAdapterHelper_POSITION_TYPE_INVISIBLE) {
@@ -552,11 +566,11 @@ void ADXAdapterHelper_applyRemoveWithADXAdapterHelper_UpdateOp_(ADXAdapterHelper
 }
 
 void ADXAdapterHelper_applyUpdateWithADXAdapterHelper_UpdateOp_(ADXAdapterHelper *self, ADXAdapterHelper_UpdateOp *op) {
-  jint tmpStart = ((ADXAdapterHelper_UpdateOp *) nil_chk(op))->positionStart_;
-  jint tmpCount = 0;
-  jint tmpEnd = op->positionStart_ + op->itemCount_;
-  jint type = -1;
-  for (jint position = op->positionStart_; position < tmpEnd; position++) {
+  int32_t tmpStart = ((ADXAdapterHelper_UpdateOp *) nil_chk(op))->positionStart_;
+  int32_t tmpCount = 0;
+  int32_t tmpEnd = op->positionStart_ + op->itemCount_;
+  int32_t type = -1;
+  for (int32_t position = op->positionStart_; position < tmpEnd; position++) {
     ADXRecyclerView_ViewHolder *vh = JreRetainedLocalValue([((id<ADXAdapterHelper_Callback>) nil_chk(self->mCallback_)) findViewHolderWithInt:position]);
     if (vh != nil || ADXAdapterHelper_canFindInPreLayoutWithInt_(self, position)) {
       if (type == ADXAdapterHelper_POSITION_TYPE_INVISIBLE) {
@@ -595,10 +609,10 @@ void ADXAdapterHelper_dispatchAndUpdateViewHoldersWithADXAdapterHelper_UpdateOp_
   if (((ADXAdapterHelper_UpdateOp *) nil_chk(op))->cmd_ == ADXAdapterHelper_UpdateOp_ADD || op->cmd_ == ADXAdapterHelper_UpdateOp_MOVE) {
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(@"should not dispatch add or move for pre layout");
   }
-  jint tmpStart = ADXAdapterHelper_updatePositionWithPostponedWithInt_withInt_(self, op->positionStart_, op->cmd_);
-  jint tmpCnt = 1;
-  jint offsetPositionForPartial = op->positionStart_;
-  jint positionMultiplier;
+  int32_t tmpStart = ADXAdapterHelper_updatePositionWithPostponedWithInt_withInt_(self, op->positionStart_, op->cmd_);
+  int32_t tmpCnt = 1;
+  int32_t offsetPositionForPartial = op->positionStart_;
+  int32_t positionMultiplier;
   switch (op->cmd_) {
     case ADXAdapterHelper_UpdateOp_UPDATE:
     positionMultiplier = 1;
@@ -609,10 +623,10 @@ void ADXAdapterHelper_dispatchAndUpdateViewHoldersWithADXAdapterHelper_UpdateOp_
     default:
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(JreStrcat("$@", @"op should be remove or update.", op));
   }
-  for (jint p = 1; p < op->itemCount_; p++) {
-    jint pos = op->positionStart_ + (positionMultiplier * p);
-    jint updatedPos = ADXAdapterHelper_updatePositionWithPostponedWithInt_withInt_(self, pos, op->cmd_);
-    jboolean continuous = false;
+  for (int32_t p = 1; p < op->itemCount_; p++) {
+    int32_t pos = op->positionStart_ + (positionMultiplier * p);
+    int32_t updatedPos = ADXAdapterHelper_updatePositionWithPostponedWithInt_withInt_(self, pos, op->cmd_);
+    bool continuous = false;
     switch (op->cmd_) {
       case ADXAdapterHelper_UpdateOp_UPDATE:
       continuous = (updatedPos == tmpStart + 1);
@@ -644,13 +658,13 @@ void ADXAdapterHelper_dispatchAndUpdateViewHoldersWithADXAdapterHelper_UpdateOp_
   }
 }
 
-jint ADXAdapterHelper_updatePositionWithPostponedWithInt_withInt_(ADXAdapterHelper *self, jint pos, jint cmd) {
-  jint count = [((JavaUtilArrayList *) nil_chk(self->mPostponedList_)) size];
-  for (jint i = count - 1; i >= 0; i--) {
+int32_t ADXAdapterHelper_updatePositionWithPostponedWithInt_withInt_(ADXAdapterHelper *self, int32_t pos, int32_t cmd) {
+  int32_t count = [((JavaUtilArrayList *) nil_chk(self->mPostponedList_)) size];
+  for (int32_t i = count - 1; i >= 0; i--) {
     ADXAdapterHelper_UpdateOp *postponed = JreRetainedLocalValue([self->mPostponedList_ getWithInt:i]);
     if (((ADXAdapterHelper_UpdateOp *) nil_chk(postponed))->cmd_ == ADXAdapterHelper_UpdateOp_MOVE) {
-      jint start;
-      jint end;
+      int32_t start;
+      int32_t end;
       if (postponed->positionStart_ < postponed->itemCount_) {
         start = postponed->positionStart_;
         end = postponed->itemCount_;
@@ -709,7 +723,7 @@ jint ADXAdapterHelper_updatePositionWithPostponedWithInt_withInt_(ADXAdapterHelp
       }
     }
   }
-  for (jint i = [self->mPostponedList_ size] - 1; i >= 0; i--) {
+  for (int32_t i = [self->mPostponedList_ size] - 1; i >= 0; i--) {
     ADXAdapterHelper_UpdateOp *op = JreRetainedLocalValue([self->mPostponedList_ getWithInt:i]);
     if (((ADXAdapterHelper_UpdateOp *) nil_chk(op))->cmd_ == ADXAdapterHelper_UpdateOp_MOVE) {
       if (op->itemCount_ == op->positionStart_ || op->itemCount_ < 0) {
@@ -725,9 +739,9 @@ jint ADXAdapterHelper_updatePositionWithPostponedWithInt_withInt_(ADXAdapterHelp
   return pos;
 }
 
-jboolean ADXAdapterHelper_canFindInPreLayoutWithInt_(ADXAdapterHelper *self, jint position) {
-  jint count = [((JavaUtilArrayList *) nil_chk(self->mPostponedList_)) size];
-  for (jint i = 0; i < count; i++) {
+bool ADXAdapterHelper_canFindInPreLayoutWithInt_(ADXAdapterHelper *self, int32_t position) {
+  int32_t count = [((JavaUtilArrayList *) nil_chk(self->mPostponedList_)) size];
+  for (int32_t i = 0; i < count; i++) {
     ADXAdapterHelper_UpdateOp *op = JreRetainedLocalValue([self->mPostponedList_ getWithInt:i]);
     if (((ADXAdapterHelper_UpdateOp *) nil_chk(op))->cmd_ == ADXAdapterHelper_UpdateOp_MOVE) {
       if ([self findPositionOffsetWithInt:op->itemCount_ withInt:i + 1] == position) {
@@ -735,8 +749,8 @@ jboolean ADXAdapterHelper_canFindInPreLayoutWithInt_(ADXAdapterHelper *self, jin
       }
     }
     else if (op->cmd_ == ADXAdapterHelper_UpdateOp_ADD) {
-      jint end = op->positionStart_ + op->itemCount_;
-      for (jint pos = op->positionStart_; pos < end; pos++) {
+      int32_t end = op->positionStart_ + op->itemCount_;
+      for (int32_t pos = op->positionStart_; pos < end; pos++) {
         if ([self findPositionOffsetWithInt:pos withInt:i + 1] == position) {
           return true;
         }
@@ -774,9 +788,9 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXAdapterHelper)
 
 @implementation ADXAdapterHelper_UpdateOp
 
-- (instancetype)initWithInt:(jint)cmd
-                    withInt:(jint)positionStart
-                    withInt:(jint)itemCount
+- (instancetype)initWithInt:(int32_t)cmd
+                    withInt:(int32_t)positionStart
+                    withInt:(int32_t)itemCount
                      withId:(id)payload {
   ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(self, cmd, positionStart, itemCount, payload);
   return self;
@@ -800,8 +814,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXAdapterHelper)
   return JreStrcat("$C$$I$I$@C", JavaLangInteger_toHexStringWithInt_(JavaLangSystem_identityHashCodeWithId_(self)), '[', [self cmdToString], @",s:", positionStart_, @"c:", itemCount_, @",p:", payload_, ']');
 }
 
-- (jboolean)isEqual:(id)o {
-  if (self == o) {
+- (bool)isEqual:(id)o {
+  if (JreObjectEqualsEquals(self, o)) {
     return true;
   }
   if (!([o isKindOfClass:[ADXAdapterHelper_UpdateOp class]])) {
@@ -834,7 +848,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXAdapterHelper)
 }
 
 - (NSUInteger)hash {
-  jint result = cmd_;
+  int32_t result = cmd_;
   result = 31 * result + positionStart_;
   result = 31 * result + itemCount_;
   return result;
@@ -880,7 +894,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXAdapterHelper)
 
 @end
 
-void ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(ADXAdapterHelper_UpdateOp *self, jint cmd, jint positionStart, jint itemCount, id payload) {
+void ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(ADXAdapterHelper_UpdateOp *self, int32_t cmd, int32_t positionStart, int32_t itemCount, id payload) {
   NSObject_init(self);
   self->cmd_ = cmd;
   self->positionStart_ = positionStart;
@@ -888,11 +902,11 @@ void ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(ADXAdapterHel
   JreStrongAssign(&self->payload_, payload);
 }
 
-ADXAdapterHelper_UpdateOp *new_ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(jint cmd, jint positionStart, jint itemCount, id payload) {
+ADXAdapterHelper_UpdateOp *new_ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(int32_t cmd, int32_t positionStart, int32_t itemCount, id payload) {
   J2OBJC_NEW_IMPL(ADXAdapterHelper_UpdateOp, initWithInt_withInt_withInt_withId_, cmd, positionStart, itemCount, payload)
 }
 
-ADXAdapterHelper_UpdateOp *create_ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(jint cmd, jint positionStart, jint itemCount, id payload) {
+ADXAdapterHelper_UpdateOp *create_ADXAdapterHelper_UpdateOp_initWithInt_withInt_withInt_withId_(int32_t cmd, int32_t positionStart, int32_t itemCount, id payload) {
   J2OBJC_CREATE_IMPL(ADXAdapterHelper_UpdateOp, initWithInt_withInt_withInt_withId_, cmd, positionStart, itemCount, payload)
 }
 

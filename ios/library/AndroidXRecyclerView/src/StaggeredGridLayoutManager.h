@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\StaggeredGridLayoutManager.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_StaggeredGridLayoutManager")
@@ -38,6 +39,9 @@
 @class ADXStaggeredGridLayoutManager_LazySpanLookup;
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class NSString;
 @protocol ADParcelable;
 @protocol ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry;
 
@@ -58,21 +62,21 @@
    */
   ADXOrientationHelper *mPrimaryOrientation_;
   ADXOrientationHelper *mSecondaryOrientation_;
-  jboolean mReverseLayout_;
+  bool mReverseLayout_;
   /*!
    @brief Aggregated reverse layout value that takes RTL into account.
    */
-  jboolean mShouldReverseLayout_;
+  bool mShouldReverseLayout_;
   /*!
    @brief When LayoutManager needs to scroll to a position, it sets this variable and requests a
   layout which will check this variable and re-layout accordingly.
    */
-  jint mPendingScrollPosition_;
+  int32_t mPendingScrollPosition_;
   /*!
    @brief Used to keep the offset value when <code>scrollToPositionWithOffset(int, int)</code> is
   called.
    */
-  jint mPendingScrollPositionOffset_;
+  int32_t mPendingScrollPositionOffset_;
   /*!
    @brief Keeps the mapping between the adapter positions and spans.This is necessary to provide
   a consistent experience when user scrolls the list.
@@ -86,35 +90,35 @@
  @brief Constructor used when layout manager is set in XML by RecyclerView attribute
   "layoutManager".Defaults to single column and vertical.
  */
-- (instancetype)initWithInt:(jint)spanCount
-                    withInt:(jint)orientation;
+- (instancetype)initWithInt:(int32_t)spanCount
+                    withInt:(int32_t)orientation;
 
 - (void)assertNotInLayoutOrScrollWithNSString:(NSString *)message;
 
-- (jboolean)canScrollHorizontally;
+- (bool)canScrollHorizontally;
 
-- (jboolean)canScrollVertically;
+- (bool)canScrollVertically;
 
-- (jboolean)checkLayoutParamsWithADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp;
+- (bool)checkLayoutParamsWithADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp;
 
 /*!
  */
-- (void)collectAdjacentPrefetchPositionsWithInt:(jint)dx
-                                        withInt:(jint)dy
+- (void)collectAdjacentPrefetchPositionsWithInt:(int32_t)dx
+                                        withInt:(int32_t)dy
                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
 withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>)layoutPrefetchRegistry;
 
-- (jint)computeHorizontalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeHorizontalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeVerticalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeVerticalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 /*!
  @brief Returns the adapter position of the first completely visible view for each span.
@@ -207,9 +211,9 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  - seealso: #GAP_HANDLING_NONE
  - seealso: #GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
  */
-- (jint)getGapStrategy;
+- (int32_t)getGapStrategy;
 
-- (jint)getOrientation;
+- (int32_t)getOrientation;
 
 /*!
  @brief Returns whether views are laid out in reverse order or not.
@@ -218,13 +222,13 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  @return True if layout is reversed, false otherwise
  - seealso: #setReverseLayout(boolean)
  */
-- (jboolean)getReverseLayout;
+- (bool)getReverseLayout;
 
 /*!
  @brief Returns the number of spans laid out by StaggeredGridLayoutManager.
  @return Number of spans in the layout
  */
-- (jint)getSpanCount;
+- (int32_t)getSpanCount;
 
 /*!
  @brief For consistency, StaggeredGridLayoutManager keeps a mapping between spans and items.
@@ -234,11 +238,11 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  */
 - (void)invalidateSpanAssignments;
 
-- (jboolean)isAutoMeasureEnabled;
+- (bool)isAutoMeasureEnabled;
 
-- (void)offsetChildrenHorizontalWithInt:(jint)dx;
+- (void)offsetChildrenHorizontalWithInt:(int32_t)dx;
 
-- (void)offsetChildrenVerticalWithInt:(jint)dy;
+- (void)offsetChildrenVerticalWithInt:(int32_t)dy;
 
 - (void)onAdapterChangedWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)oldAdapter
                         withADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)newAdapter;
@@ -247,28 +251,28 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
                    withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler;
 
 - (ADView *)onFocusSearchFailedWithADView:(ADView *)focused
-                                  withInt:(jint)direction
+                                  withInt:(int32_t)direction
              withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                 withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 - (void)onItemsAddedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                withInt:(jint)positionStart
-                                withInt:(jint)itemCount;
+                                withInt:(int32_t)positionStart
+                                withInt:(int32_t)itemCount;
 
 - (void)onItemsChangedWithADXRecyclerView:(ADXRecyclerView *)recyclerView;
 
 - (void)onItemsMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                withInt:(jint)from
-                                withInt:(jint)to
-                                withInt:(jint)itemCount;
+                                withInt:(int32_t)from
+                                withInt:(int32_t)to
+                                withInt:(int32_t)itemCount;
 
 - (void)onItemsRemovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount;
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount;
 
 - (void)onItemsUpdatedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount
                                    withId:(id)payload;
 
 - (void)onLayoutChildrenWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
@@ -280,13 +284,13 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
 
 - (id<ADParcelable>)onSaveInstanceState;
 
-- (void)onScrollStateChangedWithInt:(jint)state;
+- (void)onScrollStateChangedWithInt:(int32_t)state;
 
-- (jint)scrollHorizontallyByWithInt:(jint)dx
-       withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-          withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)scrollHorizontallyByWithInt:(int32_t)dx
+          withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+             withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (void)scrollToPositionWithInt:(jint)position;
+- (void)scrollToPositionWithInt:(int32_t)position;
 
 /*!
  @brief Scroll to the specified adapter position with the given offset from layout start.
@@ -299,12 +303,12 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  - seealso: #setReverseLayout(boolean)
  - seealso: #scrollToPosition(int)
  */
-- (void)scrollToPositionWithOffsetWithInt:(jint)position
-                                  withInt:(jint)offset;
+- (void)scrollToPositionWithOffsetWithInt:(int32_t)position
+                                  withInt:(int32_t)offset;
 
-- (jint)scrollVerticallyByWithInt:(jint)dy
-     withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-        withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)scrollVerticallyByWithInt:(int32_t)dy
+        withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+           withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 /*!
  @brief Sets the gap handling strategy for StaggeredGridLayoutManager.If the gapStrategy parameter
@@ -314,18 +318,18 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   .
  - seealso: #getGapStrategy()
  */
-- (void)setGapStrategyWithInt:(jint)gapStrategy;
+- (void)setGapStrategyWithInt:(int32_t)gapStrategy;
 
 - (void)setMeasuredDimensionWithADRect:(ADRect *)childrenBounds
-                               withInt:(jint)wSpec
-                               withInt:(jint)hSpec;
+                               withInt:(int32_t)wSpec
+                               withInt:(int32_t)hSpec;
 
 /*!
  @brief Sets the orientation of the layout.StaggeredGridLayoutManager will do its best to keep
   scroll position if this method is called after views are laid out.
  @param orientation<code>HORIZONTAL</code>  or <code>VERTICAL</code>
  */
-- (void)setOrientationWithInt:(jint)orientation;
+- (void)setOrientationWithInt:(int32_t)orientation;
 
 /*!
  @brief Sets whether LayoutManager should start laying out items from the end of the UI.The order
@@ -339,7 +343,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  <code>RecyclerView</code>} is RTL, it will layout from LTR.
  @param reverseLayout Whether layout should be in reverse or not
  */
-- (void)setReverseLayoutWithBoolean:(jboolean)reverseLayout;
+- (void)setReverseLayoutWithBoolean:(bool)reverseLayout;
 
 /*!
  @brief Sets the number of spans for the layout.This will invalidate all of the span assignments
@@ -349,15 +353,15 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   parameter is equal to current span count.
  @param spanCount Number of spans to layout
  */
-- (void)setSpanCountWithInt:(jint)spanCount;
+- (void)setSpanCountWithInt:(int32_t)spanCount;
 
-- (jboolean)supportsPredictiveItemAnimations;
+- (bool)supportsPredictiveItemAnimations;
 
 #pragma mark Package-Private
 
-- (jboolean)areAllEndsEqual;
+- (bool)areAllEndsEqual;
 
-- (jboolean)areAllStartsEqual;
+- (bool)areAllStartsEqual;
 
 /*!
  @brief Checks for gaps in the UI that may be caused by adapter changes.
@@ -365,7 +369,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   When a full span item is laid out in reverse direction, it sets a flag which we check when
   scroll is stopped (or re-layout happens) and re-layout after first valid item.
  */
-- (jboolean)checkForGaps;
+- (bool)checkForGaps;
 
 /*!
  @brief This is for internal use.Not necessarily the child closest to bottom but the first child
@@ -373,7 +377,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  This method does not do any sorting based on child's end coordinate, instead, it uses
   children order.
  */
-- (ADView *)findFirstVisibleItemClosestToEndWithBoolean:(jboolean)fullyVisible;
+- (ADView *)findFirstVisibleItemClosestToEndWithBoolean:(bool)fullyVisible;
 
 /*!
  @brief This is for internal use.Not necessarily the child closest to start but the first child
@@ -381,18 +385,18 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  This method does not do any sorting based on child's start coordinate, instead, it uses
   children order.
  */
-- (ADView *)findFirstVisibleItemClosestToStartWithBoolean:(jboolean)fullyVisible;
+- (ADView *)findFirstVisibleItemClosestToStartWithBoolean:(bool)fullyVisible;
 
 /*!
  @brief Finds the first fully visible child to be used as an anchor child if span count changes when
   state is restored.If no children is fully visible, returns a partially visible child instead
   of returning null.
  */
-- (jint)findFirstVisibleItemPositionInt;
+- (int32_t)findFirstVisibleItemPositionInt;
 
-- (jint)getFirstChildPosition;
+- (int32_t)getFirstChildPosition;
 
-- (jint)getLastChildPosition;
+- (int32_t)getLastChildPosition;
 
 /*!
  @brief Checks for gaps if we've reached to the top of the list.
@@ -401,22 +405,22 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
  */
 - (ADView *)hasGapsToFix;
 
-- (jboolean)isLayoutRTL;
+- (bool)isLayoutRTL;
 
-- (void)prepareLayoutStateForDeltaWithInt:(jint)delta
+- (void)prepareLayoutStateForDeltaWithInt:(int32_t)delta
                 withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)scrollByWithInt:(jint)dt
+- (int32_t)scrollByWithInt:(int32_t)dt
 withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-withADXRecyclerView_State:(ADXRecyclerView_State *)state;
+ withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jboolean)updateAnchorFromPendingDataWithADXRecyclerView_State:(ADXRecyclerView_State *)state
-                    withADXStaggeredGridLayoutManager_AnchorInfo:(ADXStaggeredGridLayoutManager_AnchorInfo *)anchorInfo;
+- (bool)updateAnchorFromPendingDataWithADXRecyclerView_State:(ADXRecyclerView_State *)state
+                withADXStaggeredGridLayoutManager_AnchorInfo:(ADXStaggeredGridLayoutManager_AnchorInfo *)anchorInfo;
 
 - (void)updateAnchorInfoForLayoutWithADXRecyclerView_State:(ADXRecyclerView_State *)state
               withADXStaggeredGridLayoutManager_AnchorInfo:(ADXStaggeredGridLayoutManager_AnchorInfo *)anchorInfo;
 
-- (void)updateMeasureSpecsWithInt:(jint)totalSpace;
+- (void)updateMeasureSpecsWithInt:(int32_t)totalSpace;
 
 // Disallowed inherited constructors, do not use.
 
@@ -431,30 +435,30 @@ J2OBJC_FIELD_SETTER(ADXStaggeredGridLayoutManager, mPrimaryOrientation_, ADXOrie
 J2OBJC_FIELD_SETTER(ADXStaggeredGridLayoutManager, mSecondaryOrientation_, ADXOrientationHelper *)
 J2OBJC_FIELD_SETTER(ADXStaggeredGridLayoutManager, mLazySpanLookup_, ADXStaggeredGridLayoutManager_LazySpanLookup *)
 
-inline jboolean ADXStaggeredGridLayoutManager_get_DEBUG(void);
+inline bool ADXStaggeredGridLayoutManager_get_DEBUG(void);
 #define ADXStaggeredGridLayoutManager_DEBUG false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, DEBUG, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, DEBUG, bool)
 
-inline jint ADXStaggeredGridLayoutManager_get_HORIZONTAL(void);
+inline int32_t ADXStaggeredGridLayoutManager_get_HORIZONTAL(void);
 #define ADXStaggeredGridLayoutManager_HORIZONTAL 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, HORIZONTAL, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, HORIZONTAL, int32_t)
 
-inline jint ADXStaggeredGridLayoutManager_get_VERTICAL(void);
+inline int32_t ADXStaggeredGridLayoutManager_get_VERTICAL(void);
 #define ADXStaggeredGridLayoutManager_VERTICAL 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, VERTICAL, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, VERTICAL, int32_t)
 
 /*!
  @brief Does not do anything to hide gaps.
  */
-inline jint ADXStaggeredGridLayoutManager_get_GAP_HANDLING_NONE(void);
+inline int32_t ADXStaggeredGridLayoutManager_get_GAP_HANDLING_NONE(void);
 #define ADXStaggeredGridLayoutManager_GAP_HANDLING_NONE 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, GAP_HANDLING_NONE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, GAP_HANDLING_NONE, int32_t)
 
 /*!
  */
-inline jint ADXStaggeredGridLayoutManager_get_GAP_HANDLING_LAZY(void);
+inline int32_t ADXStaggeredGridLayoutManager_get_GAP_HANDLING_LAZY(void);
 #define ADXStaggeredGridLayoutManager_GAP_HANDLING_LAZY 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, GAP_HANDLING_LAZY, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, GAP_HANDLING_LAZY, int32_t)
 
 /*!
  @brief When scroll state is changed to <code>RecyclerView.SCROLL_STATE_IDLE</code>, StaggeredGrid will
@@ -479,23 +483,24 @@ J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, GAP_HANDLING_LAZY, j
   
 @endcode
  */
-inline jint ADXStaggeredGridLayoutManager_get_GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS(void);
+inline int32_t ADXStaggeredGridLayoutManager_get_GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS(void);
 #define ADXStaggeredGridLayoutManager_GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS, int32_t)
 
-inline jint ADXStaggeredGridLayoutManager_get_INVALID_OFFSET(void);
-#define ADXStaggeredGridLayoutManager_INVALID_OFFSET ((jint) 0x80000000)
-J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, INVALID_OFFSET, jint)
+inline int32_t ADXStaggeredGridLayoutManager_get_INVALID_OFFSET(void);
+#define ADXStaggeredGridLayoutManager_INVALID_OFFSET ((int32_t) 0x80000000)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager, INVALID_OFFSET, int32_t)
 
-FOUNDATION_EXPORT void ADXStaggeredGridLayoutManager_initWithInt_withInt_(ADXStaggeredGridLayoutManager *self, jint spanCount, jint orientation);
+FOUNDATION_EXPORT void ADXStaggeredGridLayoutManager_initWithInt_withInt_(ADXStaggeredGridLayoutManager *self, int32_t spanCount, int32_t orientation);
 
-FOUNDATION_EXPORT ADXStaggeredGridLayoutManager *new_ADXStaggeredGridLayoutManager_initWithInt_withInt_(jint spanCount, jint orientation) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXStaggeredGridLayoutManager *new_ADXStaggeredGridLayoutManager_initWithInt_withInt_(int32_t spanCount, int32_t orientation) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXStaggeredGridLayoutManager *create_ADXStaggeredGridLayoutManager_initWithInt_withInt_(jint spanCount, jint orientation);
+FOUNDATION_EXPORT ADXStaggeredGridLayoutManager *create_ADXStaggeredGridLayoutManager_initWithInt_withInt_(int32_t spanCount, int32_t orientation);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager)
 
 @compatibility_alias AndroidxRecyclerviewWidgetStaggeredGridLayoutManager ADXStaggeredGridLayoutManager;
+
 
 #endif
 
@@ -509,6 +514,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager)
 @class ADViewGroup_LayoutParams;
 @class ADViewGroup_MarginLayoutParams;
 @class ADXStaggeredGridLayoutManager_Span;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief LayoutParams used by StaggeredGridLayoutManager.
@@ -520,15 +527,15 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager)
 @interface ADXStaggeredGridLayoutManager_LayoutParams : ADXRecyclerView_LayoutParams {
  @public
   ADXStaggeredGridLayoutManager_Span *mSpan_;
-  jboolean mFullSpan_;
+  bool mFullSpan_;
 }
 
 #pragma mark Public
 
 /*!
  */
-- (instancetype)initWithInt:(jint)width
-                    withInt:(jint)height;
+- (instancetype)initWithInt:(int32_t)width
+                    withInt:(int32_t)height;
 
 - (instancetype)initWithADViewGroup_LayoutParams:(ADViewGroup_LayoutParams *)source;
 
@@ -541,14 +548,14 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager)
  @return The Span index of the View. If View is not yet assigned to any span, returns 
  <code>INVALID_SPAN_ID</code>.
  */
-- (jint)getSpanIndex;
+- (int32_t)getSpanIndex;
 
 /*!
  @brief Returns whether this View occupies all available spans or just one.
  @return True if the View occupies all spans or false otherwise.
  - seealso: #setFullSpan(boolean)
  */
-- (jboolean)isFullSpan;
+- (bool)isFullSpan;
 
 /*!
  @brief When set to true, the item will layout using all span area.That means, if orientation
@@ -557,7 +564,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager)
  @param fullSpan True if this item should traverse all spans.
  - seealso: #isFullSpan()
  */
-- (void)setFullSpanWithBoolean:(jboolean)fullSpan;
+- (void)setFullSpanWithBoolean:(bool)fullSpan;
 
 @end
 
@@ -568,15 +575,15 @@ J2OBJC_FIELD_SETTER(ADXStaggeredGridLayoutManager_LayoutParams, mSpan_, ADXStagg
 /*!
  @brief Span Id for Views that are not laid out yet.
  */
-inline jint ADXStaggeredGridLayoutManager_LayoutParams_get_INVALID_SPAN_ID(void);
+inline int32_t ADXStaggeredGridLayoutManager_LayoutParams_get_INVALID_SPAN_ID(void);
 #define ADXStaggeredGridLayoutManager_LayoutParams_INVALID_SPAN_ID -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager_LayoutParams, INVALID_SPAN_ID, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager_LayoutParams, INVALID_SPAN_ID, int32_t)
 
-FOUNDATION_EXPORT void ADXStaggeredGridLayoutManager_LayoutParams_initWithInt_withInt_(ADXStaggeredGridLayoutManager_LayoutParams *self, jint width, jint height);
+FOUNDATION_EXPORT void ADXStaggeredGridLayoutManager_LayoutParams_initWithInt_withInt_(ADXStaggeredGridLayoutManager_LayoutParams *self, int32_t width, int32_t height);
 
-FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_LayoutParams *new_ADXStaggeredGridLayoutManager_LayoutParams_initWithInt_withInt_(jint width, jint height) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_LayoutParams *new_ADXStaggeredGridLayoutManager_LayoutParams_initWithInt_withInt_(int32_t width, int32_t height) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_LayoutParams *create_ADXStaggeredGridLayoutManager_LayoutParams_initWithInt_withInt_(jint width, jint height);
+FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_LayoutParams *create_ADXStaggeredGridLayoutManager_LayoutParams_initWithInt_withInt_(int32_t width, int32_t height);
 
 FOUNDATION_EXPORT void ADXStaggeredGridLayoutManager_LayoutParams_initWithADViewGroup_MarginLayoutParams_(ADXStaggeredGridLayoutManager_LayoutParams *self, ADViewGroup_MarginLayoutParams *source);
 
@@ -598,6 +605,7 @@ FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_LayoutParams *create_ADXStaggere
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LayoutParams)
 
+
 #endif
 
 #if !defined (ADXStaggeredGridLayoutManager_Span_) && (INCLUDE_ALL_StaggeredGridLayoutManager || defined(INCLUDE_ADXStaggeredGridLayoutManager_Span))
@@ -606,48 +614,50 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LayoutParams)
 @class ADView;
 @class ADXStaggeredGridLayoutManager;
 @class ADXStaggeredGridLayoutManager_LayoutParams;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilArrayList;
 
 @interface ADXStaggeredGridLayoutManager_Span : NSObject {
  @public
   JavaUtilArrayList *mViews_;
-  jint mCachedStart_;
-  jint mCachedEnd_;
-  jint mDeletedSize_;
-  jint mIndex_;
+  int32_t mCachedStart_;
+  int32_t mCachedEnd_;
+  int32_t mDeletedSize_;
+  int32_t mIndex_;
 }
 
 #pragma mark Public
 
-- (jint)findFirstCompletelyVisibleItemPosition;
+- (int32_t)findFirstCompletelyVisibleItemPosition;
 
-- (jint)findFirstPartiallyVisibleItemPosition;
+- (int32_t)findFirstPartiallyVisibleItemPosition;
 
-- (jint)findFirstVisibleItemPosition;
+- (int32_t)findFirstVisibleItemPosition;
 
-- (jint)findLastCompletelyVisibleItemPosition;
+- (int32_t)findLastCompletelyVisibleItemPosition;
 
-- (jint)findLastPartiallyVisibleItemPosition;
+- (int32_t)findLastPartiallyVisibleItemPosition;
 
-- (jint)findLastVisibleItemPosition;
+- (int32_t)findLastVisibleItemPosition;
 
-- (jint)getDeletedSize;
+- (int32_t)getDeletedSize;
 
 /*!
  @brief Depending on the layout direction, returns the View that is after the given position.
  */
-- (ADView *)getFocusableViewAfterWithInt:(jint)referenceChildPosition
-                                 withInt:(jint)layoutDir;
+- (ADView *)getFocusableViewAfterWithInt:(int32_t)referenceChildPosition
+                                 withInt:(int32_t)layoutDir;
 
 #pragma mark Package-Private
 
 - (instancetype)initWithADXStaggeredGridLayoutManager:(ADXStaggeredGridLayoutManager *)outer$
-                                              withInt:(jint)index;
+                                              withInt:(int32_t)index;
 
 - (void)appendToSpanWithADView:(ADView *)view;
 
-- (void)cacheReferenceLineAndClearWithBoolean:(jboolean)reverseLayout
-                                      withInt:(jint)offset;
+- (void)cacheReferenceLineAndClearWithBoolean:(bool)reverseLayout
+                                      withInt:(int32_t)offset;
 
 - (void)calculateCachedEnd;
 
@@ -676,33 +686,33 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LayoutParams)
  @return The adapter position of the first view that's either partially or fully visible. 
  <code>RecyclerView.NO_POSITION</code> if no such view is found.
  */
-- (jint)findOnePartiallyOrCompletelyVisibleChildWithInt:(jint)fromIndex
-                                                withInt:(jint)toIndex
-                                            withBoolean:(jboolean)completelyVisible
-                                            withBoolean:(jboolean)acceptCompletelyVisible
-                                            withBoolean:(jboolean)acceptEndPointInclusion;
+- (int32_t)findOnePartiallyOrCompletelyVisibleChildWithInt:(int32_t)fromIndex
+                                                   withInt:(int32_t)toIndex
+                                               withBoolean:(bool)completelyVisible
+                                               withBoolean:(bool)acceptCompletelyVisible
+                                               withBoolean:(bool)acceptEndPointInclusion;
 
-- (jint)findOnePartiallyVisibleChildWithInt:(jint)fromIndex
-                                    withInt:(jint)toIndex
-                                withBoolean:(jboolean)acceptEndPointInclusion;
+- (int32_t)findOnePartiallyVisibleChildWithInt:(int32_t)fromIndex
+                                       withInt:(int32_t)toIndex
+                                   withBoolean:(bool)acceptEndPointInclusion;
 
-- (jint)findOneVisibleChildWithInt:(jint)fromIndex
-                           withInt:(jint)toIndex
-                       withBoolean:(jboolean)completelyVisible;
+- (int32_t)findOneVisibleChildWithInt:(int32_t)fromIndex
+                              withInt:(int32_t)toIndex
+                          withBoolean:(bool)completelyVisible;
 
-- (jint)getEndLine;
+- (int32_t)getEndLine;
 
-- (jint)getEndLineWithInt:(jint)def;
+- (int32_t)getEndLineWithInt:(int32_t)def;
 
 - (ADXStaggeredGridLayoutManager_LayoutParams *)getLayoutParamsWithADView:(ADView *)view;
 
-- (jint)getStartLine;
+- (int32_t)getStartLine;
 
-- (jint)getStartLineWithInt:(jint)def;
+- (int32_t)getStartLineWithInt:(int32_t)def;
 
 - (void)invalidateCache;
 
-- (void)onOffsetWithInt:(jint)dt;
+- (void)onOffsetWithInt:(int32_t)dt;
 
 - (void)popEnd;
 
@@ -710,7 +720,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LayoutParams)
 
 - (void)prependToSpanWithADView:(ADView *)view;
 
-- (void)setLineWithInt:(jint)line;
+- (void)setLineWithInt:(int32_t)line;
 
 // Disallowed inherited constructors, do not use.
 
@@ -722,17 +732,18 @@ J2OBJC_EMPTY_STATIC_INIT(ADXStaggeredGridLayoutManager_Span)
 
 J2OBJC_FIELD_SETTER(ADXStaggeredGridLayoutManager_Span, mViews_, JavaUtilArrayList *)
 
-inline jint ADXStaggeredGridLayoutManager_Span_get_INVALID_LINE(void);
-#define ADXStaggeredGridLayoutManager_Span_INVALID_LINE ((jint) 0x80000000)
-J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager_Span, INVALID_LINE, jint)
+inline int32_t ADXStaggeredGridLayoutManager_Span_get_INVALID_LINE(void);
+#define ADXStaggeredGridLayoutManager_Span_INVALID_LINE ((int32_t) 0x80000000)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXStaggeredGridLayoutManager_Span, INVALID_LINE, int32_t)
 
-FOUNDATION_EXPORT void ADXStaggeredGridLayoutManager_Span_initWithADXStaggeredGridLayoutManager_withInt_(ADXStaggeredGridLayoutManager_Span *self, ADXStaggeredGridLayoutManager *outer$, jint index);
+FOUNDATION_EXPORT void ADXStaggeredGridLayoutManager_Span_initWithADXStaggeredGridLayoutManager_withInt_(ADXStaggeredGridLayoutManager_Span *self, ADXStaggeredGridLayoutManager *outer$, int32_t index);
 
-FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_Span *new_ADXStaggeredGridLayoutManager_Span_initWithADXStaggeredGridLayoutManager_withInt_(ADXStaggeredGridLayoutManager *outer$, jint index) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_Span *new_ADXStaggeredGridLayoutManager_Span_initWithADXStaggeredGridLayoutManager_withInt_(ADXStaggeredGridLayoutManager *outer$, int32_t index) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_Span *create_ADXStaggeredGridLayoutManager_Span_initWithADXStaggeredGridLayoutManager_withInt_(ADXStaggeredGridLayoutManager *outer$, jint index);
+FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_Span *create_ADXStaggeredGridLayoutManager_Span_initWithADXStaggeredGridLayoutManager_withInt_(ADXStaggeredGridLayoutManager *outer$, int32_t index);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_Span)
+
 
 #endif
 
@@ -742,6 +753,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_Span)
 @class ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpanItem;
 @class ADXStaggeredGridLayoutManager_Span;
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilList;
 
 /*!
@@ -764,12 +777,12 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_Span)
  @param gapDir if not 0, returns FSIs on in that direction
  @param hasUnwantedGapAfter If true, when full span item has unwanted gaps, it will be                         returned even if its gap direction does not match.
  */
-- (ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpanItem *)getFirstFullSpanItemInRangeWithInt:(jint)minPos
-                                                                                          withInt:(jint)maxPos
-                                                                                          withInt:(jint)gapDir
-                                                                                      withBoolean:(jboolean)hasUnwantedGapAfter;
+- (ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpanItem *)getFirstFullSpanItemInRangeWithInt:(int32_t)minPos
+                                                                                          withInt:(int32_t)maxPos
+                                                                                          withInt:(int32_t)gapDir
+                                                                                      withBoolean:(bool)hasUnwantedGapAfter;
 
-- (ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpanItem *)getFullSpanItemWithInt:(jint)position;
+- (ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpanItem *)getFullSpanItemWithInt:(int32_t)position;
 
 #pragma mark Package-Private
 
@@ -777,30 +790,30 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_Span)
 
 - (void)clear;
 
-- (void)ensureSizeWithInt:(jint)position;
+- (void)ensureSizeWithInt:(int32_t)position;
 
 /*!
  @brief Invalidates everything after this position, including full span information
  */
-- (jint)forceInvalidateAfterWithInt:(jint)position;
+- (int32_t)forceInvalidateAfterWithInt:(int32_t)position;
 
-- (jint)getSpanWithInt:(jint)position;
+- (int32_t)getSpanWithInt:(int32_t)position;
 
 /*!
  @brief returns end position for invalidation.
  */
-- (jint)invalidateAfterWithInt:(jint)position;
+- (int32_t)invalidateAfterWithInt:(int32_t)position;
 
-- (void)offsetForAdditionWithInt:(jint)positionStart
-                         withInt:(jint)itemCount;
+- (void)offsetForAdditionWithInt:(int32_t)positionStart
+                         withInt:(int32_t)itemCount;
 
-- (void)offsetForRemovalWithInt:(jint)positionStart
-                        withInt:(jint)itemCount;
+- (void)offsetForRemovalWithInt:(int32_t)positionStart
+                        withInt:(int32_t)itemCount;
 
-- (void)setSpanWithInt:(jint)position
+- (void)setSpanWithInt:(int32_t)position
 withADXStaggeredGridLayoutManager_Span:(ADXStaggeredGridLayoutManager_Span *)span;
 
-- (jint)sizeForPositionWithInt:(jint)position;
+- (int32_t)sizeForPositionWithInt:(int32_t)position;
 
 @end
 
@@ -817,6 +830,7 @@ FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_LazySpanLookup *create_ADXStagge
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LazySpanLookup)
 
+
 #endif
 
 #if !defined (ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpanItem_) && (INCLUDE_ALL_StaggeredGridLayoutManager || defined(INCLUDE_ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpanItem))
@@ -827,6 +841,9 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LazySpanLookup)
 #include "Parcelable.h"
 
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class NSString;
 @protocol ADParcel;
 
 /*!
@@ -834,20 +851,20 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LazySpanLookup)
  */
 @interface ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpanItem : NSObject < ADParcelable > {
  @public
-  jint mPosition_;
-  jint mGapDir_;
+  int32_t mPosition_;
+  int32_t mGapDir_;
   IOSIntArray *mGapPerSpan_;
-  jboolean mHasUnwantedGapAfter_;
+  bool mHasUnwantedGapAfter_;
 }
 
 #pragma mark Public
 
-- (jint)describeContents;
+- (int32_t)describeContents;
 
 - (NSString *)description;
 
 - (void)writeToParcelWithADParcel:(id<ADParcel>)dest
-                          withInt:(jint)flags;
+                          withInt:(int32_t)flags;
 
 #pragma mark Package-Private
 
@@ -855,7 +872,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LazySpanLookup)
 
 - (instancetype)initWithADParcel:(id<ADParcel>)inArg;
 
-- (jint)getGapForSpanWithInt:(jint)spanIndex;
+- (int32_t)getGapForSpanWithInt:(int32_t)spanIndex;
 
 @end
 
@@ -877,6 +894,7 @@ FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpanItem *cre
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpanItem)
 
+
 #endif
 
 #if !defined (ADXStaggeredGridLayoutManager_SavedState_) && (INCLUDE_ALL_StaggeredGridLayoutManager || defined(INCLUDE_ADXStaggeredGridLayoutManager_SavedState))
@@ -887,6 +905,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpan
 #include "Parcelable.h"
 
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol ADParcel;
 @protocol JavaUtilList;
 
@@ -894,16 +914,16 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpan
  */
 @interface ADXStaggeredGridLayoutManager_SavedState : NSObject < ADParcelable > {
  @public
-  jint mAnchorPosition_;
-  jint mVisibleAnchorPosition_;
-  jint mSpanOffsetsSize_;
+  int32_t mAnchorPosition_;
+  int32_t mVisibleAnchorPosition_;
+  int32_t mSpanOffsetsSize_;
   IOSIntArray *mSpanOffsets_;
-  jint mSpanLookupSize_;
+  int32_t mSpanLookupSize_;
   IOSIntArray *mSpanLookup_;
   id<JavaUtilList> mFullSpanItems_;
-  jboolean mReverseLayout_;
-  jboolean mAnchorLayoutFromEnd_;
-  jboolean mLastLayoutRTL_;
+  bool mReverseLayout_;
+  bool mAnchorLayoutFromEnd_;
+  bool mLastLayoutRTL_;
 }
 
 #pragma mark Public
@@ -912,10 +932,10 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_LazySpanLookup_FullSpan
 
 - (instancetype)initWithADXStaggeredGridLayoutManager_SavedState:(ADXStaggeredGridLayoutManager_SavedState *)other;
 
-- (jint)describeContents;
+- (int32_t)describeContents;
 
 - (void)writeToParcelWithADParcel:(id<ADParcel>)dest
-                          withInt:(jint)flags;
+                          withInt:(int32_t)flags;
 
 #pragma mark Package-Private
 
@@ -953,6 +973,7 @@ FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_SavedState *create_ADXStaggeredG
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_SavedState)
 
+
 #endif
 
 #if !defined (ADXStaggeredGridLayoutManager_AnchorInfo_) && (INCLUDE_ALL_StaggeredGridLayoutManager || defined(INCLUDE_ADXStaggeredGridLayoutManager_AnchorInfo))
@@ -961,17 +982,19 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_SavedState)
 @class ADXStaggeredGridLayoutManager;
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief Data class to hold the information about an anchor position which is used in onLayout call.
  */
 @interface ADXStaggeredGridLayoutManager_AnchorInfo : NSObject {
  @public
-  jint mPosition_;
-  jint mOffset_;
-  jboolean mLayoutFromEnd_;
-  jboolean mInvalidateOffsets_;
-  jboolean mValid_;
+  int32_t mPosition_;
+  int32_t mOffset_;
+  bool mLayoutFromEnd_;
+  bool mInvalidateOffsets_;
+  bool mValid_;
   IOSIntArray *mSpanReferenceLines_;
 }
 
@@ -981,7 +1004,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_SavedState)
 
 - (void)assignCoordinateFromPadding;
 
-- (void)assignCoordinateFromPaddingWithInt:(jint)addedDistance;
+- (void)assignCoordinateFromPaddingWithInt:(int32_t)addedDistance;
 
 - (void)reset;
 
@@ -1004,6 +1027,7 @@ FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_AnchorInfo *new_ADXStaggeredGrid
 FOUNDATION_EXPORT ADXStaggeredGridLayoutManager_AnchorInfo *create_ADXStaggeredGridLayoutManager_AnchorInfo_initWithADXStaggeredGridLayoutManager_(ADXStaggeredGridLayoutManager *outer$);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXStaggeredGridLayoutManager_AnchorInfo)
+
 
 #endif
 

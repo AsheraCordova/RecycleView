@@ -3,9 +3,21 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\ItemTouchHelper.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "ItemTouchHelper.h"
 #include "J2ObjC_source.h"
 #include "RecyclerView.h"
+#include "java/lang/Integer.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @implementation ADXItemTouchHelper
@@ -47,21 +59,23 @@ ADXItemTouchHelper *create_ADXItemTouchHelper_init() {
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXItemTouchHelper)
 
+J2OBJC_NAME_MAPPING(ADXItemTouchHelper, "androidx.recyclerview.widget", "ADX")
+
 @implementation ADXItemTouchHelper_SimpleCallback
 
-- (instancetype)initWithInt:(jint)i
-                    withInt:(jint)j {
+- (instancetype)initWithInt:(int32_t)i
+                    withInt:(int32_t)j {
   ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(self, i, j);
   return self;
 }
 
-- (jint)getSwipeDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-         withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+- (int32_t)getSwipeDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+            withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
   return 0;
 }
 
-- (jint)getDragDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-        withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+- (int32_t)getDragDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+           withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
   return 0;
 }
 
@@ -85,15 +99,15 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXItemTouchHelper)
 
 @end
 
-void ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(ADXItemTouchHelper_SimpleCallback *self, jint i, jint j) {
+void ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(ADXItemTouchHelper_SimpleCallback *self, int32_t i, int32_t j) {
   NSObject_init(self);
 }
 
-ADXItemTouchHelper_SimpleCallback *new_ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(jint i, jint j) {
+ADXItemTouchHelper_SimpleCallback *new_ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(int32_t i, int32_t j) {
   J2OBJC_NEW_IMPL(ADXItemTouchHelper_SimpleCallback, initWithInt_withInt_, i, j)
 }
 
-ADXItemTouchHelper_SimpleCallback *create_ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(jint i, jint j) {
+ADXItemTouchHelper_SimpleCallback *create_ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(int32_t i, int32_t j) {
   J2OBJC_CREATE_IMPL(ADXItemTouchHelper_SimpleCallback, initWithInt_withInt_, i, j)
 }
 

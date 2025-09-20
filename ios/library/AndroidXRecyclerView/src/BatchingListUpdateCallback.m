@@ -3,27 +3,40 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\BatchingListUpdateCallback.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "BatchingListUpdateCallback.h"
 #include "J2ObjC_source.h"
 #include "ListUpdateCallback.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Integer.h"
 #include "java/lang/Math.h"
 
 
-inline jint ADXBatchingListUpdateCallback_get_TYPE_NONE(void);
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
+
+
+inline int32_t ADXBatchingListUpdateCallback_get_TYPE_NONE(void);
 #define ADXBatchingListUpdateCallback_TYPE_NONE 0
-J2OBJC_STATIC_FIELD_CONSTANT(ADXBatchingListUpdateCallback, TYPE_NONE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXBatchingListUpdateCallback, TYPE_NONE, int32_t)
 
-inline jint ADXBatchingListUpdateCallback_get_TYPE_ADD(void);
+inline int32_t ADXBatchingListUpdateCallback_get_TYPE_ADD(void);
 #define ADXBatchingListUpdateCallback_TYPE_ADD 1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXBatchingListUpdateCallback, TYPE_ADD, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXBatchingListUpdateCallback, TYPE_ADD, int32_t)
 
-inline jint ADXBatchingListUpdateCallback_get_TYPE_REMOVE(void);
+inline int32_t ADXBatchingListUpdateCallback_get_TYPE_REMOVE(void);
 #define ADXBatchingListUpdateCallback_TYPE_REMOVE 2
-J2OBJC_STATIC_FIELD_CONSTANT(ADXBatchingListUpdateCallback, TYPE_REMOVE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXBatchingListUpdateCallback, TYPE_REMOVE, int32_t)
 
-inline jint ADXBatchingListUpdateCallback_get_TYPE_CHANGE(void);
+inline int32_t ADXBatchingListUpdateCallback_get_TYPE_CHANGE(void);
 #define ADXBatchingListUpdateCallback_TYPE_CHANGE 3
-J2OBJC_STATIC_FIELD_CONSTANT(ADXBatchingListUpdateCallback, TYPE_CHANGE, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXBatchingListUpdateCallback, TYPE_CHANGE, int32_t)
 
 @implementation ADXBatchingListUpdateCallback
 
@@ -51,8 +64,8 @@ J2OBJC_STATIC_FIELD_CONSTANT(ADXBatchingListUpdateCallback, TYPE_CHANGE, jint)
   mLastEventType_ = ADXBatchingListUpdateCallback_TYPE_NONE;
 }
 
-- (void)onInsertedWithInt:(jint)position
-                  withInt:(jint)count {
+- (void)onInsertedWithInt:(int32_t)position
+                  withInt:(int32_t)count {
   if (mLastEventType_ == ADXBatchingListUpdateCallback_TYPE_ADD && position >= mLastEventPosition_ && position <= mLastEventPosition_ + mLastEventCount_) {
     mLastEventCount_ += count;
     mLastEventPosition_ = JavaLangMath_minWithInt_withInt_(position, mLastEventPosition_);
@@ -64,8 +77,8 @@ J2OBJC_STATIC_FIELD_CONSTANT(ADXBatchingListUpdateCallback, TYPE_CHANGE, jint)
   mLastEventType_ = ADXBatchingListUpdateCallback_TYPE_ADD;
 }
 
-- (void)onRemovedWithInt:(jint)position
-                 withInt:(jint)count {
+- (void)onRemovedWithInt:(int32_t)position
+                 withInt:(int32_t)count {
   if (mLastEventType_ == ADXBatchingListUpdateCallback_TYPE_REMOVE && mLastEventPosition_ >= position && mLastEventPosition_ <= position + count) {
     mLastEventCount_ += count;
     mLastEventPosition_ = position;
@@ -77,17 +90,17 @@ J2OBJC_STATIC_FIELD_CONSTANT(ADXBatchingListUpdateCallback, TYPE_CHANGE, jint)
   mLastEventType_ = ADXBatchingListUpdateCallback_TYPE_REMOVE;
 }
 
-- (void)onMovedWithInt:(jint)fromPosition
-               withInt:(jint)toPosition {
+- (void)onMovedWithInt:(int32_t)fromPosition
+               withInt:(int32_t)toPosition {
   [self dispatchLastEvent];
   [((id<ADXListUpdateCallback>) nil_chk(mWrapped_)) onMovedWithInt:fromPosition withInt:toPosition];
 }
 
-- (void)onChangedWithInt:(jint)position
-                 withInt:(jint)count
+- (void)onChangedWithInt:(int32_t)position
+                 withInt:(int32_t)count
                   withId:(id)payload {
-  if (mLastEventType_ == ADXBatchingListUpdateCallback_TYPE_CHANGE && !(position > mLastEventPosition_ + mLastEventCount_ || position + count < mLastEventPosition_ || mLastEventPayload_ != payload)) {
-    jint previousEnd = mLastEventPosition_ + mLastEventCount_;
+  if (mLastEventType_ == ADXBatchingListUpdateCallback_TYPE_CHANGE && !(position > mLastEventPosition_ + mLastEventCount_ || position + count < mLastEventPosition_ || !JreObjectEqualsEquals(mLastEventPayload_, payload))) {
+    int32_t previousEnd = mLastEventPosition_ + mLastEventCount_;
     mLastEventPosition_ = JavaLangMath_minWithInt_withInt_(position, mLastEventPosition_);
     mLastEventCount_ = JavaLangMath_maxWithInt_withInt_(previousEnd, position + count) - mLastEventPosition_;
     return;
@@ -160,3 +173,5 @@ ADXBatchingListUpdateCallback *create_ADXBatchingListUpdateCallback_initWithADXL
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXBatchingListUpdateCallback)
+
+J2OBJC_NAME_MAPPING(ADXBatchingListUpdateCallback, "androidx.recyclerview.widget", "ADX")

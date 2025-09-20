@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\Item.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "GroupDataObserver.h"
 #include "GroupieViewHolder.h"
 #include "Item.h"
@@ -10,19 +15,25 @@
 #include "OnItemClickListener.h"
 #include "OnItemLongClickListener.h"
 #include "View.h"
+#include "java/lang/Boolean.h"
 #include "java/lang/IndexOutOfBoundsException.h"
+#include "java/lang/Integer.h"
+#include "java/lang/Long.h"
 #include "java/util/HashMap.h"
 #include "java/util/List.h"
 #include "java/util/Map.h"
 #include "java/util/concurrent/atomic/AtomicLong.h"
 
-@class JavaUtilConcurrentAtomicAtomicLong;
-@protocol JavaUtilMap;
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXItem () {
  @public
-  jlong id__;
+  int64_t id__;
   id<JavaUtilMap> extras_;
 }
 
@@ -46,7 +57,7 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (instancetype)initWithLong:(jlong)id_ {
+- (instancetype)initWithLong:(int64_t)id_ {
   ADXItem_initWithLong_(self, id_);
   return self;
 }
@@ -56,7 +67,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (void)bindWithADXGroupieViewHolder:(ADXGroupieViewHolder *)viewHolder
-                             withInt:(jint)position
+                             withInt:(int32_t)position
                     withJavaUtilList:(id<JavaUtilList>)payloads
           withADXOnItemClickListener:(id<ADXOnItemClickListener>)onItemClickListener
       withADXOnItemLongClickListener:(id<ADXOnItemLongClickListener>)onItemLongClickListener {
@@ -65,13 +76,13 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (void)bindWithADXGroupieViewHolder:(ADXGroupieViewHolder *)viewHolder
-                             withInt:(jint)position {
+                             withInt:(int32_t)position {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
 }
 
 - (void)bindWithADXGroupieViewHolder:(ADXGroupieViewHolder *)viewHolder
-                             withInt:(jint)position
+                             withInt:(int32_t)position
                     withJavaUtilList:(id<JavaUtilList>)payloads {
   [self bindWithADXGroupieViewHolder:viewHolder withInt:position];
 }
@@ -80,24 +91,24 @@ J2OBJC_IGNORE_DESIGNATED_END
   [((ADXGroupieViewHolder *) nil_chk(viewHolder)) unbind];
 }
 
-- (jboolean)isRecyclable {
+- (bool)isRecyclable {
   return true;
 }
 
-- (jint)getSpanSizeWithInt:(jint)spanCount
-                   withInt:(jint)position {
+- (int32_t)getSpanSizeWithInt:(int32_t)spanCount
+                      withInt:(int32_t)position {
   return spanCount;
 }
 
-- (jint)getSwipeDirs {
+- (int32_t)getSwipeDirs {
   return 0;
 }
 
-- (jint)getDragDirs {
+- (int32_t)getDragDirs {
   return 0;
 }
 
-- (jint)getLayout {
+- (int32_t)getLayout {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
@@ -109,15 +120,15 @@ J2OBJC_IGNORE_DESIGNATED_END
 - (void)onViewDetachedFromWindowWithADXGroupieViewHolder:(ADXGroupieViewHolder *)viewHolder {
 }
 
-- (jint)getViewType {
+- (int32_t)getViewType {
   return [self getLayout];
 }
 
-- (jint)getItemCount {
+- (int32_t)getItemCount {
   return 1;
 }
 
-- (ADXItem *)getItemWithInt:(jint)position {
+- (ADXItem *)getItemWithInt:(int32_t)position {
   if (position == 0) {
     return self;
   }
@@ -134,15 +145,15 @@ J2OBJC_IGNORE_DESIGNATED_END
   JreStrongAssign(&parentDataObserver_, nil);
 }
 
-- (jint)getPositionWithADXItem:(ADXItem *)item {
-  return self == item ? 0 : -1;
+- (int32_t)getPositionWithADXItem:(ADXItem *)item {
+  return JreObjectEqualsEquals(self, item) ? 0 : -1;
 }
 
-- (jboolean)isClickable {
+- (bool)isClickable {
   return true;
 }
 
-- (jboolean)isLongClickable {
+- (bool)isLongClickable {
   return true;
 }
 
@@ -162,18 +173,18 @@ J2OBJC_IGNORE_DESIGNATED_END
   return extras_;
 }
 
-- (jlong)getId {
+- (int64_t)getId {
   return id__;
 }
 
-- (jboolean)isSameAsWithADXItem:(ADXItem *)other {
+- (bool)isSameAsWithADXItem:(ADXItem *)other {
   if ([self getViewType] != [((ADXItem *) nil_chk(other)) getViewType]) {
     return false;
   }
   return [self getId] == [other getId];
 }
 
-- (jboolean)hasSameContentAsWithADXItem:(ADXItem *)other {
+- (bool)hasSameContentAsWithADXItem:(ADXItem *)other {
   return [self isEqual:other];
 }
 
@@ -265,7 +276,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 + (void)initialize {
   if (self == [ADXItem class]) {
-    JreStrongAssignAndConsume(&ADXItem_ID_COUNTER, new_JavaUtilConcurrentAtomicAtomicLong_init());
+    JreStrongAssignAndConsume(&ADXItem_ID_COUNTER, new_JavaUtilConcurrentAtomicAtomicLong_initWithLongLong_(0));
     J2OBJC_SET_INITIALIZED(ADXItem)
   }
 }
@@ -276,10 +287,12 @@ void ADXItem_init(ADXItem *self) {
   ADXItem_initWithLong_(self, [((JavaUtilConcurrentAtomicAtomicLong *) nil_chk(ADXItem_ID_COUNTER)) decrementAndGet]);
 }
 
-void ADXItem_initWithLong_(ADXItem *self, jlong id_) {
+void ADXItem_initWithLong_(ADXItem *self, int64_t id_) {
   NSObject_init(self);
   JreStrongAssignAndConsume(&self->extras_, new_JavaUtilHashMap_init());
   self->id__ = id_;
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXItem)
+
+J2OBJC_NAME_MAPPING(ADXItem, "com.xwray.groupie", "ADX")

@@ -3,9 +3,21 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\AdapterListUpdateCallback.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "AdapterListUpdateCallback.h"
 #include "J2ObjC_source.h"
 #include "RecyclerView.h"
+#include "java/lang/Integer.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXAdapterListUpdateCallback () {
@@ -24,23 +36,23 @@ J2OBJC_FIELD_SETTER(ADXAdapterListUpdateCallback, mAdapter_, ADXRecyclerView_Ada
   return self;
 }
 
-- (void)onInsertedWithInt:(jint)position
-                  withInt:(jint)count {
+- (void)onInsertedWithInt:(int32_t)position
+                  withInt:(int32_t)count {
   [((ADXRecyclerView_Adapter *) nil_chk(mAdapter_)) notifyItemRangeInsertedWithInt:position withInt:count];
 }
 
-- (void)onRemovedWithInt:(jint)position
-                 withInt:(jint)count {
+- (void)onRemovedWithInt:(int32_t)position
+                 withInt:(int32_t)count {
   [((ADXRecyclerView_Adapter *) nil_chk(mAdapter_)) notifyItemRangeRemovedWithInt:position withInt:count];
 }
 
-- (void)onMovedWithInt:(jint)fromPosition
-               withInt:(jint)toPosition {
+- (void)onMovedWithInt:(int32_t)fromPosition
+               withInt:(int32_t)toPosition {
   [((ADXRecyclerView_Adapter *) nil_chk(mAdapter_)) notifyItemMovedWithInt:fromPosition withInt:toPosition];
 }
 
-- (void)onChangedWithInt:(jint)position
-                 withInt:(jint)count
+- (void)onChangedWithInt:(int32_t)position
+                 withInt:(int32_t)count
                   withId:(id)payload {
   [((ADXRecyclerView_Adapter *) nil_chk(mAdapter_)) notifyItemRangeChangedWithInt:position withInt:count withId:payload];
 }
@@ -91,3 +103,5 @@ ADXAdapterListUpdateCallback *create_ADXAdapterListUpdateCallback_initWithADXRec
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXAdapterListUpdateCallback)
+
+J2OBJC_NAME_MAPPING(ADXAdapterListUpdateCallback, "androidx.recyclerview.widget", "ADX")

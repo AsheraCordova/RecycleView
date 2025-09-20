@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\DiffTask.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "AsyncDiffUtil.h"
 #include "AsyncTask.h"
 #include "DiffTask.h"
@@ -10,27 +15,32 @@
 #include "IOSObjectArray.h"
 #include "J2ObjC_source.h"
 #include "OnAsyncUpdateListener.h"
+#include "java/lang/Boolean.h"
 #include "java/lang/Exception.h"
+#include "java/lang/Integer.h"
 #include "java/lang/RuntimeException.h"
 #include "java/lang/ref/WeakReference.h"
 #include "java/util/Collection.h"
 
-@class JavaLangException;
-@class JavaLangRefWeakReference;
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXDiffTask () {
  @public
   ADXDiffUtil_Callback *diffCallback_;
   JavaLangRefWeakReference *asyncListDiffer_;
-  jint runGeneration_;
-  jboolean detectMoves_;
+  int32_t runGeneration_;
+  bool detectMoves_;
   JavaLangRefWeakReference *onAsyncUpdateListener_;
   JavaLangException *backgroundException_;
 }
 
-- (jboolean)shouldDispatchResultWithADXDiffUtil_DiffResult:(ADXDiffUtil_DiffResult *)diffResult
-                                      withADXAsyncDiffUtil:(ADXAsyncDiffUtil *)async;
+- (bool)shouldDispatchResultWithADXDiffUtil_DiffResult:(ADXDiffUtil_DiffResult *)diffResult
+                                  withADXAsyncDiffUtil:(ADXAsyncDiffUtil *)async;
 
 @end
 
@@ -39,14 +49,14 @@ J2OBJC_FIELD_SETTER(ADXDiffTask, asyncListDiffer_, JavaLangRefWeakReference *)
 J2OBJC_FIELD_SETTER(ADXDiffTask, onAsyncUpdateListener_, JavaLangRefWeakReference *)
 J2OBJC_FIELD_SETTER(ADXDiffTask, backgroundException_, JavaLangException *)
 
-__attribute__((unused)) static jboolean ADXDiffTask_shouldDispatchResultWithADXDiffUtil_DiffResult_withADXAsyncDiffUtil_(ADXDiffTask *self, ADXDiffUtil_DiffResult *diffResult, ADXAsyncDiffUtil *async);
+__attribute__((unused)) static bool ADXDiffTask_shouldDispatchResultWithADXDiffUtil_DiffResult_withADXAsyncDiffUtil_(ADXDiffTask *self, ADXDiffUtil_DiffResult *diffResult, ADXAsyncDiffUtil *async);
 
 @implementation ADXDiffTask
 
 - (instancetype)initPackagePrivateWithADXAsyncDiffUtil:(ADXAsyncDiffUtil *)asyncDiffUtil
                               withADXDiffUtil_Callback:(ADXDiffUtil_Callback *)callback
-                                               withInt:(jint)runGeneration
-                                           withBoolean:(jboolean)detectMoves
+                                               withInt:(int32_t)runGeneration
+                                           withBoolean:(bool)detectMoves
                           withADXOnAsyncUpdateListener:(id<ADXOnAsyncUpdateListener>)onAsyncUpdateListener {
   ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(self, asyncDiffUtil, callback, runGeneration, detectMoves, onAsyncUpdateListener);
   return self;
@@ -76,8 +86,8 @@ __attribute__((unused)) static jboolean ADXDiffTask_shouldDispatchResultWithADXD
   }
 }
 
-- (jboolean)shouldDispatchResultWithADXDiffUtil_DiffResult:(ADXDiffUtil_DiffResult *)diffResult
-                                      withADXAsyncDiffUtil:(ADXAsyncDiffUtil *)async {
+- (bool)shouldDispatchResultWithADXDiffUtil_DiffResult:(ADXDiffUtil_DiffResult *)diffResult
+                                  withADXAsyncDiffUtil:(ADXAsyncDiffUtil *)async {
   return ADXDiffTask_shouldDispatchResultWithADXDiffUtil_DiffResult_withADXAsyncDiffUtil_(self, diffResult, async);
 }
 
@@ -119,7 +129,7 @@ __attribute__((unused)) static jboolean ADXDiffTask_shouldDispatchResultWithADXD
 
 @end
 
-void ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXDiffTask *self, ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, jint runGeneration, jboolean detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener) {
+void ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXDiffTask *self, ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, int32_t runGeneration, bool detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener) {
   ADAsyncTask_init(self);
   JreStrongAssign(&self->backgroundException_, nil);
   JreStrongAssign(&self->diffCallback_, callback);
@@ -131,15 +141,15 @@ void ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback
   }
 }
 
-ADXDiffTask *new_ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, jint runGeneration, jboolean detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener) {
+ADXDiffTask *new_ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, int32_t runGeneration, bool detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener) {
   J2OBJC_NEW_IMPL(ADXDiffTask, initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_, asyncDiffUtil, callback, runGeneration, detectMoves, onAsyncUpdateListener)
 }
 
-ADXDiffTask *create_ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, jint runGeneration, jboolean detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener) {
+ADXDiffTask *create_ADXDiffTask_initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_(ADXAsyncDiffUtil *asyncDiffUtil, ADXDiffUtil_Callback *callback, int32_t runGeneration, bool detectMoves, id<ADXOnAsyncUpdateListener> onAsyncUpdateListener) {
   J2OBJC_CREATE_IMPL(ADXDiffTask, initPackagePrivateWithADXAsyncDiffUtil_withADXDiffUtil_Callback_withInt_withBoolean_withADXOnAsyncUpdateListener_, asyncDiffUtil, callback, runGeneration, detectMoves, onAsyncUpdateListener)
 }
 
-jboolean ADXDiffTask_shouldDispatchResultWithADXDiffUtil_DiffResult_withADXAsyncDiffUtil_(ADXDiffTask *self, ADXDiffUtil_DiffResult *diffResult, ADXAsyncDiffUtil *async) {
+bool ADXDiffTask_shouldDispatchResultWithADXDiffUtil_DiffResult_withADXAsyncDiffUtil_(ADXDiffTask *self, ADXDiffUtil_DiffResult *diffResult, ADXAsyncDiffUtil *async) {
   return diffResult != nil && async != nil && self->runGeneration_ == [async getMaxScheduledGeneration];
 }
 

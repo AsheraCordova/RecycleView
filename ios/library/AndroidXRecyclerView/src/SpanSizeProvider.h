@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\SpanSizeProvider.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_SpanSizeProvider")
@@ -16,10 +17,12 @@
 #if !defined (ADXSpanSizeProvider_) && (INCLUDE_ALL_SpanSizeProvider || defined(INCLUDE_ADXSpanSizeProvider))
 #define ADXSpanSizeProvider_
 
+@class JavaLangInteger;
+
 @protocol ADXSpanSizeProvider < JavaObject >
 
-- (jint)getSpanSizeWithInt:(jint)spanCount
-                   withInt:(jint)position;
+- (int32_t)getSpanSizeWithInt:(int32_t)spanCount
+                      withInt:(int32_t)position;
 
 @end
 
@@ -28,6 +31,7 @@ J2OBJC_EMPTY_STATIC_INIT(ADXSpanSizeProvider)
 J2OBJC_TYPE_LITERAL_HEADER(ADXSpanSizeProvider)
 
 #define ComXwrayGroupieSpanSizeProvider ADXSpanSizeProvider
+
 
 #endif
 

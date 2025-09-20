@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\RecyclerView.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "AdapterHelper.h"
 #include "ChildHelper.h"
 #include "Context.h"
@@ -26,11 +31,15 @@
 #include "ViewGroup.h"
 #include "ViewInfoStore.h"
 #include "ViewParent.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Character.h"
 #include "java/lang/Enum.h"
+#include "java/lang/Float.h"
 #include "java/lang/IllegalArgumentException.h"
 #include "java/lang/IllegalStateException.h"
 #include "java/lang/IndexOutOfBoundsException.h"
 #include "java/lang/Integer.h"
+#include "java/lang/Long.h"
 #include "java/lang/Math.h"
 #include "java/lang/Runnable.h"
 #include "java/lang/StringBuilder.h"
@@ -40,30 +49,34 @@
 #include "java/util/Collections.h"
 #include "java/util/List.h"
 
+
 @class ADXRecyclerView_RecyclerViewDataObserver;
-@protocol JavaLangRunnable;
-@protocol JavaUtilList;
+@class NSString;
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXRecyclerView () {
  @public
   ADXRecyclerView_RecyclerViewDataObserver *mObserver_;
-  jint mInterceptRequestLayoutDepth_;
-  jboolean mIgnoreMotionEventTillDown_;
-  jint mEatenAccessibilityChangeFlags_;
+  int32_t mInterceptRequestLayoutDepth_;
+  bool mIgnoreMotionEventTillDown_;
+  int32_t mEatenAccessibilityChangeFlags_;
   id<JavaUtilList> mOnChildAttachStateListeners_;
-  jint mLayoutOrScrollCounter_;
-  jint mDispatchScrollCounter_;
-  jint mScrollState_;
-  jint mScrollPointerId_;
-  jint mInitialTouchX_;
-  jint mInitialTouchY_;
-  jint mLastTouchX_;
-  jint mLastTouchY_;
-  jint mTouchSlop_RecyclerView_;
-  jint mMinFlingVelocity_;
-  jint mMaxFlingVelocity_;
-  jboolean mPreserveFocusAfterLayout_;
+  int32_t mLayoutOrScrollCounter_;
+  int32_t mDispatchScrollCounter_;
+  int32_t mScrollState_;
+  int32_t mScrollPointerId_;
+  int32_t mInitialTouchX_;
+  int32_t mInitialTouchY_;
+  int32_t mLastTouchX_;
+  int32_t mLastTouchY_;
+  int32_t mTouchSlop_RecyclerView_;
+  int32_t mMinFlingVelocity_;
+  int32_t mMaxFlingVelocity_;
+  bool mPreserveFocusAfterLayout_;
   ADXRecyclerView_OnScrollListener *mScrollListener_;
   id<JavaUtilList> mScrollListeners_;
   IOSIntArray *mMinMaxLayoutPositions_;
@@ -71,21 +84,21 @@
   IOSIntArray *mScrollOffset_;
   IOSIntArray *mNestedOffsets_;
   id<JavaLangRunnable> mItemAnimatorRunner_;
-  jboolean mLastAutoMeasureSkippedDueToExact_;
-  jint mLastAutoMeasureNonExactMeasuredWidth_;
-  jint mLastAutoMeasureNonExactMeasuredHeight_;
+  bool mLastAutoMeasureSkippedDueToExact_;
+  int32_t mLastAutoMeasureNonExactMeasuredWidth_;
+  int32_t mLastAutoMeasureNonExactMeasuredHeight_;
   id<ADXViewInfoStore_ProcessCallback> mViewInfoProcessCallback_;
 }
 
 - (void)initChildrenHelper OBJC_METHOD_FAMILY_NONE;
 
 - (void)setAdapterInternalWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)adapter
-                                          withBoolean:(jboolean)compatibleWithPrevious
-                                          withBoolean:(jboolean)removeAndRecycleViews;
+                                          withBoolean:(bool)compatibleWithPrevious
+                                          withBoolean:(bool)removeAndRecycleViews;
 
 - (void)addAnimatingViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
 
-- (jboolean)hasUpdatedView;
+- (bool)hasUpdatedView;
 
 - (void)processAdapterUpdatesAndSetAnimationFlags;
 
@@ -95,27 +108,27 @@
 
 - (void)dispatchLayoutStep3;
 
-- (void)handleMissingPreInfoForChangeErrorWithLong:(jlong)key
+- (void)handleMissingPreInfoForChangeErrorWithLong:(int64_t)key
                     withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
                     withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)oldChangeViewHolder;
 
 - (void)findMinMaxChildLayoutPositionsWithIntArray:(IOSIntArray *)into;
 
-- (jboolean)didChildRangeChangeWithInt:(jint)minPositionPreLayout
-                               withInt:(jint)maxPositionPreLayout;
+- (bool)didChildRangeChangeWithInt:(int32_t)minPositionPreLayout
+                           withInt:(int32_t)maxPositionPreLayout;
 
 - (void)animateChangeWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)oldHolder
                      withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)newHolder
     withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preInfo
     withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postInfo
-                                        withBoolean:(jboolean)oldHolderDisappearing
-                                        withBoolean:(jboolean)newHolderDisappearing;
+                                        withBoolean:(bool)oldHolderDisappearing
+                                        withBoolean:(bool)newHolderDisappearing;
 
 - (ADXNestedScrollingChildHelper *)getScrollingChildHelper;
 
 - (void)dispatchContentChangedIfNecessary;
 
-- (jboolean)predictiveItemAnimationsEnabled;
+- (bool)predictiveItemAnimationsEnabled;
 
 - (void)saveFocusInfo;
 
@@ -123,18 +136,18 @@
 
 - (void)resetFocusInfo;
 
-- (void)onScrollChangedWithInt:(jint)scrollX
-                       withInt:(jint)scrollY
-                       withInt:(jint)i
-                       withInt:(jint)j;
+- (void)onScrollChangedWithInt:(int32_t)scrollX
+                       withInt:(int32_t)scrollY
+                       withInt:(int32_t)i
+                       withInt:(int32_t)j;
 
-- (void)onScrolledWithInt:(jint)hresult
-                  withInt:(jint)vresult;
+- (void)onScrolledWithInt:(int32_t)hresult
+                  withInt:(int32_t)vresult;
 
-- (void)pullGlowsWithFloat:(jfloat)x
-                 withFloat:(jfloat)overscrollX
-                 withFloat:(jfloat)y
-                 withFloat:(jfloat)overscrollY;
+- (void)pullGlowsWithFloat:(float)x
+                 withFloat:(float)overscrollX
+                 withFloat:(float)y
+                 withFloat:(float)overscrollY;
 
 @end
 
@@ -149,13 +162,13 @@ J2OBJC_FIELD_SETTER(ADXRecyclerView, mNestedOffsets_, IOSIntArray *)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mItemAnimatorRunner_, id<JavaLangRunnable>)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mViewInfoProcessCallback_, id<ADXViewInfoStore_ProcessCallback>)
 
-inline jboolean ADXRecyclerView_get_FORCE_ABS_FOCUS_SEARCH_DIRECTION(void);
+inline bool ADXRecyclerView_get_FORCE_ABS_FOCUS_SEARCH_DIRECTION(void);
 #define ADXRecyclerView_FORCE_ABS_FOCUS_SEARCH_DIRECTION false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, FORCE_ABS_FOCUS_SEARCH_DIRECTION, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, FORCE_ABS_FOCUS_SEARCH_DIRECTION, bool)
 
-inline jboolean ADXRecyclerView_get_IGNORE_DETACHED_FOCUSED_CHILD(void);
+inline bool ADXRecyclerView_get_IGNORE_DETACHED_FOCUSED_CHILD(void);
 #define ADXRecyclerView_IGNORE_DETACHED_FOCUSED_CHILD false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, IGNORE_DETACHED_FOCUSED_CHILD, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, IGNORE_DETACHED_FOCUSED_CHILD, bool)
 
 inline NSString *ADXRecyclerView_get_TRACE_ON_LAYOUT_TAG(void);
 static NSString *ADXRecyclerView_TRACE_ON_LAYOUT_TAG = @"RV OnLayout";
@@ -169,19 +182,19 @@ inline NSString *ADXRecyclerView_get_TRACE_HANDLE_ADAPTER_UPDATES_TAG(void);
 static NSString *ADXRecyclerView_TRACE_HANDLE_ADAPTER_UPDATES_TAG = @"RV PartialInvalidate";
 J2OBJC_STATIC_FIELD_OBJ_FINAL(ADXRecyclerView, TRACE_HANDLE_ADAPTER_UPDATES_TAG, NSString *)
 
-inline jint ADXRecyclerView_get_INVALID_POINTER(void);
+inline int32_t ADXRecyclerView_get_INVALID_POINTER(void);
 #define ADXRecyclerView_INVALID_POINTER -1
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, INVALID_POINTER, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView, INVALID_POINTER, int32_t)
 
 __attribute__((unused)) static void ADXRecyclerView_initChildrenHelper(ADXRecyclerView *self);
 
-__attribute__((unused)) static void ADXRecyclerView_setAdapterInternalWithADXRecyclerView_Adapter_withBoolean_withBoolean_(ADXRecyclerView *self, ADXRecyclerView_Adapter *adapter, jboolean compatibleWithPrevious, jboolean removeAndRecycleViews);
+__attribute__((unused)) static void ADXRecyclerView_setAdapterInternalWithADXRecyclerView_Adapter_withBoolean_withBoolean_(ADXRecyclerView *self, ADXRecyclerView_Adapter *adapter, bool compatibleWithPrevious, bool removeAndRecycleViews);
 
 __attribute__((unused)) static void ADXRecyclerView_addAnimatingViewWithADXRecyclerView_ViewHolder_(ADXRecyclerView *self, ADXRecyclerView_ViewHolder *viewHolder);
 
-__attribute__((unused)) static jboolean ADXRecyclerView_hasUpdatedView(ADXRecyclerView *self);
+__attribute__((unused)) static bool ADXRecyclerView_hasUpdatedView(ADXRecyclerView *self);
 
-__attribute__((unused)) static void ADXRecyclerView_suppressLayoutWithBoolean_(ADXRecyclerView *self, jboolean suppress);
+__attribute__((unused)) static void ADXRecyclerView_suppressLayoutWithBoolean_(ADXRecyclerView *self, bool suppress);
 
 __attribute__((unused)) static void ADXRecyclerView_processAdapterUpdatesAndSetAnimationFlags(ADXRecyclerView *self);
 
@@ -191,21 +204,21 @@ __attribute__((unused)) static void ADXRecyclerView_dispatchLayoutStep2(ADXRecyc
 
 __attribute__((unused)) static void ADXRecyclerView_dispatchLayoutStep3(ADXRecyclerView *self);
 
-__attribute__((unused)) static void ADXRecyclerView_handleMissingPreInfoForChangeErrorWithLong_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_(ADXRecyclerView *self, jlong key, ADXRecyclerView_ViewHolder *holder, ADXRecyclerView_ViewHolder *oldChangeViewHolder);
+__attribute__((unused)) static void ADXRecyclerView_handleMissingPreInfoForChangeErrorWithLong_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_(ADXRecyclerView *self, int64_t key, ADXRecyclerView_ViewHolder *holder, ADXRecyclerView_ViewHolder *oldChangeViewHolder);
 
 __attribute__((unused)) static void ADXRecyclerView_findMinMaxChildLayoutPositionsWithIntArray_(ADXRecyclerView *self, IOSIntArray *into);
 
-__attribute__((unused)) static jboolean ADXRecyclerView_didChildRangeChangeWithInt_withInt_(ADXRecyclerView *self, jint minPositionPreLayout, jint maxPositionPreLayout);
+__attribute__((unused)) static bool ADXRecyclerView_didChildRangeChangeWithInt_withInt_(ADXRecyclerView *self, int32_t minPositionPreLayout, int32_t maxPositionPreLayout);
 
-__attribute__((unused)) static void ADXRecyclerView_animateChangeWithADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withADXRecyclerView_ItemAnimator_ItemHolderInfo_withADXRecyclerView_ItemAnimator_ItemHolderInfo_withBoolean_withBoolean_(ADXRecyclerView *self, ADXRecyclerView_ViewHolder *oldHolder, ADXRecyclerView_ViewHolder *newHolder, ADXRecyclerView_ItemAnimator_ItemHolderInfo *preInfo, ADXRecyclerView_ItemAnimator_ItemHolderInfo *postInfo, jboolean oldHolderDisappearing, jboolean newHolderDisappearing);
+__attribute__((unused)) static void ADXRecyclerView_animateChangeWithADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withADXRecyclerView_ItemAnimator_ItemHolderInfo_withADXRecyclerView_ItemAnimator_ItemHolderInfo_withBoolean_withBoolean_(ADXRecyclerView *self, ADXRecyclerView_ViewHolder *oldHolder, ADXRecyclerView_ViewHolder *newHolder, ADXRecyclerView_ItemAnimator_ItemHolderInfo *preInfo, ADXRecyclerView_ItemAnimator_ItemHolderInfo *postInfo, bool oldHolderDisappearing, bool newHolderDisappearing);
 
-__attribute__((unused)) static void ADXRecyclerView_dispatchNestedScrollWithInt_withInt_withInt_withInt_withIntArray_withInt_withIntArray_(ADXRecyclerView *self, jint dxConsumed, jint dyConsumed, jint dxUnconsumed, jint dyUnconsumed, IOSIntArray *offsetInWindow, jint type, IOSIntArray *consumed);
+__attribute__((unused)) static void ADXRecyclerView_dispatchNestedScrollWithInt_withInt_withInt_withInt_withIntArray_withInt_withIntArray_(ADXRecyclerView *self, int32_t dxConsumed, int32_t dyConsumed, int32_t dxUnconsumed, int32_t dyUnconsumed, IOSIntArray *offsetInWindow, int32_t type, IOSIntArray *consumed);
 
 __attribute__((unused)) static ADXNestedScrollingChildHelper *ADXRecyclerView_getScrollingChildHelper(ADXRecyclerView *self);
 
 __attribute__((unused)) static void ADXRecyclerView_dispatchContentChangedIfNecessary(ADXRecyclerView *self);
 
-__attribute__((unused)) static jboolean ADXRecyclerView_predictiveItemAnimationsEnabled(ADXRecyclerView *self);
+__attribute__((unused)) static bool ADXRecyclerView_predictiveItemAnimationsEnabled(ADXRecyclerView *self);
 
 __attribute__((unused)) static void ADXRecyclerView_saveFocusInfo(ADXRecyclerView *self);
 
@@ -213,13 +226,13 @@ __attribute__((unused)) static void ADXRecyclerView_recoverFocusFromState(ADXRec
 
 __attribute__((unused)) static void ADXRecyclerView_resetFocusInfo(ADXRecyclerView *self);
 
-__attribute__((unused)) static void ADXRecyclerView_onScrollChangedWithInt_withInt_withInt_withInt_(ADXRecyclerView *self, jint scrollX, jint scrollY, jint i, jint j);
+__attribute__((unused)) static void ADXRecyclerView_onScrollChangedWithInt_withInt_withInt_withInt_(ADXRecyclerView *self, int32_t scrollX, int32_t scrollY, int32_t i, int32_t j);
 
-__attribute__((unused)) static void ADXRecyclerView_onScrolledWithInt_withInt_(ADXRecyclerView *self, jint hresult, jint vresult);
+__attribute__((unused)) static void ADXRecyclerView_onScrolledWithInt_withInt_(ADXRecyclerView *self, int32_t hresult, int32_t vresult);
 
 __attribute__((unused)) static void ADXRecyclerView_fillRemainingScrollValuesWithADXRecyclerView_State_(ADXRecyclerView *self, ADXRecyclerView_State *state);
 
-__attribute__((unused)) static void ADXRecyclerView_pullGlowsWithFloat_withFloat_withFloat_withFloat_(ADXRecyclerView *self, jfloat x, jfloat overscrollX, jfloat y, jfloat overscrollY);
+__attribute__((unused)) static void ADXRecyclerView_pullGlowsWithFloat_withFloat_withFloat_withFloat_(ADXRecyclerView *self, float x, float overscrollX, float y, float overscrollY);
 
 @interface ADXRecyclerView_1 : NSObject < JavaLangRunnable > {
  @public
@@ -239,6 +252,7 @@ __attribute__((unused)) static void ADXRecyclerView_1_initWithADXRecyclerView_(A
 __attribute__((unused)) static ADXRecyclerView_1 *new_ADXRecyclerView_1_initWithADXRecyclerView_(ADXRecyclerView *outer$) NS_RETURNS_RETAINED;
 
 __attribute__((unused)) static ADXRecyclerView_1 *create_ADXRecyclerView_1_initWithADXRecyclerView_(ADXRecyclerView *outer$);
+
 
 @interface ADXRecyclerView_2 : NSObject < ADXViewInfoStore_ProcessCallback > {
  @public
@@ -271,6 +285,7 @@ __attribute__((unused)) static ADXRecyclerView_2 *new_ADXRecyclerView_2_initWith
 
 __attribute__((unused)) static ADXRecyclerView_2 *create_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView *outer$);
 
+
 @interface ADXRecyclerView_3 : NSObject < ADXChildHelper_Callback > {
  @public
   ADXRecyclerView *this$0_;
@@ -278,26 +293,26 @@ __attribute__((unused)) static ADXRecyclerView_2 *create_ADXRecyclerView_2_initW
 
 - (instancetype)initWithADXRecyclerView:(ADXRecyclerView *)outer$;
 
-- (jint)getChildCount;
+- (int32_t)getChildCount;
 
 - (void)addViewWithADView:(ADView *)child
-                  withInt:(jint)index;
+                  withInt:(int32_t)index;
 
-- (jint)indexOfChildWithADView:(ADView *)view;
+- (int32_t)indexOfChildWithADView:(ADView *)view;
 
-- (void)removeViewAtWithInt:(jint)index;
+- (void)removeViewAtWithInt:(int32_t)index;
 
-- (ADView *)getChildAtWithInt:(jint)offset;
+- (ADView *)getChildAtWithInt:(int32_t)offset;
 
 - (void)removeAllViews;
 
 - (ADXRecyclerView_ViewHolder *)getChildViewHolderWithADView:(ADView *)view;
 
 - (void)attachViewToParentWithADView:(ADView *)child
-                             withInt:(jint)index
+                             withInt:(int32_t)index
         withADViewGroup_LayoutParams:(ADViewGroup_LayoutParams *)layoutParams;
 
-- (void)detachViewFromParentWithInt:(jint)offset;
+- (void)detachViewFromParentWithInt:(int32_t)offset;
 
 - (void)onEnteredHiddenStateWithADView:(ADView *)child;
 
@@ -313,6 +328,7 @@ __attribute__((unused)) static ADXRecyclerView_3 *new_ADXRecyclerView_3_initWith
 
 __attribute__((unused)) static ADXRecyclerView_3 *create_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView *outer$);
 
+
 @interface ADXRecyclerView_4 : NSObject < ADXAdapterHelper_Callback > {
  @public
   ADXRecyclerView *this$0_;
@@ -320,16 +336,16 @@ __attribute__((unused)) static ADXRecyclerView_3 *create_ADXRecyclerView_3_initW
 
 - (instancetype)initWithADXRecyclerView:(ADXRecyclerView *)outer$;
 
-- (ADXRecyclerView_ViewHolder *)findViewHolderWithInt:(jint)position;
+- (ADXRecyclerView_ViewHolder *)findViewHolderWithInt:(int32_t)position;
 
-- (void)offsetPositionsForRemovingInvisibleWithInt:(jint)start
-                                           withInt:(jint)count;
+- (void)offsetPositionsForRemovingInvisibleWithInt:(int32_t)start
+                                           withInt:(int32_t)count;
 
-- (void)offsetPositionsForRemovingLaidOutOrNewViewWithInt:(jint)positionStart
-                                                  withInt:(jint)itemCount;
+- (void)offsetPositionsForRemovingLaidOutOrNewViewWithInt:(int32_t)positionStart
+                                                  withInt:(int32_t)itemCount;
 
-- (void)markViewHoldersUpdatedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount
+- (void)markViewHoldersUpdatedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount
                                withId:(id)payload;
 
 - (void)onDispatchFirstPassWithADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)op;
@@ -338,11 +354,11 @@ __attribute__((unused)) static ADXRecyclerView_3 *create_ADXRecyclerView_3_initW
 
 - (void)onDispatchSecondPassWithADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)op;
 
-- (void)offsetPositionsForAddWithInt:(jint)positionStart
-                             withInt:(jint)itemCount;
+- (void)offsetPositionsForAddWithInt:(int32_t)positionStart
+                             withInt:(int32_t)itemCount;
 
-- (void)offsetPositionsForMoveWithInt:(jint)from
-                              withInt:(jint)to;
+- (void)offsetPositionsForMoveWithInt:(int32_t)from
+                              withInt:(int32_t)to;
 
 @end
 
@@ -354,6 +370,7 @@ __attribute__((unused)) static ADXRecyclerView_4 *new_ADXRecyclerView_4_initWith
 
 __attribute__((unused)) static ADXRecyclerView_4 *create_ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView *outer$);
 
+
 @interface ADXRecyclerView_RecyclerViewDataObserver : ADXRecyclerView_AdapterDataObserver {
  @public
   ADXRecyclerView *this$0_;
@@ -363,19 +380,19 @@ __attribute__((unused)) static ADXRecyclerView_4 *create_ADXRecyclerView_4_initW
 
 - (void)onChanged;
 
-- (void)onItemRangeChangedWithInt:(jint)positionStart
-                          withInt:(jint)itemCount
+- (void)onItemRangeChangedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount
                            withId:(id)payload;
 
-- (void)onItemRangeInsertedWithInt:(jint)positionStart
-                           withInt:(jint)itemCount;
+- (void)onItemRangeInsertedWithInt:(int32_t)positionStart
+                           withInt:(int32_t)itemCount;
 
-- (void)onItemRangeRemovedWithInt:(jint)positionStart
-                          withInt:(jint)itemCount;
+- (void)onItemRangeRemovedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount;
 
-- (void)onItemRangeMovedWithInt:(jint)fromPosition
-                        withInt:(jint)toPosition
-                        withInt:(jint)itemCount;
+- (void)onItemRangeMovedWithInt:(int32_t)fromPosition
+                        withInt:(int32_t)toPosition
+                        withInt:(int32_t)itemCount;
 
 - (void)triggerUpdateProcessor;
 
@@ -393,109 +410,110 @@ __attribute__((unused)) static ADXRecyclerView_RecyclerViewDataObserver *create_
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_RecyclerViewDataObserver)
 
+
 @interface ADXRecyclerView_RecycledViewPool () {
  @public
-  jint mAttachCount_;
+  int32_t mAttachCount_;
 }
 
-- (ADXRecyclerView_RecycledViewPool_ScrapData *)getScrapDataForTypeWithInt:(jint)viewType;
+- (ADXRecyclerView_RecycledViewPool_ScrapData *)getScrapDataForTypeWithInt:(int32_t)viewType;
 
 @end
 
-inline jint ADXRecyclerView_RecycledViewPool_get_DEFAULT_MAX_SCRAP(void);
+inline int32_t ADXRecyclerView_RecycledViewPool_get_DEFAULT_MAX_SCRAP(void);
 #define ADXRecyclerView_RecycledViewPool_DEFAULT_MAX_SCRAP 5
-J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_RecycledViewPool, DEFAULT_MAX_SCRAP, jint)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXRecyclerView_RecycledViewPool, DEFAULT_MAX_SCRAP, int32_t)
 
-__attribute__((unused)) static ADXRecyclerView_RecycledViewPool_ScrapData *ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(ADXRecyclerView_RecycledViewPool *self, jint viewType);
+__attribute__((unused)) static ADXRecyclerView_RecycledViewPool_ScrapData *ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(ADXRecyclerView_RecycledViewPool *self, int32_t viewType);
 
 @interface ADXRecyclerView_Recycler () {
  @public
   ADXRecyclerView *this$0_;
   id<JavaUtilList> mUnmodifiableAttachedScrap_;
-  jint mRequestedCacheMax_;
+  int32_t mRequestedCacheMax_;
   ADXRecyclerView_ViewCacheExtension *mViewCacheExtension_;
 }
 
-- (jboolean)tryBindViewHolderByDeadlineWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                                              withInt:(jint)offsetPosition
-                                                              withInt:(jint)position
-                                                             withLong:(jlong)deadlineNs;
+- (bool)tryBindViewHolderByDeadlineWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
+                                                          withInt:(int32_t)offsetPosition
+                                                          withInt:(int32_t)position
+                                                         withLong:(int64_t)deadlineNs;
 
 - (void)invalidateDisplayListIntWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder;
 
 - (void)invalidateDisplayListIntWithADViewGroup:(ADViewGroup *)viewGroup
-                                    withBoolean:(jboolean)invalidateThis;
+                                    withBoolean:(bool)invalidateThis;
 
 @end
 
 J2OBJC_FIELD_SETTER(ADXRecyclerView_Recycler, mUnmodifiableAttachedScrap_, id<JavaUtilList>)
 J2OBJC_FIELD_SETTER(ADXRecyclerView_Recycler, mViewCacheExtension_, ADXRecyclerView_ViewCacheExtension *)
 
-__attribute__((unused)) static jboolean ADXRecyclerView_Recycler_tryBindViewHolderByDeadlineWithADXRecyclerView_ViewHolder_withInt_withInt_withLong_(ADXRecyclerView_Recycler *self, ADXRecyclerView_ViewHolder *holder, jint offsetPosition, jint position, jlong deadlineNs);
+__attribute__((unused)) static bool ADXRecyclerView_Recycler_tryBindViewHolderByDeadlineWithADXRecyclerView_ViewHolder_withInt_withInt_withLong_(ADXRecyclerView_Recycler *self, ADXRecyclerView_ViewHolder *holder, int32_t offsetPosition, int32_t position, int64_t deadlineNs);
 
 __attribute__((unused)) static void ADXRecyclerView_Recycler_invalidateDisplayListIntWithADXRecyclerView_ViewHolder_(ADXRecyclerView_Recycler *self, ADXRecyclerView_ViewHolder *holder);
 
-__attribute__((unused)) static void ADXRecyclerView_Recycler_invalidateDisplayListIntWithADViewGroup_withBoolean_(ADXRecyclerView_Recycler *self, ADViewGroup *viewGroup, jboolean invalidateThis);
+__attribute__((unused)) static void ADXRecyclerView_Recycler_invalidateDisplayListIntWithADViewGroup_withBoolean_(ADXRecyclerView_Recycler *self, ADViewGroup *viewGroup, bool invalidateThis);
 
 @interface ADXRecyclerView_Adapter () {
  @public
   ADXRecyclerView_AdapterDataObservable *mObservable_;
-  jboolean mHasStableIds_;
+  bool mHasStableIds_;
 }
 
 @end
 
 J2OBJC_FIELD_SETTER(ADXRecyclerView_Adapter, mObservable_, ADXRecyclerView_AdapterDataObservable *)
 
-__attribute__((unused)) static ADXRecyclerView_ViewHolder *ADXRecyclerView_Adapter_createViewHolderWithADViewGroup_withInt_(ADXRecyclerView_Adapter *self, ADViewGroup *parent, jint viewType);
+__attribute__((unused)) static ADXRecyclerView_ViewHolder *ADXRecyclerView_Adapter_createViewHolderWithADViewGroup_withInt_(ADXRecyclerView_Adapter *self, ADViewGroup *parent, int32_t viewType);
 
-__attribute__((unused)) static void ADXRecyclerView_Adapter_bindViewHolderWithADXRecyclerView_ViewHolder_withInt_(ADXRecyclerView_Adapter *self, ADXRecyclerView_ViewHolder *holder, jint position);
+__attribute__((unused)) static void ADXRecyclerView_Adapter_bindViewHolderWithADXRecyclerView_ViewHolder_withInt_(ADXRecyclerView_Adapter *self, ADXRecyclerView_ViewHolder *holder, int32_t position);
 
-__attribute__((unused)) static jboolean ADXRecyclerView_Adapter_hasStableIds(ADXRecyclerView_Adapter *self);
+__attribute__((unused)) static bool ADXRecyclerView_Adapter_hasStableIds(ADXRecyclerView_Adapter *self);
 
-__attribute__((unused)) static jboolean ADXRecyclerView_Adapter_hasObservers(ADXRecyclerView_Adapter *self);
+__attribute__((unused)) static bool ADXRecyclerView_Adapter_hasObservers(ADXRecyclerView_Adapter *self);
 
-__attribute__((unused)) static void ADXRecyclerView_Adapter_StateRestorationPolicy_initWithNSString_withInt_(ADXRecyclerView_Adapter_StateRestorationPolicy *self, NSString *__name, jint __ordinal);
+__attribute__((unused)) static void ADXRecyclerView_Adapter_StateRestorationPolicy_initWithNSString_withInt_(ADXRecyclerView_Adapter_StateRestorationPolicy *self, NSString *__name, int32_t __ordinal);
 
 @interface ADXRecyclerView_LayoutManager () {
  @public
   id<ADXViewBoundsCheck_Callback> mHorizontalBoundCheckCallback_;
   id<ADXViewBoundsCheck_Callback> mVerticalBoundCheckCallback_;
-  jboolean mMeasurementCacheEnabled_;
-  jboolean mItemPrefetchEnabled_;
-  jint mWidthMode_;
-  jint mHeightMode_;
-  jint mWidth_;
-  jint mHeight_;
+  bool mMeasurementCacheEnabled_;
+  bool mItemPrefetchEnabled_;
+  int32_t mWidthMode_;
+  int32_t mHeightMode_;
+  int32_t mWidth_;
+  int32_t mHeight_;
 }
 
 - (void)addViewIntWithADView:(ADView *)child
-                     withInt:(jint)index
-                 withBoolean:(jboolean)disappearing;
+                     withInt:(int32_t)index
+                 withBoolean:(bool)disappearing;
 
-- (void)detachViewInternalWithInt:(jint)index
+- (void)detachViewInternalWithInt:(int32_t)index
                        withADView:(ADView *)view;
 
 - (void)scrapOrRecycleViewWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                               withInt:(jint)index
+                                               withInt:(int32_t)index
                                             withADView:(ADView *)view;
 
-+ (jboolean)isMeasurementUpToDateWithInt:(jint)childSize
-                                 withInt:(jint)spec
-                                 withInt:(jint)dimension;
++ (bool)isMeasurementUpToDateWithInt:(int32_t)childSize
+                             withInt:(int32_t)spec
+                             withInt:(int32_t)dimension;
 
 @end
 
 J2OBJC_FIELD_SETTER(ADXRecyclerView_LayoutManager, mHorizontalBoundCheckCallback_, id<ADXViewBoundsCheck_Callback>)
 J2OBJC_FIELD_SETTER(ADXRecyclerView_LayoutManager, mVerticalBoundCheckCallback_, id<ADXViewBoundsCheck_Callback>)
 
-__attribute__((unused)) static void ADXRecyclerView_LayoutManager_addViewIntWithADView_withInt_withBoolean_(ADXRecyclerView_LayoutManager *self, ADView *child, jint index, jboolean disappearing);
+__attribute__((unused)) static void ADXRecyclerView_LayoutManager_addViewIntWithADView_withInt_withBoolean_(ADXRecyclerView_LayoutManager *self, ADView *child, int32_t index, bool disappearing);
 
-__attribute__((unused)) static void ADXRecyclerView_LayoutManager_detachViewInternalWithInt_withADView_(ADXRecyclerView_LayoutManager *self, jint index, ADView *view);
+__attribute__((unused)) static void ADXRecyclerView_LayoutManager_detachViewInternalWithInt_withADView_(ADXRecyclerView_LayoutManager *self, int32_t index, ADView *view);
 
-__attribute__((unused)) static void ADXRecyclerView_LayoutManager_scrapOrRecycleViewWithADXRecyclerView_Recycler_withInt_withADView_(ADXRecyclerView_LayoutManager *self, ADXRecyclerView_Recycler *recycler, jint index, ADView *view);
+__attribute__((unused)) static void ADXRecyclerView_LayoutManager_scrapOrRecycleViewWithADXRecyclerView_Recycler_withInt_withADView_(ADXRecyclerView_LayoutManager *self, ADXRecyclerView_Recycler *recycler, int32_t index, ADView *view);
 
-__attribute__((unused)) static jboolean ADXRecyclerView_LayoutManager_isMeasurementUpToDateWithInt_withInt_withInt_(jint childSize, jint spec, jint dimension);
+__attribute__((unused)) static bool ADXRecyclerView_LayoutManager_isMeasurementUpToDateWithInt_withInt_withInt_(int32_t childSize, int32_t spec, int32_t dimension);
 
 @interface ADXRecyclerView_LayoutManager_1 : NSObject < ADXViewBoundsCheck_Callback > {
  @public
@@ -504,15 +522,15 @@ __attribute__((unused)) static jboolean ADXRecyclerView_LayoutManager_isMeasurem
 
 - (instancetype)initWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)outer$;
 
-- (ADView *)getChildAtWithInt:(jint)index;
+- (ADView *)getChildAtWithInt:(int32_t)index;
 
-- (jint)getParentStart;
+- (int32_t)getParentStart;
 
-- (jint)getParentEnd;
+- (int32_t)getParentEnd;
 
-- (jint)getChildStartWithADView:(ADView *)view;
+- (int32_t)getChildStartWithADView:(ADView *)view;
 
-- (jint)getChildEndWithADView:(ADView *)view;
+- (int32_t)getChildEndWithADView:(ADView *)view;
 
 @end
 
@@ -524,6 +542,7 @@ __attribute__((unused)) static ADXRecyclerView_LayoutManager_1 *new_ADXRecyclerV
 
 __attribute__((unused)) static ADXRecyclerView_LayoutManager_1 *create_ADXRecyclerView_LayoutManager_1_initWithADXRecyclerView_LayoutManager_(ADXRecyclerView_LayoutManager *outer$);
 
+
 @interface ADXRecyclerView_LayoutManager_2 : NSObject < ADXViewBoundsCheck_Callback > {
  @public
   ADXRecyclerView_LayoutManager *this$0_;
@@ -531,15 +550,15 @@ __attribute__((unused)) static ADXRecyclerView_LayoutManager_1 *create_ADXRecycl
 
 - (instancetype)initWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)outer$;
 
-- (ADView *)getChildAtWithInt:(jint)index;
+- (ADView *)getChildAtWithInt:(int32_t)index;
 
-- (jint)getParentStart;
+- (int32_t)getParentStart;
 
-- (jint)getParentEnd;
+- (int32_t)getParentEnd;
 
-- (jint)getChildStartWithADView:(ADView *)view;
+- (int32_t)getChildStartWithADView:(ADView *)view;
 
-- (jint)getChildEndWithADView:(ADView *)view;
+- (int32_t)getChildEndWithADView:(ADView *)view;
 
 @end
 
@@ -550,6 +569,7 @@ __attribute__((unused)) static void ADXRecyclerView_LayoutManager_2_initWithADXR
 __attribute__((unused)) static ADXRecyclerView_LayoutManager_2 *new_ADXRecyclerView_LayoutManager_2_initWithADXRecyclerView_LayoutManager_(ADXRecyclerView_LayoutManager *outer$) NS_RETURNS_RETAINED;
 
 __attribute__((unused)) static ADXRecyclerView_LayoutManager_2 *create_ADXRecyclerView_LayoutManager_2_initWithADXRecyclerView_LayoutManager_(ADXRecyclerView_LayoutManager *outer$);
+
 
 @interface ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry : NSObject
 
@@ -565,8 +585,8 @@ __attribute__((unused)) static ADXRecyclerView_LayoutManager_2 *create_ADXRecycl
 
 @interface ADXRecyclerView_ViewHolder () {
  @public
-  jint mIsRecyclableCount_;
-  jint mWasImportantForAccessibilityBeforeHidden_;
+  int32_t mIsRecyclableCount_;
+  int32_t mWasImportantForAccessibilityBeforeHidden_;
 }
 
 - (void)createPayloadsIfNeeded;
@@ -577,23 +597,23 @@ inline id<JavaUtilList> ADXRecyclerView_ViewHolder_get_FULLUPDATE_PAYLOADS(void)
 static id<JavaUtilList> ADXRecyclerView_ViewHolder_FULLUPDATE_PAYLOADS;
 J2OBJC_STATIC_FIELD_OBJ_FINAL(ADXRecyclerView_ViewHolder, FULLUPDATE_PAYLOADS, id<JavaUtilList>)
 
-__attribute__((unused)) static jint ADXRecyclerView_ViewHolder_getLayoutPosition(ADXRecyclerView_ViewHolder *self);
+__attribute__((unused)) static int32_t ADXRecyclerView_ViewHolder_getLayoutPosition(ADXRecyclerView_ViewHolder *self);
 
-__attribute__((unused)) static jint ADXRecyclerView_ViewHolder_getBindingAdapterPosition(ADXRecyclerView_ViewHolder *self);
+__attribute__((unused)) static int32_t ADXRecyclerView_ViewHolder_getBindingAdapterPosition(ADXRecyclerView_ViewHolder *self);
 
-__attribute__((unused)) static jint ADXRecyclerView_ViewHolder_getAbsoluteAdapterPosition(ADXRecyclerView_ViewHolder *self);
+__attribute__((unused)) static int32_t ADXRecyclerView_ViewHolder_getAbsoluteAdapterPosition(ADXRecyclerView_ViewHolder *self);
 
-__attribute__((unused)) static jint ADXRecyclerView_ViewHolder_getOldPosition(ADXRecyclerView_ViewHolder *self);
+__attribute__((unused)) static int32_t ADXRecyclerView_ViewHolder_getOldPosition(ADXRecyclerView_ViewHolder *self);
 
-__attribute__((unused)) static jlong ADXRecyclerView_ViewHolder_getItemId(ADXRecyclerView_ViewHolder *self);
+__attribute__((unused)) static int64_t ADXRecyclerView_ViewHolder_getItemId(ADXRecyclerView_ViewHolder *self);
 
-__attribute__((unused)) static jint ADXRecyclerView_ViewHolder_getItemViewType(ADXRecyclerView_ViewHolder *self);
+__attribute__((unused)) static int32_t ADXRecyclerView_ViewHolder_getItemViewType(ADXRecyclerView_ViewHolder *self);
 
 __attribute__((unused)) static void ADXRecyclerView_ViewHolder_createPayloadsIfNeeded(ADXRecyclerView_ViewHolder *self);
 
-__attribute__((unused)) static void ADXRecyclerView_ViewHolder_setIsRecyclableWithBoolean_(ADXRecyclerView_ViewHolder *self, jboolean recyclable);
+__attribute__((unused)) static void ADXRecyclerView_ViewHolder_setIsRecyclableWithBoolean_(ADXRecyclerView_ViewHolder *self, bool recyclable);
 
-__attribute__((unused)) static jboolean ADXRecyclerView_ViewHolder_isRecyclable(ADXRecyclerView_ViewHolder *self);
+__attribute__((unused)) static bool ADXRecyclerView_ViewHolder_isRecyclable(ADXRecyclerView_ViewHolder *self);
 
 @interface ADXRecyclerView_State () {
  @public
@@ -606,10 +626,10 @@ J2OBJC_FIELD_SETTER(ADXRecyclerView_State, mData_, ADSparseArray *)
 
 @interface ADXRecyclerView_ItemAnimator () {
  @public
-  jlong mAddDuration_;
-  jlong mRemoveDuration_;
-  jlong mMoveDuration_;
-  jlong mChangeDuration_;
+  int64_t mAddDuration_;
+  int64_t mRemoveDuration_;
+  int64_t mMoveDuration_;
+  int64_t mChangeDuration_;
 }
 
 @end
@@ -654,8 +674,8 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 }
 
 - (void)setAdapterInternalWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)adapter
-                                          withBoolean:(jboolean)compatibleWithPrevious
-                                          withBoolean:(jboolean)removeAndRecycleViews {
+                                          withBoolean:(bool)compatibleWithPrevious
+                                          withBoolean:(bool)removeAndRecycleViews {
   ADXRecyclerView_setAdapterInternalWithADXRecyclerView_Adapter_withBoolean_withBoolean_(self, adapter, compatibleWithPrevious, removeAndRecycleViews);
 }
 
@@ -664,7 +684,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 }
 
 - (void)setLayoutManagerWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)layout {
-  if (layout == mLayout_) {
+  if (JreObjectEqualsEquals(layout, mLayout_)) {
     return;
   }
   [self stopScroll];
@@ -711,12 +731,12 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   return [((ADXRecyclerView_Recycler *) nil_chk(mRecycler_)) getRecycledViewPool];
 }
 
-- (jint)getScrollState {
+- (int32_t)getScrollState {
   return mScrollState_;
 }
 
 - (void)addItemDecorationWithADXRecyclerView_ItemDecoration:(ADXRecyclerView_ItemDecoration *)decor
-                                                    withInt:(jint)index {
+                                                    withInt:(int32_t)index {
   if (mLayout_ != nil) {
     [mLayout_ assertNotInLayoutOrScrollWithNSString:@"Cannot add item decoration during a scroll  or layout"];
   }
@@ -741,7 +761,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   JreStrongAssign(&mScrollListener_, listener);
 }
 
-- (void)scrollToPositionWithInt:(jint)position {
+- (void)scrollToPositionWithInt:(int32_t)position {
   if (mLayoutSuppressed_) {
     return;
   }
@@ -754,8 +774,8 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   [self awakenScrollBars];
 }
 
-- (void)scrollByWithInt:(jint)x
-                withInt:(jint)y {
+- (void)scrollByWithInt:(int32_t)x
+                withInt:(int32_t)y {
   if (mLayout_ == nil) {
     ADLog_eWithNSString_withNSString_(ADXRecyclerView_TAG, @"Cannot scroll without a LayoutManager set. Call setLayoutManager with a non-null argument.");
     return;
@@ -763,22 +783,22 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   if (mLayoutSuppressed_) {
     return;
   }
-  jboolean canScrollHorizontal = [mLayout_ canScrollHorizontally];
-  jboolean canScrollVertical = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollVertically];
+  bool canScrollHorizontal = [mLayout_ canScrollHorizontally];
+  bool canScrollVertical = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollVertically];
   if (canScrollHorizontal || canScrollVertical) {
     [self scrollByInternalWithInt:canScrollHorizontal ? x : 0 withInt:canScrollVertical ? y : 0 withADMotionEvent:nil withInt:ADXRecyclerView_TYPE_TOUCH];
   }
 }
 
-- (void)scrollStepWithInt:(jint)dx
-                  withInt:(jint)dy
+- (void)scrollStepWithInt:(int32_t)dx
+                  withInt:(int32_t)dy
              withIntArray:(IOSIntArray *)consumed {
   [self startInterceptRequestLayout];
   [self onEnterLayoutOrScroll];
   ADXTraceCompat_beginSectionWithNSString_(ADXRecyclerView_TRACE_SCROLL_TAG);
   ADXRecyclerView_fillRemainingScrollValuesWithADXRecyclerView_State_(self, mState_);
-  jint consumedX = 0;
-  jint consumedY = 0;
+  int32_t consumedX = 0;
+  int32_t consumedY = 0;
   if (dx != 0) {
     consumedX = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) scrollHorizontallyByWithInt:dx withADXRecyclerView_Recycler:mRecycler_ withADXRecyclerView_State:mState_];
   }
@@ -829,18 +849,18 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   }
 }
 
-- (jboolean)hasUpdatedView {
+- (bool)hasUpdatedView {
   return ADXRecyclerView_hasUpdatedView(self);
 }
 
-- (jboolean)scrollByInternalWithInt:(jint)x
-                            withInt:(jint)y
-                  withADMotionEvent:(ADMotionEvent *)ev
-                            withInt:(jint)type {
-  jint unconsumedX = 0;
-  jint unconsumedY = 0;
-  jint consumedX = 0;
-  jint consumedY = 0;
+- (bool)scrollByInternalWithInt:(int32_t)x
+                        withInt:(int32_t)y
+              withADMotionEvent:(ADMotionEvent *)ev
+                        withInt:(int32_t)type {
+  int32_t unconsumedX = 0;
+  int32_t unconsumedY = 0;
+  int32_t consumedX = 0;
+  int32_t consumedY = 0;
   [self consumePendingUpdateOperations];
   if (mAdapter_ != nil) {
     *IOSIntArray_GetRef(nil_chk(mReusableIntPair_), 0) = 0;
@@ -859,7 +879,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   ADXRecyclerView_dispatchNestedScrollWithInt_withInt_withInt_withInt_withIntArray_withInt_withIntArray_(self, consumedX, consumedY, unconsumedX, unconsumedY, mScrollOffset_, type, mReusableIntPair_);
   unconsumedX -= IOSIntArray_Get(mReusableIntPair_, 0);
   unconsumedY -= IOSIntArray_Get(mReusableIntPair_, 1);
-  jboolean consumedNestedScroll = IOSIntArray_Get(mReusableIntPair_, 0) != 0 || IOSIntArray_Get(mReusableIntPair_, 1) != 0;
+  bool consumedNestedScroll = IOSIntArray_Get(mReusableIntPair_, 0) != 0 || IOSIntArray_Get(mReusableIntPair_, 1) != 0;
   mLastTouchX_ -= IOSIntArray_Get(nil_chk(mScrollOffset_), 0);
   mLastTouchY_ -= IOSIntArray_Get(mScrollOffset_, 1);
   *IOSIntArray_GetRef(nil_chk(mNestedOffsets_), 0) += IOSIntArray_Get(mScrollOffset_, 0);
@@ -879,42 +899,42 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   return consumedNestedScroll || consumedX != 0 || consumedY != 0;
 }
 
-- (jint)computeHorizontalScrollOffset {
+- (int32_t)computeHorizontalScrollOffset {
   if (mLayout_ == nil) {
     return 0;
   }
   return [mLayout_ canScrollHorizontally] ? [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) computeHorizontalScrollOffsetWithADXRecyclerView_State:mState_] : 0;
 }
 
-- (jint)computeHorizontalScrollExtent {
+- (int32_t)computeHorizontalScrollExtent {
   if (mLayout_ == nil) {
     return 0;
   }
   return [mLayout_ canScrollHorizontally] ? [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) computeHorizontalScrollExtentWithADXRecyclerView_State:mState_] : 0;
 }
 
-- (jint)computeHorizontalScrollRange {
+- (int32_t)computeHorizontalScrollRange {
   if (mLayout_ == nil) {
     return 0;
   }
   return [mLayout_ canScrollHorizontally] ? [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) computeHorizontalScrollRangeWithADXRecyclerView_State:mState_] : 0;
 }
 
-- (jint)computeVerticalScrollOffset {
+- (int32_t)computeVerticalScrollOffset {
   if (mLayout_ == nil) {
     return 0;
   }
   return [mLayout_ canScrollVertically] ? [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) computeVerticalScrollOffsetWithADXRecyclerView_State:mState_] : 0;
 }
 
-- (jint)computeVerticalScrollExtent {
+- (int32_t)computeVerticalScrollExtent {
   if (mLayout_ == nil) {
     return 0;
   }
   return [mLayout_ canScrollVertically] ? [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) computeVerticalScrollExtentWithADXRecyclerView_State:mState_] : 0;
 }
 
-- (jint)computeVerticalScrollRange {
+- (int32_t)computeVerticalScrollRange {
   if (mLayout_ == nil) {
     return 0;
   }
@@ -928,7 +948,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   }
 }
 
-- (void)stopInterceptRequestLayoutWithBoolean:(jboolean)performLayoutChildren {
+- (void)stopInterceptRequestLayoutWithBoolean:(bool)performLayoutChildren {
   if (mInterceptRequestLayoutDepth_ < 1) {
     mInterceptRequestLayoutDepth_ = 1;
   }
@@ -946,11 +966,11 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   mInterceptRequestLayoutDepth_--;
 }
 
-- (void)suppressLayoutWithBoolean:(jboolean)suppress {
+- (void)suppressLayoutWithBoolean:(bool)suppress {
   ADXRecyclerView_suppressLayoutWithBoolean_(self, suppress);
 }
 
-- (void)setLayoutFrozenWithBoolean:(jboolean)frozen {
+- (void)setLayoutFrozenWithBoolean:(bool)frozen {
   ADXRecyclerView_suppressLayoutWithBoolean_(self, frozen);
 }
 
@@ -975,15 +995,15 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   }
 }
 
-- (void)onMeasureWithInt:(jint)widthSpec
-                 withInt:(jint)heightSpec {
+- (void)onMeasureWithInt:(int32_t)widthSpec
+                 withInt:(int32_t)heightSpec {
   if (mLayout_ == nil) {
     [self defaultOnMeasureWithInt:widthSpec withInt:heightSpec];
     return;
   }
   if ([mLayout_ isAutoMeasureEnabled]) {
-    jint widthMode = ADView_MeasureSpec_getModeWithInt_(widthSpec);
-    jint heightMode = ADView_MeasureSpec_getModeWithInt_(heightSpec);
+    int32_t widthMode = ADView_MeasureSpec_getModeWithInt_(widthSpec);
+    int32_t heightMode = ADView_MeasureSpec_getModeWithInt_(heightSpec);
     [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) onMeasureWithADXRecyclerView_Recycler:mRecycler_ withADXRecyclerView_State:mState_ withInt:widthSpec withInt:heightSpec];
     mLastAutoMeasureSkippedDueToExact_ = (widthMode == ADView_MeasureSpec_EXACTLY && heightMode == ADView_MeasureSpec_EXACTLY);
     if (mLastAutoMeasureSkippedDueToExact_ || mAdapter_ == nil) {
@@ -1042,10 +1062,10 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   }
 }
 
-- (void)defaultOnMeasureWithInt:(jint)widthSpec
-                        withInt:(jint)heightSpec {
-  jint width = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(widthSpec, [self getPaddingLeft] + [self getPaddingRight], ADXViewCompat_getMinimumWidthWithADView_(self));
-  jint height = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(heightSpec, [self getPaddingTop] + [self getPaddingBottom], ADXViewCompat_getMinimumHeightWithADView_(self));
+- (void)defaultOnMeasureWithInt:(int32_t)widthSpec
+                        withInt:(int32_t)heightSpec {
+  int32_t width = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(widthSpec, [self getPaddingLeft] + [self getPaddingRight], ADXViewCompat_getMinimumWidthWithADView_(self));
+  int32_t height = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(heightSpec, [self getPaddingTop] + [self getPaddingBottom], ADXViewCompat_getMinimumHeightWithADView_(self));
   [self setMeasuredDimensionWithInt:width withInt:height];
 }
 
@@ -1057,7 +1077,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   [self onExitLayoutOrScrollWithBoolean:true];
 }
 
-- (void)onExitLayoutOrScrollWithBoolean:(jboolean)enableChangeEvents {
+- (void)onExitLayoutOrScrollWithBoolean:(bool)enableChangeEvents {
   mLayoutOrScrollCounter_--;
   if (mLayoutOrScrollCounter_ < 1) {
     mLayoutOrScrollCounter_ = 0;
@@ -1068,7 +1088,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   }
 }
 
-- (jboolean)isComputingLayout {
+- (bool)isComputingLayout {
   return mLayoutOrScrollCounter_ > 0;
 }
 
@@ -1086,7 +1106,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
     return;
   }
   ((ADXRecyclerView_State *) nil_chk(mState_))->mIsMeasuring_ = false;
-  jboolean needsRemeasureDueToExactSkip = mLastAutoMeasureSkippedDueToExact_ && (mLastAutoMeasureNonExactMeasuredWidth_ != [self getWidth] || mLastAutoMeasureNonExactMeasuredHeight_ != [self getHeight]);
+  bool needsRemeasureDueToExactSkip = mLastAutoMeasureSkippedDueToExact_ && (mLastAutoMeasureNonExactMeasuredWidth_ != [self getWidth] || mLastAutoMeasureNonExactMeasuredHeight_ != [self getHeight]);
   mLastAutoMeasureNonExactMeasuredWidth_ = 0;
   mLastAutoMeasureNonExactMeasuredHeight_ = 0;
   mLastAutoMeasureSkippedDueToExact_ = false;
@@ -1117,7 +1137,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   ADXRecyclerView_dispatchLayoutStep3(self);
 }
 
-- (void)handleMissingPreInfoForChangeErrorWithLong:(jlong)key
+- (void)handleMissingPreInfoForChangeErrorWithLong:(int64_t)key
                     withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
                     withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)oldChangeViewHolder {
   ADXRecyclerView_handleMissingPreInfoForChangeErrorWithLong_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_(self, key, holder, oldChangeViewHolder);
@@ -1127,7 +1147,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
                              withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)animationInfo {
   [((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder)) setFlagsWithInt:0 withInt:ADXRecyclerView_ViewHolder_FLAG_BOUNCED_FROM_HIDDEN_LIST];
   if (((ADXRecyclerView_State *) nil_chk(mState_))->mTrackOldChangeHolders_ && [viewHolder isUpdated] && ![viewHolder isRemoved] && ![viewHolder shouldIgnore]) {
-    jlong key = [self getChangedHolderKeyWithADXRecyclerView_ViewHolder:viewHolder];
+    int64_t key = [self getChangedHolderKeyWithADXRecyclerView_ViewHolder:viewHolder];
     [((ADXViewInfoStore *) nil_chk(mViewInfoStore_)) addToOldChangeHoldersWithLong:key withADXRecyclerView_ViewHolder:viewHolder];
   }
   [((ADXViewInfoStore *) nil_chk(mViewInfoStore_)) addToPreLayoutWithADXRecyclerView_ViewHolder:viewHolder withADXRecyclerView_ItemAnimator_ItemHolderInfo:animationInfo];
@@ -1137,13 +1157,13 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   ADXRecyclerView_findMinMaxChildLayoutPositionsWithIntArray_(self, into);
 }
 
-- (jboolean)didChildRangeChangeWithInt:(jint)minPositionPreLayout
-                               withInt:(jint)maxPositionPreLayout {
+- (bool)didChildRangeChangeWithInt:(int32_t)minPositionPreLayout
+                           withInt:(int32_t)maxPositionPreLayout {
   return ADXRecyclerView_didChildRangeChangeWithInt_withInt_(self, minPositionPreLayout, maxPositionPreLayout);
 }
 
 - (void)removeDetachedViewWithADView:(ADView *)child
-                         withBoolean:(jboolean)animate {
+                         withBoolean:(bool)animate {
   ADXRecyclerView_ViewHolder *vh = ADXRecyclerView_getChildViewHolderIntWithADView_(child);
   if (vh != nil) {
     if ([vh isTmpDetached]) {
@@ -1156,7 +1176,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   [self dispatchChildDetachedWithADView:child];
 }
 
-- (jlong)getChangedHolderKeyWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
+- (int64_t)getChangedHolderKeyWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
   return ADXRecyclerView_Adapter_hasStableIds(nil_chk(mAdapter_)) ? ADXRecyclerView_ViewHolder_getItemId(nil_chk(holder)) : ((ADXRecyclerView_ViewHolder *) nil_chk(holder))->mPosition_;
 }
 
@@ -1183,16 +1203,16 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
                      withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)newHolder
     withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preInfo
     withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postInfo
-                                        withBoolean:(jboolean)oldHolderDisappearing
-                                        withBoolean:(jboolean)newHolderDisappearing {
+                                        withBoolean:(bool)oldHolderDisappearing
+                                        withBoolean:(bool)newHolderDisappearing {
   ADXRecyclerView_animateChangeWithADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withADXRecyclerView_ItemAnimator_ItemHolderInfo_withADXRecyclerView_ItemAnimator_ItemHolderInfo_withBoolean_withBoolean_(self, oldHolder, newHolder, preInfo, postInfo, oldHolderDisappearing, newHolderDisappearing);
 }
 
-- (void)onLayoutWithBoolean:(jboolean)changed
-                    withInt:(jint)l
-                    withInt:(jint)t
-                    withInt:(jint)r
-                    withInt:(jint)b {
+- (void)onLayoutWithBoolean:(bool)changed
+                    withInt:(int32_t)l
+                    withInt:(int32_t)t
+                    withInt:(int32_t)r
+                    withInt:(int32_t)b {
   ADXTraceCompat_beginSectionWithNSString_(ADXRecyclerView_TRACE_ON_LAYOUT_TAG);
   [self dispatchLayout];
   ADXTraceCompat_endSection();
@@ -1200,8 +1220,8 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 }
 
 - (void)markItemDecorInsetsDirty {
-  jint childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
-  for (jint i = 0; i < childCount; i++) {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADView *child = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildAtWithInt:i];
     ((ADXRecyclerView_LayoutParams *) nil_chk(((ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]))))->mInsetsDirty_ = true;
   }
@@ -1209,8 +1229,8 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 }
 
 - (void)saveOldPositions {
-  jint childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
-  for (jint i = 0; i < childCount; i++) {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_([((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildAtWithInt:i]);
     if (![((ADXRecyclerView_ViewHolder *) nil_chk(holder)) shouldIgnore]) {
       [holder saveOldPosition];
@@ -1219,8 +1239,8 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 }
 
 - (void)clearOldPositions {
-  jint childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
-  for (jint i = 0; i < childCount; i++) {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_([((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildAtWithInt:i]);
     if (![((ADXRecyclerView_ViewHolder *) nil_chk(holder)) shouldIgnore]) {
       [holder clearOldPosition];
@@ -1229,12 +1249,12 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   [((ADXRecyclerView_Recycler *) nil_chk(mRecycler_)) clearOldPositions];
 }
 
-- (void)offsetPositionRecordsForMoveWithInt:(jint)from
-                                    withInt:(jint)to {
-  jint childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
-  jint start;
-  jint end;
-  jint inBetweenOffset;
+- (void)offsetPositionRecordsForMoveWithInt:(int32_t)from
+                                    withInt:(int32_t)to {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
+  int32_t start;
+  int32_t end;
+  int32_t inBetweenOffset;
   if (from < to) {
     start = from;
     end = to;
@@ -1245,7 +1265,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
     end = from;
     inBetweenOffset = 1;
   }
-  for (jint i = 0; i < childCount; i++) {
+  for (int32_t i = 0; i < childCount; i++) {
     ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_([((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildAtWithInt:i]);
     if (holder == nil || holder->mPosition_ < start || holder->mPosition_ > end) {
       continue;
@@ -1262,10 +1282,10 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   [self requestLayout];
 }
 
-- (void)offsetPositionRecordsForInsertWithInt:(jint)positionStart
-                                      withInt:(jint)itemCount {
-  jint childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
-  for (jint i = 0; i < childCount; i++) {
+- (void)offsetPositionRecordsForInsertWithInt:(int32_t)positionStart
+                                      withInt:(int32_t)itemCount {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_([((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildAtWithInt:i]);
     if (holder != nil && ![holder shouldIgnore] && holder->mPosition_ >= positionStart) {
       [holder offsetPositionWithInt:itemCount withBoolean:false];
@@ -1276,12 +1296,12 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   [self requestLayout];
 }
 
-- (void)offsetPositionRecordsForRemoveWithInt:(jint)positionStart
-                                      withInt:(jint)itemCount
-                                  withBoolean:(jboolean)applyToPreLayout {
-  jint positionEnd = positionStart + itemCount;
-  jint childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
-  for (jint i = 0; i < childCount; i++) {
+- (void)offsetPositionRecordsForRemoveWithInt:(int32_t)positionStart
+                                      withInt:(int32_t)itemCount
+                                  withBoolean:(bool)applyToPreLayout {
+  int32_t positionEnd = positionStart + itemCount;
+  int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_([((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildAtWithInt:i]);
     if (holder != nil && ![holder shouldIgnore]) {
       if (holder->mPosition_ >= positionEnd) {
@@ -1298,12 +1318,12 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   [self requestLayout];
 }
 
-- (void)viewRangeUpdateWithInt:(jint)positionStart
-                       withInt:(jint)itemCount
+- (void)viewRangeUpdateWithInt:(int32_t)positionStart
+                       withInt:(int32_t)itemCount
                         withId:(id)payload {
-  jint childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
-  jint positionEnd = positionStart + itemCount;
-  for (jint i = 0; i < childCount; i++) {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
+  int32_t positionEnd = positionStart + itemCount;
+  for (int32_t i = 0; i < childCount; i++) {
     ADView *child = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildAtWithInt:i];
     ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_(child);
     if (holder == nil || [holder shouldIgnore]) {
@@ -1318,19 +1338,19 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   [((ADXRecyclerView_Recycler *) nil_chk(mRecycler_)) viewRangeUpdateWithInt:positionStart withInt:itemCount];
 }
 
-- (jboolean)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+- (bool)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
   return mItemAnimator_ == nil || [mItemAnimator_ canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:viewHolder withJavaUtilList:[((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder)) getUnmodifiedPayloads]];
 }
 
-- (void)processDataSetCompletelyChangedWithBoolean:(jboolean)dispatchItemsChanged {
+- (void)processDataSetCompletelyChangedWithBoolean:(bool)dispatchItemsChanged {
   mDispatchItemsChangedEvent_ |= dispatchItemsChanged;
   mDataSetHasChangedAfterLayout_ = true;
   [self markKnownViewsInvalid];
 }
 
 - (void)markKnownViewsInvalid {
-  jint childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
-  for (jint i = 0; i < childCount; i++) {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_([((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildAtWithInt:i]);
     if (holder != nil && ![holder shouldIgnore]) {
       [holder addFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_UPDATE | ADXRecyclerView_ViewHolder_FLAG_INVALID];
@@ -1342,7 +1362,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 
 - (ADXRecyclerView_ViewHolder *)getChildViewHolderWithADView:(ADView *)child {
   id<ADViewParent> parent = [((ADView *) nil_chk(child)) getParent];
-  if (parent != nil && parent != self) {
+  if (parent != nil && !JreObjectEqualsEquals(parent, self)) {
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(JreStrcat("$@$@", @"View ", child, @" is not a direct child of ", self));
   }
   return ADXRecyclerView_getChildViewHolderIntWithADView_(child);
@@ -1350,26 +1370,26 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 
 - (ADView *)findContainingItemViewWithADView:(ADView *)view {
   id<ADViewParent> parent = JreRetainedLocalValue([((ADView *) nil_chk(view)) getParent]);
-  while (parent != nil && parent != self && [parent isKindOfClass:[ADView class]]) {
+  while (parent != nil && !JreObjectEqualsEquals(parent, self) && [parent isKindOfClass:[ADView class]]) {
     view = (ADView *) cast_chk(parent, [ADView class]);
     parent = [view getParent];
   }
-  return parent == self ? view : nil;
+  return JreObjectEqualsEquals(parent, self) ? view : nil;
 }
 
 + (ADXRecyclerView_ViewHolder *)getChildViewHolderIntWithADView:(ADView *)child {
   return ADXRecyclerView_getChildViewHolderIntWithADView_(child);
 }
 
-- (ADXRecyclerView_ViewHolder *)findViewHolderForPositionWithInt:(jint)position {
+- (ADXRecyclerView_ViewHolder *)findViewHolderForPositionWithInt:(int32_t)position {
   return [self findViewHolderForPositionWithInt:position withBoolean:false];
 }
 
-- (ADXRecyclerView_ViewHolder *)findViewHolderForPositionWithInt:(jint)position
-                                                     withBoolean:(jboolean)checkNewPosition {
-  jint childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
+- (ADXRecyclerView_ViewHolder *)findViewHolderForPositionWithInt:(int32_t)position
+                                                     withBoolean:(bool)checkNewPosition {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildCount];
   ADXRecyclerView_ViewHolder *hidden = nil;
-  for (jint i = 0; i < childCount; i++) {
+  for (int32_t i = 0; i < childCount; i++) {
     ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_([((ADXChildHelper *) nil_chk(mChildHelper_)) getUnfilteredChildAtWithInt:i]);
     if (holder != nil && ![holder isRemoved]) {
       if (checkNewPosition) {
@@ -1391,9 +1411,9 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   return hidden;
 }
 
-- (void)offsetChildrenVerticalWithInt:(jint)dy {
-  jint childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getChildCount];
-  for (jint i = 0; i < childCount; i++) {
+- (void)offsetChildrenVerticalWithInt:(int32_t)dy {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     [((ADView *) nil_chk([((ADXChildHelper *) nil_chk(mChildHelper_)) getChildAtWithInt:i])) offsetTopAndBottomWithInt:dy];
   }
 }
@@ -1404,9 +1424,9 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 - (void)onChildDetachedFromWindowWithADView:(ADView *)child {
 }
 
-- (void)offsetChildrenHorizontalWithInt:(jint)dx {
-  jint childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getChildCount];
-  for (jint i = 0; i < childCount; i++) {
+- (void)offsetChildrenHorizontalWithInt:(int32_t)dx {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     [((ADView *) nil_chk([((ADXChildHelper *) nil_chk(mChildHelper_)) getChildAtWithInt:i])) offsetLeftAndRightWithInt:dx];
   }
 }
@@ -1426,8 +1446,8 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   }
   ADRect *insets = lp->mDecorInsets_;
   [((ADRect *) nil_chk(insets)) setWithInt:0 withInt:0 withInt:0 withInt:0];
-  jint decorCount = [((JavaUtilArrayList *) nil_chk(mItemDecorations_)) size];
-  for (jint i = 0; i < decorCount; i++) {
+  int32_t decorCount = [((JavaUtilArrayList *) nil_chk(mItemDecorations_)) size];
+  for (int32_t i = 0; i < decorCount; i++) {
     [((ADRect *) nil_chk(mTempRect_)) setWithInt:0 withInt:0 withInt:0 withInt:0];
     [((ADXRecyclerView_ItemDecoration *) nil_chk([mItemDecorations_ getWithInt:i])) getItemOffsetsWithADRect:mTempRect_ withADView:child withADXRecyclerView:self withADXRecyclerView_State:mState_];
     insets->left_ += mTempRect_->left_;
@@ -1439,37 +1459,37 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   return insets;
 }
 
-- (void)dispatchOnScrolledWithInt:(jint)hresult
-                          withInt:(jint)vresult {
+- (void)dispatchOnScrolledWithInt:(int32_t)hresult
+                          withInt:(int32_t)vresult {
   mDispatchScrollCounter_++;
-  jint scrollX = [self getScrollX];
-  jint scrollY = [self getScrollY];
+  int32_t scrollX = [self getScrollX];
+  int32_t scrollY = [self getScrollY];
   ADXRecyclerView_onScrollChangedWithInt_withInt_withInt_withInt_(self, scrollX, scrollY, scrollX - hresult, scrollY - vresult);
   ADXRecyclerView_onScrolledWithInt_withInt_(self, hresult, vresult);
   if (mScrollListener_ != nil) {
     [mScrollListener_ onScrolledWithADXRecyclerView:self withInt:hresult withInt:vresult];
   }
   if (mScrollListeners_ != nil) {
-    for (jint i = [mScrollListeners_ size] - 1; i >= 0; i--) {
+    for (int32_t i = [mScrollListeners_ size] - 1; i >= 0; i--) {
       [((ADXRecyclerView_OnScrollListener *) nil_chk([((id<JavaUtilList>) nil_chk(mScrollListeners_)) getWithInt:i])) onScrolledWithADXRecyclerView:self withInt:hresult withInt:vresult];
     }
   }
   mDispatchScrollCounter_--;
 }
 
-- (jboolean)hasPendingAdapterUpdates {
+- (bool)hasPendingAdapterUpdates {
   return !mFirstLayoutComplete_ || mDataSetHasChangedAfterLayout_ || [((ADXAdapterHelper *) nil_chk(mAdapterHelper_)) hasPendingUpdates];
 }
 
 - (void)repositionShadowingViews {
-  jint count = [((ADXChildHelper *) nil_chk(mChildHelper_)) getChildCount];
-  for (jint i = 0; i < count; i++) {
+  int32_t count = [((ADXChildHelper *) nil_chk(mChildHelper_)) getChildCount];
+  for (int32_t i = 0; i < count; i++) {
     ADView *view = JreRetainedLocalValue([((ADXChildHelper *) nil_chk(mChildHelper_)) getChildAtWithInt:i]);
     ADXRecyclerView_ViewHolder *holder = JreRetainedLocalValue([self getChildViewHolderWithADView:view]);
     if (holder != nil && holder->mShadowingHolder_ != nil) {
       ADView *shadowingView = JreRetainedLocalValue(holder->mShadowingHolder_->itemView_);
-      jint left = [((ADView *) nil_chk(view)) getLeft];
-      jint top = [view getTop];
+      int32_t left = [((ADView *) nil_chk(view)) getLeft];
+      int32_t top = [view getTop];
       if (left != [((ADView *) nil_chk(shadowingView)) getLeft] || top != [shadowingView getTop]) {
         [shadowingView layoutWithInt:left withInt:top withInt:left + [shadowingView getWidth] withInt:top + [shadowingView getHeight]];
       }
@@ -1485,7 +1505,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   ADXRecyclerView_clearNestedRecyclerViewIfNotNestedWithADXRecyclerView_ViewHolder_(holder);
 }
 
-- (jlong)getNanoTime {
+- (int64_t)getNanoTime {
   {
     return JavaLangSystem_nanoTime();
   }
@@ -1498,8 +1518,8 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
     [mAdapter_ onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:viewHolder];
   }
   if (mOnChildAttachStateListeners_ != nil) {
-    jint cnt = [mOnChildAttachStateListeners_ size];
-    for (jint i = cnt - 1; i >= 0; i--) {
+    int32_t cnt = [mOnChildAttachStateListeners_ size];
+    for (int32_t i = cnt - 1; i >= 0; i--) {
       [((id<ADXRecyclerView_OnChildAttachStateChangeListener>) nil_chk([((id<JavaUtilList>) nil_chk(mOnChildAttachStateListeners_)) getWithInt:i])) onChildViewDetachedFromWindowWithADView:child];
     }
   }
@@ -1512,34 +1532,34 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
     [mAdapter_ onViewAttachedToWindowWithADXRecyclerView_ViewHolder:viewHolder];
   }
   if (mOnChildAttachStateListeners_ != nil) {
-    jint cnt = [mOnChildAttachStateListeners_ size];
-    for (jint i = cnt - 1; i >= 0; i--) {
+    int32_t cnt = [mOnChildAttachStateListeners_ size];
+    for (int32_t i = cnt - 1; i >= 0; i--) {
       [((id<ADXRecyclerView_OnChildAttachStateChangeListener>) nil_chk([((id<JavaUtilList>) nil_chk(mOnChildAttachStateListeners_)) getWithInt:i])) onChildViewAttachedToWindowWithADView:child];
     }
   }
 }
 
-- (jint)getAdapterPositionInRecyclerViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+- (int32_t)getAdapterPositionInRecyclerViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
   if ([((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder)) hasAnyOfTheFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_INVALID | ADXRecyclerView_ViewHolder_FLAG_REMOVED | ADXRecyclerView_ViewHolder_FLAG_ADAPTER_POSITION_UNKNOWN] || ![viewHolder isBound]) {
     return ADXRecyclerView_NO_POSITION;
   }
   return [((ADXAdapterHelper *) nil_chk(mAdapterHelper_)) applyPendingUpdatesToPositionWithInt:viewHolder->mPosition_];
 }
 
-- (void)setNestedScrollingEnabledWithBoolean:(jboolean)enabled {
+- (void)setNestedScrollingEnabledWithBoolean:(bool)enabled {
   [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) setNestedScrollingEnabledWithBoolean:enabled];
 }
 
-- (jboolean)isNestedScrollingEnabled {
+- (bool)isNestedScrollingEnabled {
   return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) isNestedScrollingEnabled];
 }
 
-- (jboolean)startNestedScrollWithInt:(jint)axes {
+- (bool)startNestedScrollWithInt:(int32_t)axes {
   return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) startNestedScrollWithInt:axes];
 }
 
-- (jboolean)startNestedScrollWithInt:(jint)axes
-                             withInt:(jint)type {
+- (bool)startNestedScrollWithInt:(int32_t)axes
+                         withInt:(int32_t)type {
   return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) startNestedScrollWithInt:axes withInt:type];
 }
 
@@ -1547,68 +1567,68 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) stopNestedScroll];
 }
 
-- (void)stopNestedScrollWithInt:(jint)type {
+- (void)stopNestedScrollWithInt:(int32_t)type {
   [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) stopNestedScrollWithInt:type];
 }
 
-- (jboolean)hasNestedScrollingParent {
+- (bool)hasNestedScrollingParent {
   return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) hasNestedScrollingParent];
 }
 
-- (jboolean)hasNestedScrollingParentWithInt:(jint)type {
+- (bool)hasNestedScrollingParentWithInt:(int32_t)type {
   return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) hasNestedScrollingParentWithInt:type];
 }
 
-- (jboolean)dispatchNestedScrollWithInt:(jint)dxConsumed
-                                withInt:(jint)dyConsumed
-                                withInt:(jint)dxUnconsumed
-                                withInt:(jint)dyUnconsumed
-                           withIntArray:(IOSIntArray *)offsetInWindow {
+- (bool)dispatchNestedScrollWithInt:(int32_t)dxConsumed
+                            withInt:(int32_t)dyConsumed
+                            withInt:(int32_t)dxUnconsumed
+                            withInt:(int32_t)dyUnconsumed
+                       withIntArray:(IOSIntArray *)offsetInWindow {
   return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedScrollWithInt:dxConsumed withInt:dyConsumed withInt:dxUnconsumed withInt:dyUnconsumed withIntArray:offsetInWindow];
 }
 
-- (jboolean)dispatchNestedScrollWithInt:(jint)dxConsumed
-                                withInt:(jint)dyConsumed
-                                withInt:(jint)dxUnconsumed
-                                withInt:(jint)dyUnconsumed
-                           withIntArray:(IOSIntArray *)offsetInWindow
-                                withInt:(jint)type {
+- (bool)dispatchNestedScrollWithInt:(int32_t)dxConsumed
+                            withInt:(int32_t)dyConsumed
+                            withInt:(int32_t)dxUnconsumed
+                            withInt:(int32_t)dyUnconsumed
+                       withIntArray:(IOSIntArray *)offsetInWindow
+                            withInt:(int32_t)type {
   return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedScrollWithInt:dxConsumed withInt:dyConsumed withInt:dxUnconsumed withInt:dyUnconsumed withIntArray:offsetInWindow withInt:type];
 }
 
-- (void)dispatchNestedScrollWithInt:(jint)dxConsumed
-                            withInt:(jint)dyConsumed
-                            withInt:(jint)dxUnconsumed
-                            withInt:(jint)dyUnconsumed
+- (void)dispatchNestedScrollWithInt:(int32_t)dxConsumed
+                            withInt:(int32_t)dyConsumed
+                            withInt:(int32_t)dxUnconsumed
+                            withInt:(int32_t)dyUnconsumed
                        withIntArray:(IOSIntArray *)offsetInWindow
-                            withInt:(jint)type
+                            withInt:(int32_t)type
                        withIntArray:(IOSIntArray *)consumed {
   ADXRecyclerView_dispatchNestedScrollWithInt_withInt_withInt_withInt_withIntArray_withInt_withIntArray_(self, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow, type, consumed);
 }
 
-- (jboolean)dispatchNestedPreScrollWithInt:(jint)dx
-                                   withInt:(jint)dy
-                              withIntArray:(IOSIntArray *)consumed
-                              withIntArray:(IOSIntArray *)offsetInWindow {
+- (bool)dispatchNestedPreScrollWithInt:(int32_t)dx
+                               withInt:(int32_t)dy
+                          withIntArray:(IOSIntArray *)consumed
+                          withIntArray:(IOSIntArray *)offsetInWindow {
   return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedPreScrollWithInt:dx withInt:dy withIntArray:consumed withIntArray:offsetInWindow];
 }
 
-- (jboolean)dispatchNestedPreScrollWithInt:(jint)dx
-                                   withInt:(jint)dy
-                              withIntArray:(IOSIntArray *)consumed
-                              withIntArray:(IOSIntArray *)offsetInWindow
-                                   withInt:(jint)type {
+- (bool)dispatchNestedPreScrollWithInt:(int32_t)dx
+                               withInt:(int32_t)dy
+                          withIntArray:(IOSIntArray *)consumed
+                          withIntArray:(IOSIntArray *)offsetInWindow
+                               withInt:(int32_t)type {
   return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedPreScrollWithInt:dx withInt:dy withIntArray:consumed withIntArray:offsetInWindow withInt:type];
 }
 
-- (jboolean)dispatchNestedFlingWithFloat:(jfloat)velocityX
-                               withFloat:(jfloat)velocityY
-                             withBoolean:(jboolean)consumed {
+- (bool)dispatchNestedFlingWithFloat:(float)velocityX
+                           withFloat:(float)velocityY
+                         withBoolean:(bool)consumed {
   return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedFlingWithFloat:velocityX withFloat:velocityY withBoolean:consumed];
 }
 
-- (jboolean)dispatchNestedPreFlingWithFloat:(jfloat)velocityX
-                                  withFloat:(jfloat)velocityY {
+- (bool)dispatchNestedPreFlingWithFloat:(float)velocityX
+                              withFloat:(float)velocityY {
   return [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedPreFlingWithFloat:velocityX withFloat:velocityY];
 }
 
@@ -1617,9 +1637,9 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 }
 
 - (void)startNestedScroll {
-  jboolean canScrollHorizontally = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollHorizontally];
-  jboolean canScrollVertically = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollVertically];
-  jint nestedScrollAxis = ADXViewCompat_SCROLL_AXIS_NONE;
+  bool canScrollHorizontally = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollHorizontally];
+  bool canScrollVertically = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollVertically];
+  int32_t nestedScrollAxis = ADXViewCompat_SCROLL_AXIS_NONE;
   if (canScrollHorizontally) {
     nestedScrollAxis |= ADXViewCompat_SCROLL_AXIS_HORIZONTAL;
   }
@@ -1643,7 +1663,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   ADXRecyclerView_dispatchContentChangedIfNecessary(self);
 }
 
-- (jboolean)predictiveItemAnimationsEnabled {
+- (bool)predictiveItemAnimationsEnabled {
   return ADXRecyclerView_predictiveItemAnimationsEnabled(self);
 }
 
@@ -1662,23 +1682,23 @@ J2OBJC_IGNORE_DESIGNATED_END
   ADXRecyclerView_resetFocusInfo(self);
 }
 
-- (jint)getScrollY {
+- (int32_t)getScrollY {
   return 0;
 }
 
-- (jint)getScrollX {
+- (int32_t)getScrollX {
   return 0;
 }
 
-- (void)onScrollChangedWithInt:(jint)scrollX
-                       withInt:(jint)scrollY
-                       withInt:(jint)i
-                       withInt:(jint)j {
+- (void)onScrollChangedWithInt:(int32_t)scrollX
+                       withInt:(int32_t)scrollY
+                       withInt:(int32_t)i
+                       withInt:(int32_t)j {
   ADXRecyclerView_onScrollChangedWithInt_withInt_withInt_withInt_(self, scrollX, scrollY, i, j);
 }
 
-- (void)onScrolledWithInt:(jint)hresult
-                  withInt:(jint)vresult {
+- (void)onScrolledWithInt:(int32_t)hresult
+                  withInt:(int32_t)vresult {
   ADXRecyclerView_onScrolledWithInt_withInt_(self, hresult, vresult);
 }
 
@@ -1686,22 +1706,22 @@ J2OBJC_IGNORE_DESIGNATED_END
   ADXRecyclerView_fillRemainingScrollValuesWithADXRecyclerView_State_(self, state);
 }
 
-- (jboolean)isAccessibilityEnabled {
+- (bool)isAccessibilityEnabled {
   return false;
 }
 
-- (jlong)getDrawingTime {
+- (int64_t)getDrawingTime {
   return 0;
 }
 
 - (void)stopScroll {
 }
 
-- (jint)dispatchNestedPreScrollWithInt:(jint)dpos {
+- (int32_t)dispatchNestedPreScrollWithInt:(int32_t)dpos {
   *IOSIntArray_GetRef(nil_chk(mReusableIntPair_), 0) = 0;
   *IOSIntArray_GetRef(mReusableIntPair_, 1) = 0;
-  jboolean canScrollHorizontally = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollHorizontally];
-  jboolean canScrollVertically = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollVertically];
+  bool canScrollHorizontally = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollHorizontally];
+  bool canScrollVertically = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollVertically];
   if ([self dispatchNestedPreScrollWithInt:canScrollHorizontally ? dpos : 0 withInt:canScrollVertically ? dpos : 0 withIntArray:mReusableIntPair_ withIntArray:mScrollOffset_ withInt:ADXRecyclerView_TYPE_TOUCH]) {
     if (canScrollHorizontally) {
       dpos -= IOSIntArray_Get(mReusableIntPair_, 0);
@@ -1716,22 +1736,22 @@ J2OBJC_IGNORE_DESIGNATED_END
 - (void)registerObserverWithADXRecyclerView_AdapterDataObserver:(ADXRecyclerView_AdapterDataObserver *)observer {
 }
 
-- (jboolean)awakenScrollBars {
+- (bool)awakenScrollBars {
   return false;
 }
 
-- (void)considerReleasingGlowsOnScrollWithInt:(jint)dx
-                                      withInt:(jint)dy {
+- (void)considerReleasingGlowsOnScrollWithInt:(int32_t)dx
+                                      withInt:(int32_t)dy {
 }
 
-- (void)pullGlowsWithFloat:(jfloat)x
-                 withFloat:(jfloat)overscrollX
-                 withFloat:(jfloat)y
-                 withFloat:(jfloat)overscrollY {
+- (void)pullGlowsWithFloat:(float)x
+                 withFloat:(float)overscrollX
+                 withFloat:(float)y
+                 withFloat:(float)overscrollY {
   ADXRecyclerView_pullGlowsWithFloat_withFloat_withFloat_withFloat_(self, x, overscrollX, y, overscrollY);
 }
 
-- (jint)getOverScrollMode {
+- (int32_t)getOverScrollMode {
   return ADView_OVER_SCROLL_NEVER;
 }
 
@@ -2121,7 +2141,7 @@ void ADXRecyclerView_initChildrenHelper(ADXRecyclerView *self) {
   JreStrongAssignAndConsume(&self->mChildHelper_, new_ADXChildHelper_initPackagePrivateWithADXChildHelper_Callback_(create_ADXRecyclerView_3_initWithADXRecyclerView_(self)));
 }
 
-void ADXRecyclerView_setAdapterInternalWithADXRecyclerView_Adapter_withBoolean_withBoolean_(ADXRecyclerView *self, ADXRecyclerView_Adapter *adapter, jboolean compatibleWithPrevious, jboolean removeAndRecycleViews) {
+void ADXRecyclerView_setAdapterInternalWithADXRecyclerView_Adapter_withBoolean_withBoolean_(ADXRecyclerView *self, ADXRecyclerView_Adapter *adapter, bool compatibleWithPrevious, bool removeAndRecycleViews) {
   if (self->mAdapter_ != nil) {
     [self->mAdapter_ unregisterAdapterDataObserverWithADXRecyclerView_AdapterDataObserver:self->mObserver_];
     [((ADXRecyclerView_Adapter *) nil_chk(self->mAdapter_)) onDetachedFromRecyclerViewWithADXRecyclerView:self];
@@ -2145,7 +2165,7 @@ void ADXRecyclerView_setAdapterInternalWithADXRecyclerView_Adapter_withBoolean_w
 
 void ADXRecyclerView_addAnimatingViewWithADXRecyclerView_ViewHolder_(ADXRecyclerView *self, ADXRecyclerView_ViewHolder *viewHolder) {
   ADView *view = ((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder))->itemView_;
-  jboolean alreadyParented = [((ADView *) nil_chk(view)) getParent] == self;
+  bool alreadyParented = JreObjectEqualsEquals([((ADView *) nil_chk(view)) getParent], self);
   [((ADXRecyclerView_Recycler *) nil_chk(self->mRecycler_)) unscrapViewWithADXRecyclerView_ViewHolder:[self getChildViewHolderWithADView:view]];
   if ([viewHolder isTmpDetached]) {
     [((ADXChildHelper *) nil_chk(self->mChildHelper_)) attachViewToParentWithADView:view withInt:-1 withADViewGroup_LayoutParams:[view getLayoutParams] withBoolean:true];
@@ -2158,9 +2178,9 @@ void ADXRecyclerView_addAnimatingViewWithADXRecyclerView_ViewHolder_(ADXRecycler
   }
 }
 
-jboolean ADXRecyclerView_hasUpdatedView(ADXRecyclerView *self) {
-  jint childCount = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount];
-  for (jint i = 0; i < childCount; i++) {
+bool ADXRecyclerView_hasUpdatedView(ADXRecyclerView *self) {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_([((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildAtWithInt:i]);
     if (holder == nil || [holder shouldIgnore]) {
       continue;
@@ -2172,7 +2192,7 @@ jboolean ADXRecyclerView_hasUpdatedView(ADXRecyclerView *self) {
   return false;
 }
 
-void ADXRecyclerView_suppressLayoutWithBoolean_(ADXRecyclerView *self, jboolean suppress) {
+void ADXRecyclerView_suppressLayoutWithBoolean_(ADXRecyclerView *self, bool suppress) {
   if (suppress != self->mLayoutSuppressed_) {
     [self assertNotInLayoutOrScrollWithNSString:@"Do not suppressLayout in layout or scroll"];
     if (!suppress) {
@@ -2203,7 +2223,7 @@ void ADXRecyclerView_processAdapterUpdatesAndSetAnimationFlags(ADXRecyclerView *
   else {
     [((ADXAdapterHelper *) nil_chk(self->mAdapterHelper_)) consumeUpdatesInOnePass];
   }
-  jboolean animationTypeSupported = self->mItemsAddedOrRemoved_ || self->mItemsChanged_;
+  bool animationTypeSupported = self->mItemsAddedOrRemoved_ || self->mItemsChanged_;
   ((ADXRecyclerView_State *) nil_chk(self->mState_))->mRunSimpleAnimations_ = (self->mFirstLayoutComplete_ && self->mItemAnimator_ != nil && (self->mDataSetHasChangedAfterLayout_ || animationTypeSupported || ((ADXRecyclerView_LayoutManager *) nil_chk(self->mLayout_))->mRequestedSimpleAnimations_) && (!self->mDataSetHasChangedAfterLayout_ || ADXRecyclerView_Adapter_hasStableIds(nil_chk(self->mAdapter_))));
   self->mState_->mRunPredictiveAnimations_ = (self->mState_->mRunSimpleAnimations_ && animationTypeSupported && !self->mDataSetHasChangedAfterLayout_ && ADXRecyclerView_predictiveItemAnimationsEnabled(self));
 }
@@ -2223,8 +2243,8 @@ void ADXRecyclerView_dispatchLayoutStep1(ADXRecyclerView *self) {
   self->mState_->mItemCount_ = [((ADXRecyclerView_Adapter *) nil_chk(self->mAdapter_)) getItemCount];
   ADXRecyclerView_findMinMaxChildLayoutPositionsWithIntArray_(self, self->mMinMaxLayoutPositions_);
   if (self->mState_->mRunSimpleAnimations_) {
-    jint count = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount];
-    for (jint i = 0; i < count; ++i) {
+    int32_t count = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount];
+    for (int32_t i = 0; i < count; ++i) {
       ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_([((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildAtWithInt:i]);
       if ([((ADXRecyclerView_ViewHolder *) nil_chk(holder)) shouldIgnore] || ([holder isInvalid] && !ADXRecyclerView_Adapter_hasStableIds(nil_chk(self->mAdapter_)))) {
         continue;
@@ -2232,26 +2252,26 @@ void ADXRecyclerView_dispatchLayoutStep1(ADXRecyclerView *self) {
       ADXRecyclerView_ItemAnimator_ItemHolderInfo *animationInfo = [((ADXRecyclerView_ItemAnimator *) nil_chk(self->mItemAnimator_)) recordPreLayoutInformationWithADXRecyclerView_State:self->mState_ withADXRecyclerView_ViewHolder:holder withInt:ADXRecyclerView_ItemAnimator_buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder_(holder) withJavaUtilList:[holder getUnmodifiedPayloads]];
       [self->mViewInfoStore_ addToPreLayoutWithADXRecyclerView_ViewHolder:holder withADXRecyclerView_ItemAnimator_ItemHolderInfo:animationInfo];
       if (self->mState_->mTrackOldChangeHolders_ && [holder isUpdated] && ![holder isRemoved] && ![holder shouldIgnore] && ![holder isInvalid]) {
-        jlong key = [self getChangedHolderKeyWithADXRecyclerView_ViewHolder:holder];
+        int64_t key = [self getChangedHolderKeyWithADXRecyclerView_ViewHolder:holder];
         [self->mViewInfoStore_ addToOldChangeHoldersWithLong:key withADXRecyclerView_ViewHolder:holder];
       }
     }
   }
   if (self->mState_->mRunPredictiveAnimations_) {
     [self saveOldPositions];
-    jboolean didStructureChange = self->mState_->mStructureChanged_;
+    bool didStructureChange = self->mState_->mStructureChanged_;
     self->mState_->mStructureChanged_ = false;
     [((ADXRecyclerView_LayoutManager *) nil_chk(self->mLayout_)) onLayoutChildrenWithADXRecyclerView_Recycler:self->mRecycler_ withADXRecyclerView_State:self->mState_];
     self->mState_->mStructureChanged_ = didStructureChange;
-    for (jint i = 0; i < [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount]; ++i) {
+    for (int32_t i = 0; i < [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount]; ++i) {
       ADView *child = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildAtWithInt:i];
       ADXRecyclerView_ViewHolder *viewHolder = ADXRecyclerView_getChildViewHolderIntWithADView_(child);
       if ([((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder)) shouldIgnore]) {
         continue;
       }
       if (![self->mViewInfoStore_ isInPreLayoutWithADXRecyclerView_ViewHolder:viewHolder]) {
-        jint flags = ADXRecyclerView_ItemAnimator_buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder_(viewHolder);
-        jboolean wasHidden = [viewHolder hasAnyOfTheFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_BOUNCED_FROM_HIDDEN_LIST];
+        int32_t flags = ADXRecyclerView_ItemAnimator_buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder_(viewHolder);
+        bool wasHidden = [viewHolder hasAnyOfTheFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_BOUNCED_FROM_HIDDEN_LIST];
         if (!wasHidden) {
           flags |= ADXRecyclerView_ItemAnimator_FLAG_APPEARED_IN_PRE_LAYOUT;
         }
@@ -2296,18 +2316,18 @@ void ADXRecyclerView_dispatchLayoutStep3(ADXRecyclerView *self) {
   [self onEnterLayoutOrScroll];
   self->mState_->mLayoutStep_ = ADXRecyclerView_State_STEP_START;
   if (self->mState_->mRunSimpleAnimations_) {
-    for (jint i = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount] - 1; i >= 0; i--) {
+    for (int32_t i = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount] - 1; i >= 0; i--) {
       ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_([((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildAtWithInt:i]);
       if ([((ADXRecyclerView_ViewHolder *) nil_chk(holder)) shouldIgnore]) {
         continue;
       }
-      jlong key = [self getChangedHolderKeyWithADXRecyclerView_ViewHolder:holder];
+      int64_t key = [self getChangedHolderKeyWithADXRecyclerView_ViewHolder:holder];
       ADXRecyclerView_ItemAnimator_ItemHolderInfo *animationInfo = [((ADXRecyclerView_ItemAnimator *) nil_chk(self->mItemAnimator_)) recordPostLayoutInformationWithADXRecyclerView_State:self->mState_ withADXRecyclerView_ViewHolder:holder];
       ADXRecyclerView_ViewHolder *oldChangeViewHolder = JreRetainedLocalValue([((ADXViewInfoStore *) nil_chk(self->mViewInfoStore_)) getFromOldChangeHoldersWithLong:key]);
       if (oldChangeViewHolder != nil && ![oldChangeViewHolder shouldIgnore]) {
-        jboolean oldDisappearing = [self->mViewInfoStore_ isDisappearingWithADXRecyclerView_ViewHolder:oldChangeViewHolder];
-        jboolean newDisappearing = [self->mViewInfoStore_ isDisappearingWithADXRecyclerView_ViewHolder:holder];
-        if (oldDisappearing && oldChangeViewHolder == holder) {
+        bool oldDisappearing = [self->mViewInfoStore_ isDisappearingWithADXRecyclerView_ViewHolder:oldChangeViewHolder];
+        bool newDisappearing = [self->mViewInfoStore_ isDisappearingWithADXRecyclerView_ViewHolder:holder];
+        if (oldDisappearing && JreObjectEqualsEquals(oldChangeViewHolder, holder)) {
           [self->mViewInfoStore_ addToPostLayoutWithADXRecyclerView_ViewHolder:holder withADXRecyclerView_ItemAnimator_ItemHolderInfo:animationInfo];
         }
         else {
@@ -2354,15 +2374,15 @@ void ADXRecyclerView_dispatchLayoutStep3(ADXRecyclerView *self) {
   ADXRecyclerView_resetFocusInfo(self);
 }
 
-void ADXRecyclerView_handleMissingPreInfoForChangeErrorWithLong_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_(ADXRecyclerView *self, jlong key, ADXRecyclerView_ViewHolder *holder, ADXRecyclerView_ViewHolder *oldChangeViewHolder) {
-  jint childCount = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount];
-  for (jint i = 0; i < childCount; i++) {
+void ADXRecyclerView_handleMissingPreInfoForChangeErrorWithLong_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_(ADXRecyclerView *self, int64_t key, ADXRecyclerView_ViewHolder *holder, ADXRecyclerView_ViewHolder *oldChangeViewHolder) {
+  int32_t childCount = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADView *view = JreRetainedLocalValue([((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildAtWithInt:i]);
     ADXRecyclerView_ViewHolder *other = ADXRecyclerView_getChildViewHolderIntWithADView_(view);
-    if (other == holder) {
+    if (JreObjectEqualsEquals(other, holder)) {
       continue;
     }
-    jlong otherKey = [self getChangedHolderKeyWithADXRecyclerView_ViewHolder:other];
+    int64_t otherKey = [self getChangedHolderKeyWithADXRecyclerView_ViewHolder:other];
     if (otherKey == key) {
       if (self->mAdapter_ != nil && ADXRecyclerView_Adapter_hasStableIds(self->mAdapter_)) {
         @throw create_JavaLangIllegalStateException_initWithNSString_(JreStrcat("$@$@$", @"Two different ViewHolders have the same stable ID. Stable IDs in your adapter MUST BE unique and SHOULD NOT change.\n ViewHolder 1:", other, @" \n View Holder 2:", holder, [self exceptionLabel]));
@@ -2376,20 +2396,20 @@ void ADXRecyclerView_handleMissingPreInfoForChangeErrorWithLong_withADXRecyclerV
 }
 
 void ADXRecyclerView_findMinMaxChildLayoutPositionsWithIntArray_(ADXRecyclerView *self, IOSIntArray *into) {
-  jint count = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount];
+  int32_t count = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount];
   if (count == 0) {
     *IOSIntArray_GetRef(nil_chk(into), 0) = ADXRecyclerView_NO_POSITION;
     *IOSIntArray_GetRef(into, 1) = ADXRecyclerView_NO_POSITION;
     return;
   }
-  jint minPositionPreLayout = JavaLangInteger_MAX_VALUE;
-  jint maxPositionPreLayout = JavaLangInteger_MIN_VALUE;
-  for (jint i = 0; i < count; ++i) {
+  int32_t minPositionPreLayout = JavaLangInteger_MAX_VALUE;
+  int32_t maxPositionPreLayout = JavaLangInteger_MIN_VALUE;
+  for (int32_t i = 0; i < count; ++i) {
     ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_([((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildAtWithInt:i]);
     if ([((ADXRecyclerView_ViewHolder *) nil_chk(holder)) shouldIgnore]) {
       continue;
     }
-    jint pos = ADXRecyclerView_ViewHolder_getLayoutPosition(holder);
+    int32_t pos = ADXRecyclerView_ViewHolder_getLayoutPosition(holder);
     if (pos < minPositionPreLayout) {
       minPositionPreLayout = pos;
     }
@@ -2401,17 +2421,17 @@ void ADXRecyclerView_findMinMaxChildLayoutPositionsWithIntArray_(ADXRecyclerView
   *IOSIntArray_GetRef(into, 1) = maxPositionPreLayout;
 }
 
-jboolean ADXRecyclerView_didChildRangeChangeWithInt_withInt_(ADXRecyclerView *self, jint minPositionPreLayout, jint maxPositionPreLayout) {
+bool ADXRecyclerView_didChildRangeChangeWithInt_withInt_(ADXRecyclerView *self, int32_t minPositionPreLayout, int32_t maxPositionPreLayout) {
   ADXRecyclerView_findMinMaxChildLayoutPositionsWithIntArray_(self, self->mMinMaxLayoutPositions_);
   return IOSIntArray_Get(nil_chk(self->mMinMaxLayoutPositions_), 0) != minPositionPreLayout || IOSIntArray_Get(self->mMinMaxLayoutPositions_, 1) != maxPositionPreLayout;
 }
 
-void ADXRecyclerView_animateChangeWithADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withADXRecyclerView_ItemAnimator_ItemHolderInfo_withADXRecyclerView_ItemAnimator_ItemHolderInfo_withBoolean_withBoolean_(ADXRecyclerView *self, ADXRecyclerView_ViewHolder *oldHolder, ADXRecyclerView_ViewHolder *newHolder, ADXRecyclerView_ItemAnimator_ItemHolderInfo *preInfo, ADXRecyclerView_ItemAnimator_ItemHolderInfo *postInfo, jboolean oldHolderDisappearing, jboolean newHolderDisappearing) {
+void ADXRecyclerView_animateChangeWithADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withADXRecyclerView_ItemAnimator_ItemHolderInfo_withADXRecyclerView_ItemAnimator_ItemHolderInfo_withBoolean_withBoolean_(ADXRecyclerView *self, ADXRecyclerView_ViewHolder *oldHolder, ADXRecyclerView_ViewHolder *newHolder, ADXRecyclerView_ItemAnimator_ItemHolderInfo *preInfo, ADXRecyclerView_ItemAnimator_ItemHolderInfo *postInfo, bool oldHolderDisappearing, bool newHolderDisappearing) {
   ADXRecyclerView_ViewHolder_setIsRecyclableWithBoolean_(nil_chk(oldHolder), false);
   if (oldHolderDisappearing) {
     ADXRecyclerView_addAnimatingViewWithADXRecyclerView_ViewHolder_(self, oldHolder);
   }
-  if (oldHolder != newHolder) {
+  if (!JreObjectEqualsEquals(oldHolder, newHolder)) {
     if (newHolderDisappearing) {
       ADXRecyclerView_addAnimatingViewWithADXRecyclerView_ViewHolder_(self, newHolder);
     }
@@ -2450,8 +2470,8 @@ ADXRecyclerView *ADXRecyclerView_findNestedRecyclerViewWithADView_(ADView *view)
     return (ADXRecyclerView *) view;
   }
   ADViewGroup *parent = (ADViewGroup *) cast_chk(view, [ADViewGroup class]);
-  jint count = [((ADViewGroup *) nil_chk(parent)) getChildCount];
-  for (jint i = 0; i < count; i++) {
+  int32_t count = [((ADViewGroup *) nil_chk(parent)) getChildCount];
+  for (int32_t i = 0; i < count; i++) {
     ADView *child = [parent getChildAtWithInt:i];
     ADXRecyclerView *descendant = ADXRecyclerView_findNestedRecyclerViewWithADView_(child);
     if (descendant != nil) {
@@ -2466,7 +2486,7 @@ void ADXRecyclerView_clearNestedRecyclerViewIfNotNestedWithADXRecyclerView_ViewH
   if (((ADXRecyclerView_ViewHolder *) nil_chk(holder))->mNestedRecyclerView_ != nil) {
     ADView *item = JreRetainedLocalValue([holder->mNestedRecyclerView_ get]);
     while (item != nil) {
-      if (item == holder->itemView_) {
+      if (JreObjectEqualsEquals(item, holder->itemView_)) {
         return;
       }
       id<ADViewParent> parent = JreRetainedLocalValue([item getParent]);
@@ -2481,7 +2501,7 @@ void ADXRecyclerView_clearNestedRecyclerViewIfNotNestedWithADXRecyclerView_ViewH
   }
 }
 
-void ADXRecyclerView_dispatchNestedScrollWithInt_withInt_withInt_withInt_withIntArray_withInt_withIntArray_(ADXRecyclerView *self, jint dxConsumed, jint dyConsumed, jint dxUnconsumed, jint dyUnconsumed, IOSIntArray *offsetInWindow, jint type, IOSIntArray *consumed) {
+void ADXRecyclerView_dispatchNestedScrollWithInt_withInt_withInt_withInt_withIntArray_withInt_withIntArray_(ADXRecyclerView *self, int32_t dxConsumed, int32_t dyConsumed, int32_t dxUnconsumed, int32_t dyUnconsumed, IOSIntArray *offsetInWindow, int32_t type, IOSIntArray *consumed) {
   [((ADXNestedScrollingChildHelper *) nil_chk(ADXRecyclerView_getScrollingChildHelper(self))) dispatchNestedScrollWithInt:dxConsumed withInt:dyConsumed withInt:dxUnconsumed withInt:dyUnconsumed withIntArray:offsetInWindow withInt:type withIntArray:consumed];
 }
 
@@ -2540,7 +2560,7 @@ ADXRecyclerView *create_ADXRecyclerView_init() {
 void ADXRecyclerView_dispatchContentChangedIfNecessary(ADXRecyclerView *self) {
 }
 
-jboolean ADXRecyclerView_predictiveItemAnimationsEnabled(ADXRecyclerView *self) {
+bool ADXRecyclerView_predictiveItemAnimationsEnabled(ADXRecyclerView *self) {
   return false;
 }
 
@@ -2553,19 +2573,21 @@ void ADXRecyclerView_recoverFocusFromState(ADXRecyclerView *self) {
 void ADXRecyclerView_resetFocusInfo(ADXRecyclerView *self) {
 }
 
-void ADXRecyclerView_onScrollChangedWithInt_withInt_withInt_withInt_(ADXRecyclerView *self, jint scrollX, jint scrollY, jint i, jint j) {
+void ADXRecyclerView_onScrollChangedWithInt_withInt_withInt_withInt_(ADXRecyclerView *self, int32_t scrollX, int32_t scrollY, int32_t i, int32_t j) {
 }
 
-void ADXRecyclerView_onScrolledWithInt_withInt_(ADXRecyclerView *self, jint hresult, jint vresult) {
+void ADXRecyclerView_onScrolledWithInt_withInt_(ADXRecyclerView *self, int32_t hresult, int32_t vresult) {
 }
 
 void ADXRecyclerView_fillRemainingScrollValuesWithADXRecyclerView_State_(ADXRecyclerView *self, ADXRecyclerView_State *state) {
 }
 
-void ADXRecyclerView_pullGlowsWithFloat_withFloat_withFloat_withFloat_(ADXRecyclerView *self, jfloat x, jfloat overscrollX, jfloat y, jfloat overscrollY) {
+void ADXRecyclerView_pullGlowsWithFloat_withFloat_withFloat_withFloat_(ADXRecyclerView *self, float x, float overscrollX, float y, float overscrollY) {
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView)
+
+J2OBJC_NAME_MAPPING(ADXRecyclerView, "androidx.recyclerview.widget", "ADX")
 
 @implementation ADXRecyclerView_1
 
@@ -2601,7 +2623,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView)
     { "this$0_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXRecyclerView;" };
-  static const J2ObjcClassInfo _ADXRecyclerView_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8010, 2, 1, 0, -1, -1, -1, -1 };
+  static const J2ObjcClassInfo _ADXRecyclerView_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 2, 1, 0, -1, -1, -1, -1 };
   return &_ADXRecyclerView_1;
 }
 
@@ -2684,7 +2706,7 @@ ADXRecyclerView_1 *create_ADXRecyclerView_1_initWithADXRecyclerView_(ADXRecycler
     { "this$0_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXRecyclerView;", "processDisappeared", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "processAppeared", "processPersistent", "unused", "LADXRecyclerView_ViewHolder;" };
-  static const J2ObjcClassInfo _ADXRecyclerView_2 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8010, 5, 1, 0, -1, -1, -1, -1 };
+  static const J2ObjcClassInfo _ADXRecyclerView_2 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 5, 1, 0, -1, -1, -1, -1 };
   return &_ADXRecyclerView_2;
 }
 
@@ -2710,21 +2732,21 @@ ADXRecyclerView_2 *create_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecycler
   return self;
 }
 
-- (jint)getChildCount {
+- (int32_t)getChildCount {
   return [this$0_ getChildCount];
 }
 
 - (void)addViewWithADView:(ADView *)child
-                  withInt:(jint)index {
+                  withInt:(int32_t)index {
   [this$0_ addViewWithADView:child withInt:index];
   [this$0_ dispatchChildAttachedWithADView:child];
 }
 
-- (jint)indexOfChildWithADView:(ADView *)view {
+- (int32_t)indexOfChildWithADView:(ADView *)view {
   return [this$0_ indexOfChildWithADView:view];
 }
 
-- (void)removeViewAtWithInt:(jint)index {
+- (void)removeViewAtWithInt:(int32_t)index {
   ADView *child = [this$0_ getChildAtWithInt:index];
   if (child != nil) {
     [this$0_ dispatchChildDetachedWithADView:child];
@@ -2732,13 +2754,13 @@ ADXRecyclerView_2 *create_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecycler
   [this$0_ removeViewAtWithInt:index];
 }
 
-- (ADView *)getChildAtWithInt:(jint)offset {
-  return [this$0_ getChildAtWithInt:offset];
+- (ADView *)getChildAtWithInt:(int32_t)offset {
+  return JreRetainedLocalValue([this$0_ getChildAtWithInt:offset]);
 }
 
 - (void)removeAllViews {
-  jint count = [self getChildCount];
-  for (jint i = 0; i < count; i++) {
+  int32_t count = [self getChildCount];
+  for (int32_t i = 0; i < count; i++) {
     ADView *child = JreRetainedLocalValue([self getChildAtWithInt:i]);
     [this$0_ dispatchChildDetachedWithADView:child];
   }
@@ -2750,7 +2772,7 @@ ADXRecyclerView_2 *create_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecycler
 }
 
 - (void)attachViewToParentWithADView:(ADView *)child
-                             withInt:(jint)index
+                             withInt:(int32_t)index
         withADViewGroup_LayoutParams:(ADViewGroup_LayoutParams *)layoutParams {
   ADXRecyclerView_ViewHolder *vh = ADXRecyclerView_getChildViewHolderIntWithADView_(child);
   if (vh != nil) {
@@ -2762,7 +2784,7 @@ ADXRecyclerView_2 *create_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecycler
   [this$0_ attachViewToParentWithADView:child withInt:index withADViewGroup_LayoutParams:layoutParams];
 }
 
-- (void)detachViewFromParentWithInt:(jint)offset {
+- (void)detachViewFromParentWithInt:(int32_t)offset {
   ADView *view = [self getChildAtWithInt:offset];
   if (view != nil) {
     ADXRecyclerView_ViewHolder *vh = ADXRecyclerView_getChildViewHolderIntWithADView_(view);
@@ -2830,7 +2852,7 @@ ADXRecyclerView_2 *create_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecycler
     { "this$0_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXRecyclerView;", "addView", "LADView;I", "indexOfChild", "LADView;", "removeViewAt", "I", "getChildAt", "getChildViewHolder", "attachViewToParent", "LADView;ILADViewGroup_LayoutParams;", "detachViewFromParent", "onEnteredHiddenState", "onLeftHiddenState", "initChildrenHelper" };
-  static const J2ObjcClassInfo _ADXRecyclerView_3 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8010, 12, 1, 0, -1, 14, -1, -1 };
+  static const J2ObjcClassInfo _ADXRecyclerView_3 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 12, 1, 0, -1, 14, -1, -1 };
   return &_ADXRecyclerView_3;
 }
 
@@ -2856,32 +2878,32 @@ ADXRecyclerView_3 *create_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecycler
   return self;
 }
 
-- (ADXRecyclerView_ViewHolder *)findViewHolderWithInt:(jint)position {
+- (ADXRecyclerView_ViewHolder *)findViewHolderWithInt:(int32_t)position {
   ADXRecyclerView_ViewHolder *vh = [this$0_ findViewHolderForPositionWithInt:position withBoolean:true];
   if (vh == nil) {
-    return nil;
+    return JreRetainedLocalValue(nil);
   }
   if ([((ADXChildHelper *) nil_chk(this$0_->mChildHelper_)) isHiddenWithADView:vh->itemView_]) {
-    return nil;
+    return JreRetainedLocalValue(nil);
   }
-  return vh;
+  return JreRetainedLocalValue(vh);
 }
 
-- (void)offsetPositionsForRemovingInvisibleWithInt:(jint)start
-                                           withInt:(jint)count {
+- (void)offsetPositionsForRemovingInvisibleWithInt:(int32_t)start
+                                           withInt:(int32_t)count {
   [this$0_ offsetPositionRecordsForRemoveWithInt:start withInt:count withBoolean:true];
   this$0_->mItemsAddedOrRemoved_ = true;
   ((ADXRecyclerView_State *) nil_chk(this$0_->mState_))->mDeletedInvisibleItemCountSincePreviousLayout_ += count;
 }
 
-- (void)offsetPositionsForRemovingLaidOutOrNewViewWithInt:(jint)positionStart
-                                                  withInt:(jint)itemCount {
+- (void)offsetPositionsForRemovingLaidOutOrNewViewWithInt:(int32_t)positionStart
+                                                  withInt:(int32_t)itemCount {
   [this$0_ offsetPositionRecordsForRemoveWithInt:positionStart withInt:itemCount withBoolean:false];
   this$0_->mItemsAddedOrRemoved_ = true;
 }
 
-- (void)markViewHoldersUpdatedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount
+- (void)markViewHoldersUpdatedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount
                                withId:(id)payload {
   [this$0_ viewRangeUpdateWithInt:positionStart withInt:itemCount withId:payload];
   this$0_->mItemsChanged_ = true;
@@ -2912,14 +2934,14 @@ ADXRecyclerView_3 *create_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecycler
   [self dispatchUpdateWithADXAdapterHelper_UpdateOp:op];
 }
 
-- (void)offsetPositionsForAddWithInt:(jint)positionStart
-                             withInt:(jint)itemCount {
+- (void)offsetPositionsForAddWithInt:(int32_t)positionStart
+                             withInt:(int32_t)itemCount {
   [this$0_ offsetPositionRecordsForInsertWithInt:positionStart withInt:itemCount];
   this$0_->mItemsAddedOrRemoved_ = true;
 }
 
-- (void)offsetPositionsForMoveWithInt:(jint)from
-                              withInt:(jint)to {
+- (void)offsetPositionsForMoveWithInt:(int32_t)from
+                              withInt:(int32_t)to {
   [this$0_ offsetPositionRecordsForMoveWithInt:from withInt:to];
   this$0_->mItemsAddedOrRemoved_ = true;
 }
@@ -2960,7 +2982,7 @@ ADXRecyclerView_3 *create_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecycler
     { "this$0_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXRecyclerView;", "findViewHolder", "I", "offsetPositionsForRemovingInvisible", "II", "offsetPositionsForRemovingLaidOutOrNewView", "markViewHoldersUpdated", "IILNSObject;", "onDispatchFirstPass", "LADXAdapterHelper_UpdateOp;", "dispatchUpdate", "onDispatchSecondPass", "offsetPositionsForAdd", "offsetPositionsForMove", "initAdapterManager" };
-  static const J2ObjcClassInfo _ADXRecyclerView_4 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8010, 10, 1, 0, -1, 14, -1, -1 };
+  static const J2ObjcClassInfo _ADXRecyclerView_4 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 10, 1, 0, -1, 14, -1, -1 };
   return &_ADXRecyclerView_4;
 }
 
@@ -2991,27 +3013,27 @@ J2OBJC_IGNORE_DESIGNATED_END
 - (void)onChanged {
 }
 
-- (void)onItemRangeChangedWithInt:(jint)positionStart
-                          withInt:(jint)itemCount {
+- (void)onItemRangeChangedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount {
 }
 
-- (void)onItemRangeChangedWithInt:(jint)positionStart
-                          withInt:(jint)itemCount
+- (void)onItemRangeChangedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount
                            withId:(id)payload {
   [self onItemRangeChangedWithInt:positionStart withInt:itemCount];
 }
 
-- (void)onItemRangeInsertedWithInt:(jint)positionStart
-                           withInt:(jint)itemCount {
+- (void)onItemRangeInsertedWithInt:(int32_t)positionStart
+                           withInt:(int32_t)itemCount {
 }
 
-- (void)onItemRangeRemovedWithInt:(jint)positionStart
-                          withInt:(jint)itemCount {
+- (void)onItemRangeRemovedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount {
 }
 
-- (void)onItemRangeMovedWithInt:(jint)fromPosition
-                        withInt:(jint)toPosition
-                        withInt:(jint)itemCount {
+- (void)onItemRangeMovedWithInt:(int32_t)fromPosition
+                        withInt:(int32_t)toPosition
+                        withInt:(int32_t)itemCount {
 }
 
 - (void)onStateRestorationPolicyChanged {
@@ -3069,8 +3091,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_AdapterDataObserver)
   }
 }
 
-- (void)onItemRangeChangedWithInt:(jint)positionStart
-                          withInt:(jint)itemCount
+- (void)onItemRangeChangedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount
                            withId:(id)payload {
   [this$0_ assertNotInLayoutOrScrollWithNSString:nil];
   if ([((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) onItemRangeChangedWithInt:positionStart withInt:itemCount withId:payload]) {
@@ -3078,25 +3100,25 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_AdapterDataObserver)
   }
 }
 
-- (void)onItemRangeInsertedWithInt:(jint)positionStart
-                           withInt:(jint)itemCount {
+- (void)onItemRangeInsertedWithInt:(int32_t)positionStart
+                           withInt:(int32_t)itemCount {
   [this$0_ assertNotInLayoutOrScrollWithNSString:nil];
   if ([((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) onItemRangeInsertedWithInt:positionStart withInt:itemCount]) {
     [self triggerUpdateProcessor];
   }
 }
 
-- (void)onItemRangeRemovedWithInt:(jint)positionStart
-                          withInt:(jint)itemCount {
+- (void)onItemRangeRemovedWithInt:(int32_t)positionStart
+                          withInt:(int32_t)itemCount {
   [this$0_ assertNotInLayoutOrScrollWithNSString:nil];
   if ([((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) onItemRangeRemovedWithInt:positionStart withInt:itemCount]) {
     [self triggerUpdateProcessor];
   }
 }
 
-- (void)onItemRangeMovedWithInt:(jint)fromPosition
-                        withInt:(jint)toPosition
-                        withInt:(jint)itemCount {
+- (void)onItemRangeMovedWithInt:(int32_t)fromPosition
+                        withInt:(int32_t)toPosition
+                        withInt:(int32_t)itemCount {
   [this$0_ assertNotInLayoutOrScrollWithNSString:nil];
   if ([((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) onItemRangeMovedWithInt:fromPosition withInt:toPosition withInt:itemCount]) {
     [self triggerUpdateProcessor];
@@ -3182,14 +3204,14 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)clear {
-  for (jint i = 0; i < [((ADSparseArray *) nil_chk(mScrap_)) size]; i++) {
+  for (int32_t i = 0; i < [((ADSparseArray *) nil_chk(mScrap_)) size]; i++) {
     ADXRecyclerView_RecycledViewPool_ScrapData *data = JreRetainedLocalValue([((ADSparseArray *) nil_chk(mScrap_)) valueAtWithInt:i]);
     [((JavaUtilArrayList *) nil_chk(((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk(data))->mScrapHeap_)) clear];
   }
 }
 
-- (void)setMaxRecycledViewsWithInt:(jint)viewType
-                           withInt:(jint)max {
+- (void)setMaxRecycledViewsWithInt:(int32_t)viewType
+                           withInt:(int32_t)max {
   ADXRecyclerView_RecycledViewPool_ScrapData *scrapData = ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(self, viewType);
   ((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk(scrapData))->mMaxScrap_ = max;
   JavaUtilArrayList *scrapHeap = scrapData->mScrapHeap_;
@@ -3198,15 +3220,15 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (jint)getRecycledViewCountWithInt:(jint)viewType {
+- (int32_t)getRecycledViewCountWithInt:(int32_t)viewType {
   return [((JavaUtilArrayList *) nil_chk(((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk(ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(self, viewType)))->mScrapHeap_)) size];
 }
 
-- (ADXRecyclerView_ViewHolder *)getRecycledViewWithInt:(jint)viewType {
+- (ADXRecyclerView_ViewHolder *)getRecycledViewWithInt:(int32_t)viewType {
   ADXRecyclerView_RecycledViewPool_ScrapData *scrapData = [((ADSparseArray *) nil_chk(mScrap_)) getWithInt:viewType];
   if (scrapData != nil && ![((JavaUtilArrayList *) nil_chk(scrapData->mScrapHeap_)) isEmpty]) {
     JavaUtilArrayList *scrapHeap = scrapData->mScrapHeap_;
-    for (jint i = [((JavaUtilArrayList *) nil_chk(scrapHeap)) size] - 1; i >= 0; i--) {
+    for (int32_t i = [((JavaUtilArrayList *) nil_chk(scrapHeap)) size] - 1; i >= 0; i--) {
       if (![((ADXRecyclerView_ViewHolder *) nil_chk([scrapHeap getWithInt:i])) isAttachedToTransitionOverlay]) {
         return [scrapHeap removeWithInt:i];
       }
@@ -3215,9 +3237,9 @@ J2OBJC_IGNORE_DESIGNATED_END
   return nil;
 }
 
-- (jint)size {
-  jint count = 0;
-  for (jint i = 0; i < [((ADSparseArray *) nil_chk(mScrap_)) size]; i++) {
+- (int32_t)size {
+  int32_t count = 0;
+  for (int32_t i = 0; i < [((ADSparseArray *) nil_chk(mScrap_)) size]; i++) {
     JavaUtilArrayList *viewHolders = JreRetainedLocalValue(((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk([((ADSparseArray *) nil_chk(mScrap_)) valueAtWithInt:i]))->mScrapHeap_);
     if (viewHolders != nil) {
       count += [viewHolders size];
@@ -3227,7 +3249,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (void)putRecycledViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)scrap {
-  jint viewType = ADXRecyclerView_ViewHolder_getItemViewType(nil_chk(scrap));
+  int32_t viewType = ADXRecyclerView_ViewHolder_getItemViewType(nil_chk(scrap));
   JavaUtilArrayList *scrapHeap = ((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk(ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(self, viewType)))->mScrapHeap_;
   if (((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk([((ADSparseArray *) nil_chk(mScrap_)) getWithInt:viewType]))->mMaxScrap_ <= [((JavaUtilArrayList *) nil_chk(scrapHeap)) size]) {
     return;
@@ -3236,37 +3258,37 @@ J2OBJC_IGNORE_DESIGNATED_END
   [scrapHeap addWithId:scrap];
 }
 
-- (jlong)runningAverageWithLong:(jlong)oldAverage
-                       withLong:(jlong)newValue {
+- (int64_t)runningAverageWithLong:(int64_t)oldAverage
+                         withLong:(int64_t)newValue {
   if (oldAverage == 0) {
     return newValue;
   }
   return (JreLongDiv(oldAverage, 4) * 3) + (JreLongDiv(newValue, 4));
 }
 
-- (void)factorInCreateTimeWithInt:(jint)viewType
-                         withLong:(jlong)createTimeNs {
+- (void)factorInCreateTimeWithInt:(int32_t)viewType
+                         withLong:(int64_t)createTimeNs {
   ADXRecyclerView_RecycledViewPool_ScrapData *scrapData = ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(self, viewType);
   ((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk(scrapData))->mCreateRunningAverageNs_ = [self runningAverageWithLong:scrapData->mCreateRunningAverageNs_ withLong:createTimeNs];
 }
 
-- (void)factorInBindTimeWithInt:(jint)viewType
-                       withLong:(jlong)bindTimeNs {
+- (void)factorInBindTimeWithInt:(int32_t)viewType
+                       withLong:(int64_t)bindTimeNs {
   ADXRecyclerView_RecycledViewPool_ScrapData *scrapData = ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(self, viewType);
   ((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk(scrapData))->mBindRunningAverageNs_ = [self runningAverageWithLong:scrapData->mBindRunningAverageNs_ withLong:bindTimeNs];
 }
 
-- (jboolean)willCreateInTimeWithInt:(jint)viewType
-                           withLong:(jlong)approxCurrentNs
-                           withLong:(jlong)deadlineNs {
-  jlong expectedDurationNs = ((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk(ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(self, viewType)))->mCreateRunningAverageNs_;
+- (bool)willCreateInTimeWithInt:(int32_t)viewType
+                       withLong:(int64_t)approxCurrentNs
+                       withLong:(int64_t)deadlineNs {
+  int64_t expectedDurationNs = ((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk(ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(self, viewType)))->mCreateRunningAverageNs_;
   return expectedDurationNs == 0 || (approxCurrentNs + expectedDurationNs < deadlineNs);
 }
 
-- (jboolean)willBindInTimeWithInt:(jint)viewType
-                         withLong:(jlong)approxCurrentNs
-                         withLong:(jlong)deadlineNs {
-  jlong expectedDurationNs = ((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk(ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(self, viewType)))->mBindRunningAverageNs_;
+- (bool)willBindInTimeWithInt:(int32_t)viewType
+                     withLong:(int64_t)approxCurrentNs
+                     withLong:(int64_t)deadlineNs {
+  int64_t expectedDurationNs = ((ADXRecyclerView_RecycledViewPool_ScrapData *) nil_chk(ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(self, viewType)))->mBindRunningAverageNs_;
   return expectedDurationNs == 0 || (approxCurrentNs + expectedDurationNs < deadlineNs);
 }
 
@@ -3280,7 +3302,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)onAdapterChangedWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)oldAdapter
                         withADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)newAdapter
-                                        withBoolean:(jboolean)compatibleWithPrevious {
+                                        withBoolean:(bool)compatibleWithPrevious {
   if (oldAdapter != nil) {
     [self detach];
   }
@@ -3292,7 +3314,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (ADXRecyclerView_RecycledViewPool_ScrapData *)getScrapDataForTypeWithInt:(jint)viewType {
+- (ADXRecyclerView_RecycledViewPool_ScrapData *)getScrapDataForTypeWithInt:(int32_t)viewType {
   return ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(self, viewType);
 }
 
@@ -3366,7 +3388,7 @@ ADXRecyclerView_RecycledViewPool *create_ADXRecyclerView_RecycledViewPool_init()
   J2OBJC_CREATE_IMPL(ADXRecyclerView_RecycledViewPool, init)
 }
 
-ADXRecyclerView_RecycledViewPool_ScrapData *ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(ADXRecyclerView_RecycledViewPool *self, jint viewType) {
+ADXRecyclerView_RecycledViewPool_ScrapData *ADXRecyclerView_RecycledViewPool_getScrapDataForTypeWithInt_(ADXRecyclerView_RecycledViewPool *self, int32_t viewType) {
   ADXRecyclerView_RecycledViewPool_ScrapData *scrapData = JreRetainedLocalValue([((ADSparseArray *) nil_chk(self->mScrap_)) getWithInt:viewType]);
   if (scrapData == nil) {
     scrapData = create_ADXRecyclerView_RecycledViewPool_ScrapData_init();
@@ -3443,15 +3465,15 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   [self recycleAndClearCachedViews];
 }
 
-- (void)setViewCacheSizeWithInt:(jint)viewCount {
+- (void)setViewCacheSizeWithInt:(int32_t)viewCount {
   mRequestedCacheMax_ = viewCount;
   [self updateViewCacheSize];
 }
 
 - (void)updateViewCacheSize {
-  jint extraCache = this$0_->mLayout_ != nil ? this$0_->mLayout_->mPrefetchMaxCountObserved_ : 0;
+  int32_t extraCache = this$0_->mLayout_ != nil ? this$0_->mLayout_->mPrefetchMaxCountObserved_ : 0;
   mViewCacheMax_ = mRequestedCacheMax_ + extraCache;
-  for (jint i = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size] - 1; i >= 0 && [mCachedViews_ size] > mViewCacheMax_; i--) {
+  for (int32_t i = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size] - 1; i >= 0 && [mCachedViews_ size] > mViewCacheMax_; i--) {
     [self recycleCachedViewAtWithInt:i];
   }
 }
@@ -3460,7 +3482,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   return mUnmodifiableAttachedScrap_;
 }
 
-- (jboolean)validateViewHolderForOffsetPositionWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
+- (bool)validateViewHolderForOffsetPositionWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
   if ([((ADXRecyclerView_ViewHolder *) nil_chk(holder)) isRemoved]) {
     return [((ADXRecyclerView_State *) nil_chk(this$0_->mState_)) isPreLayout];
   }
@@ -3468,7 +3490,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
     @throw create_JavaLangIndexOutOfBoundsException_initWithNSString_(JreStrcat("$@$", @"Inconsistency detected. Invalid view holder adapter position", holder, [this$0_ exceptionLabel]));
   }
   if (![((ADXRecyclerView_State *) nil_chk(this$0_->mState_)) isPreLayout]) {
-    jint type = [((ADXRecyclerView_Adapter *) nil_chk(this$0_->mAdapter_)) getItemViewTypeWithInt:holder->mPosition_];
+    int32_t type = [((ADXRecyclerView_Adapter *) nil_chk(this$0_->mAdapter_)) getItemViewTypeWithInt:holder->mPosition_];
     if (type != ADXRecyclerView_ViewHolder_getItemViewType(holder)) {
       return false;
     }
@@ -3479,20 +3501,20 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   return true;
 }
 
-- (jboolean)tryBindViewHolderByDeadlineWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                                              withInt:(jint)offsetPosition
-                                                              withInt:(jint)position
-                                                             withLong:(jlong)deadlineNs {
+- (bool)tryBindViewHolderByDeadlineWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
+                                                          withInt:(int32_t)offsetPosition
+                                                          withInt:(int32_t)position
+                                                         withLong:(int64_t)deadlineNs {
   return ADXRecyclerView_Recycler_tryBindViewHolderByDeadlineWithADXRecyclerView_ViewHolder_withInt_withInt_withLong_(self, holder, offsetPosition, position, deadlineNs);
 }
 
 - (void)bindViewToPositionWithADView:(ADView *)view
-                             withInt:(jint)position {
+                             withInt:(int32_t)position {
   ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_(view);
   if (holder == nil) {
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(JreStrcat("$$", @"The view does not have a ViewHolder. You cannot pass arbitrary views to this method, they should be created by the Adapter", [this$0_ exceptionLabel]));
   }
-  jint offsetPosition = [((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) findPositionOffsetWithInt:position];
+  int32_t offsetPosition = [((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) findPositionOffsetWithInt:position];
   if (offsetPosition < 0 || offsetPosition >= [((ADXRecyclerView_Adapter *) nil_chk(this$0_->mAdapter_)) getItemCount]) {
     @throw create_JavaLangIndexOutOfBoundsException_initWithNSString_(JreStrcat("$I$I$I$", @"Inconsistency detected. Invalid item position ", position, @"(offset:", offsetPosition, @").state:", [((ADXRecyclerView_State *) nil_chk(this$0_->mState_)) getItemCount], [this$0_ exceptionLabel]));
   }
@@ -3515,7 +3537,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   rvLayoutParams->mPendingInvalidate_ = ([holder->itemView_ getParent] == nil);
 }
 
-- (jint)convertPreLayoutPositionToPostLayoutWithInt:(jint)position {
+- (int32_t)convertPreLayoutPositionToPostLayoutWithInt:(int32_t)position {
   if (position < 0 || position >= [((ADXRecyclerView_State *) nil_chk(this$0_->mState_)) getItemCount]) {
     @throw create_JavaLangIndexOutOfBoundsException_initWithNSString_(JreStrcat("$I$I$", @"invalid position ", position, @". State item count is ", [((ADXRecyclerView_State *) nil_chk(this$0_->mState_)) getItemCount], [this$0_ exceptionLabel]));
   }
@@ -3525,22 +3547,22 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   return [((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) findPositionOffsetWithInt:position];
 }
 
-- (ADView *)getViewForPositionWithInt:(jint)position {
+- (ADView *)getViewForPositionWithInt:(int32_t)position {
   return [self getViewForPositionWithInt:position withBoolean:false];
 }
 
-- (ADView *)getViewForPositionWithInt:(jint)position
-                          withBoolean:(jboolean)dryRun {
+- (ADView *)getViewForPositionWithInt:(int32_t)position
+                          withBoolean:(bool)dryRun {
   return ((ADXRecyclerView_ViewHolder *) nil_chk([self tryGetViewHolderForPositionByDeadlineWithInt:position withBoolean:dryRun withLong:ADXRecyclerView_FOREVER_NS]))->itemView_;
 }
 
-- (ADXRecyclerView_ViewHolder *)tryGetViewHolderForPositionByDeadlineWithInt:(jint)position
-                                                                 withBoolean:(jboolean)dryRun
-                                                                    withLong:(jlong)deadlineNs {
+- (ADXRecyclerView_ViewHolder *)tryGetViewHolderForPositionByDeadlineWithInt:(int32_t)position
+                                                                 withBoolean:(bool)dryRun
+                                                                    withLong:(int64_t)deadlineNs {
   if (position < 0 || position >= [((ADXRecyclerView_State *) nil_chk(this$0_->mState_)) getItemCount]) {
     @throw create_JavaLangIndexOutOfBoundsException_initWithNSString_(JreStrcat("$ICI$I$", @"Invalid item position ", position, '(', position, @"). Item count:", [((ADXRecyclerView_State *) nil_chk(this$0_->mState_)) getItemCount], [this$0_ exceptionLabel]));
   }
-  jboolean fromScrapOrHiddenOrCache = false;
+  bool fromScrapOrHiddenOrCache = false;
   ADXRecyclerView_ViewHolder *holder = nil;
   if ([((ADXRecyclerView_State *) nil_chk(this$0_->mState_)) isPreLayout]) {
     holder = [self getChangedScrapViewForPositionWithInt:position];
@@ -3569,11 +3591,11 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
     }
   }
   if (holder == nil) {
-    jint offsetPosition = [((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) findPositionOffsetWithInt:position];
+    int32_t offsetPosition = [((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) findPositionOffsetWithInt:position];
     if (offsetPosition < 0 || offsetPosition >= [((ADXRecyclerView_Adapter *) nil_chk(this$0_->mAdapter_)) getItemCount]) {
       @throw create_JavaLangIndexOutOfBoundsException_initWithNSString_(JreStrcat("$I$I$I$", @"Inconsistency detected. Invalid item position ", position, @"(offset:", offsetPosition, @").state:", [this$0_->mState_ getItemCount], [this$0_ exceptionLabel]));
     }
-    jint type = [((ADXRecyclerView_Adapter *) nil_chk(this$0_->mAdapter_)) getItemViewTypeWithInt:offsetPosition];
+    int32_t type = [((ADXRecyclerView_Adapter *) nil_chk(this$0_->mAdapter_)) getItemViewTypeWithInt:offsetPosition];
     if (ADXRecyclerView_Adapter_hasStableIds(nil_chk(this$0_->mAdapter_))) {
       holder = [self getScrapOrCachedViewForIdWithLong:[((ADXRecyclerView_Adapter *) nil_chk(this$0_->mAdapter_)) getItemIdWithInt:offsetPosition] withInt:type withBoolean:dryRun];
       if (holder != nil) {
@@ -3600,7 +3622,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
       }
     }
     if (holder == nil) {
-      jlong start = [this$0_ getNanoTime];
+      int64_t start = [this$0_ getNanoTime];
       if (deadlineNs != ADXRecyclerView_FOREVER_NS && ![((ADXRecyclerView_RecycledViewPool *) nil_chk(mRecyclerPool_)) willCreateInTimeWithInt:type withLong:start withLong:deadlineNs]) {
         return nil;
       }
@@ -3611,25 +3633,25 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
           JreStrongAssignAndConsume(&holder->mNestedRecyclerView_, new_JavaLangRefWeakReference_initWithId_(innerView));
         }
       }
-      jlong end = [this$0_ getNanoTime];
+      int64_t end = [this$0_ getNanoTime];
       [((ADXRecyclerView_RecycledViewPool *) nil_chk(mRecyclerPool_)) factorInCreateTimeWithInt:type withLong:end - start];
     }
   }
   if (fromScrapOrHiddenOrCache && ![this$0_->mState_ isPreLayout] && [holder hasAnyOfTheFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_BOUNCED_FROM_HIDDEN_LIST]) {
     [holder setFlagsWithInt:0 withInt:ADXRecyclerView_ViewHolder_FLAG_BOUNCED_FROM_HIDDEN_LIST];
     if (this$0_->mState_->mRunSimpleAnimations_) {
-      jint changeFlags = ADXRecyclerView_ItemAnimator_buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder_(holder);
+      int32_t changeFlags = ADXRecyclerView_ItemAnimator_buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder_(holder);
       changeFlags |= ADXRecyclerView_ItemAnimator_FLAG_APPEARED_IN_PRE_LAYOUT;
       ADXRecyclerView_ItemAnimator_ItemHolderInfo *info = [((ADXRecyclerView_ItemAnimator *) nil_chk(this$0_->mItemAnimator_)) recordPreLayoutInformationWithADXRecyclerView_State:this$0_->mState_ withADXRecyclerView_ViewHolder:holder withInt:changeFlags withJavaUtilList:[holder getUnmodifiedPayloads]];
       [this$0_ recordAnimationInfoIfBouncedHiddenViewWithADXRecyclerView_ViewHolder:holder withADXRecyclerView_ItemAnimator_ItemHolderInfo:info];
     }
   }
-  jboolean bound = false;
+  bool bound = false;
   if ([this$0_->mState_ isPreLayout] && [holder isBound]) {
     holder->mPreLayoutPosition_ = position;
   }
   else if (![holder isBound] || [holder needsUpdate] || [holder isInvalid]) {
-    jint offsetPosition = [((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) findPositionOffsetWithInt:position];
+    int32_t offsetPosition = [((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) findPositionOffsetWithInt:position];
     bound = ADXRecyclerView_Recycler_tryBindViewHolderByDeadlineWithADXRecyclerView_ViewHolder_withInt_withInt_withLong_(self, holder, offsetPosition, position, deadlineNs);
   }
   ADViewGroup_LayoutParams *lp = [((ADView *) nil_chk(holder->itemView_)) getLayoutParams];
@@ -3655,7 +3677,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
 }
 
 - (void)invalidateDisplayListIntWithADViewGroup:(ADViewGroup *)viewGroup
-                                    withBoolean:(jboolean)invalidateThis {
+                                    withBoolean:(bool)invalidateThis {
   ADXRecyclerView_Recycler_invalidateDisplayListIntWithADViewGroup_withBoolean_(self, viewGroup, invalidateThis);
 }
 
@@ -3677,8 +3699,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
 }
 
 - (void)recycleAndClearCachedViews {
-  jint count = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
-  for (jint i = count - 1; i >= 0; i--) {
+  int32_t count = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
+  for (int32_t i = count - 1; i >= 0; i--) {
     [self recycleCachedViewAtWithInt:i];
   }
   [mCachedViews_ clear];
@@ -3687,7 +3709,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   }
 }
 
-- (void)recycleCachedViewAtWithInt:(jint)cachedViewIndex {
+- (void)recycleCachedViewAtWithInt:(int32_t)cachedViewIndex {
   ADXRecyclerView_ViewHolder *viewHolder = JreRetainedLocalValue([((JavaUtilArrayList *) nil_chk(mCachedViews_)) getWithInt:cachedViewIndex]);
   [self addViewHolderToRecycledViewPoolWithADXRecyclerView_ViewHolder:viewHolder withBoolean:true];
   [mCachedViews_ removeWithInt:cachedViewIndex];
@@ -3703,22 +3725,22 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   if ([holder shouldIgnore]) {
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(JreStrcat("$$", @"Trying to recycle an ignored view holder. You should first call stopIgnoringView(view) before calling recycle.", [this$0_ exceptionLabel]));
   }
-  jboolean transientStatePreventsRecycling = [holder doesTransientStatePreventRecycling];
-  jboolean forceRecycle = this$0_->mAdapter_ != nil && transientStatePreventsRecycling && [this$0_->mAdapter_ onFailedToRecycleViewWithADXRecyclerView_ViewHolder:holder];
-  jboolean cached = false;
-  jboolean recycled = false;
+  bool transientStatePreventsRecycling = [holder doesTransientStatePreventRecycling];
+  bool forceRecycle = this$0_->mAdapter_ != nil && transientStatePreventsRecycling && [this$0_->mAdapter_ onFailedToRecycleViewWithADXRecyclerView_ViewHolder:holder];
+  bool cached = false;
+  bool recycled = false;
   if (forceRecycle || ADXRecyclerView_ViewHolder_isRecyclable(holder)) {
     if (mViewCacheMax_ > 0 && ![holder hasAnyOfTheFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_INVALID | ADXRecyclerView_ViewHolder_FLAG_REMOVED | ADXRecyclerView_ViewHolder_FLAG_UPDATE | ADXRecyclerView_ViewHolder_FLAG_ADAPTER_POSITION_UNKNOWN]) {
-      jint cachedViewSize = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
+      int32_t cachedViewSize = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
       if (cachedViewSize >= mViewCacheMax_ && cachedViewSize > 0) {
         [self recycleCachedViewAtWithInt:0];
         cachedViewSize--;
       }
-      jint targetCacheIndex = cachedViewSize;
+      int32_t targetCacheIndex = cachedViewSize;
       if (cachedViewSize > 0 && ![((ADXGapWorker_LayoutPrefetchRegistryImpl *) nil_chk(this$0_->mPrefetchRegistry_)) lastPrefetchIncludedPositionWithInt:holder->mPosition_]) {
-        jint cacheIndex = cachedViewSize - 1;
+        int32_t cacheIndex = cachedViewSize - 1;
         while (cacheIndex >= 0) {
-          jint cachedPos = ((ADXRecyclerView_ViewHolder *) nil_chk([mCachedViews_ getWithInt:cacheIndex]))->mPosition_;
+          int32_t cachedPos = ((ADXRecyclerView_ViewHolder *) nil_chk([mCachedViews_ getWithInt:cacheIndex]))->mPosition_;
           if (![((ADXGapWorker_LayoutPrefetchRegistryImpl *) nil_chk(this$0_->mPrefetchRegistry_)) lastPrefetchIncludedPositionWithInt:cachedPos]) {
             break;
           }
@@ -3744,7 +3766,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
 }
 
 - (void)addViewHolderToRecycledViewPoolWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                                          withBoolean:(jboolean)dispatchRecycled {
+                                                          withBoolean:(bool)dispatchRecycled {
   ADXRecyclerView_clearNestedRecyclerViewIfNotNestedWithADXRecyclerView_ViewHolder_(holder);
   ADView *itemView = JreRetainedLocalValue(((ADXRecyclerView_ViewHolder *) nil_chk(holder))->itemView_);
   if (dispatchRecycled) {
@@ -3793,11 +3815,11 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   [holder clearReturnedFromScrapFlag];
 }
 
-- (jint)getScrapCount {
+- (int32_t)getScrapCount {
   return [((JavaUtilArrayList *) nil_chk(mAttachedScrap_)) size];
 }
 
-- (ADView *)getScrapViewAtWithInt:(jint)index {
+- (ADView *)getScrapViewAtWithInt:(int32_t)index {
   return ((ADXRecyclerView_ViewHolder *) nil_chk([((JavaUtilArrayList *) nil_chk(mAttachedScrap_)) getWithInt:index]))->itemView_;
 }
 
@@ -3808,12 +3830,12 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   }
 }
 
-- (ADXRecyclerView_ViewHolder *)getChangedScrapViewForPositionWithInt:(jint)position {
-  jint changedScrapSize;
+- (ADXRecyclerView_ViewHolder *)getChangedScrapViewForPositionWithInt:(int32_t)position {
+  int32_t changedScrapSize;
   if (mChangedScrap_ == nil || (changedScrapSize = [mChangedScrap_ size]) == 0) {
     return nil;
   }
-  for (jint i = 0; i < changedScrapSize; i++) {
+  for (int32_t i = 0; i < changedScrapSize; i++) {
     ADXRecyclerView_ViewHolder *holder = [((JavaUtilArrayList *) nil_chk(mChangedScrap_)) getWithInt:i];
     if (![((ADXRecyclerView_ViewHolder *) nil_chk(holder)) wasReturnedFromScrap] && ADXRecyclerView_ViewHolder_getLayoutPosition(holder) == position) {
       [holder addFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_RETURNED_FROM_SCRAP];
@@ -3821,10 +3843,10 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
     }
   }
   if (ADXRecyclerView_Adapter_hasStableIds(nil_chk(this$0_->mAdapter_))) {
-    jint offsetPosition = [((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) findPositionOffsetWithInt:position];
+    int32_t offsetPosition = [((ADXAdapterHelper *) nil_chk(this$0_->mAdapterHelper_)) findPositionOffsetWithInt:position];
     if (offsetPosition > 0 && offsetPosition < [((ADXRecyclerView_Adapter *) nil_chk(this$0_->mAdapter_)) getItemCount]) {
-      jlong id_ = [((ADXRecyclerView_Adapter *) nil_chk(this$0_->mAdapter_)) getItemIdWithInt:offsetPosition];
-      for (jint i = 0; i < changedScrapSize; i++) {
+      int64_t id_ = [((ADXRecyclerView_Adapter *) nil_chk(this$0_->mAdapter_)) getItemIdWithInt:offsetPosition];
+      for (int32_t i = 0; i < changedScrapSize; i++) {
         ADXRecyclerView_ViewHolder *holder = [((JavaUtilArrayList *) nil_chk(mChangedScrap_)) getWithInt:i];
         if (![((ADXRecyclerView_ViewHolder *) nil_chk(holder)) wasReturnedFromScrap] && ADXRecyclerView_ViewHolder_getItemId(holder) == id_) {
           [holder addFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_RETURNED_FROM_SCRAP];
@@ -3836,10 +3858,10 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   return nil;
 }
 
-- (ADXRecyclerView_ViewHolder *)getScrapOrHiddenOrCachedHolderForPositionWithInt:(jint)position
-                                                                     withBoolean:(jboolean)dryRun {
-  jint scrapCount = [((JavaUtilArrayList *) nil_chk(mAttachedScrap_)) size];
-  for (jint i = 0; i < scrapCount; i++) {
+- (ADXRecyclerView_ViewHolder *)getScrapOrHiddenOrCachedHolderForPositionWithInt:(int32_t)position
+                                                                     withBoolean:(bool)dryRun {
+  int32_t scrapCount = [((JavaUtilArrayList *) nil_chk(mAttachedScrap_)) size];
+  for (int32_t i = 0; i < scrapCount; i++) {
     ADXRecyclerView_ViewHolder *holder = [mAttachedScrap_ getWithInt:i];
     if (![((ADXRecyclerView_ViewHolder *) nil_chk(holder)) wasReturnedFromScrap] && ADXRecyclerView_ViewHolder_getLayoutPosition(holder) == position && ![holder isInvalid] && (((ADXRecyclerView_State *) nil_chk(this$0_->mState_))->mInPreLayout_ || ![holder isRemoved])) {
       [holder addFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_RETURNED_FROM_SCRAP];
@@ -3851,7 +3873,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
     if (view != nil) {
       ADXRecyclerView_ViewHolder *vh = ADXRecyclerView_getChildViewHolderIntWithADView_(view);
       [((ADXChildHelper *) nil_chk(this$0_->mChildHelper_)) unhideWithADView:view];
-      jint layoutIndex = [((ADXChildHelper *) nil_chk(this$0_->mChildHelper_)) indexOfChildWithADView:view];
+      int32_t layoutIndex = [((ADXChildHelper *) nil_chk(this$0_->mChildHelper_)) indexOfChildWithADView:view];
       if (layoutIndex == ADXRecyclerView_NO_POSITION) {
         @throw create_JavaLangIllegalStateException_initWithNSString_(JreStrcat("$@$", @"layout index should not be -1 after unhiding a view:", vh, [this$0_ exceptionLabel]));
       }
@@ -3861,8 +3883,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
       return vh;
     }
   }
-  jint cacheSize = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
-  for (jint i = 0; i < cacheSize; i++) {
+  int32_t cacheSize = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
+  for (int32_t i = 0; i < cacheSize; i++) {
     ADXRecyclerView_ViewHolder *holder = [mCachedViews_ getWithInt:i];
     if (![((ADXRecyclerView_ViewHolder *) nil_chk(holder)) isInvalid] && ADXRecyclerView_ViewHolder_getLayoutPosition(holder) == position && ![holder isAttachedToTransitionOverlay]) {
       if (!dryRun) {
@@ -3874,11 +3896,11 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   return nil;
 }
 
-- (ADXRecyclerView_ViewHolder *)getScrapOrCachedViewForIdWithLong:(jlong)id_
-                                                          withInt:(jint)type
-                                                      withBoolean:(jboolean)dryRun {
-  jint count = [((JavaUtilArrayList *) nil_chk(mAttachedScrap_)) size];
-  for (jint i = count - 1; i >= 0; i--) {
+- (ADXRecyclerView_ViewHolder *)getScrapOrCachedViewForIdWithLong:(int64_t)id_
+                                                          withInt:(int32_t)type
+                                                      withBoolean:(bool)dryRun {
+  int32_t count = [((JavaUtilArrayList *) nil_chk(mAttachedScrap_)) size];
+  for (int32_t i = count - 1; i >= 0; i--) {
     ADXRecyclerView_ViewHolder *holder = [mAttachedScrap_ getWithInt:i];
     if (ADXRecyclerView_ViewHolder_getItemId(nil_chk(holder)) == id_ && ![holder wasReturnedFromScrap]) {
       if (type == ADXRecyclerView_ViewHolder_getItemViewType(holder)) {
@@ -3897,8 +3919,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
       }
     }
   }
-  jint cacheSize = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
-  for (jint i = cacheSize - 1; i >= 0; i--) {
+  int32_t cacheSize = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
+  for (int32_t i = cacheSize - 1; i >= 0; i--) {
     ADXRecyclerView_ViewHolder *holder = [mCachedViews_ getWithInt:i];
     if (ADXRecyclerView_ViewHolder_getItemId(nil_chk(holder)) == id_ && ![holder isAttachedToTransitionOverlay]) {
       if (type == ADXRecyclerView_ViewHolder_getItemViewType(holder)) {
@@ -3920,8 +3942,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   if (this$0_->mRecyclerListener_ != nil) {
     [this$0_->mRecyclerListener_ onViewRecycledWithADXRecyclerView_ViewHolder:holder];
   }
-  jint listenerCount = [((id<JavaUtilList>) nil_chk(this$0_->mRecyclerListeners_)) size];
-  for (jint i = 0; i < listenerCount; i++) {
+  int32_t listenerCount = [((id<JavaUtilList>) nil_chk(this$0_->mRecyclerListeners_)) size];
+  for (int32_t i = 0; i < listenerCount; i++) {
     [((id<ADXRecyclerView_RecyclerListener>) nil_chk([this$0_->mRecyclerListeners_ getWithInt:i])) onViewRecycledWithADXRecyclerView_ViewHolder:holder];
   }
   if (this$0_->mAdapter_ != nil) {
@@ -3934,16 +3956,16 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
 
 - (void)onAdapterChangedWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)oldAdapter
                         withADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)newAdapter
-                                        withBoolean:(jboolean)compatibleWithPrevious {
+                                        withBoolean:(bool)compatibleWithPrevious {
   [self clear];
   [((ADXRecyclerView_RecycledViewPool *) nil_chk([self getRecycledViewPool])) onAdapterChangedWithADXRecyclerView_Adapter:oldAdapter withADXRecyclerView_Adapter:newAdapter withBoolean:compatibleWithPrevious];
 }
 
-- (void)offsetPositionRecordsForMoveWithInt:(jint)from
-                                    withInt:(jint)to {
-  jint start;
-  jint end;
-  jint inBetweenOffset;
+- (void)offsetPositionRecordsForMoveWithInt:(int32_t)from
+                                    withInt:(int32_t)to {
+  int32_t start;
+  int32_t end;
+  int32_t inBetweenOffset;
   if (from < to) {
     start = from;
     end = to;
@@ -3954,8 +3976,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
     end = from;
     inBetweenOffset = 1;
   }
-  jint cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
-  for (jint i = 0; i < cachedCount; i++) {
+  int32_t cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
+  for (int32_t i = 0; i < cachedCount; i++) {
     ADXRecyclerView_ViewHolder *holder = [mCachedViews_ getWithInt:i];
     if (holder == nil || holder->mPosition_ < start || holder->mPosition_ > end) {
       continue;
@@ -3969,10 +3991,10 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   }
 }
 
-- (void)offsetPositionRecordsForInsertWithInt:(jint)insertedAt
-                                      withInt:(jint)count {
-  jint cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
-  for (jint i = 0; i < cachedCount; i++) {
+- (void)offsetPositionRecordsForInsertWithInt:(int32_t)insertedAt
+                                      withInt:(int32_t)count {
+  int32_t cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
+  for (int32_t i = 0; i < cachedCount; i++) {
     ADXRecyclerView_ViewHolder *holder = [mCachedViews_ getWithInt:i];
     if (holder != nil && holder->mPosition_ >= insertedAt) {
       [holder offsetPositionWithInt:count withBoolean:false];
@@ -3980,12 +4002,12 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   }
 }
 
-- (void)offsetPositionRecordsForRemoveWithInt:(jint)removedFrom
-                                      withInt:(jint)count
-                                  withBoolean:(jboolean)applyToPreLayout {
-  jint removedEnd = removedFrom + count;
-  jint cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
-  for (jint i = cachedCount - 1; i >= 0; i--) {
+- (void)offsetPositionRecordsForRemoveWithInt:(int32_t)removedFrom
+                                      withInt:(int32_t)count
+                                  withBoolean:(bool)applyToPreLayout {
+  int32_t removedEnd = removedFrom + count;
+  int32_t cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
+  for (int32_t i = cachedCount - 1; i >= 0; i--) {
     ADXRecyclerView_ViewHolder *holder = [mCachedViews_ getWithInt:i];
     if (holder != nil) {
       if (holder->mPosition_ >= removedEnd) {
@@ -4020,16 +4042,16 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
   return mRecyclerPool_;
 }
 
-- (void)viewRangeUpdateWithInt:(jint)positionStart
-                       withInt:(jint)itemCount {
-  jint positionEnd = positionStart + itemCount;
-  jint cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
-  for (jint i = cachedCount - 1; i >= 0; i--) {
+- (void)viewRangeUpdateWithInt:(int32_t)positionStart
+                       withInt:(int32_t)itemCount {
+  int32_t positionEnd = positionStart + itemCount;
+  int32_t cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
+  for (int32_t i = cachedCount - 1; i >= 0; i--) {
     ADXRecyclerView_ViewHolder *holder = [mCachedViews_ getWithInt:i];
     if (holder == nil) {
       continue;
     }
-    jint pos = holder->mPosition_;
+    int32_t pos = holder->mPosition_;
     if (pos >= positionStart && pos < positionEnd) {
       [holder addFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_UPDATE];
       [self recycleCachedViewAtWithInt:i];
@@ -4038,8 +4060,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
 }
 
 - (void)markKnownViewsInvalid {
-  jint cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
-  for (jint i = 0; i < cachedCount; i++) {
+  int32_t cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
+  for (int32_t i = 0; i < cachedCount; i++) {
     ADXRecyclerView_ViewHolder *holder = [mCachedViews_ getWithInt:i];
     if (holder != nil) {
       [holder addFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_UPDATE | ADXRecyclerView_ViewHolder_FLAG_INVALID];
@@ -4052,26 +4074,26 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_RecycledViewPool_ScrapData)
 }
 
 - (void)clearOldPositions {
-  jint cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
-  for (jint i = 0; i < cachedCount; i++) {
+  int32_t cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
+  for (int32_t i = 0; i < cachedCount; i++) {
     ADXRecyclerView_ViewHolder *holder = [mCachedViews_ getWithInt:i];
     [((ADXRecyclerView_ViewHolder *) nil_chk(holder)) clearOldPosition];
   }
-  jint scrapCount = [((JavaUtilArrayList *) nil_chk(mAttachedScrap_)) size];
-  for (jint i = 0; i < scrapCount; i++) {
+  int32_t scrapCount = [((JavaUtilArrayList *) nil_chk(mAttachedScrap_)) size];
+  for (int32_t i = 0; i < scrapCount; i++) {
     [((ADXRecyclerView_ViewHolder *) nil_chk([mAttachedScrap_ getWithInt:i])) clearOldPosition];
   }
   if (mChangedScrap_ != nil) {
-    jint changedScrapCount = [mChangedScrap_ size];
-    for (jint i = 0; i < changedScrapCount; i++) {
+    int32_t changedScrapCount = [mChangedScrap_ size];
+    for (int32_t i = 0; i < changedScrapCount; i++) {
       [((ADXRecyclerView_ViewHolder *) nil_chk([((JavaUtilArrayList *) nil_chk(mChangedScrap_)) getWithInt:i])) clearOldPosition];
     }
   }
 }
 
 - (void)markItemDecorInsetsDirty {
-  jint cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
-  for (jint i = 0; i < cachedCount; i++) {
+  int32_t cachedCount = [((JavaUtilArrayList *) nil_chk(mCachedViews_)) size];
+  for (int32_t i = 0; i < cachedCount; i++) {
     ADXRecyclerView_ViewHolder *holder = [mCachedViews_ getWithInt:i];
     ADXRecyclerView_LayoutParams *layoutParams = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(holder))->itemView_)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
     if (layoutParams != nil) {
@@ -4216,16 +4238,16 @@ ADXRecyclerView_Recycler *create_ADXRecyclerView_Recycler_initWithADXRecyclerVie
   J2OBJC_CREATE_IMPL(ADXRecyclerView_Recycler, initWithADXRecyclerView_, outer$)
 }
 
-jboolean ADXRecyclerView_Recycler_tryBindViewHolderByDeadlineWithADXRecyclerView_ViewHolder_withInt_withInt_withLong_(ADXRecyclerView_Recycler *self, ADXRecyclerView_ViewHolder *holder, jint offsetPosition, jint position, jlong deadlineNs) {
+bool ADXRecyclerView_Recycler_tryBindViewHolderByDeadlineWithADXRecyclerView_ViewHolder_withInt_withInt_withLong_(ADXRecyclerView_Recycler *self, ADXRecyclerView_ViewHolder *holder, int32_t offsetPosition, int32_t position, int64_t deadlineNs) {
   JreStrongAssign(&((ADXRecyclerView_ViewHolder *) nil_chk(holder))->mBindingAdapter_, nil);
   JreStrongAssign(&holder->mOwnerRecyclerView_, self->this$0_);
-  jint viewType = ADXRecyclerView_ViewHolder_getItemViewType(holder);
-  jlong startBindNs = [self->this$0_ getNanoTime];
+  int32_t viewType = ADXRecyclerView_ViewHolder_getItemViewType(holder);
+  int64_t startBindNs = [self->this$0_ getNanoTime];
   if (deadlineNs != ADXRecyclerView_FOREVER_NS && ![((ADXRecyclerView_RecycledViewPool *) nil_chk(self->mRecyclerPool_)) willBindInTimeWithInt:viewType withLong:startBindNs withLong:deadlineNs]) {
     return false;
   }
   ADXRecyclerView_Adapter_bindViewHolderWithADXRecyclerView_ViewHolder_withInt_(nil_chk(self->this$0_->mAdapter_), holder, offsetPosition);
-  jlong endBindNs = [self->this$0_ getNanoTime];
+  int64_t endBindNs = [self->this$0_ getNanoTime];
   [((ADXRecyclerView_RecycledViewPool *) nil_chk(self->mRecyclerPool_)) factorInBindTimeWithInt:ADXRecyclerView_ViewHolder_getItemViewType(holder) withLong:endBindNs - startBindNs];
   if ([((ADXRecyclerView_State *) nil_chk(self->this$0_->mState_)) isPreLayout]) {
     holder->mPreLayoutPosition_ = position;
@@ -4239,8 +4261,8 @@ void ADXRecyclerView_Recycler_invalidateDisplayListIntWithADXRecyclerView_ViewHo
   }
 }
 
-void ADXRecyclerView_Recycler_invalidateDisplayListIntWithADViewGroup_withBoolean_(ADXRecyclerView_Recycler *self, ADViewGroup *viewGroup, jboolean invalidateThis) {
-  for (jint i = [((ADViewGroup *) nil_chk(viewGroup)) getChildCount] - 1; i >= 0; i--) {
+void ADXRecyclerView_Recycler_invalidateDisplayListIntWithADViewGroup_withBoolean_(ADXRecyclerView_Recycler *self, ADViewGroup *viewGroup, bool invalidateThis) {
+  for (int32_t i = [((ADViewGroup *) nil_chk(viewGroup)) getChildCount] - 1; i >= 0; i--) {
     ADView *view = [viewGroup getChildAtWithInt:i];
     if ([view isKindOfClass:[ADViewGroup class]]) {
       ADXRecyclerView_Recycler_invalidateDisplayListIntWithADViewGroup_withBoolean_(self, (ADViewGroup *) view, true);
@@ -4254,7 +4276,7 @@ void ADXRecyclerView_Recycler_invalidateDisplayListIntWithADViewGroup_withBoolea
     [viewGroup setVisibilityWithInt:ADView_INVISIBLE];
   }
   else {
-    jint visibility = [viewGroup getVisibility];
+    int32_t visibility = [viewGroup getVisibility];
     [viewGroup setVisibilityWithInt:ADView_INVISIBLE];
     [viewGroup setVisibilityWithInt:visibility];
   }
@@ -4272,8 +4294,8 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 J2OBJC_IGNORE_DESIGNATED_END
 
 - (ADView *)getViewForPositionAndTypeWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                                          withInt:(jint)position
-                                                          withInt:(jint)type {
+                                                          withInt:(int32_t)position
+                                                          withInt:(int32_t)type {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
@@ -4313,72 +4335,72 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 J2OBJC_IGNORE_DESIGNATED_END
 
 - (ADXRecyclerView_ViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                          withInt:(jint)viewType {
+                                                          withInt:(int32_t)viewType {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
 - (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                               withInt:(jint)position {
+                                               withInt:(int32_t)position {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
 }
 
 - (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                               withInt:(jint)position
+                                               withInt:(int32_t)position
                                       withJavaUtilList:(id<JavaUtilList>)payloads {
   [self onBindViewHolderWithADXRecyclerView_ViewHolder:holder withInt:position];
 }
 
-- (jint)findRelativeAdapterPositionInWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)adapter
-                                  withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-                                                         withInt:(jint)localPosition {
-  if (adapter == self) {
+- (int32_t)findRelativeAdapterPositionInWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)adapter
+                                     withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                            withInt:(int32_t)localPosition {
+  if (JreObjectEqualsEquals(adapter, self)) {
     return localPosition;
   }
   return ADXRecyclerView_NO_POSITION;
 }
 
 - (ADXRecyclerView_ViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                        withInt:(jint)viewType {
+                                                        withInt:(int32_t)viewType {
   return ADXRecyclerView_Adapter_createViewHolderWithADViewGroup_withInt_(self, parent, viewType);
 }
 
 - (void)bindViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                             withInt:(jint)position {
+                                             withInt:(int32_t)position {
   ADXRecyclerView_Adapter_bindViewHolderWithADXRecyclerView_ViewHolder_withInt_(self, holder, position);
 }
 
-- (jint)getItemViewTypeWithInt:(jint)position {
+- (int32_t)getItemViewTypeWithInt:(int32_t)position {
   return 0;
 }
 
-- (void)setHasStableIdsWithBoolean:(jboolean)hasStableIds {
+- (void)setHasStableIdsWithBoolean:(bool)hasStableIds {
   if (ADXRecyclerView_Adapter_hasObservers(self)) {
     @throw create_JavaLangIllegalStateException_initWithNSString_(@"Cannot change whether this adapter has stable IDs while the adapter has registered observers.");
   }
   mHasStableIds_ = hasStableIds;
 }
 
-- (jlong)getItemIdWithInt:(jint)position {
+- (int64_t)getItemIdWithInt:(int32_t)position {
   return ADView_NO_ID;
 }
 
-- (jint)getItemCount {
+- (int32_t)getItemCount {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jboolean)hasStableIds {
+- (bool)hasStableIds {
   return ADXRecyclerView_Adapter_hasStableIds(self);
 }
 
 - (void)onViewRecycledWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
 }
 
-- (jboolean)onFailedToRecycleViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
+- (bool)onFailedToRecycleViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
   return false;
 }
 
@@ -4388,7 +4410,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 - (void)onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
 }
 
-- (jboolean)hasObservers {
+- (bool)hasObservers {
   return ADXRecyclerView_Adapter_hasObservers(self);
 }
 
@@ -4410,46 +4432,46 @@ J2OBJC_IGNORE_DESIGNATED_END
   [((ADXRecyclerView_AdapterDataObservable *) nil_chk(mObservable_)) notifyChanged];
 }
 
-- (void)notifyItemChangedWithInt:(jint)position {
+- (void)notifyItemChangedWithInt:(int32_t)position {
   [((ADXRecyclerView_AdapterDataObservable *) nil_chk(mObservable_)) notifyItemRangeChangedWithInt:position withInt:1];
 }
 
-- (void)notifyItemChangedWithInt:(jint)position
+- (void)notifyItemChangedWithInt:(int32_t)position
                           withId:(id)payload {
   [((ADXRecyclerView_AdapterDataObservable *) nil_chk(mObservable_)) notifyItemRangeChangedWithInt:position withInt:1 withId:payload];
 }
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount {
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount {
   [((ADXRecyclerView_AdapterDataObservable *) nil_chk(mObservable_)) notifyItemRangeChangedWithInt:positionStart withInt:itemCount];
 }
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount
                                withId:(id)payload {
   [((ADXRecyclerView_AdapterDataObservable *) nil_chk(mObservable_)) notifyItemRangeChangedWithInt:positionStart withInt:itemCount withId:payload];
 }
 
-- (void)notifyItemInsertedWithInt:(jint)position {
+- (void)notifyItemInsertedWithInt:(int32_t)position {
   [((ADXRecyclerView_AdapterDataObservable *) nil_chk(mObservable_)) notifyItemRangeInsertedWithInt:position withInt:1];
 }
 
-- (void)notifyItemMovedWithInt:(jint)fromPosition
-                       withInt:(jint)toPosition {
+- (void)notifyItemMovedWithInt:(int32_t)fromPosition
+                       withInt:(int32_t)toPosition {
   [((ADXRecyclerView_AdapterDataObservable *) nil_chk(mObservable_)) notifyItemMovedWithInt:fromPosition withInt:toPosition];
 }
 
-- (void)notifyItemRangeInsertedWithInt:(jint)positionStart
-                               withInt:(jint)itemCount {
+- (void)notifyItemRangeInsertedWithInt:(int32_t)positionStart
+                               withInt:(int32_t)itemCount {
   [((ADXRecyclerView_AdapterDataObservable *) nil_chk(mObservable_)) notifyItemRangeInsertedWithInt:positionStart withInt:itemCount];
 }
 
-- (void)notifyItemRemovedWithInt:(jint)position {
+- (void)notifyItemRemovedWithInt:(int32_t)position {
   [((ADXRecyclerView_AdapterDataObservable *) nil_chk(mObservable_)) notifyItemRangeRemovedWithInt:position withInt:1];
 }
 
-- (void)notifyItemRangeRemovedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount {
+- (void)notifyItemRangeRemovedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount {
   [((ADXRecyclerView_AdapterDataObservable *) nil_chk(mObservable_)) notifyItemRangeRemovedWithInt:positionStart withInt:itemCount];
 }
 
@@ -4544,7 +4566,7 @@ void ADXRecyclerView_Adapter_init(ADXRecyclerView_Adapter *self) {
   self->mHasStableIds_ = false;
 }
 
-ADXRecyclerView_ViewHolder *ADXRecyclerView_Adapter_createViewHolderWithADViewGroup_withInt_(ADXRecyclerView_Adapter *self, ADViewGroup *parent, jint viewType) {
+ADXRecyclerView_ViewHolder *ADXRecyclerView_Adapter_createViewHolderWithADViewGroup_withInt_(ADXRecyclerView_Adapter *self, ADViewGroup *parent, int32_t viewType) {
   @try {
     ADXTraceCompat_beginSectionWithNSString_(ADXRecyclerView_TRACE_CREATE_VIEW_TAG);
     ADXRecyclerView_ViewHolder *holder = [self onCreateViewHolderWithADViewGroup:parent withInt:viewType];
@@ -4558,8 +4580,8 @@ ADXRecyclerView_ViewHolder *ADXRecyclerView_Adapter_createViewHolderWithADViewGr
   }
 }
 
-void ADXRecyclerView_Adapter_bindViewHolderWithADXRecyclerView_ViewHolder_withInt_(ADXRecyclerView_Adapter *self, ADXRecyclerView_ViewHolder *holder, jint position) {
-  jboolean rootBind = ((ADXRecyclerView_ViewHolder *) nil_chk(holder))->mBindingAdapter_ == nil;
+void ADXRecyclerView_Adapter_bindViewHolderWithADXRecyclerView_ViewHolder_withInt_(ADXRecyclerView_Adapter *self, ADXRecyclerView_ViewHolder *holder, int32_t position) {
+  bool rootBind = ((ADXRecyclerView_ViewHolder *) nil_chk(holder))->mBindingAdapter_ == nil;
   if (rootBind) {
     holder->mPosition_ = position;
     if (ADXRecyclerView_Adapter_hasStableIds(self)) {
@@ -4580,11 +4602,11 @@ void ADXRecyclerView_Adapter_bindViewHolderWithADXRecyclerView_ViewHolder_withIn
   }
 }
 
-jboolean ADXRecyclerView_Adapter_hasStableIds(ADXRecyclerView_Adapter *self) {
+bool ADXRecyclerView_Adapter_hasStableIds(ADXRecyclerView_Adapter *self) {
   return self->mHasStableIds_;
 }
 
-jboolean ADXRecyclerView_Adapter_hasObservers(ADXRecyclerView_Adapter *self) {
+bool ADXRecyclerView_Adapter_hasObservers(ADXRecyclerView_Adapter *self) {
   return [((ADXRecyclerView_AdapterDataObservable *) nil_chk(self->mObservable_)) hasObservers];
 }
 
@@ -4606,6 +4628,24 @@ ADXRecyclerView_Adapter_StateRestorationPolicy *ADXRecyclerView_Adapter_StateRes
 
 - (ADXRecyclerView_Adapter_StateRestorationPolicy_Enum)toNSEnum {
   return (ADXRecyclerView_Adapter_StateRestorationPolicy_Enum)[self ordinal];
+}
+
+- (ADXRecyclerView_Adapter_StateRestorationPolicy_Enum)enumValue {
+  return (ADXRecyclerView_Adapter_StateRestorationPolicy_Enum)[self ordinal];
+}
+
++ (ADXRecyclerView_Adapter_StateRestorationPolicy *)fromNSEnum:(ADXRecyclerView_Adapter_StateRestorationPolicy_Enum)nativeValue {
+  ADXRecyclerView_Adapter_StateRestorationPolicy *javaEnum = ADXRecyclerView_Adapter_StateRestorationPolicy_fromOrdinal(nativeValue);
+  if (!javaEnum) @throw create_JavaLangIllegalArgumentException_initWithNSString_(@"NSEnum ADXRecyclerView_Adapter_StateRestorationPolicy_Enum out of range.");
+  return javaEnum;
+}
+
+- (ADXRecyclerView_Adapter_StateRestorationPolicy_ORDINAL)ordinal {
+  return (ADXRecyclerView_Adapter_StateRestorationPolicy_ORDINAL)[super ordinal];
+}
+
+- (nullable instancetype)initWithStateRestorationPolicy:(ADXRecyclerView_Adapter_StateRestorationPolicy_Enum)value {
+  return RETAIN_(ADXRecyclerView_Adapter_StateRestorationPolicy_fromOrdinal((ADXRecyclerView_Adapter_StateRestorationPolicy_ORDINAL)value));
 }
 
 + (const J2ObjcClassInfo *)__metadata {
@@ -4635,7 +4675,7 @@ ADXRecyclerView_Adapter_StateRestorationPolicy *ADXRecyclerView_Adapter_StateRes
     size_t allocSize = 3 * objSize;
     uintptr_t ptr = (uintptr_t)calloc(allocSize, 1);
     id e;
-    for (jint i = 0; i < 3; i++) {
+    for (int32_t i = 0; i < 3; i++) {
       ((void)(ADXRecyclerView_Adapter_StateRestorationPolicy_values_[i] = e = objc_constructInstance(self, (void *)ptr)), ptr += objSize);
       ADXRecyclerView_Adapter_StateRestorationPolicy_initWithNSString_withInt_(e, JreEnumConstantName(ADXRecyclerView_Adapter_StateRestorationPolicy_class_(), i), i);
     }
@@ -4645,7 +4685,7 @@ ADXRecyclerView_Adapter_StateRestorationPolicy *ADXRecyclerView_Adapter_StateRes
 
 @end
 
-void ADXRecyclerView_Adapter_StateRestorationPolicy_initWithNSString_withInt_(ADXRecyclerView_Adapter_StateRestorationPolicy *self, NSString *__name, jint __ordinal) {
+void ADXRecyclerView_Adapter_StateRestorationPolicy_initWithNSString_withInt_(ADXRecyclerView_Adapter_StateRestorationPolicy *self, NSString *__name, int32_t __ordinal) {
   JavaLangEnum_initWithNSString_withInt_(self, __name, __ordinal);
 }
 
@@ -4663,12 +4703,11 @@ ADXRecyclerView_Adapter_StateRestorationPolicy *ADXRecyclerView_Adapter_StateRes
     }
   }
   @throw create_JavaLangIllegalArgumentException_initWithNSString_(name);
-  return nil;
 }
 
-ADXRecyclerView_Adapter_StateRestorationPolicy *ADXRecyclerView_Adapter_StateRestorationPolicy_fromOrdinal(NSUInteger ordinal) {
+ADXRecyclerView_Adapter_StateRestorationPolicy *ADXRecyclerView_Adapter_StateRestorationPolicy_fromOrdinal(ADXRecyclerView_Adapter_StateRestorationPolicy_ORDINAL ordinal) {
   ADXRecyclerView_Adapter_StateRestorationPolicy_initialize();
-  if (ordinal >= 3) {
+  if (ordinal < 0 || ordinal >= 3) {
     return nil;
   }
   return ADXRecyclerView_Adapter_StateRestorationPolicy_values_[ordinal];
@@ -4702,26 +4741,26 @@ J2OBJC_IGNORE_DESIGNATED_END
   mHeightMode_ = ADView_MeasureSpec_EXACTLY;
 }
 
-- (void)setMeasureSpecsWithInt:(jint)wSpec
-                       withInt:(jint)hSpec {
+- (void)setMeasureSpecsWithInt:(int32_t)wSpec
+                       withInt:(int32_t)hSpec {
   mWidth_ = ADView_MeasureSpec_getSizeWithInt_(wSpec);
   mWidthMode_ = ADView_MeasureSpec_getModeWithInt_(wSpec);
   mHeight_ = ADView_MeasureSpec_getSizeWithInt_(hSpec);
   mHeightMode_ = ADView_MeasureSpec_getModeWithInt_(hSpec);
 }
 
-- (void)setMeasuredDimensionFromChildrenWithInt:(jint)widthSpec
-                                        withInt:(jint)heightSpec {
-  jint count = [self getChildCount];
+- (void)setMeasuredDimensionFromChildrenWithInt:(int32_t)widthSpec
+                                        withInt:(int32_t)heightSpec {
+  int32_t count = [self getChildCount];
   if (count == 0) {
     [((ADXRecyclerView *) nil_chk(mRecyclerView_)) defaultOnMeasureWithInt:widthSpec withInt:heightSpec];
     return;
   }
-  jint minX = JavaLangInteger_MAX_VALUE;
-  jint minY = JavaLangInteger_MAX_VALUE;
-  jint maxX = JavaLangInteger_MIN_VALUE;
-  jint maxY = JavaLangInteger_MIN_VALUE;
-  for (jint i = 0; i < count; i++) {
+  int32_t minX = JavaLangInteger_MAX_VALUE;
+  int32_t minY = JavaLangInteger_MAX_VALUE;
+  int32_t maxX = JavaLangInteger_MIN_VALUE;
+  int32_t maxY = JavaLangInteger_MIN_VALUE;
+  for (int32_t i = 0; i < count; i++) {
     ADView *child = JreRetainedLocalValue([self getChildAtWithInt:i]);
     ADRect *bounds = ((ADXRecyclerView *) nil_chk(mRecyclerView_))->mTempRect_;
     [self getDecoratedBoundsWithMarginsWithADView:child withADRect:bounds];
@@ -4743,12 +4782,12 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (void)setMeasuredDimensionWithADRect:(ADRect *)childrenBounds
-                               withInt:(jint)wSpec
-                               withInt:(jint)hSpec {
-  jint usedWidth = [((ADRect *) nil_chk(childrenBounds)) width] + [self getPaddingLeft] + [self getPaddingRight];
-  jint usedHeight = [childrenBounds height] + [self getPaddingTop] + [self getPaddingBottom];
-  jint width = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(wSpec, usedWidth, [self getMinimumWidth]);
-  jint height = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(hSpec, usedHeight, [self getMinimumHeight]);
+                               withInt:(int32_t)wSpec
+                               withInt:(int32_t)hSpec {
+  int32_t usedWidth = [((ADRect *) nil_chk(childrenBounds)) width] + [self getPaddingLeft] + [self getPaddingRight];
+  int32_t usedHeight = [childrenBounds height] + [self getPaddingTop] + [self getPaddingBottom];
+  int32_t width = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(wSpec, usedWidth, [self getMinimumWidth]);
+  int32_t height = ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(hSpec, usedHeight, [self getMinimumHeight]);
   [self setMeasuredDimensionWithInt:width withInt:height];
 }
 
@@ -4764,9 +4803,9 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-+ (jint)chooseSizeWithInt:(jint)spec
-                  withInt:(jint)desired
-                  withInt:(jint)min {
++ (int32_t)chooseSizeWithInt:(int32_t)spec
+                     withInt:(int32_t)desired
+                     withInt:(int32_t)min {
   return ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(spec, desired, min);
 }
 
@@ -4776,19 +4815,19 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (void)setAutoMeasureEnabledWithBoolean:(jboolean)enabled {
+- (void)setAutoMeasureEnabledWithBoolean:(bool)enabled {
   mAutoMeasure_ = enabled;
 }
 
-- (jboolean)isAutoMeasureEnabled {
+- (bool)isAutoMeasureEnabled {
   return mAutoMeasure_;
 }
 
-- (jboolean)supportsPredictiveItemAnimations {
+- (bool)supportsPredictiveItemAnimations {
   return false;
 }
 
-- (void)setItemPrefetchEnabledWithBoolean:(jboolean)enabled {
+- (void)setItemPrefetchEnabledWithBoolean:(bool)enabled {
   if (enabled != mItemPrefetchEnabled_) {
     mItemPrefetchEnabled_ = enabled;
     mPrefetchMaxCountObserved_ = 0;
@@ -4798,17 +4837,17 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
-- (jboolean)isItemPrefetchEnabled {
+- (bool)isItemPrefetchEnabled {
   return mItemPrefetchEnabled_;
 }
 
-- (void)collectAdjacentPrefetchPositionsWithInt:(jint)dx
-                                        withInt:(jint)dy
+- (void)collectAdjacentPrefetchPositionsWithInt:(int32_t)dx
+                                        withInt:(int32_t)dy
                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
 withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>)layoutPrefetchRegistry {
 }
 
-- (void)collectInitialPrefetchPositionsWithInt:(jint)adapterItemCount
+- (void)collectInitialPrefetchPositionsWithInt:(int32_t)adapterItemCount
 withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>)layoutPrefetchRegistry {
 }
 
@@ -4823,7 +4862,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   [self onDetachedFromWindowWithADXRecyclerView:view withADXRecyclerView_Recycler:recycler];
 }
 
-- (jboolean)isAttachedToWindow {
+- (bool)isAttachedToWindow {
   return mIsAttachedToWindow_;
 }
 
@@ -4832,7 +4871,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   }
 }
 
-- (jboolean)removeCallbacksWithJavaLangRunnable:(id<JavaLangRunnable>)action {
+- (bool)removeCallbacksWithJavaLangRunnable:(id<JavaLangRunnable>)action {
   if (mRecyclerView_ != nil) {
   }
   return false;
@@ -4849,7 +4888,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   [self onDetachedFromWindowWithADXRecyclerView:view];
 }
 
-- (jboolean)getClipToPadding {
+- (bool)getClipToPadding {
   return mRecyclerView_ != nil && mRecyclerView_->mClipToPadding_;
 }
 
@@ -4867,40 +4906,40 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   return 0;
 }
 
-- (jboolean)checkLayoutParamsWithADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
+- (bool)checkLayoutParamsWithADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
   return lp != nil;
 }
 
-- (jint)scrollHorizontallyByWithInt:(jint)dx
-       withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-          withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)scrollHorizontallyByWithInt:(int32_t)dx
+          withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+             withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return 0;
 }
 
-- (jint)scrollVerticallyByWithInt:(jint)dy
-     withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-        withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)scrollVerticallyByWithInt:(int32_t)dy
+        withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+           withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return 0;
 }
 
-- (jboolean)canScrollHorizontally {
+- (bool)canScrollHorizontally {
   return false;
 }
 
-- (jboolean)canScrollVertically {
+- (bool)canScrollVertically {
   return false;
 }
 
-- (void)scrollToPositionWithInt:(jint)position {
+- (void)scrollToPositionWithInt:(int32_t)position {
 }
 
 - (void)smoothScrollToPositionWithADXRecyclerView:(ADXRecyclerView *)recyclerView
                         withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                          withInt:(jint)position {
+                                          withInt:(int32_t)position {
   ADLog_eWithNSString_withNSString_(ADXRecyclerView_TAG, @"You must override smoothScrollToPosition to support smooth scrolling");
 }
 
-- (jint)getLayoutDirection {
+- (int32_t)getLayoutDirection {
   return ADXViewCompat_getLayoutDirectionWithADView_(mRecyclerView_);
 }
 
@@ -4915,7 +4954,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
 }
 
 - (void)addDisappearingViewWithADView:(ADView *)child
-                              withInt:(jint)index {
+                              withInt:(int32_t)index {
   ADXRecyclerView_LayoutManager_addViewIntWithADView_withInt_withBoolean_(self, child, index, true);
 }
 
@@ -4924,13 +4963,13 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
 }
 
 - (void)addViewWithADView:(ADView *)child
-                  withInt:(jint)index {
+                  withInt:(int32_t)index {
   ADXRecyclerView_LayoutManager_addViewIntWithADView_withInt_withBoolean_(self, child, index, false);
 }
 
 - (void)addViewIntWithADView:(ADView *)child
-                     withInt:(jint)index
-                 withBoolean:(jboolean)disappearing {
+                     withInt:(int32_t)index
+                 withBoolean:(bool)disappearing {
   ADXRecyclerView_LayoutManager_addViewIntWithADView_withInt_withBoolean_(self, child, index, disappearing);
 }
 
@@ -4938,7 +4977,7 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   [((ADXChildHelper *) nil_chk(mChildHelper_)) removeViewWithADView:child];
 }
 
-- (void)removeViewAtWithInt:(jint)index {
+- (void)removeViewAtWithInt:(int32_t)index {
   ADView *child = [self getChildAtWithInt:index];
   if (child != nil) {
     [((ADXChildHelper *) nil_chk(mChildHelper_)) removeViewAtWithInt:index];
@@ -4946,21 +4985,21 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
 }
 
 - (void)removeAllViews {
-  jint childCount = [self getChildCount];
-  for (jint i = childCount - 1; i >= 0; i--) {
+  int32_t childCount = [self getChildCount];
+  for (int32_t i = childCount - 1; i >= 0; i--) {
     [((ADXChildHelper *) nil_chk(mChildHelper_)) removeViewAtWithInt:i];
   }
 }
 
-- (jint)getBaseline {
+- (int32_t)getBaseline {
   return -1;
 }
 
-- (jint)getPositionWithADView:(ADView *)view {
+- (int32_t)getPositionWithADView:(ADView *)view {
   return [((ADXRecyclerView_LayoutParams *) nil_chk(((ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class])))) getViewLayoutPosition];
 }
 
-- (jint)getItemViewTypeWithADView:(ADView *)view {
+- (int32_t)getItemViewTypeWithADView:(ADView *)view {
   return ADXRecyclerView_ViewHolder_getItemViewType(nil_chk(ADXRecyclerView_getChildViewHolderIntWithADView_(view)));
 }
 
@@ -4978,9 +5017,9 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   return found;
 }
 
-- (ADView *)findViewByPositionWithInt:(jint)position {
-  jint childCount = [self getChildCount];
-  for (jint i = 0; i < childCount; i++) {
+- (ADView *)findViewByPositionWithInt:(int32_t)position {
+  int32_t childCount = [self getChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADView *child = JreRetainedLocalValue([self getChildAtWithInt:i]);
     ADXRecyclerView_ViewHolder *vh = ADXRecyclerView_getChildViewHolderIntWithADView_(child);
     if (vh == nil) {
@@ -4994,23 +5033,23 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
 }
 
 - (void)detachViewWithADView:(ADView *)child {
-  jint ind = [((ADXChildHelper *) nil_chk(mChildHelper_)) indexOfChildWithADView:child];
+  int32_t ind = [((ADXChildHelper *) nil_chk(mChildHelper_)) indexOfChildWithADView:child];
   if (ind >= 0) {
     ADXRecyclerView_LayoutManager_detachViewInternalWithInt_withADView_(self, ind, child);
   }
 }
 
-- (void)detachViewAtWithInt:(jint)index {
+- (void)detachViewAtWithInt:(int32_t)index {
   ADXRecyclerView_LayoutManager_detachViewInternalWithInt_withADView_(self, index, [self getChildAtWithInt:index]);
 }
 
-- (void)detachViewInternalWithInt:(jint)index
+- (void)detachViewInternalWithInt:(int32_t)index
                        withADView:(ADView *)view {
   ADXRecyclerView_LayoutManager_detachViewInternalWithInt_withADView_(self, index, view);
 }
 
 - (void)attachViewWithADView:(ADView *)child
-                     withInt:(jint)index
+                     withInt:(int32_t)index
 withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
   ADXRecyclerView_ViewHolder *vh = ADXRecyclerView_getChildViewHolderIntWithADView_(child);
   if ([((ADXRecyclerView_ViewHolder *) nil_chk(vh)) isRemoved]) {
@@ -5023,7 +5062,7 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
 }
 
 - (void)attachViewWithADView:(ADView *)child
-                     withInt:(jint)index {
+                     withInt:(int32_t)index {
   [self attachViewWithADView:child withInt:index withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class])];
 }
 
@@ -5035,8 +5074,8 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
   [((ADXRecyclerView *) nil_chk(mRecyclerView_)) removeDetachedViewWithADView:child withBoolean:false];
 }
 
-- (void)moveViewWithInt:(jint)fromIndex
-                withInt:(jint)toIndex {
+- (void)moveViewWithInt:(int32_t)fromIndex
+                withInt:(int32_t)toIndex {
   ADView *view = JreRetainedLocalValue([self getChildAtWithInt:fromIndex]);
   if (view == nil) {
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(JreStrcat("$I$", @"Cannot move a child from non-existing index:", fromIndex, [((ADXRecyclerView *) nil_chk(mRecyclerView_)) description]));
@@ -5047,11 +5086,11 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
 
 - (void)detachAndScrapViewWithADView:(ADView *)child
         withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler {
-  jint index = [((ADXChildHelper *) nil_chk(mChildHelper_)) indexOfChildWithADView:child];
+  int32_t index = [((ADXChildHelper *) nil_chk(mChildHelper_)) indexOfChildWithADView:child];
   ADXRecyclerView_LayoutManager_scrapOrRecycleViewWithADXRecyclerView_Recycler_withInt_withADView_(self, recycler, index, child);
 }
 
-- (void)detachAndScrapViewAtWithInt:(jint)index
+- (void)detachAndScrapViewAtWithInt:(int32_t)index
        withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler {
   ADView *child = [self getChildAtWithInt:index];
   ADXRecyclerView_LayoutManager_scrapOrRecycleViewWithADXRecyclerView_Recycler_withInt_withADView_(self, recycler, index, child);
@@ -5063,88 +5102,88 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
   [((ADXRecyclerView_Recycler *) nil_chk(recycler)) recycleViewWithADView:child];
 }
 
-- (void)removeAndRecycleViewAtWithInt:(jint)index
+- (void)removeAndRecycleViewAtWithInt:(int32_t)index
          withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler {
   ADView *view = [self getChildAtWithInt:index];
   [self removeViewAtWithInt:index];
   [((ADXRecyclerView_Recycler *) nil_chk(recycler)) recycleViewWithADView:view];
 }
 
-- (jint)getChildCount {
+- (int32_t)getChildCount {
   return mChildHelper_ != nil ? [mChildHelper_ getChildCount] : 0;
 }
 
-- (ADView *)getChildAtWithInt:(jint)index {
+- (ADView *)getChildAtWithInt:(int32_t)index {
   return mChildHelper_ != nil ? [mChildHelper_ getChildAtWithInt:index] : nil;
 }
 
-- (jint)getWidthMode {
+- (int32_t)getWidthMode {
   return mWidthMode_;
 }
 
-- (jint)getHeightMode {
+- (int32_t)getHeightMode {
   return mHeightMode_;
 }
 
-- (jint)getWidth {
+- (int32_t)getWidth {
   return mWidth_;
 }
 
-- (jint)getHeight {
+- (int32_t)getHeight {
   return mHeight_;
 }
 
-- (jint)getPaddingLeft {
+- (int32_t)getPaddingLeft {
   return mRecyclerView_ != nil ? [mRecyclerView_ getPaddingLeft] : 0;
 }
 
-- (jint)getPaddingTop {
+- (int32_t)getPaddingTop {
   return mRecyclerView_ != nil ? [mRecyclerView_ getPaddingTop] : 0;
 }
 
-- (jint)getPaddingRight {
+- (int32_t)getPaddingRight {
   return mRecyclerView_ != nil ? [mRecyclerView_ getPaddingRight] : 0;
 }
 
-- (jint)getPaddingBottom {
+- (int32_t)getPaddingBottom {
   return mRecyclerView_ != nil ? [mRecyclerView_ getPaddingBottom] : 0;
 }
 
-- (jint)getPaddingStart {
+- (int32_t)getPaddingStart {
   return mRecyclerView_ != nil ? ADXViewCompat_getPaddingStartWithADViewGroup_(mRecyclerView_) : 0;
 }
 
-- (jint)getPaddingEnd {
+- (int32_t)getPaddingEnd {
   return mRecyclerView_ != nil ? ADXViewCompat_getPaddingEndWithADViewGroup_(mRecyclerView_) : 0;
 }
 
-- (jboolean)isFocused {
+- (bool)isFocused {
   return mRecyclerView_ != nil && [mRecyclerView_ isFocused];
 }
 
-- (jboolean)hasFocus {
+- (bool)hasFocus {
   return mRecyclerView_ != nil && [mRecyclerView_ hasFocus];
 }
 
-- (jint)getItemCount {
+- (int32_t)getItemCount {
   ADXRecyclerView_Adapter *a = mRecyclerView_ != nil ? [mRecyclerView_ getAdapter] : nil;
   return a != nil ? [a getItemCount] : 0;
 }
 
-- (void)offsetChildrenHorizontalWithInt:(jint)dx {
+- (void)offsetChildrenHorizontalWithInt:(int32_t)dx {
   if (mRecyclerView_ != nil) {
     [mRecyclerView_ offsetChildrenHorizontalWithInt:dx];
   }
 }
 
-- (void)offsetChildrenVerticalWithInt:(jint)dy {
+- (void)offsetChildrenVerticalWithInt:(int32_t)dy {
   if (mRecyclerView_ != nil) {
     [mRecyclerView_ offsetChildrenVerticalWithInt:dy];
   }
 }
 
 - (void)ignoreViewWithADView:(ADView *)view {
-  if ([((ADView *) nil_chk(view)) getParent] != mRecyclerView_ || [((ADXRecyclerView *) nil_chk(mRecyclerView_)) indexOfChildWithADView:view] == -1) {
+  if (!JreObjectEqualsEquals([((ADView *) nil_chk(view)) getParent], mRecyclerView_) || [((ADXRecyclerView *) nil_chk(mRecyclerView_)) indexOfChildWithADView:view] == -1) {
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(JreStrcat("$$", @"View should be fully attached to be ignored", [((ADXRecyclerView *) nil_chk(mRecyclerView_)) exceptionLabel]));
   }
   ADXRecyclerView_ViewHolder *vh = ADXRecyclerView_getChildViewHolderIntWithADView_(view);
@@ -5160,22 +5199,22 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
 }
 
 - (void)detachAndScrapAttachedViewsWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler {
-  jint childCount = [self getChildCount];
-  for (jint i = childCount - 1; i >= 0; i--) {
+  int32_t childCount = [self getChildCount];
+  for (int32_t i = childCount - 1; i >= 0; i--) {
     ADView *v = [self getChildAtWithInt:i];
     ADXRecyclerView_LayoutManager_scrapOrRecycleViewWithADXRecyclerView_Recycler_withInt_withADView_(self, recycler, i, v);
   }
 }
 
 - (void)scrapOrRecycleViewWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                               withInt:(jint)index
+                                               withInt:(int32_t)index
                                             withADView:(ADView *)view {
   ADXRecyclerView_LayoutManager_scrapOrRecycleViewWithADXRecyclerView_Recycler_withInt_withADView_(self, recycler, index, view);
 }
 
 - (void)removeAndRecycleScrapIntWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler {
-  jint scrapCount = [((ADXRecyclerView_Recycler *) nil_chk(recycler)) getScrapCount];
-  for (jint i = scrapCount - 1; i >= 0; i--) {
+  int32_t scrapCount = [((ADXRecyclerView_Recycler *) nil_chk(recycler)) getScrapCount];
+  for (int32_t i = scrapCount - 1; i >= 0; i--) {
     ADView *scrap = [recycler getScrapViewAtWithInt:i];
     ADXRecyclerView_ViewHolder *vh = ADXRecyclerView_getChildViewHolderIntWithADView_(scrap);
     if ([((ADXRecyclerView_ViewHolder *) nil_chk(vh)) shouldIgnore]) {
@@ -5198,107 +5237,107 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
 }
 
 - (void)measureChildWithADView:(ADView *)child
-                       withInt:(jint)widthUsed
-                       withInt:(jint)heightUsed {
+                       withInt:(int32_t)widthUsed
+                       withInt:(int32_t)heightUsed {
   ADXRecyclerView_LayoutParams *lp = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   ADRect *insets = [((ADXRecyclerView *) nil_chk(mRecyclerView_)) getItemDecorInsetsForChildWithADView:child];
   widthUsed += ((ADRect *) nil_chk(insets))->left_ + insets->right_;
   heightUsed += insets->top_ + insets->bottom_;
-  jint widthSpec = ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_([self getWidth], [self getWidthMode], [self getPaddingLeft] + [self getPaddingRight] + widthUsed, ((ADXRecyclerView_LayoutParams *) nil_chk(lp))->width_, [self canScrollHorizontally]);
-  jint heightSpec = ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_([self getHeight], [self getHeightMode], [self getPaddingTop] + [self getPaddingBottom] + heightUsed, lp->height_, [self canScrollVertically]);
+  int32_t widthSpec = ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_([self getWidth], [self getWidthMode], [self getPaddingLeft] + [self getPaddingRight] + widthUsed, ((ADXRecyclerView_LayoutParams *) nil_chk(lp))->width_, [self canScrollHorizontally]);
+  int32_t heightSpec = ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_([self getHeight], [self getHeightMode], [self getPaddingTop] + [self getPaddingBottom] + heightUsed, lp->height_, [self canScrollVertically]);
   if ([self shouldMeasureChildWithADView:child withInt:widthSpec withInt:heightSpec withADXRecyclerView_LayoutParams:lp]) {
     [child measureWithInt:widthSpec withInt:heightSpec];
   }
 }
 
-- (jboolean)shouldReMeasureChildWithADView:(ADView *)child
-                                   withInt:(jint)widthSpec
-                                   withInt:(jint)heightSpec
-          withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
+- (bool)shouldReMeasureChildWithADView:(ADView *)child
+                               withInt:(int32_t)widthSpec
+                               withInt:(int32_t)heightSpec
+      withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
   return !mMeasurementCacheEnabled_ || !ADXRecyclerView_LayoutManager_isMeasurementUpToDateWithInt_withInt_withInt_([((ADView *) nil_chk(child)) getMeasuredWidth], widthSpec, ((ADXRecyclerView_LayoutParams *) nil_chk(lp))->width_) || !ADXRecyclerView_LayoutManager_isMeasurementUpToDateWithInt_withInt_withInt_([child getMeasuredHeight], heightSpec, lp->height_);
 }
 
-- (jboolean)shouldMeasureChildWithADView:(ADView *)child
-                                 withInt:(jint)widthSpec
-                                 withInt:(jint)heightSpec
-        withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
+- (bool)shouldMeasureChildWithADView:(ADView *)child
+                             withInt:(int32_t)widthSpec
+                             withInt:(int32_t)heightSpec
+    withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
   return [((ADView *) nil_chk(child)) isLayoutRequested] || !mMeasurementCacheEnabled_ || !ADXRecyclerView_LayoutManager_isMeasurementUpToDateWithInt_withInt_withInt_([child getWidth], widthSpec, ((ADXRecyclerView_LayoutParams *) nil_chk(lp))->width_) || !ADXRecyclerView_LayoutManager_isMeasurementUpToDateWithInt_withInt_withInt_([child getHeight], heightSpec, lp->height_);
 }
 
-- (jboolean)isMeasurementCacheEnabled {
+- (bool)isMeasurementCacheEnabled {
   return mMeasurementCacheEnabled_;
 }
 
-- (void)setMeasurementCacheEnabledWithBoolean:(jboolean)measurementCacheEnabled {
+- (void)setMeasurementCacheEnabledWithBoolean:(bool)measurementCacheEnabled {
   mMeasurementCacheEnabled_ = measurementCacheEnabled;
 }
 
-+ (jboolean)isMeasurementUpToDateWithInt:(jint)childSize
-                                 withInt:(jint)spec
-                                 withInt:(jint)dimension {
++ (bool)isMeasurementUpToDateWithInt:(int32_t)childSize
+                             withInt:(int32_t)spec
+                             withInt:(int32_t)dimension {
   return ADXRecyclerView_LayoutManager_isMeasurementUpToDateWithInt_withInt_withInt_(childSize, spec, dimension);
 }
 
 - (void)measureChildWithMarginsWithADView:(ADView *)child
-                                  withInt:(jint)widthUsed
-                                  withInt:(jint)heightUsed {
+                                  withInt:(int32_t)widthUsed
+                                  withInt:(int32_t)heightUsed {
   ADXRecyclerView_LayoutParams *lp = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   ADRect *insets = [((ADXRecyclerView *) nil_chk(mRecyclerView_)) getItemDecorInsetsForChildWithADView:child];
   widthUsed += ((ADRect *) nil_chk(insets))->left_ + insets->right_;
   heightUsed += insets->top_ + insets->bottom_;
-  jint widthSpec = ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_([self getWidth], [self getWidthMode], [self getPaddingLeft] + [self getPaddingRight] + ((ADXRecyclerView_LayoutParams *) nil_chk(lp))->leftMargin_ + lp->rightMargin_ + widthUsed, lp->width_, [self canScrollHorizontally]);
-  jint heightSpec = ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_([self getHeight], [self getHeightMode], [self getPaddingTop] + [self getPaddingBottom] + lp->topMargin_ + lp->bottomMargin_ + heightUsed, lp->height_, [self canScrollVertically]);
+  int32_t widthSpec = ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_([self getWidth], [self getWidthMode], [self getPaddingLeft] + [self getPaddingRight] + ((ADXRecyclerView_LayoutParams *) nil_chk(lp))->leftMargin_ + lp->rightMargin_ + widthUsed, lp->width_, [self canScrollHorizontally]);
+  int32_t heightSpec = ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_([self getHeight], [self getHeightMode], [self getPaddingTop] + [self getPaddingBottom] + lp->topMargin_ + lp->bottomMargin_ + heightUsed, lp->height_, [self canScrollVertically]);
   if ([self shouldMeasureChildWithADView:child withInt:widthSpec withInt:heightSpec withADXRecyclerView_LayoutParams:lp]) {
     [child measureWithInt:widthSpec withInt:heightSpec];
   }
 }
 
-+ (jint)getChildMeasureSpecWithInt:(jint)parentSize
-                           withInt:(jint)padding
-                           withInt:(jint)childDimension
-                       withBoolean:(jboolean)canScroll {
++ (int32_t)getChildMeasureSpecWithInt:(int32_t)parentSize
+                              withInt:(int32_t)padding
+                              withInt:(int32_t)childDimension
+                          withBoolean:(bool)canScroll {
   return ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withBoolean_(parentSize, padding, childDimension, canScroll);
 }
 
-+ (jint)getChildMeasureSpecWithInt:(jint)parentSize
-                           withInt:(jint)parentMode
-                           withInt:(jint)padding
-                           withInt:(jint)childDimension
-                       withBoolean:(jboolean)canScroll {
++ (int32_t)getChildMeasureSpecWithInt:(int32_t)parentSize
+                              withInt:(int32_t)parentMode
+                              withInt:(int32_t)padding
+                              withInt:(int32_t)childDimension
+                          withBoolean:(bool)canScroll {
   return ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_(parentSize, parentMode, padding, childDimension, canScroll);
 }
 
-- (jint)getDecoratedMeasuredWidthWithADView:(ADView *)child {
+- (int32_t)getDecoratedMeasuredWidthWithADView:(ADView *)child {
   ADRect *insets = ((ADXRecyclerView_LayoutParams *) nil_chk(((ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]))))->mDecorInsets_;
   return [child getMeasuredWidth] + ((ADRect *) nil_chk(insets))->left_ + insets->right_;
 }
 
-- (jint)getDecoratedMeasuredHeightWithADView:(ADView *)child {
+- (int32_t)getDecoratedMeasuredHeightWithADView:(ADView *)child {
   ADRect *insets = ((ADXRecyclerView_LayoutParams *) nil_chk(((ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]))))->mDecorInsets_;
   return [child getMeasuredHeight] + ((ADRect *) nil_chk(insets))->top_ + insets->bottom_;
 }
 
 - (void)layoutDecoratedWithADView:(ADView *)child
-                          withInt:(jint)left
-                          withInt:(jint)top
-                          withInt:(jint)right
-                          withInt:(jint)bottom {
+                          withInt:(int32_t)left
+                          withInt:(int32_t)top
+                          withInt:(int32_t)right
+                          withInt:(int32_t)bottom {
   ADRect *insets = ((ADXRecyclerView_LayoutParams *) nil_chk(((ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]))))->mDecorInsets_;
   [child layoutWithInt:left + ((ADRect *) nil_chk(insets))->left_ withInt:top + insets->top_ withInt:right - insets->right_ withInt:bottom - insets->bottom_];
 }
 
 - (void)layoutDecoratedWithMarginsWithADView:(ADView *)child
-                                     withInt:(jint)left
-                                     withInt:(jint)top
-                                     withInt:(jint)right
-                                     withInt:(jint)bottom {
+                                     withInt:(int32_t)left
+                                     withInt:(int32_t)top
+                                     withInt:(int32_t)right
+                                     withInt:(int32_t)bottom {
   ADXRecyclerView_LayoutParams *lp = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   ADRect *insets = ((ADXRecyclerView_LayoutParams *) nil_chk(lp))->mDecorInsets_;
   [child layoutWithInt:left + ((ADRect *) nil_chk(insets))->left_ + lp->leftMargin_ withInt:top + insets->top_ + lp->topMargin_ withInt:right - insets->right_ - lp->rightMargin_ withInt:bottom - insets->bottom_ - lp->bottomMargin_];
 }
 
 - (void)getTransformedBoundingBoxWithADView:(ADView *)child
-                                withBoolean:(jboolean)includeDecorInsets
+                                withBoolean:(bool)includeDecorInsets
                                  withADRect:(ADRect *)outArg {
   if (includeDecorInsets) {
     ADRect *insets = JreRetainedLocalValue(((ADXRecyclerView_LayoutParams *) nil_chk(((ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]))))->mDecorInsets_);
@@ -5317,19 +5356,19 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
   ADXRecyclerView_getDecoratedBoundsWithMarginsIntWithADView_withADRect_(view, outBounds);
 }
 
-- (jint)getDecoratedLeftWithADView:(ADView *)child {
+- (int32_t)getDecoratedLeftWithADView:(ADView *)child {
   return [((ADView *) nil_chk(child)) getLeft] - [self getLeftDecorationWidthWithADView:child];
 }
 
-- (jint)getDecoratedTopWithADView:(ADView *)child {
+- (int32_t)getDecoratedTopWithADView:(ADView *)child {
   return [((ADView *) nil_chk(child)) getTop] - [self getTopDecorationHeightWithADView:child];
 }
 
-- (jint)getDecoratedRightWithADView:(ADView *)child {
+- (int32_t)getDecoratedRightWithADView:(ADView *)child {
   return [((ADView *) nil_chk(child)) getRight] + [self getRightDecorationWidthWithADView:child];
 }
 
-- (jint)getDecoratedBottomWithADView:(ADView *)child {
+- (int32_t)getDecoratedBottomWithADView:(ADView *)child {
   return [((ADView *) nil_chk(child)) getBottom] + [self getBottomDecorationHeightWithADView:child];
 }
 
@@ -5343,31 +5382,31 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
   [((ADRect *) nil_chk(outRect)) setWithADRect:insets];
 }
 
-- (jint)getTopDecorationHeightWithADView:(ADView *)child {
+- (int32_t)getTopDecorationHeightWithADView:(ADView *)child {
   return ((ADRect *) nil_chk(((ADXRecyclerView_LayoutParams *) nil_chk(((ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]))))->mDecorInsets_))->top_;
 }
 
-- (jint)getBottomDecorationHeightWithADView:(ADView *)child {
+- (int32_t)getBottomDecorationHeightWithADView:(ADView *)child {
   return ((ADRect *) nil_chk(((ADXRecyclerView_LayoutParams *) nil_chk(((ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]))))->mDecorInsets_))->bottom_;
 }
 
-- (jint)getLeftDecorationWidthWithADView:(ADView *)child {
+- (int32_t)getLeftDecorationWidthWithADView:(ADView *)child {
   return ((ADRect *) nil_chk(((ADXRecyclerView_LayoutParams *) nil_chk(((ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]))))->mDecorInsets_))->left_;
 }
 
-- (jint)getRightDecorationWidthWithADView:(ADView *)child {
+- (int32_t)getRightDecorationWidthWithADView:(ADView *)child {
   return ((ADRect *) nil_chk(((ADXRecyclerView_LayoutParams *) nil_chk(((ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]))))->mDecorInsets_))->right_;
 }
 
 - (ADView *)onFocusSearchFailedWithADView:(ADView *)focused
-                                  withInt:(jint)direction
+                                  withInt:(int32_t)direction
              withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                 withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return nil;
 }
 
 - (ADView *)onInterceptFocusSearchWithADView:(ADView *)focused
-                                     withInt:(jint)direction {
+                                     withInt:(int32_t)direction {
   return nil;
 }
 
@@ -5375,10 +5414,10 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
                         withADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)newAdapter {
 }
 
-- (jboolean)onAddFocusablesWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                         withJavaUtilArrayList:(JavaUtilArrayList *)views
-                                       withInt:(jint)direction
-                                       withInt:(jint)focusableMode {
+- (bool)onAddFocusablesWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                     withJavaUtilArrayList:(JavaUtilArrayList *)views
+                                   withInt:(int32_t)direction
+                                   withInt:(int32_t)focusableMode {
   return false;
 }
 
@@ -5386,74 +5425,74 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
 }
 
 - (void)onItemsAddedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                withInt:(jint)positionStart
-                                withInt:(jint)itemCount {
+                                withInt:(int32_t)positionStart
+                                withInt:(int32_t)itemCount {
 }
 
 - (void)onItemsRemovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount {
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount {
 }
 
 - (void)onItemsUpdatedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount {
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount {
 }
 
 - (void)onItemsUpdatedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount
                                    withId:(id)payload {
   [self onItemsUpdatedWithADXRecyclerView:recyclerView withInt:positionStart withInt:itemCount];
 }
 
 - (void)onItemsMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                withInt:(jint)from
-                                withInt:(jint)to
-                                withInt:(jint)itemCount {
+                                withInt:(int32_t)from
+                                withInt:(int32_t)to
+                                withInt:(int32_t)itemCount {
 }
 
-- (jint)computeHorizontalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeHorizontalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return 0;
 }
 
-- (jint)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return 0;
 }
 
-- (jint)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return 0;
 }
 
-- (jint)computeVerticalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeVerticalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return 0;
 }
 
-- (jint)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return 0;
 }
 
-- (jint)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return 0;
 }
 
 - (void)onMeasureWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                     withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                      withInt:(jint)widthSpec
-                                      withInt:(jint)heightSpec {
+                                      withInt:(int32_t)widthSpec
+                                      withInt:(int32_t)heightSpec {
   [((ADXRecyclerView *) nil_chk(mRecyclerView_)) defaultOnMeasureWithInt:widthSpec withInt:heightSpec];
 }
 
-- (void)setMeasuredDimensionWithInt:(jint)widthSize
-                            withInt:(jint)heightSize {
+- (void)setMeasuredDimensionWithInt:(int32_t)widthSize
+                            withInt:(int32_t)heightSize {
   [((ADXRecyclerView *) nil_chk(mRecyclerView_)) setMeasuredDimensionWithInt:widthSize withInt:heightSize];
 }
 
-- (jint)getMinimumWidth {
+- (int32_t)getMinimumWidth {
   return ADXViewCompat_getMinimumWidthWithADView_(mRecyclerView_);
 }
 
-- (jint)getMinimumHeight {
+- (int32_t)getMinimumHeight {
   return ADXViewCompat_getMinimumHeightWithADView_(mRecyclerView_);
 }
 
@@ -5464,11 +5503,11 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
 - (void)onRestoreInstanceStateWithADParcelable:(id<ADParcelable>)state {
 }
 
-- (void)onScrollStateChangedWithInt:(jint)state {
+- (void)onScrollStateChangedWithInt:(int32_t)state {
 }
 
 - (void)removeAndRecycleAllViewsWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler {
-  for (jint i = [self getChildCount] - 1; i >= 0; i--) {
+  for (int32_t i = [self getChildCount] - 1; i >= 0; i--) {
     ADView *view = [self getChildAtWithInt:i];
     if (![((ADXRecyclerView_ViewHolder *) nil_chk(ADXRecyclerView_getChildViewHolderIntWithADView_(view))) shouldIgnore]) {
       [self removeAndRecycleViewAtWithInt:i withADXRecyclerView_Recycler:recycler];
@@ -5480,18 +5519,18 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
   mRequestedSimpleAnimations_ = true;
 }
 
-- (jint)getRowCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                      withADXRecyclerView_State:(ADXRecyclerView_State *)state {
-  return -1;
-}
-
-- (jint)getColumnCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+- (int32_t)getRowCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                                          withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return -1;
 }
 
-- (jboolean)isLayoutHierarchicalWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                   withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)getColumnCountForAccessibilityWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                                            withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+  return -1;
+}
+
+- (bool)isLayoutHierarchicalWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                               withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return false;
 }
 
@@ -5499,13 +5538,13 @@ withADXRecyclerView_LayoutParams:(ADXRecyclerView_LayoutParams *)lp {
   [self setMeasureSpecsWithInt:ADView_MeasureSpec_makeMeasureSpecWithInt_withInt_([((ADXRecyclerView *) nil_chk(recyclerView)) getWidth], ADView_MeasureSpec_EXACTLY) withInt:ADView_MeasureSpec_makeMeasureSpecWithInt_withInt_([recyclerView getHeight], ADView_MeasureSpec_EXACTLY)];
 }
 
-- (jboolean)shouldMeasureTwice {
+- (bool)shouldMeasureTwice {
   return false;
 }
 
-- (jboolean)hasFlexibleChildInBothOrientations {
-  jint childCount = [self getChildCount];
-  for (jint i = 0; i < childCount; i++) {
+- (bool)hasFlexibleChildInBothOrientations {
+  int32_t childCount = [self getChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
     ADView *child = [self getChildAtWithInt:i];
     ADViewGroup_LayoutParams *lp = [((ADView *) nil_chk(child)) getLayoutParams];
     if (((ADViewGroup_LayoutParams *) nil_chk(lp))->width_ < 0 && lp->height_ < 0) {
@@ -5849,10 +5888,10 @@ void ADXRecyclerView_LayoutManager_init(ADXRecyclerView_LayoutManager *self) {
   self->mItemPrefetchEnabled_ = true;
 }
 
-jint ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(jint spec, jint desired, jint min) {
+int32_t ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(int32_t spec, int32_t desired, int32_t min) {
   ADXRecyclerView_LayoutManager_initialize();
-  jint mode = ADView_MeasureSpec_getModeWithInt_(spec);
-  jint size = ADView_MeasureSpec_getSizeWithInt_(spec);
+  int32_t mode = ADView_MeasureSpec_getModeWithInt_(spec);
+  int32_t size = ADView_MeasureSpec_getSizeWithInt_(spec);
   switch (mode) {
     case ADView_MeasureSpec_EXACTLY:
     return size;
@@ -5864,7 +5903,7 @@ jint ADXRecyclerView_LayoutManager_chooseSizeWithInt_withInt_withInt_(jint spec,
   }
 }
 
-void ADXRecyclerView_LayoutManager_addViewIntWithADView_withInt_withBoolean_(ADXRecyclerView_LayoutManager *self, ADView *child, jint index, jboolean disappearing) {
+void ADXRecyclerView_LayoutManager_addViewIntWithADView_withInt_withBoolean_(ADXRecyclerView_LayoutManager *self, ADView *child, int32_t index, bool disappearing) {
   ADXRecyclerView_ViewHolder *holder = ADXRecyclerView_getChildViewHolderIntWithADView_(child);
   if (disappearing || [((ADXRecyclerView_ViewHolder *) nil_chk(holder)) isRemoved]) {
     [((ADXViewInfoStore *) nil_chk(((ADXRecyclerView *) nil_chk(self->mRecyclerView_))->mViewInfoStore_)) addToDisappearedInLayoutWithADXRecyclerView_ViewHolder:holder];
@@ -5882,8 +5921,8 @@ void ADXRecyclerView_LayoutManager_addViewIntWithADView_withInt_withBoolean_(ADX
     }
     [((ADXChildHelper *) nil_chk(self->mChildHelper_)) attachViewToParentWithADView:child withInt:index withADViewGroup_LayoutParams:[child getLayoutParams] withBoolean:false];
   }
-  else if ([child getParent] == self->mRecyclerView_) {
-    jint currentIndex = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) indexOfChildWithADView:child];
+  else if (JreObjectEqualsEquals([child getParent], self->mRecyclerView_)) {
+    int32_t currentIndex = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) indexOfChildWithADView:child];
     if (index == -1) {
       index = [((ADXChildHelper *) nil_chk(self->mChildHelper_)) getChildCount];
     }
@@ -5904,11 +5943,11 @@ void ADXRecyclerView_LayoutManager_addViewIntWithADView_withInt_withBoolean_(ADX
   }
 }
 
-void ADXRecyclerView_LayoutManager_detachViewInternalWithInt_withADView_(ADXRecyclerView_LayoutManager *self, jint index, ADView *view) {
+void ADXRecyclerView_LayoutManager_detachViewInternalWithInt_withADView_(ADXRecyclerView_LayoutManager *self, int32_t index, ADView *view) {
   [((ADXChildHelper *) nil_chk(self->mChildHelper_)) detachViewFromParentWithInt:index];
 }
 
-void ADXRecyclerView_LayoutManager_scrapOrRecycleViewWithADXRecyclerView_Recycler_withInt_withADView_(ADXRecyclerView_LayoutManager *self, ADXRecyclerView_Recycler *recycler, jint index, ADView *view) {
+void ADXRecyclerView_LayoutManager_scrapOrRecycleViewWithADXRecyclerView_Recycler_withInt_withADView_(ADXRecyclerView_LayoutManager *self, ADXRecyclerView_Recycler *recycler, int32_t index, ADView *view) {
   ADXRecyclerView_ViewHolder *viewHolder = ADXRecyclerView_getChildViewHolderIntWithADView_(view);
   if ([((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder)) shouldIgnore]) {
     return;
@@ -5924,10 +5963,10 @@ void ADXRecyclerView_LayoutManager_scrapOrRecycleViewWithADXRecyclerView_Recycle
   }
 }
 
-jboolean ADXRecyclerView_LayoutManager_isMeasurementUpToDateWithInt_withInt_withInt_(jint childSize, jint spec, jint dimension) {
+bool ADXRecyclerView_LayoutManager_isMeasurementUpToDateWithInt_withInt_withInt_(int32_t childSize, int32_t spec, int32_t dimension) {
   ADXRecyclerView_LayoutManager_initialize();
-  jint specMode = ADView_MeasureSpec_getModeWithInt_(spec);
-  jint specSize = ADView_MeasureSpec_getSizeWithInt_(spec);
+  int32_t specMode = ADView_MeasureSpec_getModeWithInt_(spec);
+  int32_t specSize = ADView_MeasureSpec_getSizeWithInt_(spec);
   if (dimension > 0 && childSize != dimension) {
     return false;
   }
@@ -5942,11 +5981,11 @@ jboolean ADXRecyclerView_LayoutManager_isMeasurementUpToDateWithInt_withInt_with
   return false;
 }
 
-jint ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withBoolean_(jint parentSize, jint padding, jint childDimension, jboolean canScroll) {
+int32_t ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withBoolean_(int32_t parentSize, int32_t padding, int32_t childDimension, bool canScroll) {
   ADXRecyclerView_LayoutManager_initialize();
-  jint size = JavaLangMath_maxWithInt_withInt_(0, parentSize - padding);
-  jint resultSize = 0;
-  jint resultMode = 0;
+  int32_t size = JavaLangMath_maxWithInt_withInt_(0, parentSize - padding);
+  int32_t resultSize = 0;
+  int32_t resultMode = 0;
   if (canScroll) {
     if (childDimension >= 0) {
       resultSize = childDimension;
@@ -5974,11 +6013,11 @@ jint ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_wi
   return ADView_MeasureSpec_makeMeasureSpecWithInt_withInt_(resultSize, resultMode);
 }
 
-jint ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_(jint parentSize, jint parentMode, jint padding, jint childDimension, jboolean canScroll) {
+int32_t ADXRecyclerView_LayoutManager_getChildMeasureSpecWithInt_withInt_withInt_withInt_withBoolean_(int32_t parentSize, int32_t parentMode, int32_t padding, int32_t childDimension, bool canScroll) {
   ADXRecyclerView_LayoutManager_initialize();
-  jint size = JavaLangMath_maxWithInt_withInt_(0, parentSize - padding);
-  jint resultSize = 0;
-  jint resultMode = 0;
+  int32_t size = JavaLangMath_maxWithInt_withInt_(0, parentSize - padding);
+  int32_t resultSize = 0;
+  int32_t resultMode = 0;
   if (canScroll) {
     if (childDimension >= 0) {
       resultSize = childDimension;
@@ -6033,24 +6072,24 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_LayoutManager)
   return self;
 }
 
-- (ADView *)getChildAtWithInt:(jint)index {
-  return [this$0_ getChildAtWithInt:index];
+- (ADView *)getChildAtWithInt:(int32_t)index {
+  return JreRetainedLocalValue([this$0_ getChildAtWithInt:index]);
 }
 
-- (jint)getParentStart {
+- (int32_t)getParentStart {
   return [this$0_ getPaddingLeft];
 }
 
-- (jint)getParentEnd {
+- (int32_t)getParentEnd {
   return [this$0_ getWidth] - [this$0_ getPaddingRight];
 }
 
-- (jint)getChildStartWithADView:(ADView *)view {
+- (int32_t)getChildStartWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [this$0_ getDecoratedLeftWithADView:view] - ((ADXRecyclerView_LayoutParams *) nil_chk(params))->leftMargin_;
 }
 
-- (jint)getChildEndWithADView:(ADView *)view {
+- (int32_t)getChildEndWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [this$0_ getDecoratedRightWithADView:view] + ((ADXRecyclerView_LayoutParams *) nil_chk(params))->rightMargin_;
 }
@@ -6083,7 +6122,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_LayoutManager)
     { "this$0_", "LADXRecyclerView_LayoutManager;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXRecyclerView_LayoutManager;", "getChildAt", "I", "getChildStart", "LADView;", "getChildEnd" };
-  static const J2ObjcClassInfo _ADXRecyclerView_LayoutManager_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8010, 6, 1, 0, -1, -1, -1, -1 };
+  static const J2ObjcClassInfo _ADXRecyclerView_LayoutManager_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 6, 1, 0, -1, -1, -1, -1 };
   return &_ADXRecyclerView_LayoutManager_1;
 }
 
@@ -6109,24 +6148,24 @@ ADXRecyclerView_LayoutManager_1 *create_ADXRecyclerView_LayoutManager_1_initWith
   return self;
 }
 
-- (ADView *)getChildAtWithInt:(jint)index {
-  return [this$0_ getChildAtWithInt:index];
+- (ADView *)getChildAtWithInt:(int32_t)index {
+  return JreRetainedLocalValue([this$0_ getChildAtWithInt:index]);
 }
 
-- (jint)getParentStart {
+- (int32_t)getParentStart {
   return [this$0_ getPaddingTop];
 }
 
-- (jint)getParentEnd {
+- (int32_t)getParentEnd {
   return [this$0_ getHeight] - [this$0_ getPaddingBottom];
 }
 
-- (jint)getChildStartWithADView:(ADView *)view {
+- (int32_t)getChildStartWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [this$0_ getDecoratedTopWithADView:view] - ((ADXRecyclerView_LayoutParams *) nil_chk(params))->topMargin_;
 }
 
-- (jint)getChildEndWithADView:(ADView *)view {
+- (int32_t)getChildEndWithADView:(ADView *)view {
   ADXRecyclerView_LayoutParams *params = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return [this$0_ getDecoratedBottomWithADView:view] + ((ADXRecyclerView_LayoutParams *) nil_chk(params))->bottomMargin_;
 }
@@ -6159,7 +6198,7 @@ ADXRecyclerView_LayoutManager_1 *create_ADXRecyclerView_LayoutManager_1_initWith
     { "this$0_", "LADXRecyclerView_LayoutManager;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXRecyclerView_LayoutManager;", "getChildAt", "I", "getChildStart", "LADView;", "getChildEnd" };
-  static const J2ObjcClassInfo _ADXRecyclerView_LayoutManager_2 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8010, 6, 1, 0, -1, -1, -1, -1 };
+  static const J2ObjcClassInfo _ADXRecyclerView_LayoutManager_2 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 6, 1, 0, -1, -1, -1, -1 };
   return &_ADXRecyclerView_LayoutManager_2;
 }
 
@@ -6208,7 +6247,7 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)getItemOffsetsWithADRect:(ADRect *)outRect
-                         withInt:(jint)itemPosition
+                         withInt:(int32_t)itemPosition
              withADXRecyclerView:(ADXRecyclerView *)parent {
   [((ADRect *) nil_chk(outRect)) setWithInt:0 withInt:0 withInt:0 withInt:0];
 }
@@ -6256,12 +6295,12 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)onScrollStateChangedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                                        withInt:(jint)newState {
+                                        withInt:(int32_t)newState {
 }
 
 - (void)onScrolledWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                              withInt:(jint)dx
-                              withInt:(jint)dy {
+                              withInt:(int32_t)dx
+                              withInt:(int32_t)dy {
 }
 
 + (const J2ObjcClassInfo *)__metadata {
@@ -6341,16 +6380,16 @@ J2OBJC_INITIALIZED_DEFN(ADXRecyclerView_ViewHolder)
   return self;
 }
 
-- (void)flagRemovedAndOffsetPositionWithInt:(jint)mNewPosition
-                                    withInt:(jint)offset
-                                withBoolean:(jboolean)applyToPreLayout {
+- (void)flagRemovedAndOffsetPositionWithInt:(int32_t)mNewPosition
+                                    withInt:(int32_t)offset
+                                withBoolean:(bool)applyToPreLayout {
   [self addFlagsWithInt:ADXRecyclerView_ViewHolder_FLAG_REMOVED];
   [self offsetPositionWithInt:offset withBoolean:applyToPreLayout];
   mPosition_ = mNewPosition;
 }
 
-- (void)offsetPositionWithInt:(jint)offset
-                  withBoolean:(jboolean)applyToPreLayout {
+- (void)offsetPositionWithInt:(int32_t)offset
+                  withBoolean:(bool)applyToPreLayout {
   if (mOldPosition_ == ADXRecyclerView_NO_POSITION) {
     mOldPosition_ = mPosition_;
   }
@@ -6377,27 +6416,27 @@ J2OBJC_INITIALIZED_DEFN(ADXRecyclerView_ViewHolder)
   }
 }
 
-- (jboolean)shouldIgnore {
+- (bool)shouldIgnore {
   return (mFlags_ & ADXRecyclerView_ViewHolder_FLAG_IGNORE) != 0;
 }
 
-- (jint)getPosition {
+- (int32_t)getPosition {
   return mPreLayoutPosition_ == ADXRecyclerView_NO_POSITION ? mPosition_ : mPreLayoutPosition_;
 }
 
-- (jint)getLayoutPosition {
+- (int32_t)getLayoutPosition {
   return ADXRecyclerView_ViewHolder_getLayoutPosition(self);
 }
 
-- (jint)getAdapterPosition {
+- (int32_t)getAdapterPosition {
   return ADXRecyclerView_ViewHolder_getBindingAdapterPosition(self);
 }
 
-- (jint)getBindingAdapterPosition {
+- (int32_t)getBindingAdapterPosition {
   return ADXRecyclerView_ViewHolder_getBindingAdapterPosition(self);
 }
 
-- (jint)getAbsoluteAdapterPosition {
+- (int32_t)getAbsoluteAdapterPosition {
   return ADXRecyclerView_ViewHolder_getAbsoluteAdapterPosition(self);
 }
 
@@ -6405,19 +6444,19 @@ J2OBJC_INITIALIZED_DEFN(ADXRecyclerView_ViewHolder)
   return mBindingAdapter_;
 }
 
-- (jint)getOldPosition {
+- (int32_t)getOldPosition {
   return ADXRecyclerView_ViewHolder_getOldPosition(self);
 }
 
-- (jlong)getItemId {
+- (int64_t)getItemId {
   return ADXRecyclerView_ViewHolder_getItemId(self);
 }
 
-- (jint)getItemViewType {
+- (int32_t)getItemViewType {
   return ADXRecyclerView_ViewHolder_getItemViewType(self);
 }
 
-- (jboolean)isScrap {
+- (bool)isScrap {
   return mScrapContainer_ != nil;
 }
 
@@ -6425,7 +6464,7 @@ J2OBJC_INITIALIZED_DEFN(ADXRecyclerView_ViewHolder)
   [((ADXRecyclerView_Recycler *) nil_chk(mScrapContainer_)) unscrapViewWithADXRecyclerView_ViewHolder:self];
 }
 
-- (jboolean)wasReturnedFromScrap {
+- (bool)wasReturnedFromScrap {
   return (mFlags_ & ADXRecyclerView_ViewHolder_FLAG_RETURNED_FROM_SCRAP) != 0;
 }
 
@@ -6442,49 +6481,49 @@ J2OBJC_INITIALIZED_DEFN(ADXRecyclerView_ViewHolder)
 }
 
 - (void)setScrapContainerWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                          withBoolean:(jboolean)isChangeScrap {
+                                          withBoolean:(bool)isChangeScrap {
   JreStrongAssign(&mScrapContainer_, recycler);
   mInChangeScrap_ = isChangeScrap;
 }
 
-- (jboolean)isInvalid {
+- (bool)isInvalid {
   return (mFlags_ & ADXRecyclerView_ViewHolder_FLAG_INVALID) != 0;
 }
 
-- (jboolean)needsUpdate {
+- (bool)needsUpdate {
   return (mFlags_ & ADXRecyclerView_ViewHolder_FLAG_UPDATE) != 0;
 }
 
-- (jboolean)isBound {
+- (bool)isBound {
   return (mFlags_ & ADXRecyclerView_ViewHolder_FLAG_BOUND) != 0;
 }
 
-- (jboolean)isRemoved {
+- (bool)isRemoved {
   return (mFlags_ & ADXRecyclerView_ViewHolder_FLAG_REMOVED) != 0;
 }
 
-- (jboolean)hasAnyOfTheFlagsWithInt:(jint)flags {
+- (bool)hasAnyOfTheFlagsWithInt:(int32_t)flags {
   return (mFlags_ & flags) != 0;
 }
 
-- (jboolean)isTmpDetached {
+- (bool)isTmpDetached {
   return (mFlags_ & ADXRecyclerView_ViewHolder_FLAG_TMP_DETACHED) != 0;
 }
 
-- (jboolean)isAttachedToTransitionOverlay {
-  return [((ADView *) nil_chk(itemView_)) getParent] != nil && [itemView_ getParent] != mOwnerRecyclerView_;
+- (bool)isAttachedToTransitionOverlay {
+  return [((ADView *) nil_chk(itemView_)) getParent] != nil && !JreObjectEqualsEquals([itemView_ getParent], mOwnerRecyclerView_);
 }
 
-- (jboolean)isAdapterPositionUnknown {
+- (bool)isAdapterPositionUnknown {
   return (mFlags_ & ADXRecyclerView_ViewHolder_FLAG_ADAPTER_POSITION_UNKNOWN) != 0 || [self isInvalid];
 }
 
-- (void)setFlagsWithInt:(jint)flags
-                withInt:(jint)mask {
+- (void)setFlagsWithInt:(int32_t)flags
+                withInt:(int32_t)mask {
   mFlags_ = (mFlags_ & ~mask) | (flags & mask);
 }
 
-- (void)addFlagsWithInt:(jint)flags {
+- (void)addFlagsWithInt:(int32_t)flags {
   mFlags_ |= flags;
 }
 
@@ -6551,7 +6590,7 @@ J2OBJC_INITIALIZED_DEFN(ADXRecyclerView_ViewHolder)
 
 - (NSString *)description {
   NSString *className_ = [[self java_getClass] getSimpleName];
-  JavaLangStringBuilder *sb = create_JavaLangStringBuilder_initWithNSString_(JreStrcat("$C$$I$J$I$I", className_, '{', JavaLangInteger_toHexStringWithInt_(((jint) [self hash])), @" position=", mPosition_, @" id=", mItemId_, @", oldPos=", mOldPosition_, @", pLpos:", mPreLayoutPosition_));
+  JavaLangStringBuilder *sb = create_JavaLangStringBuilder_initWithNSString_(JreStrcat("$C$$I$J$I$I", className_, '{', JavaLangInteger_toHexStringWithInt_(((int32_t) [self hash])), @" position=", mPosition_, @" id=", mItemId_, @", oldPos=", mOldPosition_, @", pLpos:", mPreLayoutPosition_));
   if ([self isScrap]) {
     [((JavaLangStringBuilder *) nil_chk([sb appendWithNSString:@" scrap "])) appendWithNSString:mInChangeScrap_ ? @"[changeScrap]" : @"[attachedScrap]"];
   }
@@ -6568,23 +6607,23 @@ J2OBJC_INITIALIZED_DEFN(ADXRecyclerView_ViewHolder)
   return [sb description];
 }
 
-- (void)setIsRecyclableWithBoolean:(jboolean)recyclable {
+- (void)setIsRecyclableWithBoolean:(bool)recyclable {
   ADXRecyclerView_ViewHolder_setIsRecyclableWithBoolean_(self, recyclable);
 }
 
-- (jboolean)isRecyclable {
+- (bool)isRecyclable {
   return ADXRecyclerView_ViewHolder_isRecyclable(self);
 }
 
-- (jboolean)shouldBeKeptAsChild {
+- (bool)shouldBeKeptAsChild {
   return (mFlags_ & ADXRecyclerView_ViewHolder_FLAG_NOT_RECYCLABLE) != 0;
 }
 
-- (jboolean)doesTransientStatePreventRecycling {
+- (bool)doesTransientStatePreventRecycling {
   return (mFlags_ & ADXRecyclerView_ViewHolder_FLAG_NOT_RECYCLABLE) == 0 && ADXViewCompat_hasTransientStateWithADView_(itemView_);
 }
 
-- (jboolean)isUpdated {
+- (bool)isUpdated {
   return (mFlags_ & ADXRecyclerView_ViewHolder_FLAG_UPDATE) != 0;
 }
 
@@ -6770,11 +6809,11 @@ void ADXRecyclerView_ViewHolder_initWithADView_(ADXRecyclerView_ViewHolder *self
   JreStrongAssign(&self->itemView_, itemView);
 }
 
-jint ADXRecyclerView_ViewHolder_getLayoutPosition(ADXRecyclerView_ViewHolder *self) {
+int32_t ADXRecyclerView_ViewHolder_getLayoutPosition(ADXRecyclerView_ViewHolder *self) {
   return self->mPreLayoutPosition_ == ADXRecyclerView_NO_POSITION ? self->mPosition_ : self->mPreLayoutPosition_;
 }
 
-jint ADXRecyclerView_ViewHolder_getBindingAdapterPosition(ADXRecyclerView_ViewHolder *self) {
+int32_t ADXRecyclerView_ViewHolder_getBindingAdapterPosition(ADXRecyclerView_ViewHolder *self) {
   if (self->mBindingAdapter_ == nil) {
     return ADXRecyclerView_NO_POSITION;
   }
@@ -6785,29 +6824,29 @@ jint ADXRecyclerView_ViewHolder_getBindingAdapterPosition(ADXRecyclerView_ViewHo
   if (rvAdapter == nil) {
     return ADXRecyclerView_NO_POSITION;
   }
-  jint globalPosition = [((ADXRecyclerView *) nil_chk(self->mOwnerRecyclerView_)) getAdapterPositionInRecyclerViewWithADXRecyclerView_ViewHolder:self];
+  int32_t globalPosition = [((ADXRecyclerView *) nil_chk(self->mOwnerRecyclerView_)) getAdapterPositionInRecyclerViewWithADXRecyclerView_ViewHolder:self];
   if (globalPosition == ADXRecyclerView_NO_POSITION) {
     return ADXRecyclerView_NO_POSITION;
   }
   return [rvAdapter findRelativeAdapterPositionInWithADXRecyclerView_Adapter:self->mBindingAdapter_ withADXRecyclerView_ViewHolder:self withInt:globalPosition];
 }
 
-jint ADXRecyclerView_ViewHolder_getAbsoluteAdapterPosition(ADXRecyclerView_ViewHolder *self) {
+int32_t ADXRecyclerView_ViewHolder_getAbsoluteAdapterPosition(ADXRecyclerView_ViewHolder *self) {
   if (self->mOwnerRecyclerView_ == nil) {
     return ADXRecyclerView_NO_POSITION;
   }
   return [self->mOwnerRecyclerView_ getAdapterPositionInRecyclerViewWithADXRecyclerView_ViewHolder:self];
 }
 
-jint ADXRecyclerView_ViewHolder_getOldPosition(ADXRecyclerView_ViewHolder *self) {
+int32_t ADXRecyclerView_ViewHolder_getOldPosition(ADXRecyclerView_ViewHolder *self) {
   return self->mOldPosition_;
 }
 
-jlong ADXRecyclerView_ViewHolder_getItemId(ADXRecyclerView_ViewHolder *self) {
+int64_t ADXRecyclerView_ViewHolder_getItemId(ADXRecyclerView_ViewHolder *self) {
   return self->mItemId_;
 }
 
-jint ADXRecyclerView_ViewHolder_getItemViewType(ADXRecyclerView_ViewHolder *self) {
+int32_t ADXRecyclerView_ViewHolder_getItemViewType(ADXRecyclerView_ViewHolder *self) {
   return self->mItemViewType_;
 }
 
@@ -6818,7 +6857,7 @@ void ADXRecyclerView_ViewHolder_createPayloadsIfNeeded(ADXRecyclerView_ViewHolde
   }
 }
 
-void ADXRecyclerView_ViewHolder_setIsRecyclableWithBoolean_(ADXRecyclerView_ViewHolder *self, jboolean recyclable) {
+void ADXRecyclerView_ViewHolder_setIsRecyclableWithBoolean_(ADXRecyclerView_ViewHolder *self, bool recyclable) {
   self->mIsRecyclableCount_ = recyclable ? self->mIsRecyclableCount_ - 1 : self->mIsRecyclableCount_ + 1;
   if (self->mIsRecyclableCount_ < 0) {
     self->mIsRecyclableCount_ = 0;
@@ -6832,7 +6871,7 @@ void ADXRecyclerView_ViewHolder_setIsRecyclableWithBoolean_(ADXRecyclerView_View
   }
 }
 
-jboolean ADXRecyclerView_ViewHolder_isRecyclable(ADXRecyclerView_ViewHolder *self) {
+bool ADXRecyclerView_ViewHolder_isRecyclable(ADXRecyclerView_ViewHolder *self) {
   return (self->mFlags_ & ADXRecyclerView_ViewHolder_FLAG_NOT_RECYCLABLE) == 0 && !ADXViewCompat_hasTransientStateWithADView_(self->itemView_);
 }
 
@@ -6840,8 +6879,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_ViewHolder)
 
 @implementation ADXRecyclerView_LayoutParams
 
-- (instancetype)initWithInt:(jint)width
-                    withInt:(jint)height {
+- (instancetype)initWithInt:(int32_t)width
+                    withInt:(int32_t)height {
   ADXRecyclerView_LayoutParams_initWithInt_withInt_(self, width, height);
   return self;
 }
@@ -6856,19 +6895,19 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_ViewHolder)
   return self;
 }
 
-- (jboolean)isViewInvalid {
+- (bool)isViewInvalid {
   return [((ADXRecyclerView_ViewHolder *) nil_chk(mViewHolder_)) isInvalid];
 }
 
-- (jboolean)isItemRemoved {
+- (bool)isItemRemoved {
   return [((ADXRecyclerView_ViewHolder *) nil_chk(mViewHolder_)) isRemoved];
 }
 
-- (jboolean)isItemChanged {
+- (bool)isItemChanged {
   return [((ADXRecyclerView_ViewHolder *) nil_chk(mViewHolder_)) isUpdated];
 }
 
-- (jint)getViewLayoutPosition {
+- (int32_t)getViewLayoutPosition {
   return ADXRecyclerView_ViewHolder_getLayoutPosition(nil_chk(mViewHolder_));
 }
 
@@ -6912,18 +6951,18 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_ViewHolder)
 
 @end
 
-void ADXRecyclerView_LayoutParams_initWithInt_withInt_(ADXRecyclerView_LayoutParams *self, jint width, jint height) {
+void ADXRecyclerView_LayoutParams_initWithInt_withInt_(ADXRecyclerView_LayoutParams *self, int32_t width, int32_t height) {
   ADViewGroup_MarginLayoutParams_initWithInt_withInt_(self, width, height);
   JreStrongAssignAndConsume(&self->mDecorInsets_, new_ADRect_init());
   self->mInsetsDirty_ = true;
   self->mPendingInvalidate_ = false;
 }
 
-ADXRecyclerView_LayoutParams *new_ADXRecyclerView_LayoutParams_initWithInt_withInt_(jint width, jint height) {
+ADXRecyclerView_LayoutParams *new_ADXRecyclerView_LayoutParams_initWithInt_withInt_(int32_t width, int32_t height) {
   J2OBJC_NEW_IMPL(ADXRecyclerView_LayoutParams, initWithInt_withInt_, width, height)
 }
 
-ADXRecyclerView_LayoutParams *create_ADXRecyclerView_LayoutParams_initWithInt_withInt_(jint width, jint height) {
+ADXRecyclerView_LayoutParams *create_ADXRecyclerView_LayoutParams_initWithInt_withInt_(int32_t width, int32_t height) {
   J2OBJC_CREATE_IMPL(ADXRecyclerView_LayoutParams, initWithInt_withInt_, width, height)
 }
 
@@ -7028,52 +7067,52 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jboolean)hasObservers {
+- (bool)hasObservers {
   return ![((JavaUtilArrayList *) nil_chk(mObservers_)) isEmpty];
 }
 
 - (void)notifyChanged {
-  for (jint i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
+  for (int32_t i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
     [((ADXRecyclerView_AdapterDataObserver *) nil_chk([mObservers_ getWithInt:i])) onChanged];
   }
 }
 
 - (void)notifyStateRestorationPolicyChanged {
-  for (jint i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
+  for (int32_t i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
     [((ADXRecyclerView_AdapterDataObserver *) nil_chk([mObservers_ getWithInt:i])) onStateRestorationPolicyChanged];
   }
 }
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount {
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount {
   [self notifyItemRangeChangedWithInt:positionStart withInt:itemCount withId:nil];
 }
 
-- (void)notifyItemRangeChangedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount
+- (void)notifyItemRangeChangedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount
                                withId:(id)payload {
-  for (jint i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
+  for (int32_t i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
     [((ADXRecyclerView_AdapterDataObserver *) nil_chk([mObservers_ getWithInt:i])) onItemRangeChangedWithInt:positionStart withInt:itemCount withId:payload];
   }
 }
 
-- (void)notifyItemRangeInsertedWithInt:(jint)positionStart
-                               withInt:(jint)itemCount {
-  for (jint i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
+- (void)notifyItemRangeInsertedWithInt:(int32_t)positionStart
+                               withInt:(int32_t)itemCount {
+  for (int32_t i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
     [((ADXRecyclerView_AdapterDataObserver *) nil_chk([mObservers_ getWithInt:i])) onItemRangeInsertedWithInt:positionStart withInt:itemCount];
   }
 }
 
-- (void)notifyItemRangeRemovedWithInt:(jint)positionStart
-                              withInt:(jint)itemCount {
-  for (jint i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
+- (void)notifyItemRangeRemovedWithInt:(int32_t)positionStart
+                              withInt:(int32_t)itemCount {
+  for (int32_t i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
     [((ADXRecyclerView_AdapterDataObserver *) nil_chk([mObservers_ getWithInt:i])) onItemRangeRemovedWithInt:positionStart withInt:itemCount];
   }
 }
 
-- (void)notifyItemMovedWithInt:(jint)fromPosition
-                       withInt:(jint)toPosition {
-  for (jint i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
+- (void)notifyItemMovedWithInt:(int32_t)fromPosition
+                       withInt:(int32_t)toPosition {
+  for (int32_t i = [((JavaUtilArrayList *) nil_chk(mObservers_)) size] - 1; i >= 0; i--) {
     [((ADXRecyclerView_AdapterDataObserver *) nil_chk([mObservers_ getWithInt:i])) onItemRangeMovedWithInt:fromPosition withInt:toPosition withInt:1];
   }
 }
@@ -7133,7 +7172,7 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (void)assertLayoutStepWithInt:(jint)accepted {
+- (void)assertLayoutStepWithInt:(int32_t)accepted {
   if ((accepted & mLayoutStep_) == 0) {
     @throw create_JavaLangIllegalStateException_initWithNSString_(JreStrcat("$$$$", @"Layout state should be one of ", JavaLangInteger_toBinaryStringWithInt_(accepted), @" but it is ", JavaLangInteger_toBinaryStringWithInt_(mLayoutStep_)));
   }
@@ -7147,37 +7186,37 @@ J2OBJC_IGNORE_DESIGNATED_END
   mIsMeasuring_ = false;
 }
 
-- (jboolean)isMeasuring {
+- (bool)isMeasuring {
   return mIsMeasuring_;
 }
 
-- (jboolean)isPreLayout {
+- (bool)isPreLayout {
   return mInPreLayout_;
 }
 
-- (jboolean)willRunPredictiveAnimations {
+- (bool)willRunPredictiveAnimations {
   return mRunPredictiveAnimations_;
 }
 
-- (jboolean)willRunSimpleAnimations {
+- (bool)willRunSimpleAnimations {
   return mRunSimpleAnimations_;
 }
 
-- (void)removeWithInt:(jint)resourceId {
+- (void)removeWithInt:(int32_t)resourceId {
   if (mData_ == nil) {
     return;
   }
   [mData_ removeWithInt:resourceId];
 }
 
-- (id)getWithInt:(jint)resourceId {
+- (id)getWithInt:(int32_t)resourceId {
   if (mData_ == nil) {
     return nil;
   }
   return [mData_ getWithInt:resourceId];
 }
 
-- (void)putWithInt:(jint)resourceId
+- (void)putWithInt:(int32_t)resourceId
             withId:(id)data {
   if (mData_ == nil) {
     JreStrongAssignAndConsume(&mData_, new_ADSparseArray_init());
@@ -7185,27 +7224,27 @@ J2OBJC_IGNORE_DESIGNATED_END
   [mData_ putWithInt:resourceId withId:data];
 }
 
-- (jint)getTargetScrollPosition {
+- (int32_t)getTargetScrollPosition {
   return mTargetPosition_;
 }
 
-- (jboolean)hasTargetScrollPosition {
+- (bool)hasTargetScrollPosition {
   return mTargetPosition_ != ADXRecyclerView_NO_POSITION;
 }
 
-- (jboolean)didStructureChange {
+- (bool)didStructureChange {
   return mStructureChanged_;
 }
 
-- (jint)getItemCount {
+- (int32_t)getItemCount {
   return mInPreLayout_ ? (mPreviousLayoutItemCount_ - mDeletedInvisibleItemCountSincePreviousLayout_) : mItemCount_;
 }
 
-- (jint)getRemainingScrollHorizontal {
+- (int32_t)getRemainingScrollHorizontal {
   return mRemainingScrollHorizontal_;
 }
 
-- (jint)getRemainingScrollVertical {
+- (int32_t)getRemainingScrollVertical {
   return mRemainingScrollVertical_;
 }
 
@@ -7321,41 +7360,41 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jlong)getMoveDuration {
+- (int64_t)getMoveDuration {
   return mMoveDuration_;
 }
 
-- (void)setMoveDurationWithLong:(jlong)moveDuration {
+- (void)setMoveDurationWithLong:(int64_t)moveDuration {
   mMoveDuration_ = moveDuration;
 }
 
-- (jlong)getAddDuration {
+- (int64_t)getAddDuration {
   return mAddDuration_;
 }
 
-- (void)setAddDurationWithLong:(jlong)addDuration {
+- (void)setAddDurationWithLong:(int64_t)addDuration {
   mAddDuration_ = addDuration;
 }
 
-- (jlong)getRemoveDuration {
+- (int64_t)getRemoveDuration {
   return mRemoveDuration_;
 }
 
-- (void)setRemoveDurationWithLong:(jlong)removeDuration {
+- (void)setRemoveDurationWithLong:(int64_t)removeDuration {
   mRemoveDuration_ = removeDuration;
 }
 
-- (jlong)getChangeDuration {
+- (int64_t)getChangeDuration {
   return mChangeDuration_;
 }
 
-- (void)setChangeDurationWithLong:(jlong)changeDuration {
+- (void)setChangeDurationWithLong:(int64_t)changeDuration {
   mChangeDuration_ = changeDuration;
 }
 
 - (ADXRecyclerView_ItemAnimator_ItemHolderInfo *)recordPreLayoutInformationWithADXRecyclerView_State:(ADXRecyclerView_State *)state
                                                                       withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-                                                                                             withInt:(jint)changeFlags
+                                                                                             withInt:(int32_t)changeFlags
                                                                                     withJavaUtilList:(id<JavaUtilList>)payloads {
   return [((ADXRecyclerView_ItemAnimator_ItemHolderInfo *) nil_chk([self obtainHolderInfo])) setFromWithADXRecyclerView_ViewHolder:viewHolder];
 }
@@ -7365,32 +7404,15 @@ J2OBJC_IGNORE_DESIGNATED_END
   return [((ADXRecyclerView_ItemAnimator_ItemHolderInfo *) nil_chk([self obtainHolderInfo])) setFromWithADXRecyclerView_ViewHolder:viewHolder];
 }
 
-- (jboolean)animateDisappearanceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-               withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
-               withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo {
+- (bool)animateDisappearanceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+           withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
+           withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
 }
 
-- (jboolean)animateAppearanceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-            withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
-            withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo {
-  // can't call an abstract method
-  [self doesNotRecognizeSelector:_cmd];
-  return 0;
-}
-
-- (jboolean)animatePersistenceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-             withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
-             withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo {
-  // can't call an abstract method
-  [self doesNotRecognizeSelector:_cmd];
-  return 0;
-}
-
-- (jboolean)animateChangeWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)oldHolder
-                         withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)newHolder
+- (bool)animateAppearanceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
         withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
         withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo {
   // can't call an abstract method
@@ -7398,7 +7420,24 @@ J2OBJC_IGNORE_DESIGNATED_END
   return 0;
 }
 
-+ (jint)buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+- (bool)animatePersistenceWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+         withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
+         withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo {
+  // can't call an abstract method
+  [self doesNotRecognizeSelector:_cmd];
+  return 0;
+}
+
+- (bool)animateChangeWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)oldHolder
+                     withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)newHolder
+    withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)preLayoutInfo
+    withADXRecyclerView_ItemAnimator_ItemHolderInfo:(ADXRecyclerView_ItemAnimator_ItemHolderInfo *)postLayoutInfo {
+  // can't call an abstract method
+  [self doesNotRecognizeSelector:_cmd];
+  return 0;
+}
+
++ (int32_t)buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
   return ADXRecyclerView_ItemAnimator_buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder_(viewHolder);
 }
 
@@ -7423,12 +7462,12 @@ J2OBJC_IGNORE_DESIGNATED_END
 - (void)onAnimationStartedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
 }
 
-- (jboolean)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+- (bool)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
   return true;
 }
 
-- (jboolean)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-                                                   withJavaUtilList:(id<JavaUtilList>)payloads {
+- (bool)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                               withJavaUtilList:(id<JavaUtilList>)payloads {
   return [self canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:viewHolder];
 }
 
@@ -7517,15 +7556,15 @@ void ADXRecyclerView_ItemAnimator_init(ADXRecyclerView_ItemAnimator *self) {
   self->mChangeDuration_ = 250;
 }
 
-jint ADXRecyclerView_ItemAnimator_buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder_(ADXRecyclerView_ViewHolder *viewHolder) {
+int32_t ADXRecyclerView_ItemAnimator_buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder_(ADXRecyclerView_ViewHolder *viewHolder) {
   ADXRecyclerView_ItemAnimator_initialize();
-  jint flags = ((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder))->mFlags_ & (ADXRecyclerView_ItemAnimator_FLAG_INVALIDATED | ADXRecyclerView_ItemAnimator_FLAG_REMOVED | ADXRecyclerView_ItemAnimator_FLAG_CHANGED);
+  int32_t flags = ((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder))->mFlags_ & (ADXRecyclerView_ItemAnimator_FLAG_INVALIDATED | ADXRecyclerView_ItemAnimator_FLAG_REMOVED | ADXRecyclerView_ItemAnimator_FLAG_CHANGED);
   if ([viewHolder isInvalid]) {
     return ADXRecyclerView_ItemAnimator_FLAG_INVALIDATED;
   }
   if ((flags & ADXRecyclerView_ItemAnimator_FLAG_INVALIDATED) == 0) {
-    jint oldPos = ADXRecyclerView_ViewHolder_getOldPosition(viewHolder);
-    jint pos = ADXRecyclerView_ViewHolder_getAbsoluteAdapterPosition(viewHolder);
+    int32_t oldPos = ADXRecyclerView_ViewHolder_getOldPosition(viewHolder);
+    int32_t pos = ADXRecyclerView_ViewHolder_getAbsoluteAdapterPosition(viewHolder);
     if (oldPos != ADXRecyclerView_NO_POSITION && pos != ADXRecyclerView_NO_POSITION && oldPos != pos) {
       flags |= ADXRecyclerView_ItemAnimator_FLAG_MOVED;
     }
@@ -7549,7 +7588,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (ADXRecyclerView_ItemAnimator_ItemHolderInfo *)setFromWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder
-                                                                               withInt:(jint)flags {
+                                                                               withInt:(int32_t)flags {
   ADView *view = ((ADXRecyclerView_ViewHolder *) nil_chk(holder))->itemView_;
   self->left_ = [((ADView *) nil_chk(view)) getLeft];
   self->top_ = [view getTop];
@@ -7655,8 +7694,8 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-+ (jboolean)isFromSourceWithADMotionEvent:(ADMotionEvent *)ev
-                                  withInt:(jint)source {
++ (bool)isFromSourceWithADMotionEvent:(ADMotionEvent *)ev
+                              withInt:(int32_t)source {
   return ADXRecyclerView_MotionEventCompat_isFromSourceWithADMotionEvent_withInt_(ev, source);
 }
 
@@ -7690,7 +7729,7 @@ ADXRecyclerView_MotionEventCompat *create_ADXRecyclerView_MotionEventCompat_init
   J2OBJC_CREATE_IMPL(ADXRecyclerView_MotionEventCompat, init)
 }
 
-jboolean ADXRecyclerView_MotionEventCompat_isFromSourceWithADMotionEvent_withInt_(ADMotionEvent *ev, jint source) {
+bool ADXRecyclerView_MotionEventCompat_isFromSourceWithADMotionEvent_withInt_(ADMotionEvent *ev, int32_t source) {
   ADXRecyclerView_MotionEventCompat_initialize();
   return false;
 }

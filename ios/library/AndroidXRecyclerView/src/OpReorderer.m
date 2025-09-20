@@ -3,35 +3,46 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\OpReorderer.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "AdapterHelper.h"
 #include "J2ObjC_source.h"
 #include "OpReorderer.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Integer.h"
 #include "java/util/List.h"
 
-@protocol JavaUtilList;
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXOpReorderer ()
 
 - (void)swapMoveOpWithJavaUtilList:(id<JavaUtilList>)list
-                           withInt:(jint)badMove
-                           withInt:(jint)next;
+                           withInt:(int32_t)badMove
+                           withInt:(int32_t)next;
 
 - (void)swapMoveAddWithJavaUtilList:(id<JavaUtilList>)list
-                            withInt:(jint)move
+                            withInt:(int32_t)move
       withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)moveOp
-                            withInt:(jint)add
+                            withInt:(int32_t)add
       withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)addOp;
 
-- (jint)getLastMoveOutOfOrderWithJavaUtilList:(id<JavaUtilList>)list;
+- (int32_t)getLastMoveOutOfOrderWithJavaUtilList:(id<JavaUtilList>)list;
 
 @end
 
-__attribute__((unused)) static void ADXOpReorderer_swapMoveOpWithJavaUtilList_withInt_withInt_(ADXOpReorderer *self, id<JavaUtilList> list, jint badMove, jint next);
+__attribute__((unused)) static void ADXOpReorderer_swapMoveOpWithJavaUtilList_withInt_withInt_(ADXOpReorderer *self, id<JavaUtilList> list, int32_t badMove, int32_t next);
 
-__attribute__((unused)) static void ADXOpReorderer_swapMoveAddWithJavaUtilList_withInt_withADXAdapterHelper_UpdateOp_withInt_withADXAdapterHelper_UpdateOp_(ADXOpReorderer *self, id<JavaUtilList> list, jint move, ADXAdapterHelper_UpdateOp *moveOp, jint add, ADXAdapterHelper_UpdateOp *addOp);
+__attribute__((unused)) static void ADXOpReorderer_swapMoveAddWithJavaUtilList_withInt_withADXAdapterHelper_UpdateOp_withInt_withADXAdapterHelper_UpdateOp_(ADXOpReorderer *self, id<JavaUtilList> list, int32_t move, ADXAdapterHelper_UpdateOp *moveOp, int32_t add, ADXAdapterHelper_UpdateOp *addOp);
 
-__attribute__((unused)) static jint ADXOpReorderer_getLastMoveOutOfOrderWithJavaUtilList_(ADXOpReorderer *self, id<JavaUtilList> list);
+__attribute__((unused)) static int32_t ADXOpReorderer_getLastMoveOutOfOrderWithJavaUtilList_(ADXOpReorderer *self, id<JavaUtilList> list);
 
 @interface ADXOpReorderer_Callback : NSObject
 
@@ -45,26 +56,26 @@ __attribute__((unused)) static jint ADXOpReorderer_getLastMoveOutOfOrderWithJava
 }
 
 - (void)reorderOpsWithJavaUtilList:(id<JavaUtilList>)ops {
-  jint badMove;
+  int32_t badMove;
   while ((badMove = ADXOpReorderer_getLastMoveOutOfOrderWithJavaUtilList_(self, ops)) != -1) {
     ADXOpReorderer_swapMoveOpWithJavaUtilList_withInt_withInt_(self, ops, badMove, badMove + 1);
   }
 }
 
 - (void)swapMoveOpWithJavaUtilList:(id<JavaUtilList>)list
-                           withInt:(jint)badMove
-                           withInt:(jint)next {
+                           withInt:(int32_t)badMove
+                           withInt:(int32_t)next {
   ADXOpReorderer_swapMoveOpWithJavaUtilList_withInt_withInt_(self, list, badMove, next);
 }
 
 - (void)swapMoveRemoveWithJavaUtilList:(id<JavaUtilList>)list
-                               withInt:(jint)movePos
+                               withInt:(int32_t)movePos
          withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)moveOp
-                               withInt:(jint)removePos
+                               withInt:(int32_t)removePos
          withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)removeOp {
   ADXAdapterHelper_UpdateOp *extraRm = nil;
-  jboolean revertedMove = false;
-  jboolean moveIsBackwards;
+  bool revertedMove = false;
+  bool moveIsBackwards;
   if (((ADXAdapterHelper_UpdateOp *) nil_chk(moveOp))->positionStart_ < moveOp->itemCount_) {
     moveIsBackwards = false;
     if (((ADXAdapterHelper_UpdateOp *) nil_chk(removeOp))->positionStart_ == moveOp->positionStart_ && removeOp->itemCount_ == moveOp->itemCount_ - moveOp->positionStart_) {
@@ -94,7 +105,7 @@ __attribute__((unused)) static jint ADXOpReorderer_getLastMoveOutOfOrderWithJava
     removeOp->positionStart_++;
   }
   else if (moveOp->positionStart_ < removeOp->positionStart_ + removeOp->itemCount_) {
-    jint remaining = removeOp->positionStart_ + removeOp->itemCount_ - moveOp->positionStart_;
+    int32_t remaining = removeOp->positionStart_ + removeOp->itemCount_ - moveOp->positionStart_;
     extraRm = [((id<ADXOpReorderer_Callback>) nil_chk(mCallback_)) obtainUpdateOpWithInt:ADXAdapterHelper_UpdateOp_REMOVE withInt:moveOp->positionStart_ + 1 withInt:remaining withId:nil];
     removeOp->itemCount_ = moveOp->positionStart_ - removeOp->positionStart_;
   }
@@ -149,17 +160,17 @@ __attribute__((unused)) static jint ADXOpReorderer_getLastMoveOutOfOrderWithJava
 }
 
 - (void)swapMoveAddWithJavaUtilList:(id<JavaUtilList>)list
-                            withInt:(jint)move
+                            withInt:(int32_t)move
       withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)moveOp
-                            withInt:(jint)add
+                            withInt:(int32_t)add
       withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)addOp {
   ADXOpReorderer_swapMoveAddWithJavaUtilList_withInt_withADXAdapterHelper_UpdateOp_withInt_withADXAdapterHelper_UpdateOp_(self, list, move, moveOp, add, addOp);
 }
 
 - (void)swapMoveUpdateWithJavaUtilList:(id<JavaUtilList>)list
-                               withInt:(jint)move
+                               withInt:(int32_t)move
          withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)moveOp
-                               withInt:(jint)update
+                               withInt:(int32_t)update
          withADXAdapterHelper_UpdateOp:(ADXAdapterHelper_UpdateOp *)updateOp {
   ADXAdapterHelper_UpdateOp *extraUp1 = nil;
   ADXAdapterHelper_UpdateOp *extraUp2 = nil;
@@ -174,7 +185,7 @@ __attribute__((unused)) static jint ADXOpReorderer_getLastMoveOutOfOrderWithJava
     updateOp->positionStart_++;
   }
   else if (moveOp->positionStart_ < updateOp->positionStart_ + updateOp->itemCount_) {
-    jint remaining = updateOp->positionStart_ + updateOp->itemCount_ - moveOp->positionStart_;
+    int32_t remaining = updateOp->positionStart_ + updateOp->itemCount_ - moveOp->positionStart_;
     extraUp2 = [((id<ADXOpReorderer_Callback>) nil_chk(mCallback_)) obtainUpdateOpWithInt:ADXAdapterHelper_UpdateOp_UPDATE withInt:moveOp->positionStart_ + 1 withInt:remaining withId:updateOp->payload_];
     updateOp->itemCount_ -= remaining;
   }
@@ -194,7 +205,7 @@ __attribute__((unused)) static jint ADXOpReorderer_getLastMoveOutOfOrderWithJava
   }
 }
 
-- (jint)getLastMoveOutOfOrderWithJavaUtilList:(id<JavaUtilList>)list {
+- (int32_t)getLastMoveOutOfOrderWithJavaUtilList:(id<JavaUtilList>)list {
   return ADXOpReorderer_getLastMoveOutOfOrderWithJavaUtilList_(self, list);
 }
 
@@ -247,7 +258,7 @@ ADXOpReorderer *create_ADXOpReorderer_initPackagePrivateWithADXOpReorderer_Callb
   J2OBJC_CREATE_IMPL(ADXOpReorderer, initPackagePrivateWithADXOpReorderer_Callback_, callback)
 }
 
-void ADXOpReorderer_swapMoveOpWithJavaUtilList_withInt_withInt_(ADXOpReorderer *self, id<JavaUtilList> list, jint badMove, jint next) {
+void ADXOpReorderer_swapMoveOpWithJavaUtilList_withInt_withInt_(ADXOpReorderer *self, id<JavaUtilList> list, int32_t badMove, int32_t next) {
   ADXAdapterHelper_UpdateOp *moveOp = [((id<JavaUtilList>) nil_chk(list)) getWithInt:badMove];
   ADXAdapterHelper_UpdateOp *nextOp = [list getWithInt:next];
   switch (((ADXAdapterHelper_UpdateOp *) nil_chk(nextOp))->cmd_) {
@@ -263,8 +274,8 @@ void ADXOpReorderer_swapMoveOpWithJavaUtilList_withInt_withInt_(ADXOpReorderer *
   }
 }
 
-void ADXOpReorderer_swapMoveAddWithJavaUtilList_withInt_withADXAdapterHelper_UpdateOp_withInt_withADXAdapterHelper_UpdateOp_(ADXOpReorderer *self, id<JavaUtilList> list, jint move, ADXAdapterHelper_UpdateOp *moveOp, jint add, ADXAdapterHelper_UpdateOp *addOp) {
-  jint offset = 0;
+void ADXOpReorderer_swapMoveAddWithJavaUtilList_withInt_withADXAdapterHelper_UpdateOp_withInt_withADXAdapterHelper_UpdateOp_(ADXOpReorderer *self, id<JavaUtilList> list, int32_t move, ADXAdapterHelper_UpdateOp *moveOp, int32_t add, ADXAdapterHelper_UpdateOp *addOp) {
+  int32_t offset = 0;
   if (((ADXAdapterHelper_UpdateOp *) nil_chk(moveOp))->itemCount_ < ((ADXAdapterHelper_UpdateOp *) nil_chk(addOp))->positionStart_) {
     offset--;
   }
@@ -282,9 +293,9 @@ void ADXOpReorderer_swapMoveAddWithJavaUtilList_withInt_withADXAdapterHelper_Upd
   [list setWithInt:add withId:moveOp];
 }
 
-jint ADXOpReorderer_getLastMoveOutOfOrderWithJavaUtilList_(ADXOpReorderer *self, id<JavaUtilList> list) {
-  jboolean foundNonMove = false;
-  for (jint i = [((id<JavaUtilList>) nil_chk(list)) size] - 1; i >= 0; i--) {
+int32_t ADXOpReorderer_getLastMoveOutOfOrderWithJavaUtilList_(ADXOpReorderer *self, id<JavaUtilList> list) {
+  bool foundNonMove = false;
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(list)) size] - 1; i >= 0; i--) {
     ADXAdapterHelper_UpdateOp *op1 = [list getWithInt:i];
     if (((ADXAdapterHelper_UpdateOp *) nil_chk(op1))->cmd_ == ADXAdapterHelper_UpdateOp_MOVE) {
       if (foundNonMove) {

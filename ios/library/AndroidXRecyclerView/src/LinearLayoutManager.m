@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\LinearLayoutManager.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "Context.h"
 #include "IOSPrimitiveArray.h"
 #include "J2ObjC_source.h"
@@ -17,11 +22,21 @@
 #include "ViewBoundsCheck.h"
 #include "ViewCompat.h"
 #include "ViewGroup.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Character.h"
+#include "java/lang/Float.h"
 #include "java/lang/IllegalArgumentException.h"
 #include "java/lang/Integer.h"
 #include "java/lang/Math.h"
 #include "java/lang/RuntimeException.h"
 #include "java/util/List.h"
+
+
+@class NSString;
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXLinearLayoutManager () {
@@ -35,24 +50,24 @@
   /*!
    @brief We need to track this so that we can ignore current position when it changes.
    */
-  jboolean mLastStackFromEnd_;
+  bool mLastStackFromEnd_;
   /*!
    @brief Defines if layout should be calculated from end to start.
    - seealso: #mShouldReverseLayout
    */
-  jboolean mReverseLayout_;
+  bool mReverseLayout_;
   /*!
    @brief Works the same way as <code>r.android.widget.AbsListView.setStackFromBottom(boolean)</code> and
   it supports both orientations.
    see <code>r.android.widget.AbsListView.setStackFromBottom(boolean)</code>
    */
-  jboolean mStackFromEnd_;
+  bool mStackFromEnd_;
   /*!
    @brief Works the same way as <code>r.android.widget.AbsListView.setSmoothScrollbarEnabled(boolean)</code>.
    see <code>r.android.widget.AbsListView.setSmoothScrollbarEnabled(boolean)</code>
    */
-  jboolean mSmoothScrollbarEnabled_;
-  jboolean mRecycleChildrenOnDetach_;
+  bool mSmoothScrollbarEnabled_;
+  bool mRecycleChildrenOnDetach_;
   /*!
    @brief Stashed to avoid allocation, currently only used in #fill()
    */
@@ -60,7 +75,7 @@
   /*!
    @brief Number of items to prefetch when first coming on screen with new data.
    */
-  jint mInitialPrefetchItemCount_;
+  int32_t mInitialPrefetchItemCount_;
   IOSIntArray *mReusableIntPair_;
 }
 
@@ -77,8 +92,8 @@
  */
 - (void)layoutForPredictiveAnimationsWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                                         withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                                          withInt:(jint)startOffset
-                                                          withInt:(jint)endOffset;
+                                                          withInt:(int32_t)startOffset
+                                                          withInt:(int32_t)endOffset;
 
 - (void)updateAnchorInfoForLayoutWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                                     withADXRecyclerView_State:(ADXRecyclerView_State *)state
@@ -90,52 +105,52 @@
  <p>
   If a child has focus, it is given priority.
  */
-- (jboolean)updateAnchorFromChildrenWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                           withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo;
+- (bool)updateAnchorFromChildrenWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                                   withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                       withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo;
 
 /*!
  @brief If there is a pending scroll position or saved states, updates the anchor info from that
   data and returns true
  */
-- (jboolean)updateAnchorFromPendingDataWithADXRecyclerView_State:(ADXRecyclerView_State *)state
-                           withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo;
+- (bool)updateAnchorFromPendingDataWithADXRecyclerView_State:(ADXRecyclerView_State *)state
+                       withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo;
 
 /*!
  @return The final offset amount for children
  */
-- (jint)fixLayoutEndGapWithInt:(jint)endOffset
-  withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-     withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                   withBoolean:(jboolean)canOffsetChildren;
+- (int32_t)fixLayoutEndGapWithInt:(int32_t)endOffset
+     withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+        withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                      withBoolean:(bool)canOffsetChildren;
 
 /*!
  @return The final offset amount for children
  */
-- (jint)fixLayoutStartGapWithInt:(jint)startOffset
-    withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-       withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                     withBoolean:(jboolean)canOffsetChildren;
+- (int32_t)fixLayoutStartGapWithInt:(int32_t)startOffset
+       withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+          withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                        withBoolean:(bool)canOffsetChildren;
 
 - (void)updateLayoutStateToFillEndWithADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo;
 
-- (void)updateLayoutStateToFillEndWithInt:(jint)itemPosition
-                                  withInt:(jint)offset;
+- (void)updateLayoutStateToFillEndWithInt:(int32_t)itemPosition
+                                  withInt:(int32_t)offset;
 
 - (void)updateLayoutStateToFillStartWithADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo;
 
-- (void)updateLayoutStateToFillStartWithInt:(jint)itemPosition
-                                    withInt:(jint)offset;
+- (void)updateLayoutStateToFillStartWithInt:(int32_t)itemPosition
+                                    withInt:(int32_t)offset;
 
-- (jint)computeScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (jint)computeScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
+- (int32_t)computeScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
-- (void)updateLayoutStateWithInt:(jint)layoutDirection
-                         withInt:(jint)requiredSpace
-                     withBoolean:(jboolean)canUseExistingSpace
+- (void)updateLayoutStateWithInt:(int32_t)layoutDirection
+                         withInt:(int32_t)requiredSpace
+                     withBoolean:(bool)canUseExistingSpace
        withADXRecyclerView_State:(ADXRecyclerView_State *)state;
 
 /*!
@@ -144,8 +159,8 @@
  @param endIndex exclusive
  */
 - (void)recycleChildrenWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                            withInt:(jint)startIndex
-                                            withInt:(jint)endIndex;
+                                            withInt:(int32_t)startIndex
+                                            withInt:(int32_t)endIndex;
 
 /*!
  @brief Recycles views that went out of bounds after scrolling towards the end of the layout.
@@ -159,8 +174,8 @@
   .
  */
 - (void)recycleViewsFromStartWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                                  withInt:(jint)scrollingOffset
-                                                  withInt:(jint)noRecycleSpace;
+                                                  withInt:(int32_t)scrollingOffset
+                                                  withInt:(int32_t)noRecycleSpace;
 
 /*!
  @brief Recycles views that went out of bounds after scrolling towards the start of the layout.
@@ -174,8 +189,8 @@
   .
  */
 - (void)recycleViewsFromEndWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                                withInt:(jint)scrollingOffset
-                                                withInt:(jint)noRecycleSpace;
+                                                withInt:(int32_t)scrollingOffset
+                                                withInt:(int32_t)noRecycleSpace;
 
 /*!
  @brief Helper method to call appropriate recycle method depending on current layout direction
@@ -233,45 +248,45 @@ J2OBJC_STATIC_FIELD_OBJ_FINAL(ADXLinearLayoutManager, TAG, NSString *)
   than this factor times the total space of the list.If layout is vertical, total space is the
   height minus padding, if layout is horizontal, total space is the width minus padding.
  */
-inline jfloat ADXLinearLayoutManager_get_MAX_SCROLL_FACTOR(void);
+inline float ADXLinearLayoutManager_get_MAX_SCROLL_FACTOR(void);
 #define ADXLinearLayoutManager_MAX_SCROLL_FACTOR 0.33333334f
-J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager, MAX_SCROLL_FACTOR, jfloat)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXLinearLayoutManager, MAX_SCROLL_FACTOR, float)
 
 __attribute__((unused)) static void ADXLinearLayoutManager_resolveShouldLayoutReverse(ADXLinearLayoutManager *self);
 
-__attribute__((unused)) static void ADXLinearLayoutManager_layoutForPredictiveAnimationsWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jint startOffset, jint endOffset);
+__attribute__((unused)) static void ADXLinearLayoutManager_layoutForPredictiveAnimationsWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, int32_t startOffset, int32_t endOffset);
 
 __attribute__((unused)) static void ADXLinearLayoutManager_updateAnchorInfoForLayoutWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo);
 
-__attribute__((unused)) static jboolean ADXLinearLayoutManager_updateAnchorFromChildrenWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo);
+__attribute__((unused)) static bool ADXLinearLayoutManager_updateAnchorFromChildrenWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo);
 
-__attribute__((unused)) static jboolean ADXLinearLayoutManager_updateAnchorFromPendingDataWithADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo);
+__attribute__((unused)) static bool ADXLinearLayoutManager_updateAnchorFromPendingDataWithADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo);
 
-__attribute__((unused)) static jint ADXLinearLayoutManager_fixLayoutEndGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(ADXLinearLayoutManager *self, jint endOffset, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jboolean canOffsetChildren);
+__attribute__((unused)) static int32_t ADXLinearLayoutManager_fixLayoutEndGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(ADXLinearLayoutManager *self, int32_t endOffset, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, bool canOffsetChildren);
 
-__attribute__((unused)) static jint ADXLinearLayoutManager_fixLayoutStartGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(ADXLinearLayoutManager *self, jint startOffset, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jboolean canOffsetChildren);
+__attribute__((unused)) static int32_t ADXLinearLayoutManager_fixLayoutStartGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(ADXLinearLayoutManager *self, int32_t startOffset, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, bool canOffsetChildren);
 
 __attribute__((unused)) static void ADXLinearLayoutManager_updateLayoutStateToFillEndWithADXLinearLayoutManager_AnchorInfo_(ADXLinearLayoutManager *self, ADXLinearLayoutManager_AnchorInfo *anchorInfo);
 
-__attribute__((unused)) static void ADXLinearLayoutManager_updateLayoutStateToFillEndWithInt_withInt_(ADXLinearLayoutManager *self, jint itemPosition, jint offset);
+__attribute__((unused)) static void ADXLinearLayoutManager_updateLayoutStateToFillEndWithInt_withInt_(ADXLinearLayoutManager *self, int32_t itemPosition, int32_t offset);
 
 __attribute__((unused)) static void ADXLinearLayoutManager_updateLayoutStateToFillStartWithADXLinearLayoutManager_AnchorInfo_(ADXLinearLayoutManager *self, ADXLinearLayoutManager_AnchorInfo *anchorInfo);
 
-__attribute__((unused)) static void ADXLinearLayoutManager_updateLayoutStateToFillStartWithInt_withInt_(ADXLinearLayoutManager *self, jint itemPosition, jint offset);
+__attribute__((unused)) static void ADXLinearLayoutManager_updateLayoutStateToFillStartWithInt_withInt_(ADXLinearLayoutManager *self, int32_t itemPosition, int32_t offset);
 
-__attribute__((unused)) static jint ADXLinearLayoutManager_computeScrollOffsetWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state);
+__attribute__((unused)) static int32_t ADXLinearLayoutManager_computeScrollOffsetWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state);
 
-__attribute__((unused)) static jint ADXLinearLayoutManager_computeScrollExtentWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state);
+__attribute__((unused)) static int32_t ADXLinearLayoutManager_computeScrollExtentWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state);
 
-__attribute__((unused)) static jint ADXLinearLayoutManager_computeScrollRangeWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state);
+__attribute__((unused)) static int32_t ADXLinearLayoutManager_computeScrollRangeWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state);
 
-__attribute__((unused)) static void ADXLinearLayoutManager_updateLayoutStateWithInt_withInt_withBoolean_withADXRecyclerView_State_(ADXLinearLayoutManager *self, jint layoutDirection, jint requiredSpace, jboolean canUseExistingSpace, ADXRecyclerView_State *state);
+__attribute__((unused)) static void ADXLinearLayoutManager_updateLayoutStateWithInt_withInt_withBoolean_withADXRecyclerView_State_(ADXLinearLayoutManager *self, int32_t layoutDirection, int32_t requiredSpace, bool canUseExistingSpace, ADXRecyclerView_State *state);
 
-__attribute__((unused)) static void ADXLinearLayoutManager_recycleChildrenWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, jint startIndex, jint endIndex);
+__attribute__((unused)) static void ADXLinearLayoutManager_recycleChildrenWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, int32_t startIndex, int32_t endIndex);
 
-__attribute__((unused)) static void ADXLinearLayoutManager_recycleViewsFromStartWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, jint scrollingOffset, jint noRecycleSpace);
+__attribute__((unused)) static void ADXLinearLayoutManager_recycleViewsFromStartWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, int32_t scrollingOffset, int32_t noRecycleSpace);
 
-__attribute__((unused)) static void ADXLinearLayoutManager_recycleViewsFromEndWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, jint scrollingOffset, jint noRecycleSpace);
+__attribute__((unused)) static void ADXLinearLayoutManager_recycleViewsFromEndWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, int32_t scrollingOffset, int32_t noRecycleSpace);
 
 __attribute__((unused)) static void ADXLinearLayoutManager_recycleByLayoutStateWithADXRecyclerView_Recycler_withADXLinearLayoutManager_LayoutState_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXLinearLayoutManager_LayoutState *layoutState);
 
@@ -311,13 +326,13 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
 }
 
 - (instancetype)initWithADContext:(ADContext *)context
-                          withInt:(jint)orientation
-                      withBoolean:(jboolean)reverseLayout {
+                          withInt:(int32_t)orientation
+                      withBoolean:(bool)reverseLayout {
   ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(self, context, orientation, reverseLayout);
   return self;
 }
 
-- (jboolean)isAutoMeasureEnabled {
+- (bool)isAutoMeasureEnabled {
   return true;
 }
 
@@ -325,11 +340,11 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   return create_ADXRecyclerView_LayoutParams_initWithInt_withInt_(ADViewGroup_LayoutParams_WRAP_CONTENT, ADViewGroup_LayoutParams_WRAP_CONTENT);
 }
 
-- (jboolean)getRecycleChildrenOnDetach {
+- (bool)getRecycleChildrenOnDetach {
   return mRecycleChildrenOnDetach_;
 }
 
-- (void)setRecycleChildrenOnDetachWithBoolean:(jboolean)recycleChildrenOnDetach {
+- (void)setRecycleChildrenOnDetachWithBoolean:(bool)recycleChildrenOnDetach {
   mRecycleChildrenOnDetach_ = recycleChildrenOnDetach;
 }
 
@@ -349,7 +364,7 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   ADXLinearLayoutManager_SavedState *state = create_ADXLinearLayoutManager_SavedState_init();
   if ([self getChildCount] > 0) {
     [self ensureLayoutState];
-    jboolean didLayoutFromEnd = mLastStackFromEnd_ ^ mShouldReverseLayout_;
+    bool didLayoutFromEnd = mLastStackFromEnd_ ^ mShouldReverseLayout_;
     state->mAnchorLayoutFromEnd_ = didLayoutFromEnd;
     if (didLayoutFromEnd) {
       ADView *refChild = ADXLinearLayoutManager_getChildClosestToEnd(self);
@@ -378,15 +393,15 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   }
 }
 
-- (jboolean)canScrollHorizontally {
+- (bool)canScrollHorizontally {
   return mOrientation_ == ADXLinearLayoutManager_HORIZONTAL;
 }
 
-- (jboolean)canScrollVertically {
+- (bool)canScrollVertically {
   return mOrientation_ == ADXLinearLayoutManager_VERTICAL;
 }
 
-- (void)setStackFromEndWithBoolean:(jboolean)stackFromEnd {
+- (void)setStackFromEndWithBoolean:(bool)stackFromEnd {
   [self assertNotInLayoutOrScrollWithNSString:nil];
   if (mStackFromEnd_ == stackFromEnd) {
     return;
@@ -395,15 +410,15 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   [self requestLayout];
 }
 
-- (jboolean)getStackFromEnd {
+- (bool)getStackFromEnd {
   return mStackFromEnd_;
 }
 
-- (jint)getOrientation {
+- (int32_t)getOrientation {
   return mOrientation_;
 }
 
-- (void)setOrientationWithInt:(jint)orientation {
+- (void)setOrientationWithInt:(int32_t)orientation {
   if (orientation != ADXLinearLayoutManager_HORIZONTAL && orientation != ADXLinearLayoutManager_VERTICAL) {
     @throw create_JavaLangIllegalArgumentException_initWithNSString_(JreStrcat("$I", @"invalid orientation:", orientation));
   }
@@ -420,11 +435,11 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   ADXLinearLayoutManager_resolveShouldLayoutReverse(self);
 }
 
-- (jboolean)getReverseLayout {
+- (bool)getReverseLayout {
   return mReverseLayout_;
 }
 
-- (void)setReverseLayoutWithBoolean:(jboolean)reverseLayout {
+- (void)setReverseLayoutWithBoolean:(bool)reverseLayout {
   [self assertNotInLayoutOrScrollWithNSString:nil];
   if (reverseLayout == mReverseLayout_) {
     return;
@@ -433,13 +448,13 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   [self requestLayout];
 }
 
-- (ADView *)findViewByPositionWithInt:(jint)position {
-  jint childCount = [self getChildCount];
+- (ADView *)findViewByPositionWithInt:(int32_t)position {
+  int32_t childCount = [self getChildCount];
   if (childCount == 0) {
     return nil;
   }
-  jint firstChild = [self getPositionWithADView:[self getChildAtWithInt:0]];
-  jint viewPosition = position - firstChild;
+  int32_t firstChild = [self getPositionWithADView:[self getChildAtWithInt:0]];
+  int32_t viewPosition = position - firstChild;
   if (viewPosition >= 0 && viewPosition < childCount) {
     ADView *child = [self getChildAtWithInt:viewPosition];
     if ([self getPositionWithADView:child] == position) {
@@ -449,7 +464,7 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   return [super findViewByPositionWithInt:position];
 }
 
-- (jint)getExtraLayoutSpaceWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)getExtraLayoutSpaceWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   if ([((ADXRecyclerView_State *) nil_chk(state)) hasTargetScrollPosition]) {
     return [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getTotalSpace];
   }
@@ -460,9 +475,9 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
 
 - (void)calculateExtraLayoutSpaceWithADXRecyclerView_State:(ADXRecyclerView_State *)state
                                               withIntArray:(IOSIntArray *)extraLayoutSpace {
-  jint extraLayoutSpaceStart = 0;
-  jint extraLayoutSpaceEnd = 0;
-  jint extraScrollSpace = [self getExtraLayoutSpaceWithADXRecyclerView_State:state];
+  int32_t extraLayoutSpaceStart = 0;
+  int32_t extraLayoutSpaceEnd = 0;
+  int32_t extraScrollSpace = [self getExtraLayoutSpaceWithADXRecyclerView_State:state];
   if (((ADXLinearLayoutManager_LayoutState *) nil_chk(mLayoutState_))->mLayoutDirection_ == ADXLinearLayoutManager_LayoutState_LAYOUT_START) {
     extraLayoutSpaceStart = extraScrollSpace;
   }
@@ -501,13 +516,13 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   *IOSIntArray_GetRef(nil_chk(mReusableIntPair_), 0) = 0;
   *IOSIntArray_GetRef(mReusableIntPair_, 1) = 0;
   [self calculateExtraLayoutSpaceWithADXRecyclerView_State:state withIntArray:mReusableIntPair_];
-  jint extraForStart = JavaLangMath_maxWithInt_withInt_(0, IOSIntArray_Get(nil_chk(mReusableIntPair_), 0)) + [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getStartAfterPadding];
-  jint extraForEnd = JavaLangMath_maxWithInt_withInt_(0, IOSIntArray_Get(nil_chk(mReusableIntPair_), 1)) + [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndPadding];
+  int32_t extraForStart = JavaLangMath_maxWithInt_withInt_(0, IOSIntArray_Get(nil_chk(mReusableIntPair_), 0)) + [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getStartAfterPadding];
+  int32_t extraForEnd = JavaLangMath_maxWithInt_withInt_(0, IOSIntArray_Get(nil_chk(mReusableIntPair_), 1)) + [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndPadding];
   if ([((ADXRecyclerView_State *) nil_chk(state)) isPreLayout] && mPendingScrollPosition_ != ADXRecyclerView_NO_POSITION && mPendingScrollPositionOffset_ != ADXLinearLayoutManager_INVALID_OFFSET) {
     ADView *existing = [self findViewByPositionWithInt:mPendingScrollPosition_];
     if (existing != nil) {
-      jint current;
-      jint upcomingOffset;
+      int32_t current;
+      int32_t upcomingOffset;
       if (mShouldReverseLayout_) {
         current = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding] - [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedEndWithADView:existing];
         upcomingOffset = current - mPendingScrollPositionOffset_;
@@ -524,9 +539,9 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
       }
     }
   }
-  jint startOffset;
-  jint endOffset;
-  jint firstLayoutDirection;
+  int32_t startOffset;
+  int32_t endOffset;
+  int32_t firstLayoutDirection;
   if (mAnchorInfo_->mLayoutFromEnd_) {
     firstLayoutDirection = mShouldReverseLayout_ ? ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL : ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_HEAD;
   }
@@ -543,7 +558,7 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
     ((ADXLinearLayoutManager_LayoutState *) nil_chk(mLayoutState_))->mExtraFillSpace_ = extraForStart;
     [self fillWithADXRecyclerView_Recycler:recycler withADXLinearLayoutManager_LayoutState:mLayoutState_ withADXRecyclerView_State:state withBoolean:false];
     startOffset = ((ADXLinearLayoutManager_LayoutState *) nil_chk(mLayoutState_))->mOffset_;
-    jint firstElement = mLayoutState_->mCurrentPosition_;
+    int32_t firstElement = mLayoutState_->mCurrentPosition_;
     if (mLayoutState_->mAvailable_ > 0) {
       extraForEnd += mLayoutState_->mAvailable_;
     }
@@ -565,7 +580,7 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
     ((ADXLinearLayoutManager_LayoutState *) nil_chk(mLayoutState_))->mExtraFillSpace_ = extraForEnd;
     [self fillWithADXRecyclerView_Recycler:recycler withADXLinearLayoutManager_LayoutState:mLayoutState_ withADXRecyclerView_State:state withBoolean:false];
     endOffset = ((ADXLinearLayoutManager_LayoutState *) nil_chk(mLayoutState_))->mOffset_;
-    jint lastElement = mLayoutState_->mCurrentPosition_;
+    int32_t lastElement = mLayoutState_->mCurrentPosition_;
     if (mLayoutState_->mAvailable_ > 0) {
       extraForStart += mLayoutState_->mAvailable_;
     }
@@ -584,7 +599,7 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   }
   if ([self getChildCount] > 0) {
     if (mShouldReverseLayout_ ^ mStackFromEnd_) {
-      jint fixOffset = ADXLinearLayoutManager_fixLayoutEndGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(self, endOffset, recycler, state, true);
+      int32_t fixOffset = ADXLinearLayoutManager_fixLayoutEndGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(self, endOffset, recycler, state, true);
       startOffset += fixOffset;
       endOffset += fixOffset;
       fixOffset = ADXLinearLayoutManager_fixLayoutStartGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(self, startOffset, recycler, state, false);
@@ -592,7 +607,7 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
       endOffset += fixOffset;
     }
     else {
-      jint fixOffset = ADXLinearLayoutManager_fixLayoutStartGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(self, startOffset, recycler, state, true);
+      int32_t fixOffset = ADXLinearLayoutManager_fixLayoutStartGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(self, startOffset, recycler, state, true);
       startOffset += fixOffset;
       endOffset += fixOffset;
       fixOffset = ADXLinearLayoutManager_fixLayoutEndGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(self, endOffset, recycler, state, false);
@@ -621,13 +636,13 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
 - (void)onAnchorReadyWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                         withADXRecyclerView_State:(ADXRecyclerView_State *)state
             withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo
-                                          withInt:(jint)firstLayoutItemDirection {
+                                          withInt:(int32_t)firstLayoutItemDirection {
 }
 
 - (void)layoutForPredictiveAnimationsWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                                         withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                                          withInt:(jint)startOffset
-                                                          withInt:(jint)endOffset {
+                                                          withInt:(int32_t)startOffset
+                                                          withInt:(int32_t)endOffset {
   ADXLinearLayoutManager_layoutForPredictiveAnimationsWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_withInt_(self, recycler, state, startOffset, endOffset);
 }
 
@@ -637,28 +652,28 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   ADXLinearLayoutManager_updateAnchorInfoForLayoutWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(self, recycler, state, anchorInfo);
 }
 
-- (jboolean)updateAnchorFromChildrenWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                           withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo {
+- (bool)updateAnchorFromChildrenWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+                                   withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                       withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo {
   return ADXLinearLayoutManager_updateAnchorFromChildrenWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(self, recycler, state, anchorInfo);
 }
 
-- (jboolean)updateAnchorFromPendingDataWithADXRecyclerView_State:(ADXRecyclerView_State *)state
-                           withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo {
+- (bool)updateAnchorFromPendingDataWithADXRecyclerView_State:(ADXRecyclerView_State *)state
+                       withADXLinearLayoutManager_AnchorInfo:(ADXLinearLayoutManager_AnchorInfo *)anchorInfo {
   return ADXLinearLayoutManager_updateAnchorFromPendingDataWithADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(self, state, anchorInfo);
 }
 
-- (jint)fixLayoutEndGapWithInt:(jint)endOffset
-  withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-     withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                   withBoolean:(jboolean)canOffsetChildren {
+- (int32_t)fixLayoutEndGapWithInt:(int32_t)endOffset
+     withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+        withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                      withBoolean:(bool)canOffsetChildren {
   return ADXLinearLayoutManager_fixLayoutEndGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(self, endOffset, recycler, state, canOffsetChildren);
 }
 
-- (jint)fixLayoutStartGapWithInt:(jint)startOffset
-    withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-       withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                     withBoolean:(jboolean)canOffsetChildren {
+- (int32_t)fixLayoutStartGapWithInt:(int32_t)startOffset
+       withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+          withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                        withBoolean:(bool)canOffsetChildren {
   return ADXLinearLayoutManager_fixLayoutStartGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(self, startOffset, recycler, state, canOffsetChildren);
 }
 
@@ -666,8 +681,8 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   ADXLinearLayoutManager_updateLayoutStateToFillEndWithADXLinearLayoutManager_AnchorInfo_(self, anchorInfo);
 }
 
-- (void)updateLayoutStateToFillEndWithInt:(jint)itemPosition
-                                  withInt:(jint)offset {
+- (void)updateLayoutStateToFillEndWithInt:(int32_t)itemPosition
+                                  withInt:(int32_t)offset {
   ADXLinearLayoutManager_updateLayoutStateToFillEndWithInt_withInt_(self, itemPosition, offset);
 }
 
@@ -675,12 +690,12 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   ADXLinearLayoutManager_updateLayoutStateToFillStartWithADXLinearLayoutManager_AnchorInfo_(self, anchorInfo);
 }
 
-- (void)updateLayoutStateToFillStartWithInt:(jint)itemPosition
-                                    withInt:(jint)offset {
+- (void)updateLayoutStateToFillStartWithInt:(int32_t)itemPosition
+                                    withInt:(int32_t)offset {
   ADXLinearLayoutManager_updateLayoutStateToFillStartWithInt_withInt_(self, itemPosition, offset);
 }
 
-- (jboolean)isLayoutRTL {
+- (bool)isLayoutRTL {
   return [self getLayoutDirection] == ADXViewCompat_LAYOUT_DIRECTION_RTL;
 }
 
@@ -694,7 +709,7 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   return create_ADXLinearLayoutManager_LayoutState_init();
 }
 
-- (void)scrollToPositionWithInt:(jint)position {
+- (void)scrollToPositionWithInt:(int32_t)position {
   mPendingScrollPosition_ = position;
   mPendingScrollPositionOffset_ = ADXLinearLayoutManager_INVALID_OFFSET;
   if (mPendingSavedState_ != nil) {
@@ -703,8 +718,8 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   [self requestLayout];
 }
 
-- (void)scrollToPositionWithOffsetWithInt:(jint)position
-                                  withInt:(jint)offset {
+- (void)scrollToPositionWithOffsetWithInt:(int32_t)position
+                                  withInt:(int32_t)offset {
   mPendingScrollPosition_ = position;
   mPendingScrollPositionOffset_ = offset;
   if (mPendingSavedState_ != nil) {
@@ -713,92 +728,92 @@ __attribute__((unused)) static ADView *ADXLinearLayoutManager_LayoutState_nextVi
   [self requestLayout];
 }
 
-- (jint)scrollHorizontallyByWithInt:(jint)dx
-       withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-          withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)scrollHorizontallyByWithInt:(int32_t)dx
+          withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+             withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   if (mOrientation_ == ADXLinearLayoutManager_VERTICAL) {
     return 0;
   }
   return [self scrollByWithInt:dx withADXRecyclerView_Recycler:recycler withADXRecyclerView_State:state];
 }
 
-- (jint)scrollVerticallyByWithInt:(jint)dy
-     withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-        withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)scrollVerticallyByWithInt:(int32_t)dy
+        withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+           withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   if (mOrientation_ == ADXLinearLayoutManager_HORIZONTAL) {
     return 0;
   }
   return [self scrollByWithInt:dy withADXRecyclerView_Recycler:recycler withADXRecyclerView_State:state];
 }
 
-- (jint)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeHorizontalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXLinearLayoutManager_computeScrollOffsetWithADXRecyclerView_State_(self, state);
 }
 
-- (jint)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeVerticalScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXLinearLayoutManager_computeScrollOffsetWithADXRecyclerView_State_(self, state);
 }
 
-- (jint)computeHorizontalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeHorizontalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXLinearLayoutManager_computeScrollExtentWithADXRecyclerView_State_(self, state);
 }
 
-- (jint)computeVerticalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeVerticalScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXLinearLayoutManager_computeScrollExtentWithADXRecyclerView_State_(self, state);
 }
 
-- (jint)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeHorizontalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXLinearLayoutManager_computeScrollRangeWithADXRecyclerView_State_(self, state);
 }
 
-- (jint)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeVerticalScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXLinearLayoutManager_computeScrollRangeWithADXRecyclerView_State_(self, state);
 }
 
-- (jint)computeScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXLinearLayoutManager_computeScrollOffsetWithADXRecyclerView_State_(self, state);
 }
 
-- (jint)computeScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXLinearLayoutManager_computeScrollExtentWithADXRecyclerView_State_(self, state);
 }
 
-- (jint)computeScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (int32_t)computeScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXLinearLayoutManager_computeScrollRangeWithADXRecyclerView_State_(self, state);
 }
 
-- (void)setSmoothScrollbarEnabledWithBoolean:(jboolean)enabled {
+- (void)setSmoothScrollbarEnabledWithBoolean:(bool)enabled {
   mSmoothScrollbarEnabled_ = enabled;
 }
 
-- (jboolean)isSmoothScrollbarEnabled {
+- (bool)isSmoothScrollbarEnabled {
   return mSmoothScrollbarEnabled_;
 }
 
-- (void)updateLayoutStateWithInt:(jint)layoutDirection
-                         withInt:(jint)requiredSpace
-                     withBoolean:(jboolean)canUseExistingSpace
+- (void)updateLayoutStateWithInt:(int32_t)layoutDirection
+                         withInt:(int32_t)requiredSpace
+                     withBoolean:(bool)canUseExistingSpace
        withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   ADXLinearLayoutManager_updateLayoutStateWithInt_withInt_withBoolean_withADXRecyclerView_State_(self, layoutDirection, requiredSpace, canUseExistingSpace, state);
 }
 
-- (jboolean)resolveIsInfinite {
+- (bool)resolveIsInfinite {
   return [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getMode] == ADView_MeasureSpec_UNSPECIFIED && [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEnd] == 0;
 }
 
 - (void)collectPrefetchPositionsForLayoutStateWithADXRecyclerView_State:(ADXRecyclerView_State *)state
                                  withADXLinearLayoutManager_LayoutState:(ADXLinearLayoutManager_LayoutState *)layoutState
                withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>)layoutPrefetchRegistry {
-  jint pos = ((ADXLinearLayoutManager_LayoutState *) nil_chk(layoutState))->mCurrentPosition_;
+  int32_t pos = ((ADXLinearLayoutManager_LayoutState *) nil_chk(layoutState))->mCurrentPosition_;
   if (pos >= 0 && pos < [((ADXRecyclerView_State *) nil_chk(state)) getItemCount]) {
     [((id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>) nil_chk(layoutPrefetchRegistry)) addPositionWithInt:pos withInt:JavaLangMath_maxWithInt_withInt_(0, layoutState->mScrollingOffset_)];
   }
 }
 
-- (void)collectInitialPrefetchPositionsWithInt:(jint)adapterItemCount
+- (void)collectInitialPrefetchPositionsWithInt:(int32_t)adapterItemCount
 withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>)layoutPrefetchRegistry {
-  jboolean fromEnd;
-  jint anchorPos;
+  bool fromEnd;
+  int32_t anchorPos;
   if (mPendingSavedState_ != nil && [mPendingSavedState_ hasValidAnchor]) {
     fromEnd = mPendingSavedState_->mAnchorLayoutFromEnd_;
     anchorPos = mPendingSavedState_->mAnchorPosition_;
@@ -813,9 +828,9 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
       anchorPos = mPendingScrollPosition_;
     }
   }
-  jint direction = fromEnd ? ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_HEAD : ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL;
-  jint targetPos = anchorPos;
-  for (jint i = 0; i < mInitialPrefetchItemCount_; i++) {
+  int32_t direction = fromEnd ? ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_HEAD : ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL;
+  int32_t targetPos = anchorPos;
+  for (int32_t i = 0; i < mInitialPrefetchItemCount_; i++) {
     if (targetPos >= 0 && targetPos < adapterItemCount) {
       [((id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>) nil_chk(layoutPrefetchRegistry)) addPositionWithInt:targetPos withInt:0];
     }
@@ -826,45 +841,45 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
   }
 }
 
-- (void)setInitialPrefetchItemCountWithInt:(jint)itemCount {
+- (void)setInitialPrefetchItemCountWithInt:(int32_t)itemCount {
   mInitialPrefetchItemCount_ = itemCount;
 }
 
-- (jint)getInitialPrefetchItemCount {
+- (int32_t)getInitialPrefetchItemCount {
   return mInitialPrefetchItemCount_;
 }
 
-- (void)collectAdjacentPrefetchPositionsWithInt:(jint)dx
-                                        withInt:(jint)dy
+- (void)collectAdjacentPrefetchPositionsWithInt:(int32_t)dx
+                                        withInt:(int32_t)dy
                       withADXRecyclerView_State:(ADXRecyclerView_State *)state
 withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_LayoutManager_LayoutPrefetchRegistry>)layoutPrefetchRegistry {
-  jint delta = (mOrientation_ == ADXLinearLayoutManager_HORIZONTAL) ? dx : dy;
+  int32_t delta = (mOrientation_ == ADXLinearLayoutManager_HORIZONTAL) ? dx : dy;
   if ([self getChildCount] == 0 || delta == 0) {
     return;
   }
   [self ensureLayoutState];
-  jint layoutDirection = delta > 0 ? ADXLinearLayoutManager_LayoutState_LAYOUT_END : ADXLinearLayoutManager_LayoutState_LAYOUT_START;
-  jint absDelta = JavaLangMath_absWithInt_(delta);
+  int32_t layoutDirection = delta > 0 ? ADXLinearLayoutManager_LayoutState_LAYOUT_END : ADXLinearLayoutManager_LayoutState_LAYOUT_START;
+  int32_t absDelta = JavaLangMath_absWithInt_(delta);
   ADXLinearLayoutManager_updateLayoutStateWithInt_withInt_withBoolean_withADXRecyclerView_State_(self, layoutDirection, absDelta, true, state);
   [self collectPrefetchPositionsForLayoutStateWithADXRecyclerView_State:state withADXLinearLayoutManager_LayoutState:mLayoutState_ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:layoutPrefetchRegistry];
 }
 
-- (jint)scrollByWithInt:(jint)delta
+- (int32_t)scrollByWithInt:(int32_t)delta
 withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   if ([self getChildCount] == 0 || delta == 0) {
     return 0;
   }
   [self ensureLayoutState];
   ((ADXLinearLayoutManager_LayoutState *) nil_chk(mLayoutState_))->mRecycle_ = true;
-  jint layoutDirection = delta > 0 ? ADXLinearLayoutManager_LayoutState_LAYOUT_END : ADXLinearLayoutManager_LayoutState_LAYOUT_START;
-  jint absDelta = JavaLangMath_absWithInt_(delta);
+  int32_t layoutDirection = delta > 0 ? ADXLinearLayoutManager_LayoutState_LAYOUT_END : ADXLinearLayoutManager_LayoutState_LAYOUT_START;
+  int32_t absDelta = JavaLangMath_absWithInt_(delta);
   ADXLinearLayoutManager_updateLayoutStateWithInt_withInt_withBoolean_withADXRecyclerView_State_(self, layoutDirection, absDelta, true, state);
-  jint consumed = ((ADXLinearLayoutManager_LayoutState *) nil_chk(mLayoutState_))->mScrollingOffset_ + [self fillWithADXRecyclerView_Recycler:recycler withADXLinearLayoutManager_LayoutState:mLayoutState_ withADXRecyclerView_State:state withBoolean:false];
+  int32_t consumed = ((ADXLinearLayoutManager_LayoutState *) nil_chk(mLayoutState_))->mScrollingOffset_ + [self fillWithADXRecyclerView_Recycler:recycler withADXLinearLayoutManager_LayoutState:mLayoutState_ withADXRecyclerView_State:state withBoolean:false];
   if (consumed < 0) {
     return 0;
   }
-  jint scrolled = absDelta > consumed ? layoutDirection * consumed : delta;
+  int32_t scrolled = absDelta > consumed ? layoutDirection * consumed : delta;
   [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) offsetChildrenWithInt:-scrolled];
   ((ADXLinearLayoutManager_LayoutState *) nil_chk(mLayoutState_))->mLastScrollDelta_ = scrolled;
   return scrolled;
@@ -877,20 +892,20 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
 }
 
 - (void)recycleChildrenWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                            withInt:(jint)startIndex
-                                            withInt:(jint)endIndex {
+                                            withInt:(int32_t)startIndex
+                                            withInt:(int32_t)endIndex {
   ADXLinearLayoutManager_recycleChildrenWithADXRecyclerView_Recycler_withInt_withInt_(self, recycler, startIndex, endIndex);
 }
 
 - (void)recycleViewsFromStartWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                                  withInt:(jint)scrollingOffset
-                                                  withInt:(jint)noRecycleSpace {
+                                                  withInt:(int32_t)scrollingOffset
+                                                  withInt:(int32_t)noRecycleSpace {
   ADXLinearLayoutManager_recycleViewsFromStartWithADXRecyclerView_Recycler_withInt_withInt_(self, recycler, scrollingOffset, noRecycleSpace);
 }
 
 - (void)recycleViewsFromEndWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-                                                withInt:(jint)scrollingOffset
-                                                withInt:(jint)noRecycleSpace {
+                                                withInt:(int32_t)scrollingOffset
+                                                withInt:(int32_t)noRecycleSpace {
   ADXLinearLayoutManager_recycleViewsFromEndWithADXRecyclerView_Recycler_withInt_withInt_(self, recycler, scrollingOffset, noRecycleSpace);
 }
 
@@ -899,18 +914,18 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   ADXLinearLayoutManager_recycleByLayoutStateWithADXRecyclerView_Recycler_withADXLinearLayoutManager_LayoutState_(self, recycler, layoutState);
 }
 
-- (jint)fillWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
-  withADXLinearLayoutManager_LayoutState:(ADXLinearLayoutManager_LayoutState *)layoutState
-               withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                             withBoolean:(jboolean)stopOnFocusable {
-  jint start = ((ADXLinearLayoutManager_LayoutState *) nil_chk(layoutState))->mAvailable_;
+- (int32_t)fillWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
+     withADXLinearLayoutManager_LayoutState:(ADXLinearLayoutManager_LayoutState *)layoutState
+                  withADXRecyclerView_State:(ADXRecyclerView_State *)state
+                                withBoolean:(bool)stopOnFocusable {
+  int32_t start = ((ADXLinearLayoutManager_LayoutState *) nil_chk(layoutState))->mAvailable_;
   if (layoutState->mScrollingOffset_ != ADXLinearLayoutManager_LayoutState_SCROLLING_OFFSET_NaN) {
     if (layoutState->mAvailable_ < 0) {
       layoutState->mScrollingOffset_ += layoutState->mAvailable_;
     }
     ADXLinearLayoutManager_recycleByLayoutStateWithADXRecyclerView_Recycler_withADXLinearLayoutManager_LayoutState_(self, recycler, layoutState);
   }
-  jint remainingSpace = layoutState->mAvailable_ + layoutState->mExtraFillSpace_;
+  int32_t remainingSpace = layoutState->mAvailable_ + layoutState->mExtraFillSpace_;
   ADXLinearLayoutManager_LayoutChunkResult *layoutChunkResult = JreRetainedLocalValue(mLayoutChunkResult_);
   while ((layoutState->mInfinite_ || remainingSpace > 0) && [layoutState hasMoreWithADXRecyclerView_State:state]) {
     [((ADXLinearLayoutManager_LayoutChunkResult *) nil_chk(layoutChunkResult)) resetInternal];
@@ -965,10 +980,10 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   }
   [self measureChildWithMarginsWithADView:view withInt:0 withInt:0];
   ((ADXLinearLayoutManager_LayoutChunkResult *) nil_chk(result))->mConsumed_ = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementWithADView:view];
-  jint left;
-  jint top;
-  jint right;
-  jint bottom;
+  int32_t left;
+  int32_t top;
+  int32_t right;
+  int32_t bottom;
   if (mOrientation_ == ADXLinearLayoutManager_VERTICAL) {
     if ([self isLayoutRTL]) {
       right = [self getWidth] - [self getPaddingRight];
@@ -1005,11 +1020,11 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   }
 }
 
-- (jboolean)shouldMeasureTwice {
+- (bool)shouldMeasureTwice {
   return [self getHeightMode] != ADView_MeasureSpec_EXACTLY && [self getWidthMode] != ADView_MeasureSpec_EXACTLY && [self hasFlexibleChildInBothOrientations];
 }
 
-- (jint)convertFocusDirectionToLayoutDirectionWithInt:(jint)focusDirection {
+- (int32_t)convertFocusDirectionToLayoutDirectionWithInt:(int32_t)focusDirection {
   switch (focusDirection) {
     case ADView_FOCUS_BACKWARD:
     if (mOrientation_ == ADXLinearLayoutManager_VERTICAL) {
@@ -1052,8 +1067,8 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXLinearLayoutManager_getChildClosestToEnd(self);
 }
 
-- (ADView *)findFirstVisibleChildClosestToStartWithBoolean:(jboolean)completelyVisible
-                                               withBoolean:(jboolean)acceptPartiallyVisible {
+- (ADView *)findFirstVisibleChildClosestToStartWithBoolean:(bool)completelyVisible
+                                               withBoolean:(bool)acceptPartiallyVisible {
   if (mShouldReverseLayout_) {
     return [self findOneVisibleChildWithInt:[self getChildCount] - 1 withInt:-1 withBoolean:completelyVisible withBoolean:acceptPartiallyVisible];
   }
@@ -1062,8 +1077,8 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   }
 }
 
-- (ADView *)findFirstVisibleChildClosestToEndWithBoolean:(jboolean)completelyVisible
-                                             withBoolean:(jboolean)acceptPartiallyVisible {
+- (ADView *)findFirstVisibleChildClosestToEndWithBoolean:(bool)completelyVisible
+                                             withBoolean:(bool)acceptPartiallyVisible {
   if (mShouldReverseLayout_) {
     return [self findOneVisibleChildWithInt:0 withInt:[self getChildCount] withBoolean:completelyVisible withBoolean:acceptPartiallyVisible];
   }
@@ -1074,28 +1089,28 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
 
 - (ADView *)findReferenceChildWithADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                                  withADXRecyclerView_State:(ADXRecyclerView_State *)state
-                                               withBoolean:(jboolean)layoutFromEnd
-                                               withBoolean:(jboolean)traverseChildrenInReverseOrder {
+                                               withBoolean:(bool)layoutFromEnd
+                                               withBoolean:(bool)traverseChildrenInReverseOrder {
   [self ensureLayoutState];
-  jint start = 0;
-  jint end = [self getChildCount];
-  jint diff = 1;
+  int32_t start = 0;
+  int32_t end = [self getChildCount];
+  int32_t diff = 1;
   if (traverseChildrenInReverseOrder) {
     start = [self getChildCount] - 1;
     end = -1;
     diff = -1;
   }
-  jint itemCount = [((ADXRecyclerView_State *) nil_chk(state)) getItemCount];
-  jint boundsStart = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getStartAfterPadding];
-  jint boundsEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding];
+  int32_t itemCount = [((ADXRecyclerView_State *) nil_chk(state)) getItemCount];
+  int32_t boundsStart = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getStartAfterPadding];
+  int32_t boundsEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding];
   ADView *invalidMatch = nil;
   ADView *bestFirstFind = nil;
   ADView *bestSecondFind = nil;
-  for (jint i = start; i != end; i += diff) {
+  for (int32_t i = start; i != end; i += diff) {
     ADView *view = [self getChildAtWithInt:i];
-    jint position = [self getPositionWithADView:view];
-    jint childStart = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:view];
-    jint childEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedEndWithADView:view];
+    int32_t position = [self getPositionWithADView:view];
+    int32_t childStart = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:view];
+    int32_t childEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedEndWithADView:view];
     if (position >= 0 && position < itemCount) {
       if ([((ADXRecyclerView_LayoutParams *) nil_chk(((ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class])))) isItemRemoved]) {
         if (invalidMatch == nil) {
@@ -1103,8 +1118,8 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
         }
       }
       else {
-        jboolean outOfBoundsBefore = childEnd <= boundsStart && childStart < boundsStart;
-        jboolean outOfBoundsAfter = childStart >= boundsEnd && childEnd > boundsEnd;
+        bool outOfBoundsBefore = childEnd <= boundsStart && childStart < boundsStart;
+        bool outOfBoundsAfter = childStart >= boundsEnd && childEnd > boundsEnd;
         if (outOfBoundsBefore || outOfBoundsAfter) {
           if (layoutFromEnd) {
             if (outOfBoundsAfter) {
@@ -1148,33 +1163,33 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return ADXLinearLayoutManager_findLastPartiallyOrCompletelyInvisibleChild(self);
 }
 
-- (jint)findFirstVisibleItemPosition {
+- (int32_t)findFirstVisibleItemPosition {
   ADView *child = [self findOneVisibleChildWithInt:0 withInt:[self getChildCount] withBoolean:false withBoolean:true];
   return child == nil ? ADXRecyclerView_NO_POSITION : [self getPositionWithADView:child];
 }
 
-- (jint)findFirstCompletelyVisibleItemPosition {
+- (int32_t)findFirstCompletelyVisibleItemPosition {
   ADView *child = [self findOneVisibleChildWithInt:0 withInt:[self getChildCount] withBoolean:true withBoolean:false];
   return child == nil ? ADXRecyclerView_NO_POSITION : [self getPositionWithADView:child];
 }
 
-- (jint)findLastVisibleItemPosition {
+- (int32_t)findLastVisibleItemPosition {
   ADView *child = [self findOneVisibleChildWithInt:[self getChildCount] - 1 withInt:-1 withBoolean:false withBoolean:true];
   return child == nil ? ADXRecyclerView_NO_POSITION : [self getPositionWithADView:child];
 }
 
-- (jint)findLastCompletelyVisibleItemPosition {
+- (int32_t)findLastCompletelyVisibleItemPosition {
   ADView *child = [self findOneVisibleChildWithInt:[self getChildCount] - 1 withInt:-1 withBoolean:true withBoolean:false];
   return child == nil ? ADXRecyclerView_NO_POSITION : [self getPositionWithADView:child];
 }
 
-- (ADView *)findOneVisibleChildWithInt:(jint)fromIndex
-                               withInt:(jint)toIndex
-                           withBoolean:(jboolean)completelyVisible
-                           withBoolean:(jboolean)acceptPartiallyVisible {
+- (ADView *)findOneVisibleChildWithInt:(int32_t)fromIndex
+                               withInt:(int32_t)toIndex
+                           withBoolean:(bool)completelyVisible
+                           withBoolean:(bool)acceptPartiallyVisible {
   [self ensureLayoutState];
-  jint preferredBoundsFlag = 0;
-  jint acceptableBoundsFlag = 0;
+  int32_t preferredBoundsFlag = 0;
+  int32_t acceptableBoundsFlag = 0;
   if (completelyVisible) {
     preferredBoundsFlag = (ADXViewBoundsCheck_FLAG_CVS_GT_PVS | ADXViewBoundsCheck_FLAG_CVS_EQ_PVS | ADXViewBoundsCheck_FLAG_CVE_LT_PVE | ADXViewBoundsCheck_FLAG_CVE_EQ_PVE);
   }
@@ -1187,15 +1202,15 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return (mOrientation_ == ADXLinearLayoutManager_HORIZONTAL) ? [((ADXViewBoundsCheck *) nil_chk(mHorizontalBoundCheck_)) findOneViewWithinBoundFlagsWithInt:fromIndex withInt:toIndex withInt:preferredBoundsFlag withInt:acceptableBoundsFlag] : [((ADXViewBoundsCheck *) nil_chk(mVerticalBoundCheck_)) findOneViewWithinBoundFlagsWithInt:fromIndex withInt:toIndex withInt:preferredBoundsFlag withInt:acceptableBoundsFlag];
 }
 
-- (ADView *)findOnePartiallyOrCompletelyInvisibleChildWithInt:(jint)fromIndex
-                                                      withInt:(jint)toIndex {
+- (ADView *)findOnePartiallyOrCompletelyInvisibleChildWithInt:(int32_t)fromIndex
+                                                      withInt:(int32_t)toIndex {
   [self ensureLayoutState];
-  jint next = toIndex > fromIndex ? 1 : (toIndex < fromIndex ? -1 : 0);
+  int32_t next = toIndex > fromIndex ? 1 : (toIndex < fromIndex ? -1 : 0);
   if (next == 0) {
     return [self getChildAtWithInt:fromIndex];
   }
-  jint preferredBoundsFlag = 0;
-  jint acceptableBoundsFlag = 0;
+  int32_t preferredBoundsFlag = 0;
+  int32_t acceptableBoundsFlag = 0;
   if ([((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:[self getChildAtWithInt:fromIndex]] < [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getStartAfterPadding]) {
     preferredBoundsFlag = (ADXViewBoundsCheck_FLAG_CVS_LT_PVS | ADXViewBoundsCheck_FLAG_CVE_LT_PVE | ADXViewBoundsCheck_FLAG_CVE_GT_PVS);
     acceptableBoundsFlag = (ADXViewBoundsCheck_FLAG_CVS_LT_PVS | ADXViewBoundsCheck_FLAG_CVE_LT_PVE);
@@ -1208,19 +1223,19 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
 }
 
 - (ADView *)onFocusSearchFailedWithADView:(ADView *)focused
-                                  withInt:(jint)direction
+                                  withInt:(int32_t)direction
              withADXRecyclerView_Recycler:(ADXRecyclerView_Recycler *)recycler
                 withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   ADXLinearLayoutManager_resolveShouldLayoutReverse(self);
   if ([self getChildCount] == 0) {
     return nil;
   }
-  jint layoutDir = [self convertFocusDirectionToLayoutDirectionWithInt:direction];
+  int32_t layoutDir = [self convertFocusDirectionToLayoutDirectionWithInt:direction];
   if (layoutDir == ADXLinearLayoutManager_LayoutState_INVALID_LAYOUT) {
     return nil;
   }
   [self ensureLayoutState];
-  jint maxScroll = JreFpToInt((ADXLinearLayoutManager_MAX_SCROLL_FACTOR * [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getTotalSpace]));
+  int32_t maxScroll = JreFpToInt((ADXLinearLayoutManager_MAX_SCROLL_FACTOR * [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getTotalSpace]));
   ADXLinearLayoutManager_updateLayoutStateWithInt_withInt_withBoolean_withADXRecyclerView_State_(self, layoutDir, maxScroll, false, state);
   ((ADXLinearLayoutManager_LayoutState *) nil_chk(mLayoutState_))->mScrollingOffset_ = ADXLinearLayoutManager_LayoutState_SCROLLING_OFFSET_NaN;
   mLayoutState_->mRecycle_ = false;
@@ -1251,13 +1266,13 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   if ([self getChildCount] < 1) {
     return;
   }
-  jint lastPos = [self getPositionWithADView:[self getChildAtWithInt:0]];
-  jint lastScreenLoc = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:[self getChildAtWithInt:0]];
+  int32_t lastPos = [self getPositionWithADView:[self getChildAtWithInt:0]];
+  int32_t lastScreenLoc = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:[self getChildAtWithInt:0]];
   if (mShouldReverseLayout_) {
-    for (jint i = 1; i < [self getChildCount]; i++) {
+    for (int32_t i = 1; i < [self getChildCount]; i++) {
       ADView *child = JreRetainedLocalValue([self getChildAtWithInt:i]);
-      jint pos = [self getPositionWithADView:child];
-      jint screenLoc = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:child];
+      int32_t pos = [self getPositionWithADView:child];
+      int32_t screenLoc = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:child];
       if (pos < lastPos) {
         ADXLinearLayoutManager_logChildren(self);
         @throw create_JavaLangRuntimeException_initWithNSString_(JreStrcat("$Z", @"detected invalid position. loc invalid? ", (screenLoc < lastScreenLoc)));
@@ -1269,10 +1284,10 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
     }
   }
   else {
-    for (jint i = 1; i < [self getChildCount]; i++) {
+    for (int32_t i = 1; i < [self getChildCount]; i++) {
       ADView *child = JreRetainedLocalValue([self getChildAtWithInt:i]);
-      jint pos = [self getPositionWithADView:child];
-      jint screenLoc = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:child];
+      int32_t pos = [self getPositionWithADView:child];
+      int32_t screenLoc = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:child];
       if (pos < lastPos) {
         ADXLinearLayoutManager_logChildren(self);
         @throw create_JavaLangRuntimeException_initWithNSString_(JreStrcat("$Z", @"detected invalid position. loc invalid? ", (screenLoc < lastScreenLoc)));
@@ -1285,20 +1300,20 @@ withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   }
 }
 
-- (jboolean)supportsPredictiveItemAnimations {
+- (bool)supportsPredictiveItemAnimations {
   return mPendingSavedState_ == nil && mLastStackFromEnd_ == mStackFromEnd_;
 }
 
 - (void)prepareForDropWithADView:(ADView *)view
                       withADView:(ADView *)target
-                         withInt:(jint)x
-                         withInt:(jint)y {
+                         withInt:(int32_t)x
+                         withInt:(int32_t)y {
   [self assertNotInLayoutOrScrollWithNSString:@"Cannot drop a view during a scroll or layout calculation"];
   [self ensureLayoutState];
   ADXLinearLayoutManager_resolveShouldLayoutReverse(self);
-  jint myPos = [self getPositionWithADView:view];
-  jint targetPos = [self getPositionWithADView:target];
-  jint dropDirection = myPos < targetPos ? ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL : ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_HEAD;
+  int32_t myPos = [self getPositionWithADView:view];
+  int32_t targetPos = [self getPositionWithADView:target];
+  int32_t dropDirection = myPos < targetPos ? ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL : ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_HEAD;
   if (mShouldReverseLayout_) {
     if (dropDirection == ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL) {
       [self scrollToPositionWithOffsetWithInt:targetPos withInt:[((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding] - ([((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:target] + [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementWithADView:view])];
@@ -1555,7 +1570,7 @@ ADXLinearLayoutManager *create_ADXLinearLayoutManager_initWithADContext_(ADConte
   J2OBJC_CREATE_IMPL(ADXLinearLayoutManager, initWithADContext_, context)
 }
 
-void ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADXLinearLayoutManager *self, ADContext *context, jint orientation, jboolean reverseLayout) {
+void ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADXLinearLayoutManager *self, ADContext *context, int32_t orientation, bool reverseLayout) {
   ADXRecyclerView_LayoutManager_init(self);
   self->mOrientation_ = ADXRecyclerView_DEFAULT_ORIENTATION;
   self->mReverseLayout_ = false;
@@ -1573,11 +1588,11 @@ void ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADXLinearLayo
   [self setReverseLayoutWithBoolean:reverseLayout];
 }
 
-ADXLinearLayoutManager *new_ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADContext *context, jint orientation, jboolean reverseLayout) {
+ADXLinearLayoutManager *new_ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADContext *context, int32_t orientation, bool reverseLayout) {
   J2OBJC_NEW_IMPL(ADXLinearLayoutManager, initWithADContext_withInt_withBoolean_, context, orientation, reverseLayout)
 }
 
-ADXLinearLayoutManager *create_ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADContext *context, jint orientation, jboolean reverseLayout) {
+ADXLinearLayoutManager *create_ADXLinearLayoutManager_initWithADContext_withInt_withBoolean_(ADContext *context, int32_t orientation, bool reverseLayout) {
   J2OBJC_CREATE_IMPL(ADXLinearLayoutManager, initWithADContext_withInt_withBoolean_, context, orientation, reverseLayout)
 }
 
@@ -1590,22 +1605,22 @@ void ADXLinearLayoutManager_resolveShouldLayoutReverse(ADXLinearLayoutManager *s
   }
 }
 
-void ADXLinearLayoutManager_layoutForPredictiveAnimationsWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jint startOffset, jint endOffset) {
+void ADXLinearLayoutManager_layoutForPredictiveAnimationsWithADXRecyclerView_Recycler_withADXRecyclerView_State_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, int32_t startOffset, int32_t endOffset) {
   if (![((ADXRecyclerView_State *) nil_chk(state)) willRunPredictiveAnimations] || [self getChildCount] == 0 || [state isPreLayout] || ![self supportsPredictiveItemAnimations]) {
     return;
   }
-  jint scrapExtraStart = 0;
-  jint scrapExtraEnd = 0;
+  int32_t scrapExtraStart = 0;
+  int32_t scrapExtraEnd = 0;
   id<JavaUtilList> scrapList = [((ADXRecyclerView_Recycler *) nil_chk(recycler)) getScrapList];
-  jint scrapSize = [((id<JavaUtilList>) nil_chk(scrapList)) size];
-  jint firstChildPos = [self getPositionWithADView:[self getChildAtWithInt:0]];
-  for (jint i = 0; i < scrapSize; i++) {
+  int32_t scrapSize = [((id<JavaUtilList>) nil_chk(scrapList)) size];
+  int32_t firstChildPos = [self getPositionWithADView:[self getChildAtWithInt:0]];
+  for (int32_t i = 0; i < scrapSize; i++) {
     ADXRecyclerView_ViewHolder *scrap = JreRetainedLocalValue([scrapList getWithInt:i]);
     if ([((ADXRecyclerView_ViewHolder *) nil_chk(scrap)) isRemoved]) {
       continue;
     }
-    jint position = [scrap getLayoutPosition];
-    jint direction = position < firstChildPos != self->mShouldReverseLayout_ ? ADXLinearLayoutManager_LayoutState_LAYOUT_START : ADXLinearLayoutManager_LayoutState_LAYOUT_END;
+    int32_t position = [scrap getLayoutPosition];
+    int32_t direction = position < firstChildPos != self->mShouldReverseLayout_ ? ADXLinearLayoutManager_LayoutState_LAYOUT_START : ADXLinearLayoutManager_LayoutState_LAYOUT_END;
     if (direction == ADXLinearLayoutManager_LayoutState_LAYOUT_START) {
       scrapExtraStart += [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedMeasurementWithADView:scrap->itemView_];
     }
@@ -1644,7 +1659,7 @@ void ADXLinearLayoutManager_updateAnchorInfoForLayoutWithADXRecyclerView_Recycle
   anchorInfo->mPosition_ = self->mStackFromEnd_ ? [((ADXRecyclerView_State *) nil_chk(state)) getItemCount] - 1 : 0;
 }
 
-jboolean ADXLinearLayoutManager_updateAnchorFromChildrenWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo) {
+bool ADXLinearLayoutManager_updateAnchorFromChildrenWithADXRecyclerView_Recycler_withADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo) {
   if ([self getChildCount] == 0) {
     return false;
   }
@@ -1660,12 +1675,12 @@ jboolean ADXLinearLayoutManager_updateAnchorFromChildrenWithADXRecyclerView_Recy
   if (referenceChild != nil) {
     [anchorInfo assignFromViewWithADView:referenceChild withInt:[self getPositionWithADView:referenceChild]];
     if (![((ADXRecyclerView_State *) nil_chk(state)) isPreLayout] && [self supportsPredictiveItemAnimations]) {
-      jint childStart = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:referenceChild];
-      jint childEnd = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedEndWithADView:referenceChild];
-      jint boundsStart = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getStartAfterPadding];
-      jint boundsEnd = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getEndAfterPadding];
-      jboolean outOfBoundsBefore = childEnd <= boundsStart && childStart < boundsStart;
-      jboolean outOfBoundsAfter = childStart >= boundsEnd && childEnd > boundsEnd;
+      int32_t childStart = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:referenceChild];
+      int32_t childEnd = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedEndWithADView:referenceChild];
+      int32_t boundsStart = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getStartAfterPadding];
+      int32_t boundsEnd = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getEndAfterPadding];
+      bool outOfBoundsBefore = childEnd <= boundsStart && childStart < boundsStart;
+      bool outOfBoundsAfter = childStart >= boundsEnd && childEnd > boundsEnd;
       if (outOfBoundsBefore || outOfBoundsAfter) {
         anchorInfo->mCoordinate_ = anchorInfo->mLayoutFromEnd_ ? boundsEnd : boundsStart;
       }
@@ -1675,7 +1690,7 @@ jboolean ADXLinearLayoutManager_updateAnchorFromChildrenWithADXRecyclerView_Recy
   return false;
 }
 
-jboolean ADXLinearLayoutManager_updateAnchorFromPendingDataWithADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo) {
+bool ADXLinearLayoutManager_updateAnchorFromPendingDataWithADXRecyclerView_State_withADXLinearLayoutManager_AnchorInfo_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state, ADXLinearLayoutManager_AnchorInfo *anchorInfo) {
   if ([((ADXRecyclerView_State *) nil_chk(state)) isPreLayout] || self->mPendingScrollPosition_ == ADXRecyclerView_NO_POSITION) {
     return false;
   }
@@ -1698,18 +1713,18 @@ jboolean ADXLinearLayoutManager_updateAnchorFromPendingDataWithADXRecyclerView_S
   if (self->mPendingScrollPositionOffset_ == ADXLinearLayoutManager_INVALID_OFFSET) {
     ADView *child = JreRetainedLocalValue([self findViewByPositionWithInt:self->mPendingScrollPosition_]);
     if (child != nil) {
-      jint childSize = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedMeasurementWithADView:child];
+      int32_t childSize = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedMeasurementWithADView:child];
       if (childSize > [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getTotalSpace]) {
         [anchorInfo assignCoordinateFromPadding];
         return true;
       }
-      jint startGap = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:child] - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getStartAfterPadding];
+      int32_t startGap = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:child] - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getStartAfterPadding];
       if (startGap < 0) {
         anchorInfo->mCoordinate_ = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getStartAfterPadding];
         anchorInfo->mLayoutFromEnd_ = false;
         return true;
       }
-      jint endGap = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getEndAfterPadding] - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedEndWithADView:child];
+      int32_t endGap = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getEndAfterPadding] - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedEndWithADView:child];
       if (endGap < 0) {
         anchorInfo->mCoordinate_ = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getEndAfterPadding];
         anchorInfo->mLayoutFromEnd_ = true;
@@ -1719,7 +1734,7 @@ jboolean ADXLinearLayoutManager_updateAnchorFromPendingDataWithADXRecyclerView_S
     }
     else {
       if ([self getChildCount] > 0) {
-        jint pos = [self getPositionWithADView:[self getChildAtWithInt:0]];
+        int32_t pos = [self getPositionWithADView:[self getChildAtWithInt:0]];
         anchorInfo->mLayoutFromEnd_ = (self->mPendingScrollPosition_ < pos == self->mShouldReverseLayout_);
       }
       [anchorInfo assignCoordinateFromPadding];
@@ -1736,9 +1751,9 @@ jboolean ADXLinearLayoutManager_updateAnchorFromPendingDataWithADXRecyclerView_S
   return true;
 }
 
-jint ADXLinearLayoutManager_fixLayoutEndGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(ADXLinearLayoutManager *self, jint endOffset, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jboolean canOffsetChildren) {
-  jint gap = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getEndAfterPadding] - endOffset;
-  jint fixOffset = 0;
+int32_t ADXLinearLayoutManager_fixLayoutEndGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(ADXLinearLayoutManager *self, int32_t endOffset, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, bool canOffsetChildren) {
+  int32_t gap = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getEndAfterPadding] - endOffset;
+  int32_t fixOffset = 0;
   if (gap > 0) {
     fixOffset = -[self scrollByWithInt:-gap withADXRecyclerView_Recycler:recycler withADXRecyclerView_State:state];
   }
@@ -1756,9 +1771,9 @@ jint ADXLinearLayoutManager_fixLayoutEndGapWithInt_withADXRecyclerView_Recycler_
   return fixOffset;
 }
 
-jint ADXLinearLayoutManager_fixLayoutStartGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(ADXLinearLayoutManager *self, jint startOffset, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, jboolean canOffsetChildren) {
-  jint gap = startOffset - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getStartAfterPadding];
-  jint fixOffset = 0;
+int32_t ADXLinearLayoutManager_fixLayoutStartGapWithInt_withADXRecyclerView_Recycler_withADXRecyclerView_State_withBoolean_(ADXLinearLayoutManager *self, int32_t startOffset, ADXRecyclerView_Recycler *recycler, ADXRecyclerView_State *state, bool canOffsetChildren) {
+  int32_t gap = startOffset - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getStartAfterPadding];
+  int32_t fixOffset = 0;
   if (gap > 0) {
     fixOffset = -[self scrollByWithInt:gap withADXRecyclerView_Recycler:recycler withADXRecyclerView_State:state];
   }
@@ -1780,7 +1795,7 @@ void ADXLinearLayoutManager_updateLayoutStateToFillEndWithADXLinearLayoutManager
   ADXLinearLayoutManager_updateLayoutStateToFillEndWithInt_withInt_(self, ((ADXLinearLayoutManager_AnchorInfo *) nil_chk(anchorInfo))->mPosition_, anchorInfo->mCoordinate_);
 }
 
-void ADXLinearLayoutManager_updateLayoutStateToFillEndWithInt_withInt_(ADXLinearLayoutManager *self, jint itemPosition, jint offset) {
+void ADXLinearLayoutManager_updateLayoutStateToFillEndWithInt_withInt_(ADXLinearLayoutManager *self, int32_t itemPosition, int32_t offset) {
   ((ADXLinearLayoutManager_LayoutState *) nil_chk(self->mLayoutState_))->mAvailable_ = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getEndAfterPadding] - offset;
   ((ADXLinearLayoutManager_LayoutState *) nil_chk(self->mLayoutState_))->mItemDirection_ = self->mShouldReverseLayout_ ? ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_HEAD : ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL;
   self->mLayoutState_->mCurrentPosition_ = itemPosition;
@@ -1793,7 +1808,7 @@ void ADXLinearLayoutManager_updateLayoutStateToFillStartWithADXLinearLayoutManag
   ADXLinearLayoutManager_updateLayoutStateToFillStartWithInt_withInt_(self, ((ADXLinearLayoutManager_AnchorInfo *) nil_chk(anchorInfo))->mPosition_, anchorInfo->mCoordinate_);
 }
 
-void ADXLinearLayoutManager_updateLayoutStateToFillStartWithInt_withInt_(ADXLinearLayoutManager *self, jint itemPosition, jint offset) {
+void ADXLinearLayoutManager_updateLayoutStateToFillStartWithInt_withInt_(ADXLinearLayoutManager *self, int32_t itemPosition, int32_t offset) {
   ((ADXLinearLayoutManager_LayoutState *) nil_chk(self->mLayoutState_))->mAvailable_ = offset - [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getStartAfterPadding];
   ((ADXLinearLayoutManager_LayoutState *) nil_chk(self->mLayoutState_))->mCurrentPosition_ = itemPosition;
   self->mLayoutState_->mItemDirection_ = self->mShouldReverseLayout_ ? ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_TAIL : ADXLinearLayoutManager_LayoutState_ITEM_DIRECTION_HEAD;
@@ -1802,7 +1817,7 @@ void ADXLinearLayoutManager_updateLayoutStateToFillStartWithInt_withInt_(ADXLine
   self->mLayoutState_->mScrollingOffset_ = ADXLinearLayoutManager_LayoutState_SCROLLING_OFFSET_NaN;
 }
 
-jint ADXLinearLayoutManager_computeScrollOffsetWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state) {
+int32_t ADXLinearLayoutManager_computeScrollOffsetWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state) {
   if ([self getChildCount] == 0) {
     return 0;
   }
@@ -1810,7 +1825,7 @@ jint ADXLinearLayoutManager_computeScrollOffsetWithADXRecyclerView_State_(ADXLin
   return ADXScrollbarHelper_computeScrollOffsetWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_withBoolean_(state, self->mOrientationHelper_, [self findFirstVisibleChildClosestToStartWithBoolean:!self->mSmoothScrollbarEnabled_ withBoolean:true], [self findFirstVisibleChildClosestToEndWithBoolean:!self->mSmoothScrollbarEnabled_ withBoolean:true], self, self->mSmoothScrollbarEnabled_, self->mShouldReverseLayout_);
 }
 
-jint ADXLinearLayoutManager_computeScrollExtentWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state) {
+int32_t ADXLinearLayoutManager_computeScrollExtentWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state) {
   if ([self getChildCount] == 0) {
     return 0;
   }
@@ -1818,7 +1833,7 @@ jint ADXLinearLayoutManager_computeScrollExtentWithADXRecyclerView_State_(ADXLin
   return ADXScrollbarHelper_computeScrollExtentWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(state, self->mOrientationHelper_, [self findFirstVisibleChildClosestToStartWithBoolean:!self->mSmoothScrollbarEnabled_ withBoolean:true], [self findFirstVisibleChildClosestToEndWithBoolean:!self->mSmoothScrollbarEnabled_ withBoolean:true], self, self->mSmoothScrollbarEnabled_);
 }
 
-jint ADXLinearLayoutManager_computeScrollRangeWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state) {
+int32_t ADXLinearLayoutManager_computeScrollRangeWithADXRecyclerView_State_(ADXLinearLayoutManager *self, ADXRecyclerView_State *state) {
   if ([self getChildCount] == 0) {
     return 0;
   }
@@ -1826,18 +1841,18 @@ jint ADXLinearLayoutManager_computeScrollRangeWithADXRecyclerView_State_(ADXLine
   return ADXScrollbarHelper_computeScrollRangeWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(state, self->mOrientationHelper_, [self findFirstVisibleChildClosestToStartWithBoolean:!self->mSmoothScrollbarEnabled_ withBoolean:true], [self findFirstVisibleChildClosestToEndWithBoolean:!self->mSmoothScrollbarEnabled_ withBoolean:true], self, self->mSmoothScrollbarEnabled_);
 }
 
-void ADXLinearLayoutManager_updateLayoutStateWithInt_withInt_withBoolean_withADXRecyclerView_State_(ADXLinearLayoutManager *self, jint layoutDirection, jint requiredSpace, jboolean canUseExistingSpace, ADXRecyclerView_State *state) {
+void ADXLinearLayoutManager_updateLayoutStateWithInt_withInt_withBoolean_withADXRecyclerView_State_(ADXLinearLayoutManager *self, int32_t layoutDirection, int32_t requiredSpace, bool canUseExistingSpace, ADXRecyclerView_State *state) {
   ((ADXLinearLayoutManager_LayoutState *) nil_chk(self->mLayoutState_))->mInfinite_ = [self resolveIsInfinite];
   ((ADXLinearLayoutManager_LayoutState *) nil_chk(self->mLayoutState_))->mLayoutDirection_ = layoutDirection;
   *IOSIntArray_GetRef(nil_chk(self->mReusableIntPair_), 0) = 0;
   *IOSIntArray_GetRef(self->mReusableIntPair_, 1) = 0;
   [self calculateExtraLayoutSpaceWithADXRecyclerView_State:state withIntArray:self->mReusableIntPair_];
-  jint extraForStart = JavaLangMath_maxWithInt_withInt_(0, IOSIntArray_Get(nil_chk(self->mReusableIntPair_), 0));
-  jint extraForEnd = JavaLangMath_maxWithInt_withInt_(0, IOSIntArray_Get(nil_chk(self->mReusableIntPair_), 1));
-  jboolean layoutToEnd = layoutDirection == ADXLinearLayoutManager_LayoutState_LAYOUT_END;
+  int32_t extraForStart = JavaLangMath_maxWithInt_withInt_(0, IOSIntArray_Get(nil_chk(self->mReusableIntPair_), 0));
+  int32_t extraForEnd = JavaLangMath_maxWithInt_withInt_(0, IOSIntArray_Get(nil_chk(self->mReusableIntPair_), 1));
+  bool layoutToEnd = layoutDirection == ADXLinearLayoutManager_LayoutState_LAYOUT_END;
   ((ADXLinearLayoutManager_LayoutState *) nil_chk(self->mLayoutState_))->mExtraFillSpace_ = layoutToEnd ? extraForEnd : extraForStart;
   self->mLayoutState_->mNoRecycleSpace_ = layoutToEnd ? extraForStart : extraForEnd;
-  jint scrollingOffset;
+  int32_t scrollingOffset;
   if (layoutToEnd) {
     self->mLayoutState_->mExtraFillSpace_ += [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getEndPadding];
     ADView *child = ADXLinearLayoutManager_getChildClosestToEnd(self);
@@ -1861,30 +1876,30 @@ void ADXLinearLayoutManager_updateLayoutStateWithInt_withInt_withBoolean_withADX
   self->mLayoutState_->mScrollingOffset_ = scrollingOffset;
 }
 
-void ADXLinearLayoutManager_recycleChildrenWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, jint startIndex, jint endIndex) {
+void ADXLinearLayoutManager_recycleChildrenWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, int32_t startIndex, int32_t endIndex) {
   if (startIndex == endIndex) {
     return;
   }
   if (endIndex > startIndex) {
-    for (jint i = endIndex - 1; i >= startIndex; i--) {
+    for (int32_t i = endIndex - 1; i >= startIndex; i--) {
       [self removeAndRecycleViewAtWithInt:i withADXRecyclerView_Recycler:recycler];
     }
   }
   else {
-    for (jint i = startIndex; i > endIndex; i--) {
+    for (int32_t i = startIndex; i > endIndex; i--) {
       [self removeAndRecycleViewAtWithInt:i withADXRecyclerView_Recycler:recycler];
     }
   }
 }
 
-void ADXLinearLayoutManager_recycleViewsFromStartWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, jint scrollingOffset, jint noRecycleSpace) {
+void ADXLinearLayoutManager_recycleViewsFromStartWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, int32_t scrollingOffset, int32_t noRecycleSpace) {
   if (scrollingOffset < 0) {
     return;
   }
-  jint limit = scrollingOffset - noRecycleSpace;
-  jint childCount = [self getChildCount];
+  int32_t limit = scrollingOffset - noRecycleSpace;
+  int32_t childCount = [self getChildCount];
   if (self->mShouldReverseLayout_) {
-    for (jint i = childCount - 1; i >= 0; i--) {
+    for (int32_t i = childCount - 1; i >= 0; i--) {
       ADView *child = JreRetainedLocalValue([self getChildAtWithInt:i]);
       if ([((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedEndWithADView:child] > limit || [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getTransformedEndWithDecorationWithADView:child] > limit) {
         ADXLinearLayoutManager_recycleChildrenWithADXRecyclerView_Recycler_withInt_withInt_(self, recycler, childCount - 1, i);
@@ -1893,7 +1908,7 @@ void ADXLinearLayoutManager_recycleViewsFromStartWithADXRecyclerView_Recycler_wi
     }
   }
   else {
-    for (jint i = 0; i < childCount; i++) {
+    for (int32_t i = 0; i < childCount; i++) {
       ADView *child = JreRetainedLocalValue([self getChildAtWithInt:i]);
       if ([((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedEndWithADView:child] > limit || [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getTransformedEndWithDecorationWithADView:child] > limit) {
         ADXLinearLayoutManager_recycleChildrenWithADXRecyclerView_Recycler_withInt_withInt_(self, recycler, 0, i);
@@ -1903,14 +1918,14 @@ void ADXLinearLayoutManager_recycleViewsFromStartWithADXRecyclerView_Recycler_wi
   }
 }
 
-void ADXLinearLayoutManager_recycleViewsFromEndWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, jint scrollingOffset, jint noRecycleSpace) {
-  jint childCount = [self getChildCount];
+void ADXLinearLayoutManager_recycleViewsFromEndWithADXRecyclerView_Recycler_withInt_withInt_(ADXLinearLayoutManager *self, ADXRecyclerView_Recycler *recycler, int32_t scrollingOffset, int32_t noRecycleSpace) {
+  int32_t childCount = [self getChildCount];
   if (scrollingOffset < 0) {
     return;
   }
-  jint limit = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getEnd] - scrollingOffset + noRecycleSpace;
+  int32_t limit = [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getEnd] - scrollingOffset + noRecycleSpace;
   if (self->mShouldReverseLayout_) {
-    for (jint i = 0; i < childCount; i++) {
+    for (int32_t i = 0; i < childCount; i++) {
       ADView *child = JreRetainedLocalValue([self getChildAtWithInt:i]);
       if ([((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:child] < limit || [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getTransformedStartWithDecorationWithADView:child] < limit) {
         ADXLinearLayoutManager_recycleChildrenWithADXRecyclerView_Recycler_withInt_withInt_(self, recycler, 0, i);
@@ -1919,7 +1934,7 @@ void ADXLinearLayoutManager_recycleViewsFromEndWithADXRecyclerView_Recycler_with
     }
   }
   else {
-    for (jint i = childCount - 1; i >= 0; i--) {
+    for (int32_t i = childCount - 1; i >= 0; i--) {
       ADView *child = JreRetainedLocalValue([self getChildAtWithInt:i]);
       if ([((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:child] < limit || [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getTransformedStartWithDecorationWithADView:child] < limit) {
         ADXLinearLayoutManager_recycleChildrenWithADXRecyclerView_Recycler_withInt_withInt_(self, recycler, childCount - 1, i);
@@ -1933,8 +1948,8 @@ void ADXLinearLayoutManager_recycleByLayoutStateWithADXRecyclerView_Recycler_wit
   if (!((ADXLinearLayoutManager_LayoutState *) nil_chk(layoutState))->mRecycle_ || layoutState->mInfinite_) {
     return;
   }
-  jint scrollingOffset = layoutState->mScrollingOffset_;
-  jint noRecycleSpace = layoutState->mNoRecycleSpace_;
+  int32_t scrollingOffset = layoutState->mScrollingOffset_;
+  int32_t noRecycleSpace = layoutState->mNoRecycleSpace_;
   if (layoutState->mLayoutDirection_ == ADXLinearLayoutManager_LayoutState_LAYOUT_START) {
     ADXLinearLayoutManager_recycleViewsFromEndWithADXRecyclerView_Recycler_withInt_withInt_(self, recycler, scrollingOffset, noRecycleSpace);
   }
@@ -1969,7 +1984,7 @@ ADView *ADXLinearLayoutManager_findLastPartiallyOrCompletelyInvisibleChild(ADXLi
 
 void ADXLinearLayoutManager_logChildren(ADXLinearLayoutManager *self) {
   ADLog_dWithNSString_withNSString_(ADXLinearLayoutManager_TAG, @"internal representation of views on the screen");
-  for (jint i = 0; i < [self getChildCount]; i++) {
+  for (int32_t i = 0; i < [self getChildCount]; i++) {
     ADView *child = JreRetainedLocalValue([self getChildAtWithInt:i]);
     ADLog_dWithNSString_withNSString_(ADXLinearLayoutManager_TAG, JreStrcat("$I$I", @"item ", [self getPositionWithADView:child], @", coord:", [((ADXOrientationHelper *) nil_chk(self->mOrientationHelper_)) getDecoratedStartWithADView:child]));
   }
@@ -1977,6 +1992,8 @@ void ADXLinearLayoutManager_logChildren(ADXLinearLayoutManager *self) {
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXLinearLayoutManager)
+
+J2OBJC_NAME_MAPPING(ADXLinearLayoutManager, "androidx.recyclerview.widget", "ADX")
 
 NSString *ADXLinearLayoutManager_LayoutState_TAG = @"LLM#LayoutState";
 
@@ -1989,7 +2006,7 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 }
 J2OBJC_IGNORE_DESIGNATED_END
 
-- (jboolean)hasMoreWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (bool)hasMoreWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return mCurrentPosition_ >= 0 && mCurrentPosition_ < [((ADXRecyclerView_State *) nil_chk(state)) getItemCount];
 }
 
@@ -2021,16 +2038,16 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (ADView *)nextViewInLimitedListWithADView:(ADView *)ignore {
-  jint size = [((id<JavaUtilList>) nil_chk(mScrapList_)) size];
+  int32_t size = [((id<JavaUtilList>) nil_chk(mScrapList_)) size];
   ADView *closest = nil;
-  jint closestDistance = JavaLangInteger_MAX_VALUE;
-  for (jint i = 0; i < size; i++) {
+  int32_t closestDistance = JavaLangInteger_MAX_VALUE;
+  for (int32_t i = 0; i < size; i++) {
     ADView *view = JreRetainedLocalValue(((ADXRecyclerView_ViewHolder *) nil_chk([((id<JavaUtilList>) nil_chk(mScrapList_)) getWithInt:i]))->itemView_);
     ADXRecyclerView_LayoutParams *lp = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
-    if (view == ignore || [((ADXRecyclerView_LayoutParams *) nil_chk(lp)) isItemRemoved]) {
+    if (JreObjectEqualsEquals(view, ignore) || [((ADXRecyclerView_LayoutParams *) nil_chk(lp)) isItemRemoved]) {
       continue;
     }
-    jint distance = ([((ADXRecyclerView_LayoutParams *) nil_chk(lp)) getViewLayoutPosition] - mCurrentPosition_) * mItemDirection_;
+    int32_t distance = ([((ADXRecyclerView_LayoutParams *) nil_chk(lp)) getViewLayoutPosition] - mCurrentPosition_) * mItemDirection_;
     if (distance < 0) {
       continue;
     }
@@ -2124,8 +2141,8 @@ ADXLinearLayoutManager_LayoutState *create_ADXLinearLayoutManager_LayoutState_in
 }
 
 ADView *ADXLinearLayoutManager_LayoutState_nextViewFromScrapList(ADXLinearLayoutManager_LayoutState *self) {
-  jint size = [((id<JavaUtilList>) nil_chk(self->mScrapList_)) size];
-  for (jint i = 0; i < size; i++) {
+  int32_t size = [((id<JavaUtilList>) nil_chk(self->mScrapList_)) size];
+  for (int32_t i = 0; i < size; i++) {
     ADView *view = ((ADXRecyclerView_ViewHolder *) nil_chk([((id<JavaUtilList>) nil_chk(self->mScrapList_)) getWithInt:i]))->itemView_;
     ADXRecyclerView_LayoutParams *lp = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(view)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
     if ([((ADXRecyclerView_LayoutParams *) nil_chk(lp)) isItemRemoved]) {
@@ -2160,7 +2177,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   return self;
 }
 
-- (jboolean)hasValidAnchor {
+- (bool)hasValidAnchor {
   return mAnchorPosition_ >= 0;
 }
 
@@ -2168,12 +2185,12 @@ J2OBJC_IGNORE_DESIGNATED_END
   mAnchorPosition_ = ADXRecyclerView_NO_POSITION;
 }
 
-- (jint)describeContents {
+- (int32_t)describeContents {
   return 0;
 }
 
 - (void)writeToParcelWithADParcel:(id<ADParcel>)dest
-                          withInt:(jint)flags {
+                          withInt:(int32_t)flags {
 }
 
 + (const J2ObjcClassInfo *)__metadata {
@@ -2277,47 +2294,47 @@ J2OBJC_IGNORE_DESIGNATED_END
   return JreStrcat("$I$I$Z$ZC", @"AnchorInfo{mPosition=", mPosition_, @", mCoordinate=", mCoordinate_, @", mLayoutFromEnd=", mLayoutFromEnd_, @", mValid=", mValid_, '}');
 }
 
-- (jboolean)isViewValidAsAnchorWithADView:(ADView *)child
-                withADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (bool)isViewValidAsAnchorWithADView:(ADView *)child
+            withADXRecyclerView_State:(ADXRecyclerView_State *)state {
   ADXRecyclerView_LayoutParams *lp = (ADXRecyclerView_LayoutParams *) cast_chk([((ADView *) nil_chk(child)) getLayoutParams], [ADXRecyclerView_LayoutParams class]);
   return ![((ADXRecyclerView_LayoutParams *) nil_chk(lp)) isItemRemoved] && [lp getViewLayoutPosition] >= 0 && [lp getViewLayoutPosition] < [((ADXRecyclerView_State *) nil_chk(state)) getItemCount];
 }
 
 - (void)assignFromViewAndKeepVisibleRectWithADView:(ADView *)child
-                                           withInt:(jint)position {
-  jint spaceChange = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getTotalSpaceChange];
+                                           withInt:(int32_t)position {
+  int32_t spaceChange = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getTotalSpaceChange];
   if (spaceChange >= 0) {
     [self assignFromViewWithADView:child withInt:position];
     return;
   }
   mPosition_ = position;
   if (mLayoutFromEnd_) {
-    jint prevLayoutEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding] - spaceChange;
-    jint childEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedEndWithADView:child];
-    jint previousEndMargin = prevLayoutEnd - childEnd;
+    int32_t prevLayoutEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding] - spaceChange;
+    int32_t childEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedEndWithADView:child];
+    int32_t previousEndMargin = prevLayoutEnd - childEnd;
     mCoordinate_ = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding] - previousEndMargin;
     if (previousEndMargin > 0) {
-      jint childSize = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementWithADView:child];
-      jint estimatedChildStart = mCoordinate_ - childSize;
-      jint layoutStart = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getStartAfterPadding];
-      jint previousStartMargin = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:child] - layoutStart;
-      jint startReference = layoutStart + JavaLangMath_minWithInt_withInt_(previousStartMargin, 0);
-      jint startMargin = estimatedChildStart - startReference;
+      int32_t childSize = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementWithADView:child];
+      int32_t estimatedChildStart = mCoordinate_ - childSize;
+      int32_t layoutStart = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getStartAfterPadding];
+      int32_t previousStartMargin = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:child] - layoutStart;
+      int32_t startReference = layoutStart + JavaLangMath_minWithInt_withInt_(previousStartMargin, 0);
+      int32_t startMargin = estimatedChildStart - startReference;
       if (startMargin < 0) {
         mCoordinate_ += JavaLangMath_minWithInt_withInt_(previousEndMargin, -startMargin);
       }
     }
   }
   else {
-    jint childStart = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:child];
-    jint startMargin = childStart - [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getStartAfterPadding];
+    int32_t childStart = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedStartWithADView:child];
+    int32_t startMargin = childStart - [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getStartAfterPadding];
     mCoordinate_ = childStart;
     if (startMargin > 0) {
-      jint estimatedEnd = childStart + [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementWithADView:child];
-      jint previousLayoutEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding] - spaceChange;
-      jint previousEndMargin = previousLayoutEnd - [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedEndWithADView:child];
-      jint endReference = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding] - JavaLangMath_minWithInt_withInt_(0, previousEndMargin);
-      jint endMargin = endReference - estimatedEnd;
+      int32_t estimatedEnd = childStart + [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedMeasurementWithADView:child];
+      int32_t previousLayoutEnd = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding] - spaceChange;
+      int32_t previousEndMargin = previousLayoutEnd - [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedEndWithADView:child];
+      int32_t endReference = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getEndAfterPadding] - JavaLangMath_minWithInt_withInt_(0, previousEndMargin);
+      int32_t endMargin = endReference - estimatedEnd;
       if (endMargin < 0) {
         mCoordinate_ -= JavaLangMath_minWithInt_withInt_(startMargin, -endMargin);
       }
@@ -2326,7 +2343,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 - (void)assignFromViewWithADView:(ADView *)child
-                         withInt:(jint)position {
+                         withInt:(int32_t)position {
   if (mLayoutFromEnd_) {
     mCoordinate_ = [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getDecoratedEndWithADView:child] + [((ADXOrientationHelper *) nil_chk(mOrientationHelper_)) getTotalSpaceChange];
   }

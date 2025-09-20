@@ -3,27 +3,41 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\ViewInfoStore.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "J2ObjC_source.h"
 #include "LongSparseArray.h"
 #include "Pools.h"
 #include "RecyclerView.h"
 #include "SimpleArrayMap.h"
 #include "ViewInfoStore.h"
+#include "java/lang/Boolean.h"
 #include "java/lang/IllegalArgumentException.h"
+#include "java/lang/Integer.h"
+#include "java/lang/Long.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXViewInfoStore ()
 
 - (ADXRecyclerView_ItemAnimator_ItemHolderInfo *)popFromLayoutStepWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)vh
-                                                                                         withInt:(jint)flag;
+                                                                                         withInt:(int32_t)flag;
 
 @end
 
-inline jboolean ADXViewInfoStore_get_DEBUG(void);
+inline bool ADXViewInfoStore_get_DEBUG(void);
 #define ADXViewInfoStore_DEBUG false
-J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore, DEBUG, jboolean)
+J2OBJC_STATIC_FIELD_CONSTANT(ADXViewInfoStore, DEBUG, bool)
 
-__attribute__((unused)) static ADXRecyclerView_ItemAnimator_ItemHolderInfo *ADXViewInfoStore_popFromLayoutStepWithADXRecyclerView_ViewHolder_withInt_(ADXViewInfoStore *self, ADXRecyclerView_ViewHolder *vh, jint flag);
+__attribute__((unused)) static ADXRecyclerView_ItemAnimator_ItemHolderInfo *ADXViewInfoStore_popFromLayoutStepWithADXRecyclerView_ViewHolder_withInt_(ADXViewInfoStore *self, ADXRecyclerView_ViewHolder *vh, int32_t flag);
 
 @interface ADXViewInfoStore_ProcessCallback : NSObject
 
@@ -64,7 +78,7 @@ __attribute__((unused)) static ADXViewInfoStore_InfoRecord *create_ADXViewInfoSt
   record->flags_ |= ADXViewInfoStore_InfoRecord_FLAG_PRE;
 }
 
-- (jboolean)isDisappearingWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
+- (bool)isDisappearingWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
   ADXViewInfoStore_InfoRecord *record = [((ADXSimpleArrayMap *) nil_chk(mLayoutHolderMap_)) getWithId:holder];
   return record != nil && ((record->flags_ & ADXViewInfoStore_InfoRecord_FLAG_DISAPPEARED) != 0);
 }
@@ -78,11 +92,11 @@ __attribute__((unused)) static ADXViewInfoStore_InfoRecord *create_ADXViewInfoSt
 }
 
 - (ADXRecyclerView_ItemAnimator_ItemHolderInfo *)popFromLayoutStepWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)vh
-                                                                                         withInt:(jint)flag {
+                                                                                         withInt:(int32_t)flag {
   return ADXViewInfoStore_popFromLayoutStepWithADXRecyclerView_ViewHolder_withInt_(self, vh, flag);
 }
 
-- (void)addToOldChangeHoldersWithLong:(jlong)key
+- (void)addToOldChangeHoldersWithLong:(int64_t)key
        withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
   [((ADLongSparseArray *) nil_chk(mOldChangedHolders_)) putWithLong:key withId:holder];
 }
@@ -98,12 +112,12 @@ __attribute__((unused)) static ADXViewInfoStore_InfoRecord *create_ADXViewInfoSt
   JreStrongAssign(&record->preInfo_, info);
 }
 
-- (jboolean)isInPreLayoutWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+- (bool)isInPreLayoutWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
   ADXViewInfoStore_InfoRecord *record = [((ADXSimpleArrayMap *) nil_chk(mLayoutHolderMap_)) getWithId:viewHolder];
   return record != nil && (record->flags_ & ADXViewInfoStore_InfoRecord_FLAG_PRE) != 0;
 }
 
-- (ADXRecyclerView_ViewHolder *)getFromOldChangeHoldersWithLong:(jlong)key {
+- (ADXRecyclerView_ViewHolder *)getFromOldChangeHoldersWithLong:(int64_t)key {
   return [((ADLongSparseArray *) nil_chk(mOldChangedHolders_)) getWithLong:key];
 }
 
@@ -136,7 +150,7 @@ __attribute__((unused)) static ADXViewInfoStore_InfoRecord *create_ADXViewInfoSt
 }
 
 - (void)processWithADXViewInfoStore_ProcessCallback:(id<ADXViewInfoStore_ProcessCallback>)callback {
-  for (jint index = [((ADXSimpleArrayMap *) nil_chk(mLayoutHolderMap_)) size] - 1; index >= 0; index--) {
+  for (int32_t index = [((ADXSimpleArrayMap *) nil_chk(mLayoutHolderMap_)) size] - 1; index >= 0; index--) {
     ADXRecyclerView_ViewHolder *viewHolder = [mLayoutHolderMap_ keyAtWithInt:index];
     ADXViewInfoStore_InfoRecord *record = [mLayoutHolderMap_ removeAtWithInt:index];
     if ((((ADXViewInfoStore_InfoRecord *) nil_chk(record))->flags_ & ADXViewInfoStore_InfoRecord_FLAG_APPEAR_AND_DISAPPEAR) == ADXViewInfoStore_InfoRecord_FLAG_APPEAR_AND_DISAPPEAR) {
@@ -169,8 +183,8 @@ __attribute__((unused)) static ADXViewInfoStore_InfoRecord *create_ADXViewInfoSt
 }
 
 - (void)removeViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
-  for (jint i = [((ADLongSparseArray *) nil_chk(mOldChangedHolders_)) size] - 1; i >= 0; i--) {
-    if (holder == [mOldChangedHolders_ valueAtWithInt:i]) {
+  for (int32_t i = [((ADLongSparseArray *) nil_chk(mOldChangedHolders_)) size] - 1; i >= 0; i--) {
+    if (JreObjectEqualsEquals(holder, [mOldChangedHolders_ valueAtWithInt:i])) {
       [mOldChangedHolders_ removeAtWithInt:i];
       break;
     }
@@ -264,8 +278,8 @@ ADXViewInfoStore *create_ADXViewInfoStore_initPackagePrivate() {
   J2OBJC_CREATE_IMPL(ADXViewInfoStore, initPackagePrivate)
 }
 
-ADXRecyclerView_ItemAnimator_ItemHolderInfo *ADXViewInfoStore_popFromLayoutStepWithADXRecyclerView_ViewHolder_withInt_(ADXViewInfoStore *self, ADXRecyclerView_ViewHolder *vh, jint flag) {
-  jint index = [((ADXSimpleArrayMap *) nil_chk(self->mLayoutHolderMap_)) indexOfKeyWithId:vh];
+ADXRecyclerView_ItemAnimator_ItemHolderInfo *ADXViewInfoStore_popFromLayoutStepWithADXRecyclerView_ViewHolder_withInt_(ADXViewInfoStore *self, ADXRecyclerView_ViewHolder *vh, int32_t flag) {
+  int32_t index = [((ADXSimpleArrayMap *) nil_chk(self->mLayoutHolderMap_)) indexOfKeyWithId:vh];
   if (index < 0) {
     return nil;
   }

@@ -3,10 +3,24 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\LayoutState.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "J2ObjC_source.h"
 #include "LayoutState.h"
 #include "RecyclerView.h"
 #include "View.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Character.h"
+#include "java/lang/Integer.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @implementation ADXLayoutState
@@ -16,7 +30,7 @@
   return self;
 }
 
-- (jboolean)hasMoreWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
+- (bool)hasMoreWithADXRecyclerView_State:(ADXRecyclerView_State *)state {
   return mCurrentPosition_ >= 0 && mCurrentPosition_ < [((ADXRecyclerView_State *) nil_chk(state)) getItemCount];
 }
 

@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\ItemTouchHelper.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_ItemTouchHelper")
@@ -36,6 +37,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXItemTouchHelper)
 
 @compatibility_alias AndroidxRecyclerviewWidgetItemTouchHelper ADXItemTouchHelper;
 
+
 #endif
 
 #if !defined (ADXItemTouchHelper_SimpleCallback_) && (INCLUDE_ALL_ItemTouchHelper || defined(INCLUDE_ADXItemTouchHelper_SimpleCallback))
@@ -43,19 +45,20 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXItemTouchHelper)
 
 @class ADXRecyclerView;
 @class ADXRecyclerView_ViewHolder;
+@class JavaLangInteger;
 
 @interface ADXItemTouchHelper_SimpleCallback : NSObject
 
 #pragma mark Public
 
-- (instancetype)initWithInt:(jint)i
-                    withInt:(jint)j;
+- (instancetype)initWithInt:(int32_t)i
+                    withInt:(int32_t)j;
 
-- (jint)getDragDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-        withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+- (int32_t)getDragDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+           withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
 
-- (jint)getSwipeDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-         withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+- (int32_t)getSwipeDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+            withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
 
 // Disallowed inherited constructors, do not use.
 
@@ -65,13 +68,14 @@ J2OBJC_TYPE_LITERAL_HEADER(ADXItemTouchHelper)
 
 J2OBJC_EMPTY_STATIC_INIT(ADXItemTouchHelper_SimpleCallback)
 
-FOUNDATION_EXPORT void ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(ADXItemTouchHelper_SimpleCallback *self, jint i, jint j);
+FOUNDATION_EXPORT void ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(ADXItemTouchHelper_SimpleCallback *self, int32_t i, int32_t j);
 
-FOUNDATION_EXPORT ADXItemTouchHelper_SimpleCallback *new_ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(jint i, jint j) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ADXItemTouchHelper_SimpleCallback *new_ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(int32_t i, int32_t j) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ADXItemTouchHelper_SimpleCallback *create_ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(jint i, jint j);
+FOUNDATION_EXPORT ADXItemTouchHelper_SimpleCallback *create_ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(int32_t i, int32_t j);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXItemTouchHelper_SimpleCallback)
+
 
 #endif
 

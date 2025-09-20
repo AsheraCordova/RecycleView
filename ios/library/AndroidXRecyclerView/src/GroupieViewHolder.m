@@ -3,6 +3,11 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\GroupieViewHolder.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "GroupieViewHolder.h"
 #include "Item.h"
 #include "J2ObjC_source.h"
@@ -10,7 +15,15 @@
 #include "OnItemLongClickListener.h"
 #include "RecyclerView.h"
 #include "View.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Integer.h"
 #include "java/util/Map.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 @interface ADXGroupieViewHolder () {
@@ -49,6 +62,7 @@ __attribute__((unused)) static ADXGroupieViewHolder_1 *new_ADXGroupieViewHolder_
 
 __attribute__((unused)) static ADXGroupieViewHolder_1 *create_ADXGroupieViewHolder_1_initWithADXGroupieViewHolder_(ADXGroupieViewHolder *outer$);
 
+
 @interface ADXGroupieViewHolder_2 : NSObject < ADView_OnLongClickListener > {
  @public
   ADXGroupieViewHolder *this$0_;
@@ -56,7 +70,7 @@ __attribute__((unused)) static ADXGroupieViewHolder_1 *create_ADXGroupieViewHold
 
 - (instancetype)initWithADXGroupieViewHolder:(ADXGroupieViewHolder *)outer$;
 
-- (jboolean)onLongClickWithADView:(ADView *)v;
+- (bool)onLongClickWithADView:(ADView *)v;
 
 @end
 
@@ -67,6 +81,7 @@ __attribute__((unused)) static void ADXGroupieViewHolder_2_initWithADXGroupieVie
 __attribute__((unused)) static ADXGroupieViewHolder_2 *new_ADXGroupieViewHolder_2_initWithADXGroupieViewHolder_(ADXGroupieViewHolder *outer$) NS_RETURNS_RETAINED;
 
 __attribute__((unused)) static ADXGroupieViewHolder_2 *create_ADXGroupieViewHolder_2_initWithADXGroupieViewHolder_(ADXGroupieViewHolder *outer$);
+
 
 @implementation ADXGroupieViewHolder
 
@@ -101,11 +116,11 @@ withADXOnItemLongClickListener:(id<ADXOnItemLongClickListener>)onItemLongClickLi
   return [((ADXItem *) nil_chk(item_)) getExtras];
 }
 
-- (jint)getSwipeDirs {
+- (int32_t)getSwipeDirs {
   return [((ADXItem *) nil_chk(item_)) getSwipeDirs];
 }
 
-- (jint)getDragDirs {
+- (int32_t)getDragDirs {
   return [((ADXItem *) nil_chk(item_)) getDragDirs];
 }
 
@@ -179,6 +194,8 @@ ADXGroupieViewHolder *create_ADXGroupieViewHolder_initWithADView_(ADView *rootVi
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXGroupieViewHolder)
 
+J2OBJC_NAME_MAPPING(ADXGroupieViewHolder, "com.xwray.groupie", "ADX")
+
 @implementation ADXGroupieViewHolder_1
 
 - (instancetype)initWithADXGroupieViewHolder:(ADXGroupieViewHolder *)outer$ {
@@ -212,7 +229,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXGroupieViewHolder)
     { "this$0_", "LADXGroupieViewHolder;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXGroupieViewHolder;", "onClick", "LADView;" };
-  static const J2ObjcClassInfo _ADXGroupieViewHolder_1 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8010, 2, 1, 0, -1, -1, -1, -1 };
+  static const J2ObjcClassInfo _ADXGroupieViewHolder_1 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8000, 2, 1, 0, -1, -1, -1, -1 };
   return &_ADXGroupieViewHolder_1;
 }
 
@@ -238,7 +255,7 @@ ADXGroupieViewHolder_1 *create_ADXGroupieViewHolder_1_initWithADXGroupieViewHold
   return self;
 }
 
-- (jboolean)onLongClickWithADView:(ADView *)v {
+- (bool)onLongClickWithADView:(ADView *)v {
   if (this$0_->onItemLongClickListener_ != nil && [this$0_ getBindingAdapterPosition] != ADXRecyclerView_NO_POSITION) {
     return [this$0_->onItemLongClickListener_ onItemLongClickWithADXItem:[this$0_ getItem] withADView:v];
   }
@@ -265,7 +282,7 @@ ADXGroupieViewHolder_1 *create_ADXGroupieViewHolder_1_initWithADXGroupieViewHold
     { "this$0_", "LADXGroupieViewHolder;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXGroupieViewHolder;", "onLongClick", "LADView;" };
-  static const J2ObjcClassInfo _ADXGroupieViewHolder_2 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8010, 2, 1, 0, -1, -1, -1, -1 };
+  static const J2ObjcClassInfo _ADXGroupieViewHolder_2 = { "", "com.xwray.groupie", ptrTable, methods, fields, 7, 0x8000, 2, 1, 0, -1, -1, -1, -1 };
   return &_ADXGroupieViewHolder_2;
 }
 

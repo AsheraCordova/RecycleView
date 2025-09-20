@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\androidx\recyclerview\widget\ScrollbarHelper.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_ScrollbarHelper")
@@ -20,6 +21,8 @@
 @class ADXOrientationHelper;
 @class ADXRecyclerView_LayoutManager;
 @class ADXRecyclerView_State;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief A helper class to do scroll offset calculations.
@@ -32,35 +35,35 @@
  @param startChild View closest to start of the list. (top or left)
  @param endChild View closest to end of the list (bottom or right)
  */
-+ (jint)computeScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state
-                            withADXOrientationHelper:(ADXOrientationHelper *)orientation
-                                          withADView:(ADView *)startChild
-                                          withADView:(ADView *)endChild
-                   withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
-                                         withBoolean:(jboolean)smoothScrollbarEnabled;
++ (int32_t)computeScrollExtentWithADXRecyclerView_State:(ADXRecyclerView_State *)state
+                               withADXOrientationHelper:(ADXOrientationHelper *)orientation
+                                             withADView:(ADView *)startChild
+                                             withADView:(ADView *)endChild
+                      withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
+                                            withBoolean:(bool)smoothScrollbarEnabled;
 
 /*!
  @param startChild View closest to start of the list. (top or left)
  @param endChild View closest to end of the list (bottom or right)
  */
-+ (jint)computeScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state
-                            withADXOrientationHelper:(ADXOrientationHelper *)orientation
-                                          withADView:(ADView *)startChild
-                                          withADView:(ADView *)endChild
-                   withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
-                                         withBoolean:(jboolean)smoothScrollbarEnabled
-                                         withBoolean:(jboolean)reverseLayout;
++ (int32_t)computeScrollOffsetWithADXRecyclerView_State:(ADXRecyclerView_State *)state
+                               withADXOrientationHelper:(ADXOrientationHelper *)orientation
+                                             withADView:(ADView *)startChild
+                                             withADView:(ADView *)endChild
+                      withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
+                                            withBoolean:(bool)smoothScrollbarEnabled
+                                            withBoolean:(bool)reverseLayout;
 
 /*!
  @param startChild View closest to start of the list. (top or left)
  @param endChild View closest to end of the list (bottom or right)
  */
-+ (jint)computeScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state
-                           withADXOrientationHelper:(ADXOrientationHelper *)orientation
-                                         withADView:(ADView *)startChild
-                                         withADView:(ADView *)endChild
-                  withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
-                                        withBoolean:(jboolean)smoothScrollbarEnabled;
++ (int32_t)computeScrollRangeWithADXRecyclerView_State:(ADXRecyclerView_State *)state
+                              withADXOrientationHelper:(ADXOrientationHelper *)orientation
+                                            withADView:(ADView *)startChild
+                                            withADView:(ADView *)endChild
+                     withADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)lm
+                                           withBoolean:(bool)smoothScrollbarEnabled;
 
 // Disallowed inherited constructors, do not use.
 
@@ -70,15 +73,16 @@
 
 J2OBJC_EMPTY_STATIC_INIT(ADXScrollbarHelper)
 
-FOUNDATION_EXPORT jint ADXScrollbarHelper_computeScrollOffsetWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, jboolean smoothScrollbarEnabled, jboolean reverseLayout);
+FOUNDATION_EXPORT int32_t ADXScrollbarHelper_computeScrollOffsetWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, bool smoothScrollbarEnabled, bool reverseLayout);
 
-FOUNDATION_EXPORT jint ADXScrollbarHelper_computeScrollExtentWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, jboolean smoothScrollbarEnabled);
+FOUNDATION_EXPORT int32_t ADXScrollbarHelper_computeScrollExtentWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, bool smoothScrollbarEnabled);
 
-FOUNDATION_EXPORT jint ADXScrollbarHelper_computeScrollRangeWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, jboolean smoothScrollbarEnabled);
+FOUNDATION_EXPORT int32_t ADXScrollbarHelper_computeScrollRangeWithADXRecyclerView_State_withADXOrientationHelper_withADView_withADView_withADXRecyclerView_LayoutManager_withBoolean_(ADXRecyclerView_State *state, ADXOrientationHelper *orientation, ADView *startChild, ADView *endChild, ADXRecyclerView_LayoutManager *lm, bool smoothScrollbarEnabled);
 
 J2OBJC_TYPE_LITERAL_HEADER(ADXScrollbarHelper)
 
 @compatibility_alias AndroidxRecyclerviewWidgetScrollbarHelper ADXScrollbarHelper;
+
 
 #endif
 

@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\GroupieViewHolder.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_GroupieViewHolder")
@@ -28,6 +29,7 @@
 
 @class ADView;
 @class ADXItem;
+@class JavaLangInteger;
 @protocol ADXOnItemClickListener;
 @protocol ADXOnItemLongClickListener;
 @protocol JavaUtilMap;
@@ -42,7 +44,7 @@
 withADXOnItemClickListener:(id<ADXOnItemClickListener>)onItemClickListener
 withADXOnItemLongClickListener:(id<ADXOnItemLongClickListener>)onItemLongClickListener;
 
-- (jint)getDragDirs;
+- (int32_t)getDragDirs;
 
 - (id<JavaUtilMap>)getExtras;
 
@@ -50,7 +52,7 @@ withADXOnItemLongClickListener:(id<ADXOnItemLongClickListener>)onItemLongClickLi
 
 - (ADView *)getRoot;
 
-- (jint)getSwipeDirs;
+- (int32_t)getSwipeDirs;
 
 - (void)unbind;
 
@@ -67,6 +69,7 @@ FOUNDATION_EXPORT ADXGroupieViewHolder *create_ADXGroupieViewHolder_initWithADVi
 J2OBJC_TYPE_LITERAL_HEADER(ADXGroupieViewHolder)
 
 @compatibility_alias ComXwrayGroupieGroupieViewHolder ADXGroupieViewHolder;
+
 
 #endif
 

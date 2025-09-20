@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\GroupAdapter.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_GroupAdapter")
@@ -34,6 +35,9 @@
 @class ADXGridLayoutManager_SpanSizeLookup;
 @class ADXGroupieViewHolder;
 @class ADXItem;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol ADXOnAsyncUpdateListener;
 @protocol ADXOnItemClickListener;
 @protocol ADXOnItemLongClickListener;
@@ -50,7 +54,7 @@
 
 - (instancetype)init;
 
-- (void)addWithInt:(jint)index
+- (void)addWithInt:(int32_t)index
     withADXRVGroup:(id<ADXRVGroup>)group;
 
 - (void)addWithADXRVGroup:(id<ADXRVGroup>)group;
@@ -64,16 +68,16 @@
 
 - (void)clear;
 
-- (ADXGroupieViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)arg0
-                                                  withInt:(jint)arg1;
+- (ADXGroupieViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)parent
+                                                  withInt:(int32_t)viewType;
 
-- (jint)getAdapterPositionWithADXItem:(ADXItem *)contentItem;
+- (int32_t)getAdapterPositionWithADXItem:(ADXItem *)contentItem;
 
 /*!
  @brief The position in the flat list of individual items at which the group starts
  @param group
  */
-- (jint)getAdapterPositionWithADXRVGroup:(id<ADXRVGroup>)group;
+- (int32_t)getAdapterPositionWithADXRVGroup:(id<ADXRVGroup>)group;
 
 /*!
  @brief Get group, given a raw adapter position.If you want to get a top level group by position
@@ -81,7 +85,7 @@
  @param adapterPosition raw adapter position
  @return Group at that position or throws <code>IndexOutOfBoundsException</code>
  */
-- (id<ADXRVGroup>)getGroupWithInt:(jint)adapterPosition;
+- (id<ADXRVGroup>)getGroupWithInt:(int32_t)adapterPosition;
 
 /*!
  @brief Returns the Group which contains this item or throws an <code>IndexOutOfBoundsException</code> if not present.
@@ -97,31 +101,31 @@
  @param position raw adapter position
  @return Group at that position or throws <code>IndexOutOfBoundsException</code>
  */
-- (id<ADXRVGroup>)getGroupAtAdapterPositionWithInt:(jint)position;
+- (id<ADXRVGroup>)getGroupAtAdapterPositionWithInt:(int32_t)position;
 
 /*!
  @brief Returns the number of top-level groups present in the adapter.
  */
-- (jint)getGroupCount;
+- (int32_t)getGroupCount;
 
-- (ADXItem *)getItemWithInt:(jint)position;
+- (ADXItem *)getItemWithInt:(int32_t)position;
 
 - (ADXItem *)getItemWithADXGroupieViewHolder:(ADXGroupieViewHolder *)holder;
 
 /*!
  @brief This returns the total number of items contained in all groups in this adapter
  */
-- (jint)getItemCount;
+- (int32_t)getItemCount;
 
 /*!
  @brief This returns the total number of items contained in the top level group at the passed index
  */
-- (jint)getItemCountWithInt:(jint)groupIndex;
+- (int32_t)getItemCountWithInt:(int32_t)groupIndex;
 
 /*!
  @brief This returns the total number of items contained in the top level group at the passed index
  */
-- (jint)getItemCountForGroupWithInt:(jint)groupIndex;
+- (int32_t)getItemCountForGroupWithInt:(int32_t)groupIndex;
 
 /*!
  @brief This idea was copied from Epoxy.
@@ -138,13 +142,13 @@
   To be safe, we fallback to searching through all models for a view type match. This is slow and
   shouldn't be needed, but is a guard against RecyclerView behavior changing.
  */
-- (ADXItem *)getItemForViewTypeWithInt:(jint)viewType;
+- (ADXItem *)getItemForViewTypeWithInt:(int32_t)viewType;
 
-- (jlong)getItemIdWithInt:(jint)position;
+- (int64_t)getItemIdWithInt:(int32_t)position;
 
-- (jint)getItemViewTypeWithInt:(jint)position;
+- (int32_t)getItemViewTypeWithInt:(int32_t)position;
 
-- (jint)getSpanCount;
+- (int32_t)getSpanCount;
 
 - (ADXGridLayoutManager_SpanSizeLookup *)getSpanSizeLookup;
 
@@ -154,57 +158,57 @@
  @param position Top level group position
  @return Group at that position or throws <code>IndexOutOfBoundsException</code>
  */
-- (id<ADXRVGroup>)getTopLevelGroupWithInt:(jint)position;
+- (id<ADXRVGroup>)getTopLevelGroupWithInt:(int32_t)position;
 
 - (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ADXGroupieViewHolder *)holder
-                                               withInt:(jint)position;
+                                               withInt:(int32_t)position;
 
 - (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ADXGroupieViewHolder *)holder
-                                               withInt:(jint)position
+                                               withInt:(int32_t)position
                                       withJavaUtilList:(id<JavaUtilList>)payloads;
 
 - (void)onChangedWithADXRVGroup:(id<ADXRVGroup>)group;
 
 - (ADXGroupieViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                    withInt:(jint)viewType;
+                                                    withInt:(int32_t)viewType;
 
 - (void)onDataSetInvalidated;
 
-- (jboolean)onFailedToRecycleViewWithADXRecyclerView_ViewHolder:(ADXGroupieViewHolder *)holder;
+- (bool)onFailedToRecycleViewWithADXRecyclerView_ViewHolder:(ADXGroupieViewHolder *)holder;
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position;
+                            withInt:(int32_t)position;
 
 - (void)onItemChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position
+                            withInt:(int32_t)position
                              withId:(id)payload;
 
 - (void)onItemInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                             withInt:(jint)position;
+                             withInt:(int32_t)position;
 
 - (void)onItemMovedWithADXRVGroup:(id<ADXRVGroup>)group
-                          withInt:(jint)fromPosition
-                          withInt:(jint)toPosition;
+                          withInt:(int32_t)fromPosition
+                          withInt:(int32_t)toPosition;
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount;
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount;
 
 - (void)onItemRangeChangedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount
                                   withId:(id)payload;
 
 - (void)onItemRangeInsertedWithADXRVGroup:(id<ADXRVGroup>)group
-                                  withInt:(jint)positionStart
-                                  withInt:(jint)itemCount;
+                                  withInt:(int32_t)positionStart
+                                  withInt:(int32_t)itemCount;
 
 - (void)onItemRangeRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                                 withInt:(jint)positionStart
-                                 withInt:(jint)itemCount;
+                                 withInt:(int32_t)positionStart
+                                 withInt:(int32_t)itemCount;
 
 - (void)onItemRemovedWithADXRVGroup:(id<ADXRVGroup>)group
-                            withInt:(jint)position;
+                            withInt:(int32_t)position;
 
 - (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ADXGroupieViewHolder *)holder;
 
@@ -220,13 +224,13 @@
  @brief Remove a Group at a raw adapter position.
  @param adapterPosition raw adapter position of Group to remove.
  */
-- (void)removeGroupWithInt:(jint)adapterPosition;
+- (void)removeGroupWithInt:(int32_t)adapterPosition;
 
 /*!
  @brief Remove a Group at a raw adapter position
  @param position raw adapter position of Group to remove
  */
-- (void)removeGroupAtAdapterPositionWithInt:(jint)position;
+- (void)removeGroupAtAdapterPositionWithInt:(int32_t)position;
 
 /*!
  @brief Replaces the groups within the adapter without using DiffUtil, and therefore without animations.
@@ -249,7 +253,7 @@
  */
 - (void)setOnItemLongClickListenerWithADXOnItemLongClickListener:(id<ADXOnItemLongClickListener>)onItemLongClickListener;
 
-- (void)setSpanCountWithInt:(jint)spanCount;
+- (void)setSpanCountWithInt:(int32_t)spanCount;
 
 /*!
  @brief Updates the adapter with a new list that will be diffed on the <em>main</em> thread
@@ -267,7 +271,7 @@
                       if you don't want DiffUtil to detect moved items.
  */
 - (void)updateWithJavaUtilCollection:(id<JavaUtilCollection>)newGroups
-                         withBoolean:(jboolean)detectMoves;
+                         withBoolean:(bool)detectMoves;
 
 /*!
  @brief Updates the adapter with a new list that will be diffed on a background thread
@@ -295,7 +299,7 @@
                       if you want DiffUtil to detect moved items.
  */
 - (void)updateAsyncWithJavaUtilList:(id<JavaUtilList>)newGroups
-                        withBoolean:(jboolean)detectMoves
+                        withBoolean:(bool)detectMoves
        withADXOnAsyncUpdateListener:(id<ADXOnAsyncUpdateListener>)onAsyncUpdateListener;
 
 /*!
@@ -325,6 +329,7 @@ FOUNDATION_EXPORT ADXGroupAdapter *create_ADXGroupAdapter_init(void);
 J2OBJC_TYPE_LITERAL_HEADER(ADXGroupAdapter)
 
 @compatibility_alias ComXwrayGroupieGroupAdapter ADXGroupAdapter;
+
 
 #endif
 

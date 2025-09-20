@@ -3,6 +3,7 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\GroupieAdapter.java
 //
 
+#import <Foundation/Foundation.h>
 #include "J2ObjC_header.h"
 
 #pragma push_macro("INCLUDE_ALL_GroupieAdapter")
@@ -22,6 +23,7 @@
 
 @class ADViewGroup;
 @class ADXGroupieViewHolder;
+@class JavaLangInteger;
 
 /*!
  @brief A <code>GroupAdapter</code> that defaults to the ViewHolder type being <code>GroupieViewHolder</code>.
@@ -32,8 +34,8 @@
 
 - (instancetype)init;
 
-- (ADXGroupieViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)arg0
-                                                  withInt:(jint)arg1;
+- (ADXGroupieViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)parent
+                                                  withInt:(int32_t)viewType;
 
 @end
 
@@ -48,6 +50,7 @@ FOUNDATION_EXPORT ADXGroupieAdapter *create_ADXGroupieAdapter_init(void);
 J2OBJC_TYPE_LITERAL_HEADER(ADXGroupieAdapter)
 
 @compatibility_alias ComXwrayGroupieGroupieAdapter ADXGroupieAdapter;
+
 
 #endif
 

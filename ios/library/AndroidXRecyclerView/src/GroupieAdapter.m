@@ -3,9 +3,20 @@
 //  source: D:\Java\git\core-javafx-widget\SWTAndroidXRecyclerView\src\main\java\com\xwray\groupie\GroupieAdapter.java
 //
 
+#define J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION 1
+
+
+
+
 #include "GroupAdapter.h"
 #include "GroupieAdapter.h"
 #include "J2ObjC_source.h"
+
+
+
+
+#pragma clang diagnostic error "-Wreturn-type"
+#pragma clang diagnostic ignored "-Wswitch"
 
 
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
@@ -48,3 +59,5 @@ ADXGroupieAdapter *create_ADXGroupieAdapter_init() {
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXGroupieAdapter)
+
+J2OBJC_NAME_MAPPING(ADXGroupieAdapter, "com.xwray.groupie", "ADX")
