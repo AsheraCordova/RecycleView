@@ -1,3 +1,18 @@
+//start - license
+/*
+ * Copyright (c) 2025 Ashera Cordova
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+//end - license
 package com.ashera.recycleview;
 // start - imports
 import java.util.*;
@@ -2568,13 +2583,13 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 		]-*/
 	}
 	
-	private native void stopScrollEnd(Object scrollView) /*-[
+	private native void stopScrollEnd(Object scrollView)/*-[
 		[((UIScrollView*) scrollView) setContentOffset:((UIScrollView*) scrollView).contentOffset animated:NO];
 	]-*/;
-	private native void stopScrollStart(Object scrollView) /*-[
+	private native void stopScrollStart(Object scrollView)/*-[
 		[((UIScrollView*) scrollView) setContentOffset:CGPointZero animated:NO];
 	]-*/;
-	private native void updateContentSize(int range, Object uiView) /*-[
+	private native void updateContentSize(int range, Object uiView)/*-[
 		UIScrollView* scrollView = ((UIScrollView*) uiView);
 		
 		if ([self isHorizontal]) {
@@ -2587,7 +2602,7 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 			}
 		}
 	]-*/;
-	private native void applyTransform(Object uiView, Object view) /*-[
+	private native void applyTransform(Object uiView, Object view)/*-[
   		UIScrollView* scrollView = ((UIScrollView*) uiView);
     	[(UIView*)view setTransform:CGAffineTransformIdentity];
 
@@ -2659,11 +2674,11 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 		return oldScrollCorrect;
 	}
 
-	private native void setContentSizeWidth(int range, Object uiView) /*-[
+	private native void setContentSizeWidth(int range, Object uiView)/*-[
 		UIScrollView* scrollView = ((UIScrollView*) uiView);
 		scrollView.contentSize = CGSizeMake(range, scrollView.contentSize.height);
 	]-*/;
-	private native void setContentSizeHeight(int range, Object uiView) /*-[
+	private native void setContentSizeHeight(int range, Object uiView)/*-[
 		UIScrollView* scrollView = ((UIScrollView*) uiView);
 		scrollView.contentSize = CGSizeMake(scrollView.contentSize.width, range);
 	]-*/;
@@ -2679,18 +2694,18 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 		return isHorizontal()  ? getContentOffsetX(uiView) : getContentOffsetY(uiView);
 	}
 	
-	private native void flashScrollIndicators(Object uiView) /*-[
+	private native void flashScrollIndicators(Object uiView)/*-[
 		UIScrollView* scrollView = ((UIScrollView*) uiView);
 		[UIView animateWithDuration:0.01 animations:^ {
 	    	[scrollView flashScrollIndicators];
 			}];
 	]-*/;
 	
-	private native void setContentOffsetX(int range, Object uiView) /*-[
+	private native void setContentOffsetX(int range, Object uiView)/*-[
 		UIScrollView* scrollView = ((UIScrollView*) uiView);
 		[scrollView setContentOffset:CGPointMake(range, scrollView.contentOffset.y) animated:NO];
 	]-*/;
-	private native void setContentOffsetY(int range, Object uiView) /*-[
+	private native void setContentOffsetY(int range, Object uiView)/*-[
 		UIScrollView* scrollView = ((UIScrollView*) uiView);
 		[scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, range) animated:NO];
 	]-*/;

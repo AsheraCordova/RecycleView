@@ -1,3 +1,18 @@
+//start - license
+/*
+ * Copyright (c) 2025 Ashera Cordova
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+//end - license
 package com.xwray.groupie;
 
 import androidx.annotation.NonNull;
@@ -17,7 +32,7 @@ public class GroupieViewHolder extends RecyclerView.ViewHolder {
         public void onClick(@NonNull View v) {
             // Discard click if the viewholder has been removed, but was still in the process of
             // animating its removal while clicked (unlikely, but technically possible)
-            if (onItemClickListener != null /*&& getBindingAdapterPosition() != RecyclerView.NO_POSITION*/) {
+            if (onItemClickListener != null/*&& getBindingAdapterPosition() != RecyclerView.NO_POSITION*/) {
                 onItemClickListener.onItemClick(getItem(), v);
             }
         }
@@ -28,7 +43,7 @@ public class GroupieViewHolder extends RecyclerView.ViewHolder {
         public boolean onLongClick(@NonNull View v) {
             // Discard long click if the viewholder has been removed, but was still in the process of
             // animating its removal while long clicked (unlikely, but technically possible)
-            if (onItemLongClickListener != null /*&& getBindingAdapterPosition() != RecyclerView.NO_POSITION*/) {
+            if (onItemLongClickListener != null/*&& getBindingAdapterPosition() != RecyclerView.NO_POSITION*/) {
                 return onItemLongClickListener.onItemLongClick(getItem(), v);
             }
             return false;
