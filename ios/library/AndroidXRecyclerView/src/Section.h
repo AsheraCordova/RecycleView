@@ -145,8 +145,7 @@ withJavaUtilCollection:(id<JavaUtilCollection>)groups;
   If you don't customize getId() or isSameAs() and hasSameContentAs(), the default implementations will return false,
   meaning your Group will consider every update a complete change of everything.
  @param newBodyGroups The new content of the section
- @param detectMoves is passed to <code>DiffUtil.calculateDiff(DiffUtil.Callback, boolean)</code> . Set to false if you
-                      don't want DiffUtil to detect moved items.
+ @param detectMoves is passed to <code>DiffUtil.calculateDiff(DiffUtil.Callback, boolean)</code> . Set to false if you                     don't want DiffUtil to detect moved items.
  */
 - (void)updateWithJavaUtilCollection:(id<JavaUtilCollection>)newBodyGroups
                          withBoolean:(bool)detectMoves;

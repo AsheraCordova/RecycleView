@@ -267,8 +267,7 @@
  @brief Updates the adapter with a new list that will be diffed on the <em>main</em> thread
   and displayed once diff results are calculated.Not recommended for huge lists.
  @param newGroups List of <code>Group</code>
- @param detectMoves is passed to <code>DiffUtil.calculateDiff(DiffUtil.Callback, boolean)</code> . Set to false
-                      if you don't want DiffUtil to detect moved items.
+ @param detectMoves is passed to <code>DiffUtil.calculateDiff(DiffUtil.Callback, boolean)</code> . Set to false                     if you don't want DiffUtil to detect moved items.
  */
 - (void)updateWithJavaUtilCollection:(id<JavaUtilCollection>)newGroups
                          withBoolean:(bool)detectMoves;
@@ -295,8 +294,7 @@
   updates will no longer work and you must use this method to update exclusively.
  @param newGroups List of <code>Group</code>
  @param onAsyncUpdateListener Optional callback for when the async update is complete
- @param detectMoves Boolean is passed to <code>DiffUtil.calculateDiff(DiffUtil.Callback, boolean)</code> . Set to true
-                      if you want DiffUtil to detect moved items.
+ @param detectMoves Boolean is passed to <code>DiffUtil.calculateDiff(DiffUtil.Callback, boolean)</code> . Set to true                     if you want DiffUtil to detect moved items.
  */
 - (void)updateAsyncWithJavaUtilList:(id<JavaUtilList>)newGroups
                         withBoolean:(bool)detectMoves
