@@ -2501,6 +2501,9 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 			public void handlePanDrag(IWidget widget, Object eventWidget, int x, int y) {
 				int selection = getSelection();
 				
+				if (!recyclerView.isEnabled()) {
+					return;
+				}
 				if (selection == 0) {
 					overScrollTop = true;
 					
@@ -2531,7 +2534,28 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 			}
 			
 		});
+		
+		fragment.getEventBus().on("scrollEnabled", new com.ashera.widget.bus.EventBusHandler("scrollEnabled") {
+			@Override
+			protected void doPerform(Object payload) {
+				if (payload == Boolean.TRUE) {
+					recyclerView.setEnabled(true);
+					scrollEnabled(uiView, true);
+				} else {
+					recyclerView.setEnabled(false);
+					scrollEnabled(uiView, false);
+				}
+			}
+			
+		});
 	}
+	
+	private native void scrollEnabled(Object uiView, boolean scrollEnabled)/*-[
+		ASUIScrollView* scrollView = (ASUIScrollView*) uiView;
+		if (scrollView.scrollEnabled != scrollEnabled) {
+    		scrollView.scrollEnabled=scrollEnabled;
+    	}
+	]-*/;
     public native Object createView()/*-[
 		ASUIView* uiView = [ASUIView new];
 		uiView.userInteractionEnabled=YES;
