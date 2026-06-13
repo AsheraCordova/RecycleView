@@ -219,20 +219,22 @@ dragDropMode          | Can be one of these: swaponhighlight (Swap widgets when 
 dragResetHighlightAttributes | Style attributes that needs to be applied to Target/source item when unselected.Style attributes that needs to be applied to Target/source item when unselected.
 dragSelectHighlightAttributes | Style attributes that needs to be applied to Target/source item when unselected.Style attributes that needs to be applied to Target/source item when selected.
 dragStartMode        | Can be one of these: onclick (Start drag on click) longpress (Start drag on long press)
-dragSwapMode         | Can be one of these:notifyItemMoved (Call notifyItemMoved on drop) notifyDataSetChanged (Call notifyDataSetChanged on drop)
+dragSwapMode         | Can be one of these when ListAdapter is used:notifyItemMoved (Call notifyItemMoved on drop) notifyDataSetChanged (Call notifyDataSetChanged on drop). 
 onMove 	             | Call back to javascript when onMove is called.
 onMoved 	           | Call back to javascript when onMoved is called. 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 
 onSelectedChanged 	 | Call back to javascript when onSelectedChanged is called.
 
 ## Swipe
-The following attributes enable drag and drop.
+The following attributes enable swipe.
 
 Name                	| Description
 -------------       	| -------------
 swipeDirs             | Direction of swipe e.g none|up|down|left|right
 onSwiped 	            | Call back to javascript when onSwiped is called. 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	  	 
-deleteOnSwipe         | Delete on swipe.
-swipeSwapMode         |  Can be one of these:notifyItemRemoved (Call notifyItemRemoved on drop) notifyDataSetChanged (Call notifyDataSetChanged on drop)
+deleteOnSwipe         | Enable delete on swipe.
+swipeSwapMode         |  Can be one of these when ListAdapter is used:notifyItemRemoved (Call notifyItemRemoved on drop) notifyDataSetChanged (Call notifyDataSetChanged on drop)
+
+To enable/disable drag and drop in groupie adapter for header, footer and item, swipeDirs/dragDirs/dragAcrossSections has been add to the xml.
 
 ## Recycler View as GridView.
 Recycler view can be configured as grid view with no scroll.
