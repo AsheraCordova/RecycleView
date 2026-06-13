@@ -1,6 +1,39 @@
 // start - imports
 
-	
+export const enum DragDirs {
+none = "none",
+up = "up",
+down = "down",
+left = "left",
+right = "right",
+}
+export const enum SwipeDirs {
+none = "none",
+up = "up",
+down = "down",
+left = "left",
+right = "right",
+}
+export const enum DragDropMode {
+none = "none",
+swaponhighlight = "swaponhighlight",
+swapwhendropped = "swapwhendropped",
+}
+export const enum DragStartMode {
+none = "none",
+longpress = "longpress",
+onclick = "onclick",
+}
+export const enum DragSwapMode {
+none = "none",
+notifyDataSetChanged = "notifyDataSetChanged",
+notifyItemMoved = "notifyItemMoved",
+}
+export const enum SwipeSwapMode {
+none = "none",
+notifyDataSetChanged = "notifyDataSetChanged",
+notifyItemRemoved = "notifyItemRemoved",
+}	
 import CommandAttr from '../../widget/CommandAttr';
 import IWidget from '../../widget/IWidget';
 import ILayoutParam from '../../widget/ILayoutParam';
@@ -70,6 +103,89 @@ item!:any;
 
 
 
+export class DragDirsTransformer implements ITranform {
+    transform(value: any, obj: any, type: number) : any{
+        if (type == 1) {
+            return value.toString().replace(",", "|");
+        } else {
+            let strArray:Array<string> = value.toString().split("|");
+            
+            let valueArr:Array<DragDirs> = new Array<DragDirs>();
+            for (let i =0; i < strArray.length; i++) {
+                switch(strArray[i]) {
+					case "none":
+						valueArr.push(DragDirs.none);
+                       	break;	
+					case "up":
+						valueArr.push(DragDirs.up);
+                       	break;	
+					case "down":
+						valueArr.push(DragDirs.down);
+                       	break;	
+					case "left":
+						valueArr.push(DragDirs.left);
+                       	break;	
+					case "right":
+						valueArr.push(DragDirs.right);
+                       	break;	
+                }
+                
+            }
+            return valueArr;
+        }
+    }
+}
+
+export class SwipeDirsTransformer implements ITranform {
+    transform(value: any, obj: any, type: number) : any{
+        if (type == 1) {
+            return value.toString().replace(",", "|");
+        } else {
+            let strArray:Array<string> = value.toString().split("|");
+            
+            let valueArr:Array<SwipeDirs> = new Array<SwipeDirs>();
+            for (let i =0; i < strArray.length; i++) {
+                switch(strArray[i]) {
+					case "none":
+						valueArr.push(SwipeDirs.none);
+                       	break;	
+					case "up":
+						valueArr.push(SwipeDirs.up);
+                       	break;	
+					case "down":
+						valueArr.push(SwipeDirs.down);
+                       	break;	
+					case "left":
+						valueArr.push(SwipeDirs.left);
+                       	break;	
+					case "right":
+						valueArr.push(SwipeDirs.right);
+                       	break;	
+                }
+                
+            }
+            return valueArr;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import {ViewGroupImpl_LayoutParams} from './ViewGroupImpl';
 
 // end - imports
@@ -77,6 +193,8 @@ import {ViewGroupImpl} from './ViewGroupImpl';
 export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 	//start - body
 	static initialize() {
+		TransformerFactory.getInstance().register("dragDirs", new DragDirsTransformer());
+		TransformerFactory.getInstance().register("swipeDirs", new SwipeDirsTransformer());
     }	
 	@decorate(Type(() => CommandAttr))
 	@decorate(Expose({ name: "layoutManager" }))
@@ -142,6 +260,63 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 	@decorate(Expose({ name: "filterQueryGetPath" }))
 	filterQueryGetPath!:CommandAttr<string>| undefined;
 	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "fixedgrid_rowCount" }))
+	fixedgrid_rowCount!:CommandAttr<number>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "fixedgrid_columnCount" }))
+	fixedgrid_columnCount!:CommandAttr<number>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "fixedgrid_tileWidth" }))
+	fixedgrid_tileWidth!:CommandAttr<number>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "fixedgrid_tileHeight" }))
+	fixedgrid_tileHeight!:CommandAttr<number>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "disableItemAnimator" }))
+	disableItemAnimator_!:CommandAttr<void>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "hasFixedSize" }))
+	hasFixedSize!:CommandAttr<boolean>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "dragDirs" }))
+	dragDirs!:CommandAttr<DragDirs[]>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "swipeDirs" }))
+	swipeDirs!:CommandAttr<SwipeDirs[]>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "dragDropMode" }))
+	dragDropMode!:CommandAttr<DragDropMode>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "dragStartMode" }))
+	dragStartMode!:CommandAttr<DragStartMode>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "dragSwapMode" }))
+	dragSwapMode!:CommandAttr<DragSwapMode>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "dragSelectHighlightAttributes" }))
+	dragSelectHighlightAttributes!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "dragResetHighlightAttributes" }))
+	dragResetHighlightAttributes!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "swipeSwapMode" }))
+	swipeSwapMode!:CommandAttr<SwipeSwapMode>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "deleteOnSwipe" }))
+	deleteOnSwipe!:CommandAttr<boolean>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "onSwiped" }))
+	onSwiped!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "onMove" }))
+	onMove!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "onMoved" }))
+	onMoved!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
+	@decorate(Expose({ name: "onSelectedChanged" }))
+	onSelectedChanged!:CommandAttr<string>| undefined;
+	@decorate(Type(() => CommandAttr))
 	@decorate(Expose({ name: "swtIncrement" }))
 	swtIncrement!:CommandAttr<number>| undefined;
 	@decorate(Type(() => CommandAttr))
@@ -186,6 +361,25 @@ export abstract class RecyclerViewImpl<T> extends ViewGroupImpl<T>{
 		this.filterSectionPath = undefined;
 		this.filterQueryStorePath = undefined;
 		this.filterQueryGetPath = undefined;
+		this.fixedgrid_rowCount = undefined;
+		this.fixedgrid_columnCount = undefined;
+		this.fixedgrid_tileWidth = undefined;
+		this.fixedgrid_tileHeight = undefined;
+		this.disableItemAnimator_ = undefined;
+		this.hasFixedSize = undefined;
+		this.dragDirs = undefined;
+		this.swipeDirs = undefined;
+		this.dragDropMode = undefined;
+		this.dragStartMode = undefined;
+		this.dragSwapMode = undefined;
+		this.dragSelectHighlightAttributes = undefined;
+		this.dragResetHighlightAttributes = undefined;
+		this.swipeSwapMode = undefined;
+		this.deleteOnSwipe = undefined;
+		this.onSwiped = undefined;
+		this.onMove = undefined;
+		this.onMoved = undefined;
+		this.onSelectedChanged = undefined;
 		this.swtIncrement = undefined;
 		this.nestedScrollStopDelay = undefined;
 		this.onScrollStateChange = undefined;
@@ -554,6 +748,272 @@ item : any) : T {
 	}
 		
 
+	public setFixedgrid_rowCount(value : number) : T {
+		this.resetIfRequired();
+		if (this.fixedgrid_rowCount == null || this.fixedgrid_rowCount == undefined) {
+			this.fixedgrid_rowCount = new CommandAttr<number>();
+		}
+		
+		this.fixedgrid_rowCount.setSetter(true);
+		this.fixedgrid_rowCount.setValue(value);
+		this.orderSet++;
+		this.fixedgrid_rowCount.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setFixedgrid_columnCount(value : number) : T {
+		this.resetIfRequired();
+		if (this.fixedgrid_columnCount == null || this.fixedgrid_columnCount == undefined) {
+			this.fixedgrid_columnCount = new CommandAttr<number>();
+		}
+		
+		this.fixedgrid_columnCount.setSetter(true);
+		this.fixedgrid_columnCount.setValue(value);
+		this.orderSet++;
+		this.fixedgrid_columnCount.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setFixedgrid_tileWidth(value : number) : T {
+		this.resetIfRequired();
+		if (this.fixedgrid_tileWidth == null || this.fixedgrid_tileWidth == undefined) {
+			this.fixedgrid_tileWidth = new CommandAttr<number>();
+		}
+		
+		this.fixedgrid_tileWidth.setSetter(true);
+		this.fixedgrid_tileWidth.setValue(value);
+		this.orderSet++;
+		this.fixedgrid_tileWidth.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setFixedgrid_tileHeight(value : number) : T {
+		this.resetIfRequired();
+		if (this.fixedgrid_tileHeight == null || this.fixedgrid_tileHeight == undefined) {
+			this.fixedgrid_tileHeight = new CommandAttr<number>();
+		}
+		
+		this.fixedgrid_tileHeight.setSetter(true);
+		this.fixedgrid_tileHeight.setValue(value);
+		this.orderSet++;
+		this.fixedgrid_tileHeight.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public disableItemAnimator() : T {
+		this.resetIfRequired();
+		if (this.disableItemAnimator_ == null || this.disableItemAnimator_ == undefined) {
+			this.disableItemAnimator_ = new CommandAttr<void>();
+		}
+		
+		this.disableItemAnimator_.setSetter(true);
+		
+		this.orderSet++;
+		this.disableItemAnimator_.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setHasFixedSize(value : boolean) : T {
+		this.resetIfRequired();
+		if (this.hasFixedSize == null || this.hasFixedSize == undefined) {
+			this.hasFixedSize = new CommandAttr<boolean>();
+		}
+		
+		this.hasFixedSize.setSetter(true);
+		this.hasFixedSize.setValue(value);
+		this.orderSet++;
+		this.hasFixedSize.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setDragDirs(...value : DragDirs[]) : T {
+		this.resetIfRequired();
+		if (this.dragDirs == null || this.dragDirs == undefined) {
+			this.dragDirs = new CommandAttr<DragDirs[]>();
+		}
+		
+		this.dragDirs.setSetter(true);
+		this.dragDirs.setValue(value);
+		this.orderSet++;
+		this.dragDirs.setOrderSet(this.orderSet);
+this.dragDirs.setTransformer('dragDirs');		return this.thisPointer;
+	}
+		
+
+	public setSwipeDirs(...value : SwipeDirs[]) : T {
+		this.resetIfRequired();
+		if (this.swipeDirs == null || this.swipeDirs == undefined) {
+			this.swipeDirs = new CommandAttr<SwipeDirs[]>();
+		}
+		
+		this.swipeDirs.setSetter(true);
+		this.swipeDirs.setValue(value);
+		this.orderSet++;
+		this.swipeDirs.setOrderSet(this.orderSet);
+this.swipeDirs.setTransformer('swipeDirs');		return this.thisPointer;
+	}
+		
+
+	public setDragDropMode(value : DragDropMode) : T {
+		this.resetIfRequired();
+		if (this.dragDropMode == null || this.dragDropMode == undefined) {
+			this.dragDropMode = new CommandAttr<DragDropMode>();
+		}
+		
+		this.dragDropMode.setSetter(true);
+		this.dragDropMode.setValue(value);
+		this.orderSet++;
+		this.dragDropMode.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setDragStartMode(value : DragStartMode) : T {
+		this.resetIfRequired();
+		if (this.dragStartMode == null || this.dragStartMode == undefined) {
+			this.dragStartMode = new CommandAttr<DragStartMode>();
+		}
+		
+		this.dragStartMode.setSetter(true);
+		this.dragStartMode.setValue(value);
+		this.orderSet++;
+		this.dragStartMode.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setDragSwapMode(value : DragSwapMode) : T {
+		this.resetIfRequired();
+		if (this.dragSwapMode == null || this.dragSwapMode == undefined) {
+			this.dragSwapMode = new CommandAttr<DragSwapMode>();
+		}
+		
+		this.dragSwapMode.setSetter(true);
+		this.dragSwapMode.setValue(value);
+		this.orderSet++;
+		this.dragSwapMode.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setDragSelectHighlightAttributes(value : string) : T {
+		this.resetIfRequired();
+		if (this.dragSelectHighlightAttributes == null || this.dragSelectHighlightAttributes == undefined) {
+			this.dragSelectHighlightAttributes = new CommandAttr<string>();
+		}
+		
+		this.dragSelectHighlightAttributes.setSetter(true);
+		this.dragSelectHighlightAttributes.setValue(value);
+		this.orderSet++;
+		this.dragSelectHighlightAttributes.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setDragResetHighlightAttributes(value : string) : T {
+		this.resetIfRequired();
+		if (this.dragResetHighlightAttributes == null || this.dragResetHighlightAttributes == undefined) {
+			this.dragResetHighlightAttributes = new CommandAttr<string>();
+		}
+		
+		this.dragResetHighlightAttributes.setSetter(true);
+		this.dragResetHighlightAttributes.setValue(value);
+		this.orderSet++;
+		this.dragResetHighlightAttributes.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setSwipeSwapMode(value : SwipeSwapMode) : T {
+		this.resetIfRequired();
+		if (this.swipeSwapMode == null || this.swipeSwapMode == undefined) {
+			this.swipeSwapMode = new CommandAttr<SwipeSwapMode>();
+		}
+		
+		this.swipeSwapMode.setSetter(true);
+		this.swipeSwapMode.setValue(value);
+		this.orderSet++;
+		this.swipeSwapMode.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setDeleteOnSwipe(value : boolean) : T {
+		this.resetIfRequired();
+		if (this.deleteOnSwipe == null || this.deleteOnSwipe == undefined) {
+			this.deleteOnSwipe = new CommandAttr<boolean>();
+		}
+		
+		this.deleteOnSwipe.setSetter(true);
+		this.deleteOnSwipe.setValue(value);
+		this.orderSet++;
+		this.deleteOnSwipe.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setOnSwiped(value : string) : T {
+		this.resetIfRequired();
+		if (this.onSwiped == null || this.onSwiped == undefined) {
+			this.onSwiped = new CommandAttr<string>();
+		}
+		
+		this.onSwiped.setSetter(true);
+		this.onSwiped.setValue(value);
+		this.orderSet++;
+		this.onSwiped.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setOnMove(value : string) : T {
+		this.resetIfRequired();
+		if (this.onMove == null || this.onMove == undefined) {
+			this.onMove = new CommandAttr<string>();
+		}
+		
+		this.onMove.setSetter(true);
+		this.onMove.setValue(value);
+		this.orderSet++;
+		this.onMove.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setOnMoved(value : string) : T {
+		this.resetIfRequired();
+		if (this.onMoved == null || this.onMoved == undefined) {
+			this.onMoved = new CommandAttr<string>();
+		}
+		
+		this.onMoved.setSetter(true);
+		this.onMoved.setValue(value);
+		this.orderSet++;
+		this.onMoved.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
+	public setOnSelectedChanged(value : string) : T {
+		this.resetIfRequired();
+		if (this.onSelectedChanged == null || this.onSelectedChanged == undefined) {
+			this.onSelectedChanged = new CommandAttr<string>();
+		}
+		
+		this.onSelectedChanged.setSetter(true);
+		this.onSelectedChanged.setValue(value);
+		this.orderSet++;
+		this.onSelectedChanged.setOrderSet(this.orderSet);
+		return this.thisPointer;
+	}
+		
+
 	public setSwtIncrement(value : number) : T {
 		this.resetIfRequired();
 		if (this.swtIncrement == null || this.swtIncrement == undefined) {
@@ -658,5 +1118,141 @@ export class RecyclerView extends RecyclerViewImpl<RecyclerView> implements IWid
 }
 
 RecyclerViewImpl.initialize();
+export interface OnSwipedEvent extends Event{
+        //viewHolder:ViewHolder;
+
+	        direction:number;
+
+}
+export interface OnMoveEvent extends Event{
+        //recyclerView:RecyclerView;
+
+        //viewHolder:ViewHolder;
+
+        //target:ViewHolder;
+
+
+}
+export interface OnMovedEvent extends Event{
+        //recyclerView:RecyclerView;
+
+        //viewHolder:ViewHolder;
+
+	        fromPos:number;
+        //target:ViewHolder;
+
+	        toPos:number;
+	        x:number;
+	        y:number;
+
+}
+export interface OnSelectedChangedEvent extends Event{
+        //viewHolder:ViewHolder;
+
+	        actionState:number;
+
+}
+export interface OnSwipedEvent extends Event{
+        //viewHolder:ViewHolder;
+
+	        direction:number;
+
+}
+export interface OnMoveEvent extends Event{
+        //recyclerView:RecyclerView;
+
+        //viewHolder:ViewHolder;
+
+        //target:ViewHolder;
+
+
+}
+export interface OnMovedEvent extends Event{
+        //recyclerView:RecyclerView;
+
+        //viewHolder:ViewHolder;
+
+	        fromPos:number;
+        //target:ViewHolder;
+
+	        toPos:number;
+	        x:number;
+	        y:number;
+
+}
+export interface OnSelectedChangedEvent extends Event{
+        //viewHolder:ViewHolder;
+
+	        actionState:number;
+
+}
+export interface OnSwipedEvent extends Event{
+        //viewHolder:ViewHolder;
+
+	        direction:number;
+
+}
+export interface OnMoveEvent extends Event{
+        //recyclerView:RecyclerView;
+
+        //viewHolder:ViewHolder;
+
+        //target:ViewHolder;
+
+
+}
+export interface OnMovedEvent extends Event{
+        //recyclerView:RecyclerView;
+
+        //viewHolder:ViewHolder;
+
+	        fromPos:number;
+        //target:ViewHolder;
+
+	        toPos:number;
+	        x:number;
+	        y:number;
+
+}
+export interface OnSelectedChangedEvent extends Event{
+        //viewHolder:ViewHolder;
+
+	        actionState:number;
+
+}
+export interface OnSwipedEvent extends Event{
+        //viewHolder:ViewHolder;
+
+	        direction:number;
+
+}
+export interface OnMoveEvent extends Event{
+        //recyclerView:RecyclerView;
+
+        //viewHolder:ViewHolder;
+
+        //target:ViewHolder;
+
+
+}
+export interface OnMovedEvent extends Event{
+        //recyclerView:RecyclerView;
+
+        //viewHolder:ViewHolder;
+
+	        fromPos:number;
+        //target:ViewHolder;
+
+	        toPos:number;
+	        x:number;
+	        y:number;
+
+}
+export interface OnSelectedChangedEvent extends Event{
+        //viewHolder:ViewHolder;
+
+	        actionState:number;
+
+}
 
 //end - staticinit

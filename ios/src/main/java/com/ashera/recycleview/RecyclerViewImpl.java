@@ -47,8 +47,8 @@ import androidx.core.view.*;
 import static com.ashera.widget.IWidget.*;
 //end - imports
 import androidx.recyclerview.widget.*;
-import androidx.recyclerview.widget.RecyclerView.LayoutManager;
-
+import androidx.recyclerview.widget.ItemTouchHelper.Callback;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 /*-[
 #include "ASUIScrollView.h"
 ]-*/
@@ -63,6 +63,118 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 	
 
 	
+		@SuppressLint("NewApi")
+		final static class DragDirs  extends AbstractBitFlagConverter{
+		private Map<String, Integer> mapping = new HashMap<>();
+				{
+				mapping.put("none", 0x0);
+				mapping.put("up", 0x1);
+				mapping.put("down", 0x2);
+				mapping.put("left", 0x4);
+				mapping.put("right", 0x8);
+				}
+		@Override
+		public Map<String, Integer> getMapping() {
+				return mapping;
+				}
+
+		@Override
+		public Integer getDefault() {
+				return 0;
+				}
+				}
+		@SuppressLint("NewApi")
+		final static class SwipeDirs  extends AbstractBitFlagConverter{
+		private Map<String, Integer> mapping = new HashMap<>();
+				{
+				mapping.put("none", 0x0);
+				mapping.put("up", 0x1);
+				mapping.put("down", 0x2);
+				mapping.put("left", 0x4);
+				mapping.put("right", 0x8);
+				}
+		@Override
+		public Map<String, Integer> getMapping() {
+				return mapping;
+				}
+
+		@Override
+		public Integer getDefault() {
+				return 0;
+				}
+				}
+		@SuppressLint("NewApi")
+		final static class DragDropMode extends AbstractEnumToIntConverter{
+		private Map<String, Integer> mapping = new HashMap<>();
+				{
+				mapping.put("none",  0x0);
+				mapping.put("swaponhighlight",  0x1);
+				mapping.put("swapwhendropped",  0x2);
+				}
+		@Override
+		public Map<String, Integer> getMapping() {
+				return mapping;
+				}
+
+		@Override
+		public Integer getDefault() {
+				return 0;
+				}
+				}
+		@SuppressLint("NewApi")
+		final static class DragStartMode extends AbstractEnumToIntConverter{
+		private Map<String, Integer> mapping = new HashMap<>();
+				{
+				mapping.put("none",  0x0);
+				mapping.put("longpress",  0x1);
+				mapping.put("onclick",  0x2);
+				}
+		@Override
+		public Map<String, Integer> getMapping() {
+				return mapping;
+				}
+
+		@Override
+		public Integer getDefault() {
+				return 0;
+				}
+				}
+		@SuppressLint("NewApi")
+		final static class DragSwapMode extends AbstractEnumToIntConverter{
+		private Map<String, Integer> mapping = new HashMap<>();
+				{
+				mapping.put("none",  0x0);
+				mapping.put("notifyDataSetChanged",  0x1);
+				mapping.put("notifyItemMoved",  0x2);
+				}
+		@Override
+		public Map<String, Integer> getMapping() {
+				return mapping;
+				}
+
+		@Override
+		public Integer getDefault() {
+				return 0;
+				}
+				}
+		@SuppressLint("NewApi")
+		final static class SwipeSwapMode extends AbstractEnumToIntConverter{
+		private Map<String, Integer> mapping = new HashMap<>();
+				{
+				mapping.put("none",  0x0);
+				mapping.put("notifyDataSetChanged",  0x1);
+				mapping.put("notifyItemRemoved",  0x2);
+				}
+		@Override
+		public Map<String, Integer> getMapping() {
+				return mapping;
+				}
+
+		@Override
+		public Integer getDefault() {
+				return 0;
+				}
+				}
 		@SuppressLint("NewApi")
 		final static class Orientation extends AbstractEnumToIntConverter{
 		private Map<String, Integer> mapping = new HashMap<>();
@@ -105,6 +217,31 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("filterSectionPath").withType("array").withOrder(-10));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("filterQueryStorePath").withType("string").withOrder(-10));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("filterQueryGetPath").withType("string").withOrder(-10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("fixedgrid_rowCount").withType("int").withOrder(-10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("fixedgrid_columnCount").withType("int").withOrder(-10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("fixedgrid_tileWidth").withType("int").withOrder(-10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("fixedgrid_tileHeight").withType("int").withOrder(-10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("disableItemAnimator").withType("nil"));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("hasFixedSize").withType("boolean"));
+		ConverterFactory.register("androidx.recyclerview.widget.RecyclerView.dragDirs", new DragDirs());
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("dragDirs").withType("androidx.recyclerview.widget.RecyclerView.dragDirs").withOrder(-10));
+		ConverterFactory.register("androidx.recyclerview.widget.RecyclerView.swipeDirs", new SwipeDirs());
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("swipeDirs").withType("androidx.recyclerview.widget.RecyclerView.swipeDirs").withOrder(-10));
+		ConverterFactory.register("androidx.recyclerview.widget.RecyclerView.dragDropMode", new DragDropMode());
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("dragDropMode").withType("androidx.recyclerview.widget.RecyclerView.dragDropMode").withOrder(10));
+		ConverterFactory.register("androidx.recyclerview.widget.RecyclerView.dragStartMode", new DragStartMode());
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("dragStartMode").withType("androidx.recyclerview.widget.RecyclerView.dragStartMode").withOrder(10));
+		ConverterFactory.register("androidx.recyclerview.widget.RecyclerView.dragSwapMode", new DragSwapMode());
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("dragSwapMode").withType("androidx.recyclerview.widget.RecyclerView.dragSwapMode").withOrder(10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("dragSelectHighlightAttributes").withType("resourcestring").withOrder(10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("dragResetHighlightAttributes").withType("resourcestring").withOrder(10));
+		ConverterFactory.register("androidx.recyclerview.widget.RecyclerView.swipeSwapMode", new SwipeSwapMode());
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("swipeSwapMode").withType("androidx.recyclerview.widget.RecyclerView.swipeSwapMode").withOrder(10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("deleteOnSwipe").withType("boolean").withOrder(10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("onSwiped").withType("string").withOrder(10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("onMove").withType("string").withOrder(10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("onMoved").withType("string").withOrder(10));
+		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("onSelectedChanged").withType("string").withOrder(10));
 		ConverterFactory.register("androidx.recyclerview.widget.RecyclerView.orientation", new Orientation());
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("orientation").withType("androidx.recyclerview.widget.RecyclerView.orientation").withOrder(-1));
 		WidgetFactory.registerAttribute(localName, new WidgetAttribute.Builder().withName("onScrollStateChange").withType("string"));
@@ -275,6 +412,11 @@ public class RecyclerViewImpl extends BaseHasWidgets {
 		
 		@Override
 		public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+			if (isCustomMeasure()) {
+				int[] wh = RecyclerViewImpl.this.customMeasure(widthMeasureSpec, heightMeasureSpec);
+				super.onMeasure(wh[0], wh[1]);
+				return;
+			}
 
 			if(mMaxWidth > 0) {
 	        	widthMeasureSpec = MeasureSpec.makeMeasureSpec(mMaxWidth, MeasureSpec.AT_MOST);
@@ -767,6 +909,177 @@ if (objValue instanceof java.util.List) {
 
 			}
 			break;
+			case "fixedgrid_rowCount": {
+
+
+		 setFixedgridRowCount(objValue);
+
+
+
+			}
+			break;
+			case "fixedgrid_columnCount": {
+
+
+		 setFixedgridColumnCount(objValue);
+
+
+
+			}
+			break;
+			case "fixedgrid_tileWidth": {
+
+
+		 setFixedgridTileWidth(objValue);
+
+
+
+			}
+			break;
+			case "fixedgrid_tileHeight": {
+
+
+		 setFixedgridTileHeight(objValue);
+
+
+
+			}
+			break;
+			case "disableItemAnimator": {
+
+
+		 disableItemAnimator();
+
+
+
+			}
+			break;
+			case "hasFixedSize": {
+
+
+		 setHasFixedSize(objValue);
+
+
+
+			}
+			break;
+			case "dragDirs": {
+
+
+		setDragDirs(objValue);
+
+
+
+			}
+			break;
+			case "swipeDirs": {
+
+
+		setSwipeDirs(objValue);
+
+
+
+			}
+			break;
+			case "dragDropMode": {
+
+
+		setDragDropMode(strValue, objValue);
+
+
+
+			}
+			break;
+			case "dragStartMode": {
+
+
+		setDragStartMode(strValue, objValue);
+
+
+
+			}
+			break;
+			case "dragSwapMode": {
+
+
+		setSwapMode(strValue, objValue);
+
+
+
+			}
+			break;
+			case "dragSelectHighlightAttributes": {
+
+
+		 setSelectHighlightAttributes(objValue);
+
+
+
+			}
+			break;
+			case "dragResetHighlightAttributes": {
+
+
+		 setResetHighlightAttributes(objValue);
+
+
+
+			}
+			break;
+			case "swipeSwapMode": {
+
+
+		setSwipeSwapMode(strValue, objValue);
+
+
+
+			}
+			break;
+			case "deleteOnSwipe": {
+
+
+		 setDeleteOnSwipe(objValue);
+
+
+
+			}
+			break;
+			case "onSwiped": {
+
+
+		if (objValue instanceof String) {setonSwiped(strValue);} else {setonSwiped((MyItemTouchHelper.MyCallback) objValue);}
+
+
+
+			}
+			break;
+			case "onMove": {
+
+
+		if (objValue instanceof String) {setOnMove(strValue);} else {setOnMove((MyItemTouchHelper.MyCallback) objValue);}
+
+
+
+			}
+			break;
+			case "onMoved": {
+
+
+		if (objValue instanceof String) {setOnMoved(strValue);} else {setOnMoved((MyItemTouchHelper.MyCallback) objValue);}
+
+
+
+			}
+			break;
+			case "onSelectedChanged": {
+
+
+		if (objValue instanceof String) {setOnSelectedChanged(strValue);} else {setOnSelectedChanged((MyItemTouchHelper.MyCallback) objValue);}
+
+
+
+			}
+			break;
 			case "orientation": {
 
 
@@ -1145,11 +1458,66 @@ return isReverseLayout();			}
 		adapter.setHasStableIds(true);
 		recyclerView.setAdapter(adapter);
 		recyclerView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(recyclerView.getContext()));
-		
 		initScrollBars();
 	}
-	
-	public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
+
+	public class ListAdapter extends RecyclerView.Adapter<MyViewHolder> implements ItemActionHandler {
+		@Override
+		public boolean isDragEnabled(ViewHolder viewHolder) {
+			return viewHolder.getItemViewType() == 0;
+		}
+
+		@Override
+		public void onItemMove(int fromPosition, int toPosition, String mode) {
+			int fromItem = adapterPositionToItemIndex(fromPosition);
+			int toItem = adapterPositionToItemIndex(toPosition);
+			Collections.swap(dataList, fromItem, toItem);
+			Collections.swap(ids, fromItem, toItem);
+			
+			if (mode != null) {
+				switch (mode) {
+				case "notifyDataSetChanged":
+					notifyDataSetChanged();
+					break;
+				case "notifyItemMoved":
+					notifyItemMoved(fromPosition, toPosition);
+					break;
+				default:
+					break;
+				}
+			}
+
+		}
+		
+		private int adapterPositionToItemIndex(int index) {
+			if (headerTemplate != null && !headerDisabled) {
+				return index - 1;
+			}
+			
+			return index;
+		}
+
+		@Override
+		public void onItemRemove(int position, String mode) {
+			int itemIndex = adapterPositionToItemIndex(position);
+            ids.remove(itemIndex);
+            dataList.remove(itemIndex);
+            
+            if (mode != null) {
+	            switch (mode) {
+				case "notifyDataSetChanged":
+					notifyDataSetChanged();
+					break;
+				case "notifyItemRemoved":
+					notifyItemRemoved(position);
+					break;
+				default:
+					break;
+				}
+            } else {
+            	notifyItemRemoved(position);
+            }
+		}
 		@Override
 		public long getItemId(int position) {
 			if (isHeader(position) || isFooter(position)) {
@@ -1166,15 +1534,15 @@ return isReverseLayout();			}
 		}
 		
 		@Override
-		public void onViewAttachedToWindow(ViewHolder holder) {
+		public void onViewAttachedToWindow(MyViewHolder holder) {
 			super.onViewAttachedToWindow(holder);
 			holder.itemView.setVisibility(View.VISIBLE);
 		}
 		
 		@Override
-		public void onViewDetachedFromWindow(ViewHolder holder) {
+		public void onViewDetachedFromWindow(MyViewHolder holder) {
 			super.onViewDetachedFromWindow(holder);
-			holder.itemView.setVisibility(View.GONE);
+			holder.itemView.setVisibility(View.INVISIBLE);
 		}
 
 		@Override
@@ -1199,7 +1567,7 @@ return isReverseLayout();			}
 		}
 
 		@Override
-		public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 			IWidget listItem = null;
 			List<String> viewHolderIds;
 			
@@ -1222,12 +1590,13 @@ return isReverseLayout();			}
 			
 			setItemViewParams(widget, itemView);
 
-			ViewHolder viewHolder = new ViewHolder(widget, itemView, viewHolderIds);
+			MyViewHolder viewHolder = new MyViewHolder(widget, itemView, viewHolderIds);
+			addStartDrag(viewHolder);
 			return viewHolder;
 		}
-	
+
 		@Override
-		public void onBindViewHolder(ViewHolder viewHolder, int position) {
+		public void onBindViewHolder(MyViewHolder viewHolder, int position) {
 			if (isHeader(position) || isFooter(position)) {
 				setAttributeOnViewHolder(viewHolder.widgetViewHolder, ( com.ashera.model.LoopParam) null);
 				return;
@@ -1249,12 +1618,22 @@ return isReverseLayout();			}
 			}
 			return size;
 		}
+
+		@Override
+		public int getSwipeDirs(ViewHolder viewHolder) {
+			return -1;
+		}
+
+		@Override
+		public int getDragDirs(ViewHolder viewHolder) {
+			return -1;
+		}
 	}
 	
 
-	public class ViewHolder extends RecyclerView.ViewHolder {
+	public class MyViewHolder extends RecyclerView.ViewHolder {
 		WidgetViewHolder widgetViewHolder;
-		public ViewHolder(IWidget widget, View itemView, List<String> viewHolderIds) {
+		public MyViewHolder(IWidget widget, View itemView, List<String> viewHolderIds) {
 			super(itemView);
 
 			if (viewHolderIds != null) {
@@ -1266,6 +1645,11 @@ return isReverseLayout();			}
 		String layoutManager = (String) objValue;
 		
 		switch (layoutManager) {
+			case "com.ashera.recycleview.FixedGridViewManager": {
+				FixedGridViewManager gridLayoutManager = new FixedGridViewManager(fixedGridRowCount, fixedGridColumnCount);
+				recyclerView.setLayoutManager(gridLayoutManager);
+				break;
+			}
 		case "androidx.recyclerview.widget.GridLayoutManager": {
 				GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), spanCount);
 				recyclerView.setLayoutManager(gridLayoutManager);
@@ -1611,7 +1995,22 @@ return isReverseLayout();			}
 		if (itemMap.containsKey("@gridInsets")) {
 			margin = (int) quickConvert(itemMap.get("@gridInsets"), CommonConverters.dimension);
 		}
-
+		
+		int swipeDirs = -1;
+		if (itemMap.containsKey("@swipeDirs")) {
+			swipeDirs = (int) quickConvert(itemMap.get("@swipeDirs"), "androidx.recyclerview.widget.RecyclerView.swipeDirs");
+		}
+		
+		int dragDirs = -1;
+		if (itemMap.containsKey("@dragDirs")) {
+			dragDirs = (int) quickConvert(itemMap.get("@dragDirs"), "androidx.recyclerview.widget.RecyclerView.dragDirs");
+		}
+		
+		boolean dragAcrossSections = false;
+		
+		if (itemMap.containsKey("@dragAcrossSections")) {
+			dragAcrossSections = (boolean) quickConvert(itemMap.get("@dragAcrossSections"), "boolean");
+		}
 		if (itemMap.containsKey("@modelFor")) {
 			String modelFor = PluginInvoker.getString(itemMap.get("@modelFor"));
 			com.ashera.model.ModelExpressionParser.ModelLoopHolder modelLoopHolder = com.ashera.model.ModelExpressionParser.parseModelLoopExpression(modelFor);
@@ -1636,9 +2035,12 @@ return isReverseLayout();			}
 						if (filterData(model)) {
 							com.ashera.model.LoopParam loopParam = new com.ashera.model.LoopParam();
 							storeModelToScope(modelLoopHolder.varName, modelLoopHolder.varScope, model, loopParam);
-							GenericItem item = new GenericItem(layout.toString(), template, loopParam, viewHolderIds);
+							GenericItem item = new GenericItem(layout.toString(), template, loopParam, viewHolderIds, section);
 							item.setNumberOfColums(numberOfColumns);
+							item.setDragDirs(dragDirs);
+							item.setSwipeDirs(swipeDirs);
 							item.setMargin(margin);
+							item.setDragAcrossSections(dragAcrossSections);
 							section.add(item);
 						}
 					}
@@ -1649,9 +2051,12 @@ return isReverseLayout();			}
 						obj = changeModelDataType(modelLoopHolder.dataType, obj);
 						com.ashera.model.LoopParam loopParam = new com.ashera.model.LoopParam();
 						storeModelToScope(modelLoopHolder.varName, modelLoopHolder.varScope, obj, loopParam);
-						GenericItem item = new GenericItem(layout.toString(), template, loopParam, viewHolderIds);
+						GenericItem item = new GenericItem(layout.toString(), template, loopParam, viewHolderIds, section);
 						item.setNumberOfColums(numberOfColumns);
+						item.setDragDirs(dragDirs);
+						item.setSwipeDirs(swipeDirs);
 						item.setMargin(margin);
+						item.setDragAcrossSections(dragAcrossSections);
 						section.add(item);
 					}
 				}
@@ -1674,15 +2079,21 @@ return isReverseLayout();			}
 					storeModelToScope(modelVarHolder.varName, modelVarHolder.varScope, obj, loopParam);
 				}
 				
-				GenericItem item = new GenericItem(layout.toString(), template, loopParam, viewHolderIds);
+				GenericItem item = new GenericItem(layout.toString(), template, loopParam, viewHolderIds, section);
 				item.setNumberOfColums(numberOfColumns);
+				item.setDragDirs(dragDirs);
+				item.setSwipeDirs(swipeDirs);
 				item.setMargin(margin);
+				item.setDragAcrossSections(dragAcrossSections);
 				section.add(item);
 			}
 		} else {
-			GenericItem item = new GenericItem(layout.toString(), template, pLoopParam, viewHolderIds);
+			GenericItem item = new GenericItem(layout.toString(), template, pLoopParam, viewHolderIds, section);
 			item.setNumberOfColums(numberOfColumns);
+			item.setDragDirs(dragDirs);
+			item.setSwipeDirs(swipeDirs);
 			item.setMargin(margin);
+			item.setDragAcrossSections(dragAcrossSections);
 			section.add(item);
 		}
 	}
@@ -1699,7 +2110,26 @@ return isReverseLayout();			}
 				viewHolderIds = (List<String>) quickConvert(viewHolderId, CommonConverters.array, "list", null);
 			}
 
-			section.setFooter(new GenericItem(layout.toString(), template, loopParam, viewHolderIds));
+			int swipeDirs = -1;
+			if (footerMap.containsKey("@swipeDirs")) {
+				swipeDirs = (int) quickConvert(footerMap.get("@swipeDirs"), "androidx.recyclerview.widget.RecyclerView.swipeDirs");
+			}
+			
+			int dragDirs = -1;
+			if (footerMap.containsKey("@dragDirs")) {
+				dragDirs = (int) quickConvert(footerMap.get("@dragDirs"), "androidx.recyclerview.widget.RecyclerView.dragDirs");
+			}
+			
+			boolean dragAcrossSections = false;
+			
+			if (footerMap.containsKey("@dragAcrossSections")) {
+				dragAcrossSections = (boolean) quickConvert(footerMap.get("@dragAcrossSections"), "boolean");
+			}
+			GenericItem footer = new GenericItem(layout.toString(), template, loopParam, viewHolderIds, section);
+			footer.setDragDirs(dragDirs);
+			footer.setSwipeDirs(swipeDirs);
+			footer.setDragAcrossSections(dragAcrossSections);
+			section.setFooter(footer);
 		}
 	}
 
@@ -1714,7 +2144,26 @@ return isReverseLayout();			}
 			if (viewHolderId != null) {
 				viewHolderIds = (List<String>) quickConvert(viewHolderId, CommonConverters.array, "list", null);
 			}
-			section.setHeader(new GenericItem(layout.toString(), template, loopParam, viewHolderIds));
+			
+			int swipeDirs = -1;
+			if (headerMap.containsKey("@swipeDirs")) {
+				swipeDirs = (int) quickConvert(headerMap.get("@swipeDirs"), "androidx.recyclerview.widget.RecyclerView.swipeDirs");
+			}
+			
+			int dragDirs = -1;
+			if (headerMap.containsKey("@dragDirs")) {
+				dragDirs = (int) quickConvert(headerMap.get("@dragDirs"), "androidx.recyclerview.widget.RecyclerView.dragDirs");
+			}
+			
+			boolean dragAcrossSections = false;
+			if (headerMap.containsKey("@dragAcrossSections")) {
+				dragAcrossSections = (boolean) quickConvert(headerMap.get("@dragAcrossSections"), "boolean");
+			}
+			GenericItem header = new GenericItem(layout.toString(), template, loopParam, viewHolderIds, section);
+			header.setDragDirs(dragDirs);
+			header.setSwipeDirs(swipeDirs);
+			header.setDragAcrossSections(dragAcrossSections);
+			section.setHeader(header);
 		}
 	}
 
@@ -1749,7 +2198,7 @@ return isReverseLayout();			}
 		private com.xwray.groupie.ExpandableGroup expandableGroup;
 		private List<String> onClickIds;
 		public GenericExpandableItem(String layout, IWidget template, com.ashera.model.LoopParam loopParam, List<String> viewHolderIds, List<String> onClickIds) {
-			super(layout, template, loopParam, viewHolderIds);
+			super(layout, template, loopParam, viewHolderIds, null);
 			this.onClickIds = onClickIds;
 		}
 
@@ -1786,10 +2235,35 @@ return isReverseLayout();			}
 		private com.ashera.model.LoopParam loopParam;
 		private List<String> viewHolderIds;
 		private String layout;
+		private com.xwray.groupie.Section section;
 		private int margin;
 		private boolean modified;
 		int numberOfColums = 1;
+		private int dragDirs = -1;
+		private int swipeDirs = -1;
+		private boolean dragAcrossSections;
 		
+		public boolean isDragAcrossSections() {
+			return dragAcrossSections;
+		}
+		public void setDragAcrossSections(boolean dragAcrossSections) {
+			this.dragAcrossSections = dragAcrossSections;
+		}
+		@Override
+		public int getDragDirs() {
+			return dragDirs;
+		}
+		public void setDragDirs(int dragDirs) {
+			this.dragDirs = dragDirs;
+		}
+		
+		@Override
+		public int getSwipeDirs() {
+			return swipeDirs;
+		}
+		public void setSwipeDirs(int swipeDirs) {
+			this.swipeDirs = swipeDirs;
+		}
 		public boolean isModified() {
 			return modified;
 		}
@@ -1813,11 +2287,12 @@ return isReverseLayout();			}
 			this.margin = margin;
 		}
 
-		public GenericItem(String layout, IWidget template, com.ashera.model.LoopParam loopParam, List<String> viewHolderIds) {
+		public GenericItem(String layout, IWidget template, com.ashera.model.LoopParam loopParam, List<String> viewHolderIds, com.xwray.groupie.Section section) {
 			this.template = template;
 			this.loopParam = loopParam;
 			this.layout = layout;
 			this.viewHolderIds = viewHolderIds;
+			this.section = section;
 		}
 
 		public List<String> getViewHolderIds() {
@@ -1843,10 +2318,110 @@ return isReverseLayout();			}
 			return template;
 		}
 		
+		public com.xwray.groupie.Section getSection() {
+			return section;
+		}
+		
+		public void setSection(com.xwray.groupie.Section section) {
+			this.section = section;
+		}
 	}
 	
-	public class GroupieAdapter extends com.xwray.groupie.GroupAdapter<GroupieViewHolder> {
+	public class GroupieAdapter extends com.xwray.groupie.GroupAdapter<GroupieViewHolder> implements ItemActionHandler {
+		@Override
+		public int getSwipeDirs(ViewHolder viewHolder) {
+			if (viewHolder instanceof GroupieViewHolder) {
+				return ((GroupieViewHolder) viewHolder).getSwipeDirs();
+			}
+			return -1;
+		}
 
+		@Override
+		public int getDragDirs(ViewHolder viewHolder) {
+			if (viewHolder instanceof GroupieViewHolder) {
+				return ((GroupieViewHolder) viewHolder).getDragDirs();
+			}
+			return -1;
+		}
+		@Override
+		public void onItemMove(int fromPosition, int toPosition, String mode) {
+			com.xwray.groupie.Item<GroupieViewHolder> item = getItem(fromPosition);
+			com.xwray.groupie.Item<GroupieViewHolder> targetItem = getItem(toPosition);
+			
+			if (item instanceof GenericItem && targetItem instanceof GenericItem) {
+				GenericItem genericItem = (GenericItem)item;
+				GenericItem targetGenericItem = (GenericItem)targetItem;
+				
+				if (genericItem.getLayout() == targetGenericItem.getLayout()) {
+					com.xwray.groupie.Section section = genericItem.getSection();
+					com.xwray.groupie.Section dragSection = targetGenericItem.getSection();
+	
+					if (dragSection != null && section == dragSection) {
+						List<com.xwray.groupie.RVGroup> dragItems = section.getGroups();
+			            int targetIndex = dragItems.indexOf(targetItem);
+			            dragItems.remove(item);
+		
+			            // if item gets moved out of the boundary
+			            if (targetIndex == -1) {
+			                if (toPosition < fromPosition) {
+			                    targetIndex = 0;
+			                } else {
+			                    targetIndex = dragItems.size() - 1;
+			                }
+			            }
+			            
+			            dragItems.add(targetIndex, item);
+			            dragSection.update(dragItems);
+					} else {
+						if (genericItem.isDragAcrossSections() && section != null && dragSection != null && section != dragSection) {
+
+						    List<com.xwray.groupie.RVGroup> sourceItems =
+						            new ArrayList<>(section.getGroups());
+
+						    List<com.xwray.groupie.RVGroup> targetItems =
+						            new ArrayList<>(dragSection.getGroups());
+
+						    int sourceIndex = sourceItems.indexOf(item);
+						    int targetIndex = targetItems.indexOf(targetItem);
+
+						    if (sourceIndex == -1 || targetIndex == -1) {
+						        return;
+						    }
+
+						    sourceItems.remove(sourceIndex);
+
+						    targetItems.add(targetIndex, item);
+						    genericItem.setSection(dragSection);
+
+						    section.update(sourceItems);
+						    dragSection.update(targetItems);
+						}
+					}
+				}
+			}
+		}
+
+		@Override
+		public void onItemRemove(int position, String mode) {
+			com.xwray.groupie.Item<GroupieViewHolder> item = getItem(position);
+			if (item instanceof GenericItem) {
+				 GenericItem genericItem = (GenericItem)item;
+				 com.xwray.groupie.Section section = genericItem.getSection();
+				 section.remove(item);
+			 }
+		}
+
+		@Override
+		public boolean isDragEnabled(ViewHolder viewHolder) {
+			 com.xwray.groupie.Item<GroupieViewHolder> item = getItem(viewHolder.getAdapterPosition());
+			 
+			 if (item instanceof GenericItem) {
+				 GenericItem genericItem = (GenericItem) item;
+				 com.xwray.groupie.Section section = genericItem.getSection();
+				 return section != null;
+			 }
+			return false;
+		}
 		@Override
 		public void onViewAttachedToWindow(GroupieViewHolder holder) {
 			super.onViewAttachedToWindow(holder);
@@ -1856,7 +2431,7 @@ return isReverseLayout();			}
 		@Override
 		public void onViewDetachedFromWindow(GroupieViewHolder holder) {
 			super.onViewDetachedFromWindow(holder);
-			holder.itemView.setVisibility(View.GONE);
+			holder.itemView.setVisibility(View.INVISIBLE);
 		}
 
 		@Override
@@ -2224,6 +2799,211 @@ return isReverseLayout();			}
 		}
 	}
 	
+	private int fixedGridRowCount;
+	private int fixedGridColumnCount;
+
+	private int fixedGridTileWidth;
+	private int fixedGridTileHeight;
+	private int dragDirs = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+	private int swipeDirs = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+
+	private boolean isCustomMeasure() {
+		return isFixedGridViewManager();
+	}
+	
+	private int[] customMeasure(int widthSpec, int heightSpec) {
+		return measureFixedGridViewManager(widthSpec, heightSpec);
+	}
+
+	private boolean isFixedGridViewManager() {
+		return recyclerView.getLayoutManager() instanceof FixedGridViewManager;
+	}
+
+	private int[] measureFixedGridViewManager(int widthSpec, int heightSpec) {
+		int parentWidth = MeasureSpec.getSize(widthSpec);
+		int parentHeight = MeasureSpec.getSize(heightSpec);
+
+		float imageWidth = fixedGridTileWidth * fixedGridColumnCount;
+		float imageHeight = fixedGridTileHeight * fixedGridRowCount;
+
+		float ratio = imageWidth / imageHeight;
+
+		boolean isLandscape =
+				parentWidth > parentHeight;
+
+		int finalWidth;
+		int finalHeight;
+
+		if (isLandscape) {
+
+			// Fit height
+			finalHeight = parentHeight;
+
+			finalWidth = (int)(finalHeight * ratio);
+
+		} else {
+
+			// Fit width
+			finalWidth = parentWidth;
+
+			finalHeight = (int)(finalWidth / ratio);
+		}
+
+		int w = MeasureSpec.makeMeasureSpec(
+				finalWidth,
+				MeasureSpec.EXACTLY
+		);
+
+		int h = MeasureSpec.makeMeasureSpec(
+				finalHeight,
+				MeasureSpec.EXACTLY
+		);
+
+		return new int []{
+				w, h
+		};
+	}
+
+	private ItemTouchHelper itemTouchHelper;
+	private GenericTouchHelperSimpleCallback touchHelperSimpleCallback;
+	private void setDragDropMode(String strValue, Object objValue) {
+		initTouchHelperSimpleCallback();
+		touchHelperSimpleCallback.setDragmode(strValue);
+	}
+
+	private void initTouchHelperSimpleCallback() {
+		if (touchHelperSimpleCallback == null) {
+			touchHelperSimpleCallback = new GenericTouchHelperSimpleCallback(adapter, dragDirs, swipeDirs);	
+			itemTouchHelper = createItemTouchHelper();
+			itemTouchHelper.attachToRecyclerView(recyclerView);
+		}
+	}
+
+	private void setFixedgridTileHeight(Object objValue) {
+		fixedGridTileHeight = (int) objValue;
+	}
+
+	private void setFixedgridTileWidth(Object objValue) {
+		fixedGridTileWidth = (int) objValue;
+	}
+
+	private void setFixedgridColumnCount(Object objValue) {
+		fixedGridColumnCount = (int) objValue;
+	}
+
+	private void setFixedgridRowCount(Object objValue) {
+		fixedGridRowCount = (int) objValue;
+	}
+	
+	private void setResetHighlightAttributes(Object objValue) {
+		initTouchHelperSimpleCallback();
+		touchHelperSimpleCallback.setResetHighlightAttributes((String) objValue);
+	}
+
+	private void setSelectHighlightAttributes(Object objValue) {
+		initTouchHelperSimpleCallback();
+		touchHelperSimpleCallback.setSelectHighlightAttributes((String) objValue);
+	}
+
+	private void setSwapMode(String strValue, Object objValue) {
+		initTouchHelperSimpleCallback();
+		touchHelperSimpleCallback.setSwapMode(strValue);
+	}
+
+	private void setDragStartMode(String strValue, Object objValue) {
+		initTouchHelperSimpleCallback();
+		touchHelperSimpleCallback.setDragStartMode(strValue);
+	}
+	
+	private void setHasFixedSize(Object objValue) {
+		recyclerView.setHasFixedSize((boolean) objValue);
+	}
+
+	private void disableItemAnimator() {
+		recyclerView.setItemAnimator(null);
+	}
+	
+	private void setSwipeSwapMode(String strValue, Object objValue) {
+		initTouchHelperSimpleCallback();
+		touchHelperSimpleCallback.setSwipeSwapMode(strValue);
+	}
+	
+	private void setDeleteOnSwipe(Object objValue) {
+		initTouchHelperSimpleCallback();
+		touchHelperSimpleCallback.setDeleteOnSwipe((boolean) objValue);
+	}
+	
+	
+
+	private void setonSwiped(String strValue) {
+		initTouchHelperSimpleCallback();
+		MyCallback mycallback = new MyCallback(this, strValue, "onSwipe");
+		touchHelperSimpleCallback.setSwipeListener(mycallback);
+	}
+
+
+	private void setOnMoved(String strValue) {
+		initTouchHelperSimpleCallback();
+		MyCallback mycallback = new MyCallback(this, strValue, "onMoved");
+		touchHelperSimpleCallback.setOnMovedListener(mycallback);
+	}
+
+	private void setOnMove(String strValue) {
+		initTouchHelperSimpleCallback();
+		MyCallback mycallback = new MyCallback(this, strValue, "onMove");
+		touchHelperSimpleCallback.setOnMoveListener(mycallback);
+	}
+
+	private void setOnSelectedChanged(String strValue) {
+		initTouchHelperSimpleCallback();
+		MyCallback mycallback = new MyCallback(this, strValue, "onSelectedChanged");
+		touchHelperSimpleCallback.setOnSelectedChangedListener(mycallback);
+	}
+
+
+	private void setonSwiped(MyItemTouchHelper.MyCallback  objValue) {
+		initTouchHelperSimpleCallback();
+		touchHelperSimpleCallback.setSwipeListener(objValue);
+	}
+	
+	private void setOnMoved(com.ashera.recycleview.MyItemTouchHelper.MyCallback objValue) {
+		initTouchHelperSimpleCallback();
+		touchHelperSimpleCallback.setOnMovedListener(objValue);
+	}
+
+	private void setOnMove(com.ashera.recycleview.MyItemTouchHelper.MyCallback objValue) {
+		initTouchHelperSimpleCallback();
+		touchHelperSimpleCallback.setOnMoveListener(objValue);
+	}
+	
+	private void setOnSelectedChanged(com.ashera.recycleview.MyItemTouchHelper.MyCallback objValue) {
+		initTouchHelperSimpleCallback();
+		touchHelperSimpleCallback.setOnSelectedChangedListener(objValue);
+	}
+
+	
+	
+	private void setSwipeDirs(Object objValue) {
+		swipeDirs = (int) objValue;
+	}
+
+	private void setDragDirs(Object objValue) {
+		dragDirs = (int) objValue;
+	}
+    
+
+	private static void addEventInfoTargetViewHolder(Map<String, Object> obj, ViewHolder target) {
+		if (target != null) {
+			obj.put("targetViewHolderAdapterPoition", target.getAdapterPosition());
+		}
+	}
+
+	private static void addEventInfoViewHolder(Map<String, Object> obj, ViewHolder viewHolder) {
+		if (viewHolder != null) {
+			obj.put("viewHolderAdapterPoition", viewHolder.getAdapterPosition());
+		}
+	}
+	
 
 	
 	private String query;
@@ -2309,6 +3089,271 @@ return isReverseLayout();			}
 		
 	}
 		
+
+	@SuppressLint("NewApi")
+private static class MyCallback implements MyItemTouchHelper.MyCallback, com.ashera.widget.IListener{
+private IWidget w; private View view; private String strValue; private String action;
+public String getAction() {return action;}
+public MyCallback(IWidget w, String strValue)  {
+this.w = w; this.strValue = strValue;
+}
+public MyCallback(IWidget w, String strValue, String action)  {
+this.w = w; this.strValue = strValue;this.action=action;
+}
+public void onSwiped(ViewHolder viewHolder, int direction){
+    
+	if (action == null || action.equals("onSwiped")) {
+		// populate the data from ui to pojo
+		w.syncModelFromUiToPojo("onSwiped");
+	    java.util.Map<String, Object> obj = getOnSwipedEventObj(viewHolder,direction);
+	    String commandName =  (String) obj.get(EventExpressionParser.KEY_COMMAND_NAME);
+	    
+	    // execute command based on command type
+	    String commandType = (String)obj.get(EventExpressionParser.KEY_COMMAND_TYPE);
+		switch (commandType) {
+		case "+":
+		    if (EventCommandFactory.hasCommand(commandName)) {
+		    	 EventCommandFactory.getCommand(commandName).executeCommand(w, obj, viewHolder,direction);
+		    }
+
+			break;
+		default:
+			break;
+		}
+		
+		if (obj.containsKey("refreshUiFromModel")) {
+			Object widgets = obj.remove("refreshUiFromModel");
+			com.ashera.layout.ViewImpl.refreshUiFromModel(w, widgets, true);
+		}
+		if (w.getModelUiToPojoEventIds() != null) {
+			com.ashera.layout.ViewImpl.refreshUiFromModel(w, w.getModelUiToPojoEventIds(), true);
+		}
+		if (strValue != null && !strValue.isEmpty() && !strValue.trim().startsWith("+")) {
+		    com.ashera.core.IActivity activity = (com.ashera.core.IActivity)w.getFragment().getRootActivity();
+		    if (activity != null) {
+		    	activity.sendEventMessage(obj);
+		    }
+		}
+	}
+    return;
+}//#####
+
+public java.util.Map<String, Object> getOnSwipedEventObj(ViewHolder viewHolder,int direction) {
+	java.util.Map<String, Object> obj = com.ashera.widget.PluginInvoker.getJSONCompatMap();
+    obj.put("action", "action");
+    obj.put("eventType", "swiped");
+    obj.put("fragmentId", w.getFragment().getFragmentId());
+    obj.put("actionUrl", w.getFragment().getActionUrl());
+    obj.put("namespace", w.getFragment().getNamespace());
+    
+    if (w.getComponentId() != null) {
+    	obj.put("componentId", w.getComponentId());
+    }
+    
+    PluginInvoker.putJSONSafeObjectIntoMap(obj, "id", w.getId());
+     
+        RecyclerViewImpl.addEventInfoViewHolder(obj, viewHolder);
+        PluginInvoker.putJSONSafeObjectIntoMap(obj, "direction", direction);
+    
+    // parse event info into the map
+    EventExpressionParser.parseEventExpression(strValue, obj);
+    
+    // update model data into map
+    w.updateModelToEventMap(obj, "onSwiped", (String)obj.get(EventExpressionParser.KEY_EVENT_ARGS));
+    return obj;
+}public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target){
+    boolean result = true;
+    
+	if (action == null || action.equals("onMove")) {
+		// populate the data from ui to pojo
+		w.syncModelFromUiToPojo("onMove");
+	    java.util.Map<String, Object> obj = getOnMoveEventObj(recyclerView,viewHolder,target);
+	    String commandName =  (String) obj.get(EventExpressionParser.KEY_COMMAND_NAME);
+	    
+	    // execute command based on command type
+	    String commandType = (String)obj.get(EventExpressionParser.KEY_COMMAND_TYPE);
+		switch (commandType) {
+		case "+":
+		    if (EventCommandFactory.hasCommand(commandName)) {
+		    	 Object commandResult = EventCommandFactory.getCommand(commandName).executeCommand(w, obj, recyclerView,viewHolder,target);
+		    	 if (commandResult != null) {
+		    		 result = (boolean) commandResult;
+		    	 }
+		    }
+
+			break;
+		default:
+			break;
+		}
+		
+		if (obj.containsKey("refreshUiFromModel")) {
+			Object widgets = obj.remove("refreshUiFromModel");
+			com.ashera.layout.ViewImpl.refreshUiFromModel(w, widgets, true);
+		}
+		if (w.getModelUiToPojoEventIds() != null) {
+			com.ashera.layout.ViewImpl.refreshUiFromModel(w, w.getModelUiToPojoEventIds(), true);
+		}
+		if (strValue != null && !strValue.isEmpty() && !strValue.trim().startsWith("+")) {
+		    com.ashera.core.IActivity activity = (com.ashera.core.IActivity)w.getFragment().getRootActivity();
+		    if (activity != null) {
+		    	activity.sendEventMessage(obj);
+		    }
+		}
+	}
+    return result;
+}//#####
+
+public java.util.Map<String, Object> getOnMoveEventObj(RecyclerView recyclerView,ViewHolder viewHolder,ViewHolder target) {
+	java.util.Map<String, Object> obj = com.ashera.widget.PluginInvoker.getJSONCompatMap();
+    obj.put("action", "action");
+    obj.put("eventType", "move");
+    obj.put("fragmentId", w.getFragment().getFragmentId());
+    obj.put("actionUrl", w.getFragment().getActionUrl());
+    obj.put("namespace", w.getFragment().getNamespace());
+    
+    if (w.getComponentId() != null) {
+    	obj.put("componentId", w.getComponentId());
+    }
+    
+    PluginInvoker.putJSONSafeObjectIntoMap(obj, "id", w.getId());
+     
+        RecyclerViewImpl.addEventInfoViewHolder(obj, viewHolder);
+        RecyclerViewImpl.addEventInfoTargetViewHolder(obj, target);
+    
+    // parse event info into the map
+    EventExpressionParser.parseEventExpression(strValue, obj);
+    
+    // update model data into map
+    w.updateModelToEventMap(obj, "onMove", (String)obj.get(EventExpressionParser.KEY_EVENT_ARGS));
+    return obj;
+}public void onMoved(RecyclerView recyclerView, ViewHolder viewHolder, int fromPos, ViewHolder target, int toPos, int x, int y){
+    
+	if (action == null || action.equals("onMoved")) {
+		// populate the data from ui to pojo
+		w.syncModelFromUiToPojo("onMoved");
+	    java.util.Map<String, Object> obj = getOnMovedEventObj(recyclerView,viewHolder,fromPos,target,toPos,x,y);
+	    String commandName =  (String) obj.get(EventExpressionParser.KEY_COMMAND_NAME);
+	    
+	    // execute command based on command type
+	    String commandType = (String)obj.get(EventExpressionParser.KEY_COMMAND_TYPE);
+		switch (commandType) {
+		case "+":
+		    if (EventCommandFactory.hasCommand(commandName)) {
+		    	 EventCommandFactory.getCommand(commandName).executeCommand(w, obj, recyclerView,viewHolder,fromPos,target,toPos,x,y);
+		    }
+
+			break;
+		default:
+			break;
+		}
+		
+		if (obj.containsKey("refreshUiFromModel")) {
+			Object widgets = obj.remove("refreshUiFromModel");
+			com.ashera.layout.ViewImpl.refreshUiFromModel(w, widgets, true);
+		}
+		if (w.getModelUiToPojoEventIds() != null) {
+			com.ashera.layout.ViewImpl.refreshUiFromModel(w, w.getModelUiToPojoEventIds(), true);
+		}
+		if (strValue != null && !strValue.isEmpty() && !strValue.trim().startsWith("+")) {
+		    com.ashera.core.IActivity activity = (com.ashera.core.IActivity)w.getFragment().getRootActivity();
+		    if (activity != null) {
+		    	activity.sendEventMessage(obj);
+		    }
+		}
+	}
+    return;
+}//#####
+
+public java.util.Map<String, Object> getOnMovedEventObj(RecyclerView recyclerView,ViewHolder viewHolder,int fromPos,ViewHolder target,int toPos,int x,int y) {
+	java.util.Map<String, Object> obj = com.ashera.widget.PluginInvoker.getJSONCompatMap();
+    obj.put("action", "action");
+    obj.put("eventType", "moved");
+    obj.put("fragmentId", w.getFragment().getFragmentId());
+    obj.put("actionUrl", w.getFragment().getActionUrl());
+    obj.put("namespace", w.getFragment().getNamespace());
+    
+    if (w.getComponentId() != null) {
+    	obj.put("componentId", w.getComponentId());
+    }
+    
+    PluginInvoker.putJSONSafeObjectIntoMap(obj, "id", w.getId());
+     
+        RecyclerViewImpl.addEventInfoViewHolder(obj, viewHolder);
+        PluginInvoker.putJSONSafeObjectIntoMap(obj, "fromPos", fromPos);
+        RecyclerViewImpl.addEventInfoTargetViewHolder(obj, target);
+        PluginInvoker.putJSONSafeObjectIntoMap(obj, "toPos", toPos);
+        PluginInvoker.putJSONSafeObjectIntoMap(obj, "x", x);
+        PluginInvoker.putJSONSafeObjectIntoMap(obj, "y", y);
+    
+    // parse event info into the map
+    EventExpressionParser.parseEventExpression(strValue, obj);
+    
+    // update model data into map
+    w.updateModelToEventMap(obj, "onMoved", (String)obj.get(EventExpressionParser.KEY_EVENT_ARGS));
+    return obj;
+}public void onSelectedChanged(ViewHolder viewHolder, int actionState){
+    
+	if (action == null || action.equals("onSelectedChanged")) {
+		// populate the data from ui to pojo
+		w.syncModelFromUiToPojo("onSelectedChanged");
+	    java.util.Map<String, Object> obj = getOnSelectedChangedEventObj(viewHolder,actionState);
+	    String commandName =  (String) obj.get(EventExpressionParser.KEY_COMMAND_NAME);
+	    
+	    // execute command based on command type
+	    String commandType = (String)obj.get(EventExpressionParser.KEY_COMMAND_TYPE);
+		switch (commandType) {
+		case "+":
+		    if (EventCommandFactory.hasCommand(commandName)) {
+		    	 EventCommandFactory.getCommand(commandName).executeCommand(w, obj, viewHolder,actionState);
+		    }
+
+			break;
+		default:
+			break;
+		}
+		
+		if (obj.containsKey("refreshUiFromModel")) {
+			Object widgets = obj.remove("refreshUiFromModel");
+			com.ashera.layout.ViewImpl.refreshUiFromModel(w, widgets, true);
+		}
+		if (w.getModelUiToPojoEventIds() != null) {
+			com.ashera.layout.ViewImpl.refreshUiFromModel(w, w.getModelUiToPojoEventIds(), true);
+		}
+		if (strValue != null && !strValue.isEmpty() && !strValue.trim().startsWith("+")) {
+		    com.ashera.core.IActivity activity = (com.ashera.core.IActivity)w.getFragment().getRootActivity();
+		    if (activity != null) {
+		    	activity.sendEventMessage(obj);
+		    }
+		}
+	}
+    return;
+}//#####
+
+public java.util.Map<String, Object> getOnSelectedChangedEventObj(ViewHolder viewHolder,int actionState) {
+	java.util.Map<String, Object> obj = com.ashera.widget.PluginInvoker.getJSONCompatMap();
+    obj.put("action", "action");
+    obj.put("eventType", "selectedchanged");
+    obj.put("fragmentId", w.getFragment().getFragmentId());
+    obj.put("actionUrl", w.getFragment().getActionUrl());
+    obj.put("namespace", w.getFragment().getNamespace());
+    
+    if (w.getComponentId() != null) {
+    	obj.put("componentId", w.getComponentId());
+    }
+    
+    PluginInvoker.putJSONSafeObjectIntoMap(obj, "id", w.getId());
+     
+        RecyclerViewImpl.addEventInfoViewHolder(obj, viewHolder);
+        PluginInvoker.putJSONSafeObjectIntoMap(obj, "actionState", actionState);
+    
+    // parse event info into the map
+    EventExpressionParser.parseEventExpression(strValue, obj);
+    
+    // update model data into map
+    w.updateModelToEventMap(obj, "onSelectedChanged", (String)obj.get(EventExpressionParser.KEY_EVENT_ARGS));
+    return obj;
+}
+}
 
 	@SuppressLint("NewApi")
 private static class OnScrollListener extends RecyclerView.OnScrollListener implements com.ashera.widget.IListener{
@@ -2487,7 +3532,7 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 		ViewImpl.addPanListener(this, uiView, new ViewImpl.PanCallBack() {
 			
 			@Override
-			public void handlePanStart(IWidget widget, Object eventWidget, int x, int y) {
+			public void handlePanStart(IWidget widget, Object eventWidget, int x, int y, int rawX, int rawY) {
 				if (isHorizontal()) {
 					oldOverScroll = x;
 				} else {
@@ -2498,7 +3543,7 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 			}
 
 			@Override
-			public void handlePanDrag(IWidget widget, Object eventWidget, int x, int y) {
+			public void handlePanDrag(IWidget widget, Object eventWidget, int x, int y, int rawX, int rawY) {
 				int selection = getSelection();
 				
 				if (!recyclerView.isEnabled()) {
@@ -2530,7 +3575,7 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 			}
 
 			@Override
-			public void handlePanEnd(IWidget widget, Object eventWidget, int x, int y) {
+			public void handlePanEnd(IWidget widget, Object eventWidget, int x, int y, int rawX, int rawY) {
 			}
 			
 		});
@@ -2852,5 +3897,43 @@ public java.util.Map<String, Object> getOnScrollStateChangeEventObj(RecyclerView
 				}
 			}
 		}
-	}	
+	}
+	
+	private void addStartDrag(MyViewHolder viewHolder) {
+	}
+
+
+	private ItemTouchHelper createItemTouchHelper() {
+		ItemTouchHelper itemTouchHelper = new CustomItemTouchHelper(touchHelperSimpleCallback);
+		return itemTouchHelper;
+	}
+	
+	@com.google.j2objc.annotations.WeakOuter
+	private final class CustomItemTouchHelper extends ItemTouchHelper {
+		private CustomItemTouchHelper(Callback callback) {
+			super(callback);
+		}
+
+		@Override
+		public void select(androidx.recyclerview.widget.RecyclerView.ViewHolder selected, int actionState) {
+			if (actionState == ItemTouchHelper.ACTION_STATE_DRAG || actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+				recyclerView.setEnabled(false);
+				scrollEnabled(uiView, false);
+			} else {
+				scrollEnabled(uiView, true);
+				recyclerView.setEnabled(true);
+			}
+			super.select(selected, actionState);
+		}
+
+		@Override
+		public boolean isScrolling() {
+			return nativeIsScrolling(uiView);
+		}
+		
+		private native boolean nativeIsScrolling(Object uiView)/*-[
+			ASUIScrollView* scrollView = (ASUIScrollView*) uiView;
+			return scrollView.dragging || scrollView.decelerating;
+		]-*/;
+	}
 }

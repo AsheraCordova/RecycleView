@@ -8,6 +8,7 @@
 
 
 
+#include "AbstractBitFlagConverter.h"
 #include "AbstractEnumToIntConverter.h"
 #include "BaseHasWidgets.h"
 #include "CommonConverters.h"
@@ -20,6 +21,8 @@
 #include "EventExpressionParser.h"
 #include "ExpandableGroup.h"
 #include "FilterFactory.h"
+#include "FixedGridViewManager.h"
+#include "GenericTouchHelperSimpleCallback.h"
 #include "GridLayoutManager.h"
 #include "GroupAdapter.h"
 #include "GroupieViewHolder.h"
@@ -38,6 +41,7 @@
 #include "IWidgetLifeCycleListener.h"
 #include "InsetItemDecoration.h"
 #include "Item.h"
+#include "ItemTouchHelper.h"
 #include "J2ObjC_source.h"
 #include "LayoutTransition.h"
 #include "LinearLayoutManager.h"
@@ -46,8 +50,10 @@
 #include "ModelDataType.h"
 #include "ModelExpressionParser.h"
 #include "ModelScope.h"
+#include "MyItemTouchHelper.h"
 #include "OnLayoutEvent.h"
 #include "PluginInvoker.h"
+#include "RVGroup.h"
 #include "Rect.h"
 #include "RecyclerView.h"
 #include "RecyclerViewImpl.h"
@@ -74,6 +80,7 @@
 #include "java/lang/System.h"
 #include "java/lang/UnsupportedOperationException.h"
 #include "java/util/ArrayList.h"
+#include "java/util/Collections.h"
 #include "java/util/HashMap.h"
 #include "java/util/List.h"
 #include "java/util/Map.h"
@@ -121,6 +128,14 @@
   id<JavaUtilMap> itemConfigMap_;
   bool headerDisabled_;
   bool footerDisabled_;
+  int32_t fixedGridRowCount_;
+  int32_t fixedGridColumnCount_;
+  int32_t fixedGridTileWidth_;
+  int32_t fixedGridTileHeight_;
+  int32_t dragDirs_;
+  int32_t swipeDirs_;
+  ADXItemTouchHelper *itemTouchHelper_;
+  ASGenericTouchHelperSimpleCallback *touchHelperSimpleCallback_;
   NSString *query_;
   int32_t filterDelay_;
   ADHandler *handler_;
@@ -272,6 +287,74 @@
 
 - (void)setHeaderDisabledWithId:(id)objValue;
 
+- (bool)isCustomMeasure;
+
+- (IOSIntArray *)customMeasureWithInt:(int32_t)widthSpec
+                              withInt:(int32_t)heightSpec;
+
+- (bool)isFixedGridViewManager;
+
+- (IOSIntArray *)measureFixedGridViewManagerWithInt:(int32_t)widthSpec
+                                            withInt:(int32_t)heightSpec;
+
+- (void)setDragDropModeWithNSString:(NSString *)strValue
+                             withId:(id)objValue;
+
+- (void)initTouchHelperSimpleCallback OBJC_METHOD_FAMILY_NONE;
+
+- (void)setFixedgridTileHeightWithId:(id)objValue;
+
+- (void)setFixedgridTileWidthWithId:(id)objValue;
+
+- (void)setFixedgridColumnCountWithId:(id)objValue;
+
+- (void)setFixedgridRowCountWithId:(id)objValue;
+
+- (void)setResetHighlightAttributesWithId:(id)objValue;
+
+- (void)setSelectHighlightAttributesWithId:(id)objValue;
+
+- (void)setSwapModeWithNSString:(NSString *)strValue
+                         withId:(id)objValue;
+
+- (void)setDragStartModeWithNSString:(NSString *)strValue
+                              withId:(id)objValue;
+
+- (void)setHasFixedSizeWithId:(id)objValue;
+
+- (void)disableItemAnimator;
+
+- (void)setSwipeSwapModeWithNSString:(NSString *)strValue
+                              withId:(id)objValue;
+
+- (void)setDeleteOnSwipeWithId:(id)objValue;
+
+- (void)setonSwipedWithNSString:(NSString *)strValue;
+
+- (void)setOnMovedWithNSString:(NSString *)strValue;
+
+- (void)setOnMoveWithNSString:(NSString *)strValue;
+
+- (void)setOnSelectedChangedWithNSString:(NSString *)strValue;
+
+- (void)setonSwipedWithASMyItemTouchHelper_MyCallback:(id<ASMyItemTouchHelper_MyCallback>)objValue;
+
+- (void)setOnMovedWithASMyItemTouchHelper_MyCallback:(id<ASMyItemTouchHelper_MyCallback>)objValue;
+
+- (void)setOnMoveWithASMyItemTouchHelper_MyCallback:(id<ASMyItemTouchHelper_MyCallback>)objValue;
+
+- (void)setOnSelectedChangedWithASMyItemTouchHelper_MyCallback:(id<ASMyItemTouchHelper_MyCallback>)objValue;
+
+- (void)setSwipeDirsWithId:(id)objValue;
+
+- (void)setDragDirsWithId:(id)objValue;
+
++ (void)addEventInfoTargetViewHolderWithJavaUtilMap:(id<JavaUtilMap>)obj
+                     withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target;
+
++ (void)addEventInfoViewHolderWithJavaUtilMap:(id<JavaUtilMap>)obj
+               withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+
 - (void)filterWithId:(id)query;
 
 - (void)setFilterDelayWithId:(id)objValue;
@@ -366,6 +449,10 @@
 - (int32_t)getScrollBarMaxWithId:(id)view
                        withFloat:(float)scrollBarDimen;
 
+- (void)addStartDragWithASRecyclerViewImpl_MyViewHolder:(ASRecyclerViewImpl_MyViewHolder *)viewHolder;
+
+- (ADXItemTouchHelper *)createItemTouchHelper;
+
 @end
 
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, uiView_, id)
@@ -381,6 +468,8 @@ J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, headerViewHolderIds_, id<JavaUtilList>)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, footerViewHolderIds_, id<JavaUtilList>)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, sectionMap_, id<JavaUtilMap>)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, itemConfigMap_, id<JavaUtilMap>)
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, itemTouchHelper_, ADXItemTouchHelper *)
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, touchHelperSimpleCallback_, ASGenericTouchHelperSimpleCallback *)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, query_, NSString *)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, handler_, ADHandler *)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl, filterId_, NSString *)
@@ -486,6 +575,66 @@ __attribute__((unused)) static void ASRecyclerViewImpl_setFooterDisabledWithId_(
 
 __attribute__((unused)) static void ASRecyclerViewImpl_setHeaderDisabledWithId_(ASRecyclerViewImpl *self, id objValue);
 
+__attribute__((unused)) static bool ASRecyclerViewImpl_isCustomMeasure(ASRecyclerViewImpl *self);
+
+__attribute__((unused)) static IOSIntArray *ASRecyclerViewImpl_customMeasureWithInt_withInt_(ASRecyclerViewImpl *self, int32_t widthSpec, int32_t heightSpec);
+
+__attribute__((unused)) static bool ASRecyclerViewImpl_isFixedGridViewManager(ASRecyclerViewImpl *self);
+
+__attribute__((unused)) static IOSIntArray *ASRecyclerViewImpl_measureFixedGridViewManagerWithInt_withInt_(ASRecyclerViewImpl *self, int32_t widthSpec, int32_t heightSpec);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setDragDropModeWithNSString_withId_(ASRecyclerViewImpl *self, NSString *strValue, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_initTouchHelperSimpleCallback(ASRecyclerViewImpl *self);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setFixedgridTileHeightWithId_(ASRecyclerViewImpl *self, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setFixedgridTileWidthWithId_(ASRecyclerViewImpl *self, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setFixedgridColumnCountWithId_(ASRecyclerViewImpl *self, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setFixedgridRowCountWithId_(ASRecyclerViewImpl *self, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setResetHighlightAttributesWithId_(ASRecyclerViewImpl *self, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setSelectHighlightAttributesWithId_(ASRecyclerViewImpl *self, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setSwapModeWithNSString_withId_(ASRecyclerViewImpl *self, NSString *strValue, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setDragStartModeWithNSString_withId_(ASRecyclerViewImpl *self, NSString *strValue, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setHasFixedSizeWithId_(ASRecyclerViewImpl *self, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_disableItemAnimator(ASRecyclerViewImpl *self);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setSwipeSwapModeWithNSString_withId_(ASRecyclerViewImpl *self, NSString *strValue, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setDeleteOnSwipeWithId_(ASRecyclerViewImpl *self, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setonSwipedWithNSString_(ASRecyclerViewImpl *self, NSString *strValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setOnMovedWithNSString_(ASRecyclerViewImpl *self, NSString *strValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setOnMoveWithNSString_(ASRecyclerViewImpl *self, NSString *strValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setOnSelectedChangedWithNSString_(ASRecyclerViewImpl *self, NSString *strValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setonSwipedWithASMyItemTouchHelper_MyCallback_(ASRecyclerViewImpl *self, id<ASMyItemTouchHelper_MyCallback> objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setOnMovedWithASMyItemTouchHelper_MyCallback_(ASRecyclerViewImpl *self, id<ASMyItemTouchHelper_MyCallback> objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setOnMoveWithASMyItemTouchHelper_MyCallback_(ASRecyclerViewImpl *self, id<ASMyItemTouchHelper_MyCallback> objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setOnSelectedChangedWithASMyItemTouchHelper_MyCallback_(ASRecyclerViewImpl *self, id<ASMyItemTouchHelper_MyCallback> objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setSwipeDirsWithId_(ASRecyclerViewImpl *self, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_setDragDirsWithId_(ASRecyclerViewImpl *self, id objValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_addEventInfoTargetViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(id<JavaUtilMap> obj, ADXRecyclerView_ViewHolder *target);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_addEventInfoViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(id<JavaUtilMap> obj, ADXRecyclerView_ViewHolder *viewHolder);
+
 __attribute__((unused)) static void ASRecyclerViewImpl_filterWithId_(ASRecyclerViewImpl *self, id query);
 
 __attribute__((unused)) static void ASRecyclerViewImpl_setFilterDelayWithId_(ASRecyclerViewImpl *self, id objValue);
@@ -558,6 +707,64 @@ __attribute__((unused)) static void ASRecyclerViewImpl_updateContentSizeWithInt_
 
 __attribute__((unused)) static int32_t ASRecyclerViewImpl_getScrollBarMaxWithId_withFloat_(ASRecyclerViewImpl *self, id view, float scrollBarDimen);
 
+__attribute__((unused)) static void ASRecyclerViewImpl_addStartDragWithASRecyclerViewImpl_MyViewHolder_(ASRecyclerViewImpl *self, ASRecyclerViewImpl_MyViewHolder *viewHolder);
+
+__attribute__((unused)) static ADXItemTouchHelper *ASRecyclerViewImpl_createItemTouchHelper(ASRecyclerViewImpl *self);
+
+@interface ASRecyclerViewImpl_DragDirs () {
+ @public
+  id<JavaUtilMap> mapping_;
+}
+
+@end
+
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_DragDirs, mapping_, id<JavaUtilMap>)
+
+@interface ASRecyclerViewImpl_SwipeDirs () {
+ @public
+  id<JavaUtilMap> mapping_;
+}
+
+@end
+
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_SwipeDirs, mapping_, id<JavaUtilMap>)
+
+@interface ASRecyclerViewImpl_DragDropMode () {
+ @public
+  id<JavaUtilMap> mapping_;
+}
+
+@end
+
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_DragDropMode, mapping_, id<JavaUtilMap>)
+
+@interface ASRecyclerViewImpl_DragStartMode () {
+ @public
+  id<JavaUtilMap> mapping_;
+}
+
+@end
+
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_DragStartMode, mapping_, id<JavaUtilMap>)
+
+@interface ASRecyclerViewImpl_DragSwapMode () {
+ @public
+  id<JavaUtilMap> mapping_;
+}
+
+@end
+
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_DragSwapMode, mapping_, id<JavaUtilMap>)
+
+@interface ASRecyclerViewImpl_SwipeSwapMode () {
+ @public
+  id<JavaUtilMap> mapping_;
+}
+
+@end
+
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_SwipeSwapMode, mapping_, id<JavaUtilMap>)
+
 @interface ASRecyclerViewImpl_Orientation () {
  @public
   id<JavaUtilMap> mapping_;
@@ -594,11 +801,15 @@ __attribute__((unused)) static ASRecyclerViewImpl_ScrollProviderType *new_ASRecy
   ASRecyclerViewImpl *this$0_;
 }
 
+- (int32_t)adapterPositionToItemIndexWithInt:(int32_t)index;
+
 - (bool)isFooterWithInt:(int32_t)position;
 
 - (bool)isHeaderWithInt:(int32_t)position;
 
 @end
+
+__attribute__((unused)) static int32_t ASRecyclerViewImpl_ListAdapter_adapterPositionToItemIndexWithInt_(ASRecyclerViewImpl_ListAdapter *self, int32_t index);
 
 __attribute__((unused)) static bool ASRecyclerViewImpl_ListAdapter_isFooterWithInt_(ASRecyclerViewImpl_ListAdapter *self, int32_t position);
 
@@ -651,8 +862,12 @@ __attribute__((unused)) static ASRecyclerViewImpl_2 *create_ASRecyclerViewImpl_2
   ASLoopParam *loopParam_;
   id<JavaUtilList> viewHolderIds_;
   NSString *layout_;
+  ADXSection *section_;
   int32_t margin_;
   bool modified_;
+  int32_t dragDirs_;
+  int32_t swipeDirs_;
+  bool dragAcrossSections_;
 }
 
 @end
@@ -661,6 +876,7 @@ J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_GenericItem, template__, id<ASIWidget>)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_GenericItem, loopParam_, ASLoopParam *)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_GenericItem, viewHolderIds_, id<JavaUtilList>)
 J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_GenericItem, layout_, NSString *)
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_GenericItem, section_, ADXSection *)
 
 __attribute__((unused)) static void ASRecyclerViewImpl_GenericItem_bindWithASRecyclerViewImpl_GroupieViewHolder_withInt_(ASRecyclerViewImpl_GenericItem *self, ASRecyclerViewImpl_GroupieViewHolder *viewHolder, int32_t position);
 
@@ -710,6 +926,83 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericExpandableItem_ExpandableCl
 }
 
 @end
+
+@interface ASRecyclerViewImpl_MyCallback : NSObject < ASMyItemTouchHelper_MyCallback, ASIListener > {
+ @public
+  id<ASIWidget> w_;
+  ADView *view_;
+  NSString *strValue_;
+  NSString *action_;
+}
+
+- (NSString *)getAction;
+
+- (instancetype)initWithASIWidget:(id<ASIWidget>)w
+                     withNSString:(NSString *)strValue;
+
+- (instancetype)initWithASIWidget:(id<ASIWidget>)w
+                     withNSString:(NSString *)strValue
+                     withNSString:(NSString *)action;
+
+- (void)onSwipedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                       withInt:(int32_t)direction;
+
+- (id<JavaUtilMap>)getOnSwipedEventObjWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                             withInt:(int32_t)direction;
+
+- (bool)onMoveWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+   withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+   withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target;
+
+- (id<JavaUtilMap>)getOnMoveEventObjWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                         withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                         withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target;
+
+- (void)onMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                           withInt:(int32_t)fromPos
+    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
+                           withInt:(int32_t)toPos
+                           withInt:(int32_t)x
+                           withInt:(int32_t)y;
+
+- (id<JavaUtilMap>)getOnMovedEventObjWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                          withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                 withInt:(int32_t)fromPos
+                          withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
+                                                 withInt:(int32_t)toPos
+                                                 withInt:(int32_t)x
+                                                 withInt:(int32_t)y;
+
+- (void)onSelectedChangedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                withInt:(int32_t)actionState;
+
+- (id<JavaUtilMap>)getOnSelectedChangedEventObjWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                                      withInt:(int32_t)actionState;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_MyCallback)
+
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_MyCallback, w_, id<ASIWidget>)
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_MyCallback, view_, ADView *)
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_MyCallback, strValue_, NSString *)
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_MyCallback, action_, NSString *)
+
+__attribute__((unused)) static void ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_(ASRecyclerViewImpl_MyCallback *self, id<ASIWidget> w, NSString *strValue);
+
+__attribute__((unused)) static ASRecyclerViewImpl_MyCallback *new_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_(id<ASIWidget> w, NSString *strValue) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ASRecyclerViewImpl_MyCallback *create_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_(id<ASIWidget> w, NSString *strValue);
+
+__attribute__((unused)) static void ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_withNSString_(ASRecyclerViewImpl_MyCallback *self, id<ASIWidget> w, NSString *strValue, NSString *action);
+
+__attribute__((unused)) static ASRecyclerViewImpl_MyCallback *new_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_withNSString_(id<ASIWidget> w, NSString *strValue, NSString *action) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ASRecyclerViewImpl_MyCallback *create_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_withNSString_(id<ASIWidget> w, NSString *strValue, NSString *action);
+
+J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_MyCallback)
+
 
 @interface ASRecyclerViewImpl_OnScrollListener : ADXRecyclerView_OnScrollListener < ASIListener > {
  @public
@@ -776,17 +1069,23 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_OnScrollListener)
 - (void)handlePanStartWithASIWidget:(id<ASIWidget>)widget
                              withId:(id)eventWidget
                             withInt:(int32_t)x
-                            withInt:(int32_t)y;
+                            withInt:(int32_t)y
+                            withInt:(int32_t)rawX
+                            withInt:(int32_t)rawY;
 
 - (void)handlePanDragWithASIWidget:(id<ASIWidget>)widget
                             withId:(id)eventWidget
                            withInt:(int32_t)x
-                           withInt:(int32_t)y;
+                           withInt:(int32_t)y
+                           withInt:(int32_t)rawX
+                           withInt:(int32_t)rawY;
 
 - (void)handlePanEndWithASIWidget:(id<ASIWidget>)widget
                            withId:(id)eventWidget
                           withInt:(int32_t)x
-                          withInt:(int32_t)y;
+                          withInt:(int32_t)y
+                          withInt:(int32_t)rawX
+                          withInt:(int32_t)rawY;
 
 @end
 
@@ -826,6 +1125,36 @@ __attribute__((unused)) static ASRecyclerViewImpl_4 *create_ASRecyclerViewImpl_4
 }
 
 @end
+
+@interface ASRecyclerViewImpl_CustomItemTouchHelper : ADXItemTouchHelper {
+ @public
+  WEAK_ ASRecyclerViewImpl *this$0_;
+}
+
+- (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$
+           withADXItemTouchHelper_Callback:(ADXItemTouchHelper_Callback *)callback;
+
+- (void)selectWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)selected
+                                     withInt:(int32_t)actionState;
+
+- (bool)isScrolling;
+
+- (bool)nativeIsScrollingWithId:(id)uiView;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_CustomItemTouchHelper)
+
+__attribute__((unused)) static void ASRecyclerViewImpl_CustomItemTouchHelper_initWithASRecyclerViewImpl_withADXItemTouchHelper_Callback_(ASRecyclerViewImpl_CustomItemTouchHelper *self, ASRecyclerViewImpl *outer$, ADXItemTouchHelper_Callback *callback);
+
+__attribute__((unused)) static ASRecyclerViewImpl_CustomItemTouchHelper *new_ASRecyclerViewImpl_CustomItemTouchHelper_initWithASRecyclerViewImpl_withADXItemTouchHelper_Callback_(ASRecyclerViewImpl *outer$, ADXItemTouchHelper_Callback *callback) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ASRecyclerViewImpl_CustomItemTouchHelper *create_ASRecyclerViewImpl_CustomItemTouchHelper_initWithASRecyclerViewImpl_withADXItemTouchHelper_Callback_(ASRecyclerViewImpl *outer$, ADXItemTouchHelper_Callback *callback);
+
+__attribute__((unused)) static bool ASRecyclerViewImpl_CustomItemTouchHelper_nativeIsScrollingWithId_(ASRecyclerViewImpl_CustomItemTouchHelper *self, id uiView);
+
+J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_CustomItemTouchHelper)
+
 
 @interface ASRecyclerViewImpl_$Lambda$1 : NSObject < JavaLangRunnable > {
  @public
@@ -911,6 +1240,31 @@ NSString *ASRecyclerViewImpl_GROUP_NAME = @"androidx.recyclerview.widget.Recycle
   ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"filterSectionPath"])) withTypeWithNSString:@"array"])) withOrderWithInt:-10]);
   ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"filterQueryStorePath"])) withTypeWithNSString:@"string"])) withOrderWithInt:-10]);
   ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"filterQueryGetPath"])) withTypeWithNSString:@"string"])) withOrderWithInt:-10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"fixedgrid_rowCount"])) withTypeWithNSString:@"int"])) withOrderWithInt:-10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"fixedgrid_columnCount"])) withTypeWithNSString:@"int"])) withOrderWithInt:-10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"fixedgrid_tileWidth"])) withTypeWithNSString:@"int"])) withOrderWithInt:-10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"fixedgrid_tileHeight"])) withTypeWithNSString:@"int"])) withOrderWithInt:-10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"disableItemAnimator"])) withTypeWithNSString:@"nil"]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"hasFixedSize"])) withTypeWithNSString:@"boolean"]);
+  ASConverterFactory_register__WithNSString_withASIConverter_(@"androidx.recyclerview.widget.RecyclerView.dragDirs", new_ASRecyclerViewImpl_DragDirs_init());
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"dragDirs"])) withTypeWithNSString:@"androidx.recyclerview.widget.RecyclerView.dragDirs"])) withOrderWithInt:-10]);
+  ASConverterFactory_register__WithNSString_withASIConverter_(@"androidx.recyclerview.widget.RecyclerView.swipeDirs", new_ASRecyclerViewImpl_SwipeDirs_init());
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"swipeDirs"])) withTypeWithNSString:@"androidx.recyclerview.widget.RecyclerView.swipeDirs"])) withOrderWithInt:-10]);
+  ASConverterFactory_register__WithNSString_withASIConverter_(@"androidx.recyclerview.widget.RecyclerView.dragDropMode", new_ASRecyclerViewImpl_DragDropMode_init());
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"dragDropMode"])) withTypeWithNSString:@"androidx.recyclerview.widget.RecyclerView.dragDropMode"])) withOrderWithInt:10]);
+  ASConverterFactory_register__WithNSString_withASIConverter_(@"androidx.recyclerview.widget.RecyclerView.dragStartMode", new_ASRecyclerViewImpl_DragStartMode_init());
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"dragStartMode"])) withTypeWithNSString:@"androidx.recyclerview.widget.RecyclerView.dragStartMode"])) withOrderWithInt:10]);
+  ASConverterFactory_register__WithNSString_withASIConverter_(@"androidx.recyclerview.widget.RecyclerView.dragSwapMode", new_ASRecyclerViewImpl_DragSwapMode_init());
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"dragSwapMode"])) withTypeWithNSString:@"androidx.recyclerview.widget.RecyclerView.dragSwapMode"])) withOrderWithInt:10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"dragSelectHighlightAttributes"])) withTypeWithNSString:@"resourcestring"])) withOrderWithInt:10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"dragResetHighlightAttributes"])) withTypeWithNSString:@"resourcestring"])) withOrderWithInt:10]);
+  ASConverterFactory_register__WithNSString_withASIConverter_(@"androidx.recyclerview.widget.RecyclerView.swipeSwapMode", new_ASRecyclerViewImpl_SwipeSwapMode_init());
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"swipeSwapMode"])) withTypeWithNSString:@"androidx.recyclerview.widget.RecyclerView.swipeSwapMode"])) withOrderWithInt:10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"deleteOnSwipe"])) withTypeWithNSString:@"boolean"])) withOrderWithInt:10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"onSwiped"])) withTypeWithNSString:@"string"])) withOrderWithInt:10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"onMove"])) withTypeWithNSString:@"string"])) withOrderWithInt:10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"onMoved"])) withTypeWithNSString:@"string"])) withOrderWithInt:10]);
+  ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"onSelectedChanged"])) withTypeWithNSString:@"string"])) withOrderWithInt:10]);
   ASConverterFactory_register__WithNSString_withASIConverter_(@"androidx.recyclerview.widget.RecyclerView.orientation", new_ASRecyclerViewImpl_Orientation_init());
   ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"orientation"])) withTypeWithNSString:@"androidx.recyclerview.widget.RecyclerView.orientation"])) withOrderWithInt:-1]);
   ASWidgetFactory_registerAttributeWithNSString_withASWidgetAttribute_Builder_(localName, [((ASWidgetAttribute_Builder *) nil_chk([new_ASWidgetAttribute_Builder_init() withNameWithNSString:@"onScrollStateChange"])) withTypeWithNSString:@"string"]);
@@ -1034,7 +1388,7 @@ J2OBJC_IGNORE_DESIGNATED_END
                 withASILifeCycleDecorator:(id<ASILifeCycleDecorator>)decorator {
   ASViewGroupImpl_setAttributeWithASIWidget_withASWidgetAttribute_withNSString_withId_withASILifeCycleDecorator_(self, key, strValue, objValue, decorator);
   id nativeWidget = [self asNativeWidget];
-  switch (JreIndexOfStr([((ASWidgetAttribute *) nil_chk(key)) getAttributeName], (id[]){ @"layoutManager", @"viewHolderIds", @"spanCount", @"layout", @"nestedScrollingEnabled", @"addSectionItem", @"removeSectionItem", @"removeAllItems", @"updateSectionItem", @"stackFromEnd", @"reverseLayout", @"scrollToEnd", @"scrollToTop", @"scrollToPosition", @"filter", @"filterDelay", @"filterId", @"filterItemPath", @"filterSectionPath", @"filterQueryStorePath", @"filterQueryGetPath", @"orientation", @"onScrollStateChange", @"onScrolled", @"headerDisabled", @"footerDisabled", @"nestedScrollStopDelay" }, 27)) {
+  switch (JreIndexOfStr([((ASWidgetAttribute *) nil_chk(key)) getAttributeName], (id[]){ @"layoutManager", @"viewHolderIds", @"spanCount", @"layout", @"nestedScrollingEnabled", @"addSectionItem", @"removeSectionItem", @"removeAllItems", @"updateSectionItem", @"stackFromEnd", @"reverseLayout", @"scrollToEnd", @"scrollToTop", @"scrollToPosition", @"filter", @"filterDelay", @"filterId", @"filterItemPath", @"filterSectionPath", @"filterQueryStorePath", @"filterQueryGetPath", @"fixedgrid_rowCount", @"fixedgrid_columnCount", @"fixedgrid_tileWidth", @"fixedgrid_tileHeight", @"disableItemAnimator", @"hasFixedSize", @"dragDirs", @"swipeDirs", @"dragDropMode", @"dragStartMode", @"dragSwapMode", @"dragSelectHighlightAttributes", @"dragResetHighlightAttributes", @"swipeSwapMode", @"deleteOnSwipe", @"onSwiped", @"onMove", @"onMoved", @"onSelectedChanged", @"orientation", @"onScrollStateChange", @"onScrolled", @"headerDisabled", @"footerDisabled", @"nestedScrollStopDelay" }, 46)) {
     case 0:
     {
       ASRecyclerViewImpl_setLayoutManagerWithId_(self, objValue);
@@ -1206,30 +1560,145 @@ J2OBJC_IGNORE_DESIGNATED_END
     break;
     case 21:
     {
-      ASRecyclerViewImpl_setOrientationWithId_(self, objValue);
+      ASRecyclerViewImpl_setFixedgridRowCountWithId_(self, objValue);
     }
     break;
     case 22:
     {
-      ASRecyclerViewImpl_setOnScrollStateChangeWithASWidgetAttribute_withNSString_withId_withASILifeCycleDecorator_(self, key, strValue, objValue, decorator);
+      ASRecyclerViewImpl_setFixedgridColumnCountWithId_(self, objValue);
     }
     break;
     case 23:
     {
-      ASRecyclerViewImpl_setOnScrollWithASWidgetAttribute_withNSString_withId_withASILifeCycleDecorator_(self, key, strValue, objValue, decorator);
+      ASRecyclerViewImpl_setFixedgridTileWidthWithId_(self, objValue);
     }
     break;
     case 24:
     {
-      ASRecyclerViewImpl_setHeaderDisabledWithId_(self, objValue);
+      ASRecyclerViewImpl_setFixedgridTileHeightWithId_(self, objValue);
     }
     break;
     case 25:
     {
-      ASRecyclerViewImpl_setFooterDisabledWithId_(self, objValue);
+      ASRecyclerViewImpl_disableItemAnimator(self);
     }
     break;
     case 26:
+    {
+      ASRecyclerViewImpl_setHasFixedSizeWithId_(self, objValue);
+    }
+    break;
+    case 27:
+    {
+      ASRecyclerViewImpl_setDragDirsWithId_(self, objValue);
+    }
+    break;
+    case 28:
+    {
+      ASRecyclerViewImpl_setSwipeDirsWithId_(self, objValue);
+    }
+    break;
+    case 29:
+    {
+      ASRecyclerViewImpl_setDragDropModeWithNSString_withId_(self, strValue, objValue);
+    }
+    break;
+    case 30:
+    {
+      ASRecyclerViewImpl_setDragStartModeWithNSString_withId_(self, strValue, objValue);
+    }
+    break;
+    case 31:
+    {
+      ASRecyclerViewImpl_setSwapModeWithNSString_withId_(self, strValue, objValue);
+    }
+    break;
+    case 32:
+    {
+      ASRecyclerViewImpl_setSelectHighlightAttributesWithId_(self, objValue);
+    }
+    break;
+    case 33:
+    {
+      ASRecyclerViewImpl_setResetHighlightAttributesWithId_(self, objValue);
+    }
+    break;
+    case 34:
+    {
+      ASRecyclerViewImpl_setSwipeSwapModeWithNSString_withId_(self, strValue, objValue);
+    }
+    break;
+    case 35:
+    {
+      ASRecyclerViewImpl_setDeleteOnSwipeWithId_(self, objValue);
+    }
+    break;
+    case 36:
+    {
+      if ([objValue isKindOfClass:[NSString class]]) {
+        ASRecyclerViewImpl_setonSwipedWithNSString_(self, strValue);
+      }
+      else {
+        ASRecyclerViewImpl_setonSwipedWithASMyItemTouchHelper_MyCallback_(self, (id<ASMyItemTouchHelper_MyCallback>) cast_check(objValue, ASMyItemTouchHelper_MyCallback_class_()));
+      }
+    }
+    break;
+    case 37:
+    {
+      if ([objValue isKindOfClass:[NSString class]]) {
+        ASRecyclerViewImpl_setOnMoveWithNSString_(self, strValue);
+      }
+      else {
+        ASRecyclerViewImpl_setOnMoveWithASMyItemTouchHelper_MyCallback_(self, (id<ASMyItemTouchHelper_MyCallback>) cast_check(objValue, ASMyItemTouchHelper_MyCallback_class_()));
+      }
+    }
+    break;
+    case 38:
+    {
+      if ([objValue isKindOfClass:[NSString class]]) {
+        ASRecyclerViewImpl_setOnMovedWithNSString_(self, strValue);
+      }
+      else {
+        ASRecyclerViewImpl_setOnMovedWithASMyItemTouchHelper_MyCallback_(self, (id<ASMyItemTouchHelper_MyCallback>) cast_check(objValue, ASMyItemTouchHelper_MyCallback_class_()));
+      }
+    }
+    break;
+    case 39:
+    {
+      if ([objValue isKindOfClass:[NSString class]]) {
+        ASRecyclerViewImpl_setOnSelectedChangedWithNSString_(self, strValue);
+      }
+      else {
+        ASRecyclerViewImpl_setOnSelectedChangedWithASMyItemTouchHelper_MyCallback_(self, (id<ASMyItemTouchHelper_MyCallback>) cast_check(objValue, ASMyItemTouchHelper_MyCallback_class_()));
+      }
+    }
+    break;
+    case 40:
+    {
+      ASRecyclerViewImpl_setOrientationWithId_(self, objValue);
+    }
+    break;
+    case 41:
+    {
+      ASRecyclerViewImpl_setOnScrollStateChangeWithASWidgetAttribute_withNSString_withId_withASILifeCycleDecorator_(self, key, strValue, objValue, decorator);
+    }
+    break;
+    case 42:
+    {
+      ASRecyclerViewImpl_setOnScrollWithASWidgetAttribute_withNSString_withId_withASILifeCycleDecorator_(self, key, strValue, objValue, decorator);
+    }
+    break;
+    case 43:
+    {
+      ASRecyclerViewImpl_setHeaderDisabledWithId_(self, objValue);
+    }
+    break;
+    case 44:
+    {
+      ASRecyclerViewImpl_setFooterDisabledWithId_(self, objValue);
+    }
+    break;
+    case 45:
     {
       ASRecyclerViewImpl_setNestedScrollStopDelayWithInt_(self, [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk(objValue, [JavaLangInteger class]))) intValue]);
     }
@@ -1620,6 +2089,134 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
+- (bool)isCustomMeasure {
+  return ASRecyclerViewImpl_isCustomMeasure(self);
+}
+
+- (IOSIntArray *)customMeasureWithInt:(int32_t)widthSpec
+                              withInt:(int32_t)heightSpec {
+  return ASRecyclerViewImpl_customMeasureWithInt_withInt_(self, widthSpec, heightSpec);
+}
+
+- (bool)isFixedGridViewManager {
+  return ASRecyclerViewImpl_isFixedGridViewManager(self);
+}
+
+- (IOSIntArray *)measureFixedGridViewManagerWithInt:(int32_t)widthSpec
+                                            withInt:(int32_t)heightSpec {
+  return ASRecyclerViewImpl_measureFixedGridViewManagerWithInt_withInt_(self, widthSpec, heightSpec);
+}
+
+- (void)setDragDropModeWithNSString:(NSString *)strValue
+                             withId:(id)objValue {
+  ASRecyclerViewImpl_setDragDropModeWithNSString_withId_(self, strValue, objValue);
+}
+
+- (void)initTouchHelperSimpleCallback {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+}
+
+- (void)setFixedgridTileHeightWithId:(id)objValue {
+  ASRecyclerViewImpl_setFixedgridTileHeightWithId_(self, objValue);
+}
+
+- (void)setFixedgridTileWidthWithId:(id)objValue {
+  ASRecyclerViewImpl_setFixedgridTileWidthWithId_(self, objValue);
+}
+
+- (void)setFixedgridColumnCountWithId:(id)objValue {
+  ASRecyclerViewImpl_setFixedgridColumnCountWithId_(self, objValue);
+}
+
+- (void)setFixedgridRowCountWithId:(id)objValue {
+  ASRecyclerViewImpl_setFixedgridRowCountWithId_(self, objValue);
+}
+
+- (void)setResetHighlightAttributesWithId:(id)objValue {
+  ASRecyclerViewImpl_setResetHighlightAttributesWithId_(self, objValue);
+}
+
+- (void)setSelectHighlightAttributesWithId:(id)objValue {
+  ASRecyclerViewImpl_setSelectHighlightAttributesWithId_(self, objValue);
+}
+
+- (void)setSwapModeWithNSString:(NSString *)strValue
+                         withId:(id)objValue {
+  ASRecyclerViewImpl_setSwapModeWithNSString_withId_(self, strValue, objValue);
+}
+
+- (void)setDragStartModeWithNSString:(NSString *)strValue
+                              withId:(id)objValue {
+  ASRecyclerViewImpl_setDragStartModeWithNSString_withId_(self, strValue, objValue);
+}
+
+- (void)setHasFixedSizeWithId:(id)objValue {
+  ASRecyclerViewImpl_setHasFixedSizeWithId_(self, objValue);
+}
+
+- (void)disableItemAnimator {
+  ASRecyclerViewImpl_disableItemAnimator(self);
+}
+
+- (void)setSwipeSwapModeWithNSString:(NSString *)strValue
+                              withId:(id)objValue {
+  ASRecyclerViewImpl_setSwipeSwapModeWithNSString_withId_(self, strValue, objValue);
+}
+
+- (void)setDeleteOnSwipeWithId:(id)objValue {
+  ASRecyclerViewImpl_setDeleteOnSwipeWithId_(self, objValue);
+}
+
+- (void)setonSwipedWithNSString:(NSString *)strValue {
+  ASRecyclerViewImpl_setonSwipedWithNSString_(self, strValue);
+}
+
+- (void)setOnMovedWithNSString:(NSString *)strValue {
+  ASRecyclerViewImpl_setOnMovedWithNSString_(self, strValue);
+}
+
+- (void)setOnMoveWithNSString:(NSString *)strValue {
+  ASRecyclerViewImpl_setOnMoveWithNSString_(self, strValue);
+}
+
+- (void)setOnSelectedChangedWithNSString:(NSString *)strValue {
+  ASRecyclerViewImpl_setOnSelectedChangedWithNSString_(self, strValue);
+}
+
+- (void)setonSwipedWithASMyItemTouchHelper_MyCallback:(id<ASMyItemTouchHelper_MyCallback>)objValue {
+  ASRecyclerViewImpl_setonSwipedWithASMyItemTouchHelper_MyCallback_(self, objValue);
+}
+
+- (void)setOnMovedWithASMyItemTouchHelper_MyCallback:(id<ASMyItemTouchHelper_MyCallback>)objValue {
+  ASRecyclerViewImpl_setOnMovedWithASMyItemTouchHelper_MyCallback_(self, objValue);
+}
+
+- (void)setOnMoveWithASMyItemTouchHelper_MyCallback:(id<ASMyItemTouchHelper_MyCallback>)objValue {
+  ASRecyclerViewImpl_setOnMoveWithASMyItemTouchHelper_MyCallback_(self, objValue);
+}
+
+- (void)setOnSelectedChangedWithASMyItemTouchHelper_MyCallback:(id<ASMyItemTouchHelper_MyCallback>)objValue {
+  ASRecyclerViewImpl_setOnSelectedChangedWithASMyItemTouchHelper_MyCallback_(self, objValue);
+}
+
+- (void)setSwipeDirsWithId:(id)objValue {
+  ASRecyclerViewImpl_setSwipeDirsWithId_(self, objValue);
+}
+
+- (void)setDragDirsWithId:(id)objValue {
+  ASRecyclerViewImpl_setDragDirsWithId_(self, objValue);
+}
+
++ (void)addEventInfoTargetViewHolderWithJavaUtilMap:(id<JavaUtilMap>)obj
+                     withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target {
+  ASRecyclerViewImpl_addEventInfoTargetViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(obj, target);
+}
+
++ (void)addEventInfoViewHolderWithJavaUtilMap:(id<JavaUtilMap>)obj
+               withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  ASRecyclerViewImpl_addEventInfoViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(obj, viewHolder);
+}
+
 - (void)filterWithId:(id)query {
   ASRecyclerViewImpl_filterWithId_(self, query);
 }
@@ -1864,6 +2461,14 @@ J2OBJC_IGNORE_DESIGNATED_END
   }
 }
 
+- (void)addStartDragWithASRecyclerViewImpl_MyViewHolder:(ASRecyclerViewImpl_MyViewHolder *)viewHolder {
+  ASRecyclerViewImpl_addStartDragWithASRecyclerViewImpl_MyViewHolder_(self, viewHolder);
+}
+
+- (ADXItemTouchHelper *)createItemTouchHelper {
+  return ASRecyclerViewImpl_createItemTouchHelper(self);
+}
+
 + (const J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { NULL, "V", 0x1, 0, 1, -1, -1, -1, -1 },
@@ -1943,49 +2548,81 @@ J2OBJC_IGNORE_DESIGNATED_END
     { NULL, "V", 0x2, 88, 25, -1, -1, -1, -1 },
     { NULL, "V", 0x2, 89, 25, -1, -1, -1, -1 },
     { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 90, 25, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 91, 25, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 92, 25, -1, -1, -1, -1 },
-    { NULL, "Z", 0x4, 93, 25, -1, -1, -1, -1 },
-    { NULL, "Z", 0x2, 93, 94, -1, -1, -1, -1 },
+    { NULL, "Z", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "[I", 0x2, 90, 31, -1, -1, -1, -1 },
+    { NULL, "Z", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "[I", 0x2, 91, 31, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 92, 93, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 94, 25, -1, -1, -1, -1 },
     { NULL, "V", 0x2, 95, 25, -1, -1, -1, -1 },
     { NULL, "V", 0x2, 96, 25, -1, -1, -1, -1 },
     { NULL, "V", 0x2, 97, 25, -1, -1, -1, -1 },
     { NULL, "V", 0x2, 98, 25, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 99, 1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 100, 101, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 102, 37, -1, 38, -1, -1 },
-    { NULL, "V", 0x102, 103, 104, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 99, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 100, 93, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 101, 93, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 102, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 103, 93, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 104, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 105, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 106, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 107, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 108, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 105, 109, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 106, 109, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 107, 109, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 108, 109, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 110, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 111, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0xa, 112, 113, -1, 114, -1, -1 },
+    { NULL, "V", 0xa, 115, 113, -1, 114, -1, -1 },
+    { NULL, "V", 0x2, 116, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 117, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 118, 25, -1, -1, -1, -1 },
+    { NULL, "Z", 0x4, 119, 25, -1, -1, -1, -1 },
+    { NULL, "Z", 0x2, 119, 120, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 121, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 122, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 123, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 124, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 125, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 126, 127, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 128, 37, -1, 38, -1, -1 },
+    { NULL, "V", 0x102, 129, 130, -1, -1, -1, -1 },
     { NULL, "LNSObject;", 0x101, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LNSObject;", 0x101, 105, 106, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 107, 25, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 108, 25, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 109, 110, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 111, 112, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 113, 18, -1, -1, -1, -1 },
+    { NULL, "LNSObject;", 0x101, 131, 132, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 133, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 134, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 135, 136, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 137, 138, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 139, 18, -1, -1, -1, -1 },
     { NULL, "V", 0x102, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x102, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 114, 33, -1, -1, -1, -1 },
-    { NULL, "I", 0x2, 115, 116, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 117, 110, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 118, 110, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 119, 27, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 140, 33, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 141, 142, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 143, 136, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 144, 136, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 145, 27, -1, -1, -1, -1 },
     { NULL, "I", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x2, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 120, 25, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 121, 110, -1, -1, -1, -1 },
-    { NULL, "V", 0x102, 122, 110, -1, -1, -1, -1 },
-    { NULL, "I", 0x102, 123, 25, -1, -1, -1, -1 },
-    { NULL, "I", 0x102, 124, 25, -1, -1, -1, -1 },
-    { NULL, "I", 0x102, 125, 25, -1, -1, -1, -1 },
-    { NULL, "I", 0x102, 126, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 146, 25, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 147, 136, -1, -1, -1, -1 },
+    { NULL, "V", 0x102, 148, 136, -1, -1, -1, -1 },
+    { NULL, "I", 0x102, 149, 25, -1, -1, -1, -1 },
+    { NULL, "I", 0x102, 150, 25, -1, -1, -1, -1 },
+    { NULL, "I", 0x102, 151, 25, -1, -1, -1, -1 },
+    { NULL, "I", 0x102, 152, 25, -1, -1, -1, -1 },
     { NULL, "I", 0x2, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 127, 27, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 128, 129, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 130, 27, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 109, 27, -1, -1, -1, -1 },
-    { NULL, "I", 0x2, 131, 132, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 133, 27, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 153, 27, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 154, 155, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 156, 27, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 135, 27, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 157, 158, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 159, 27, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 160, 161, -1, -1, -1, -1 },
+    { NULL, "LADXItemTouchHelper;", 0x2, -1, -1, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
@@ -2067,54 +2704,86 @@ J2OBJC_IGNORE_DESIGNATED_END
   methods[74].selector = @selector(setFooterDisabledWithId:);
   methods[75].selector = @selector(setHeaderDisabledWithId:);
   methods[76].selector = @selector(applyModelToWidget);
-  methods[77].selector = @selector(filterWithId:);
-  methods[78].selector = @selector(setFilterDelayWithId:);
-  methods[79].selector = @selector(setFilterIdWithId:);
-  methods[80].selector = @selector(filterDataWithId:);
-  methods[81].selector = @selector(filterDataWithId:withNSStringArray:);
-  methods[82].selector = @selector(setFilterSectionItemPathWithId:);
-  methods[83].selector = @selector(setFilterItemPathWithId:);
-  methods[84].selector = @selector(setFilterQueryGetPathWithId:);
-  methods[85].selector = @selector(setFilterQueryStorePathWithId:);
-  methods[86].selector = @selector(setIdWithNSString:);
-  methods[87].selector = @selector(setVisibleWithBoolean:);
-  methods[88].selector = @selector(nativeCreateWithJavaUtilMap:);
-  methods[89].selector = @selector(scrollEnabledWithId:withBoolean:);
-  methods[90].selector = @selector(createView);
-  methods[91].selector = @selector(nativescrollViewCreateWithBoolean:withBoolean:withBoolean:);
-  methods[92].selector = @selector(stopScrollEndWithId:);
-  methods[93].selector = @selector(stopScrollStartWithId:);
-  methods[94].selector = @selector(updateContentSizeWithInt:withId:);
-  methods[95].selector = @selector(applyTransformWithId:withId:);
-  methods[96].selector = @selector(postSetAttributeWithASWidgetAttribute:withNSString:withId:withASILifeCycleDecorator:);
-  methods[97].selector = @selector(showVerticalScrollBar);
-  methods[98].selector = @selector(showHorizontalScrollBar);
-  methods[99].selector = @selector(setCustomHandleScrollWithInt:withInt:withInt:withInt:);
-  methods[100].selector = @selector(setSelectionWithInt:withInt:withId:);
-  methods[101].selector = @selector(setContentSizeWidthWithInt:withId:);
-  methods[102].selector = @selector(setContentSizeHeightWithInt:withId:);
-  methods[103].selector = @selector(setMaximumWithInt:);
-  methods[104].selector = @selector(getMaximum);
-  methods[105].selector = @selector(getSelection);
-  methods[106].selector = @selector(flashScrollIndicatorsWithId:);
-  methods[107].selector = @selector(setContentOffsetXWithInt:withId:);
-  methods[108].selector = @selector(setContentOffsetYWithInt:withId:);
-  methods[109].selector = @selector(getContentOffsetXWithId:);
-  methods[110].selector = @selector(getContentOffsetYWithId:);
-  methods[111].selector = @selector(getContentHeightWithId:);
-  methods[112].selector = @selector(getContentWidthWithId:);
-  methods[113].selector = @selector(getThumbWidth);
-  methods[114].selector = @selector(setMinimumWithInt:);
-  methods[115].selector = @selector(setCustomMakeFrameForChildWidgetWithInt:withInt:withInt:withInt:withInt:withInt:);
-  methods[116].selector = @selector(updateContentSizeOfScrolledProviderWithInt:);
-  methods[117].selector = @selector(updateContentSizeWithInt:);
-  methods[118].selector = @selector(getScrollBarMaxWithId:withFloat:);
-  methods[119].selector = @selector(adjustScrollOffsetWhenEdgeReachedWithInt:);
+  methods[77].selector = @selector(isCustomMeasure);
+  methods[78].selector = @selector(customMeasureWithInt:withInt:);
+  methods[79].selector = @selector(isFixedGridViewManager);
+  methods[80].selector = @selector(measureFixedGridViewManagerWithInt:withInt:);
+  methods[81].selector = @selector(setDragDropModeWithNSString:withId:);
+  methods[82].selector = @selector(initTouchHelperSimpleCallback);
+  methods[83].selector = @selector(setFixedgridTileHeightWithId:);
+  methods[84].selector = @selector(setFixedgridTileWidthWithId:);
+  methods[85].selector = @selector(setFixedgridColumnCountWithId:);
+  methods[86].selector = @selector(setFixedgridRowCountWithId:);
+  methods[87].selector = @selector(setResetHighlightAttributesWithId:);
+  methods[88].selector = @selector(setSelectHighlightAttributesWithId:);
+  methods[89].selector = @selector(setSwapModeWithNSString:withId:);
+  methods[90].selector = @selector(setDragStartModeWithNSString:withId:);
+  methods[91].selector = @selector(setHasFixedSizeWithId:);
+  methods[92].selector = @selector(disableItemAnimator);
+  methods[93].selector = @selector(setSwipeSwapModeWithNSString:withId:);
+  methods[94].selector = @selector(setDeleteOnSwipeWithId:);
+  methods[95].selector = @selector(setonSwipedWithNSString:);
+  methods[96].selector = @selector(setOnMovedWithNSString:);
+  methods[97].selector = @selector(setOnMoveWithNSString:);
+  methods[98].selector = @selector(setOnSelectedChangedWithNSString:);
+  methods[99].selector = @selector(setonSwipedWithASMyItemTouchHelper_MyCallback:);
+  methods[100].selector = @selector(setOnMovedWithASMyItemTouchHelper_MyCallback:);
+  methods[101].selector = @selector(setOnMoveWithASMyItemTouchHelper_MyCallback:);
+  methods[102].selector = @selector(setOnSelectedChangedWithASMyItemTouchHelper_MyCallback:);
+  methods[103].selector = @selector(setSwipeDirsWithId:);
+  methods[104].selector = @selector(setDragDirsWithId:);
+  methods[105].selector = @selector(addEventInfoTargetViewHolderWithJavaUtilMap:withADXRecyclerView_ViewHolder:);
+  methods[106].selector = @selector(addEventInfoViewHolderWithJavaUtilMap:withADXRecyclerView_ViewHolder:);
+  methods[107].selector = @selector(filterWithId:);
+  methods[108].selector = @selector(setFilterDelayWithId:);
+  methods[109].selector = @selector(setFilterIdWithId:);
+  methods[110].selector = @selector(filterDataWithId:);
+  methods[111].selector = @selector(filterDataWithId:withNSStringArray:);
+  methods[112].selector = @selector(setFilterSectionItemPathWithId:);
+  methods[113].selector = @selector(setFilterItemPathWithId:);
+  methods[114].selector = @selector(setFilterQueryGetPathWithId:);
+  methods[115].selector = @selector(setFilterQueryStorePathWithId:);
+  methods[116].selector = @selector(setIdWithNSString:);
+  methods[117].selector = @selector(setVisibleWithBoolean:);
+  methods[118].selector = @selector(nativeCreateWithJavaUtilMap:);
+  methods[119].selector = @selector(scrollEnabledWithId:withBoolean:);
+  methods[120].selector = @selector(createView);
+  methods[121].selector = @selector(nativescrollViewCreateWithBoolean:withBoolean:withBoolean:);
+  methods[122].selector = @selector(stopScrollEndWithId:);
+  methods[123].selector = @selector(stopScrollStartWithId:);
+  methods[124].selector = @selector(updateContentSizeWithInt:withId:);
+  methods[125].selector = @selector(applyTransformWithId:withId:);
+  methods[126].selector = @selector(postSetAttributeWithASWidgetAttribute:withNSString:withId:withASILifeCycleDecorator:);
+  methods[127].selector = @selector(showVerticalScrollBar);
+  methods[128].selector = @selector(showHorizontalScrollBar);
+  methods[129].selector = @selector(setCustomHandleScrollWithInt:withInt:withInt:withInt:);
+  methods[130].selector = @selector(setSelectionWithInt:withInt:withId:);
+  methods[131].selector = @selector(setContentSizeWidthWithInt:withId:);
+  methods[132].selector = @selector(setContentSizeHeightWithInt:withId:);
+  methods[133].selector = @selector(setMaximumWithInt:);
+  methods[134].selector = @selector(getMaximum);
+  methods[135].selector = @selector(getSelection);
+  methods[136].selector = @selector(flashScrollIndicatorsWithId:);
+  methods[137].selector = @selector(setContentOffsetXWithInt:withId:);
+  methods[138].selector = @selector(setContentOffsetYWithInt:withId:);
+  methods[139].selector = @selector(getContentOffsetXWithId:);
+  methods[140].selector = @selector(getContentOffsetYWithId:);
+  methods[141].selector = @selector(getContentHeightWithId:);
+  methods[142].selector = @selector(getContentWidthWithId:);
+  methods[143].selector = @selector(getThumbWidth);
+  methods[144].selector = @selector(setMinimumWithInt:);
+  methods[145].selector = @selector(setCustomMakeFrameForChildWidgetWithInt:withInt:withInt:withInt:withInt:withInt:);
+  methods[146].selector = @selector(updateContentSizeOfScrolledProviderWithInt:);
+  methods[147].selector = @selector(updateContentSizeWithInt:);
+  methods[148].selector = @selector(getScrollBarMaxWithId:withFloat:);
+  methods[149].selector = @selector(adjustScrollOffsetWhenEdgeReachedWithInt:);
+  methods[150].selector = @selector(addStartDragWithASRecyclerViewImpl_MyViewHolder:);
+  methods[151].selector = @selector(createItemTouchHelper);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
     { "uiView_", "LNSObject;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "LOCAL_NAME", "LNSString;", .constantValue.asLong = 0, 0x19, -1, 134, -1, -1 },
-    { "GROUP_NAME", "LNSString;", .constantValue.asLong = 0, 0x19, -1, 135, -1, -1 },
+    { "LOCAL_NAME", "LNSString;", .constantValue.asLong = 0, 0x19, -1, 162, -1, -1 },
+    { "GROUP_NAME", "LNSString;", .constantValue.asLong = 0, 0x19, -1, 163, -1, -1 },
     { "recyclerView_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "disableUpdate_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "scrollProvider_", "LNSObject;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -2125,19 +2794,27 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "lastScrollEvent_", "J", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "scrollProviderType_", "LASRecyclerViewImpl_ScrollProviderType;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "nestedScrollHandler_", "LADHandler;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "adapter_", "LADXRecyclerView_Adapter;", .constantValue.asLong = 0, 0x2, -1, -1, 136, -1 },
+    { "adapter_", "LADXRecyclerView_Adapter;", .constantValue.asLong = 0, 0x2, -1, -1, 164, -1 },
     { "headerTemplate_", "LASIWidget;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "footerTemplate_", "LASIWidget;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "viewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 137, -1 },
-    { "headerViewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 137, -1 },
-    { "footerViewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 137, -1 },
-    { "layout_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x0, -1, -1, 138, -1 },
+    { "viewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 165, -1 },
+    { "headerViewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 165, -1 },
+    { "footerViewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 165, -1 },
+    { "layout_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x0, -1, -1, 166, -1 },
     { "spanCount_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "orientation_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "sectionMap_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 139, -1 },
-    { "itemConfigMap_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 140, -1 },
+    { "sectionMap_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 167, -1 },
+    { "itemConfigMap_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 168, -1 },
     { "headerDisabled_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "footerDisabled_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "fixedGridRowCount_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "fixedGridColumnCount_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "fixedGridTileWidth_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "fixedGridTileHeight_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "dragDirs_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "swipeDirs_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "itemTouchHelper_", "LADXItemTouchHelper;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "touchHelperSimpleCallback_", "LASGenericTouchHelperSimpleCallback;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "query_", "LNSString;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "filterDelay_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "handler_", "LADHandler;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -2153,8 +2830,8 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "oldOverScroll_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "overScrollDpos_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "loadAttributes", "LNSString;", "LNSString;LNSString;", "create", "LASIFragment;LJavaUtilMap;", "(Lcom/ashera/core/IFragment;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "nativeRemoveView", "LASIWidget;", "add", "LASIWidget;I", "createLayoutParams", "LADView;", "getLayoutParams", "setChildAttribute", "LASIWidget;LASWidgetAttribute;LNSString;LNSObject;", "getChildAttribute", "LASIWidget;LASWidgetAttribute;", "setAttribute", "LASWidgetAttribute;LNSString;LNSObject;LASILifeCycleDecorator;", "getAttribute", "LASWidgetAttribute;LASILifeCycleDecorator;", "checkIosVersion", "addObject", "LASLoopParam;LNSString;ILNSString;", "addAllModel", "LNSObject;", "remove", "I", "setScrollBarIncrement", "setNestedScrollStopDelay", "getScrollBarDimen", "II", "nativeMakeFrameForChildWidget", "IIII", "setOnScroll", "setOnScrollStateChange", "nativeCreateRecycleView", "LJavaUtilMap;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "setLayoutManager", "setViewHolderIds", "setSpanCount", "setOrientation", "setLayout", "createSections", "LASRecyclerViewImpl_GroupieAdapter;", "LNSObject;LNSObject;LASLoopParam;", "createExpandable", "LJavaUtilMap;LADXSection;LASLoopParam;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/xwray/groupie/Section;Lcom/ashera/model/LoopParam;)V", "addSection", "createItems", "createItem", "LADXSection;LJavaUtilMap;LASLoopParam;LNSObject;", "(Lcom/xwray/groupie/Section;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/ashera/model/LoopParam;Ljava/lang/Object;)V", "createFooter", "LASLoopParam;LADXSection;LJavaUtilMap;", "(Lcom/ashera/model/LoopParam;Lcom/xwray/groupie/Section;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "createHeader", "setItemViewParams", "LASIWidget;LADView;", "addSectionItem", "LNSString;LNSString;LNSObject;", "getModelChildItems", "LJavaUtilMap;LASLoopParam;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/ashera/model/LoopParam;)Ljava/util/List<Ljava/lang/Object;>;", "notifyDataSetChanged", "LASRecyclerViewImpl_SectionHolder;", "getChildItems", "LASRecyclerViewImpl_SectionHolder;LJavaUtilMap;", "(Lcom/ashera/recycleview/RecyclerViewImpl$SectionHolder;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)Ljava/util/List<Ljava/lang/Object;>;", "removeSectionItem", "LNSString;LNSString;LNSString;", "syncObjectRemoveSectionItem", "LNSString;LNSString;LJavaUtilList;", "(Ljava/lang/String;Ljava/lang/String;Ljava/util/List<Ljava/lang/Object;>;)V", "syncObjectUpdateSectionItem", "LNSString;LNSString;LJavaUtilList;LNSObject;", "(Ljava/lang/String;Ljava/lang/String;Ljava/util/List<Ljava/lang/Object;>;Ljava/lang/Object;)V", "removeAllItems", "updateSectionItem", "LNSString;LNSString;LNSString;LNSObject;", "scrollToPosition", "scrollToTop", "scrollToEnd", "setStackFromBottom", "setReverseLayout", "invalidateChildIfRequired", "setFooterDisabled", "setHeaderDisabled", "filter", "setFilterDelay", "setFilterId", "filterData", "LNSObject;[LNSString;", "setFilterSectionItemPath", "setFilterItemPath", "setFilterQueryGetPath", "setFilterQueryStorePath", "setId", "setVisible", "Z", "nativeCreate", "scrollEnabled", "LNSObject;Z", "nativescrollViewCreate", "ZZZ", "stopScrollEnd", "stopScrollStart", "updateContentSize", "ILNSObject;", "applyTransform", "LNSObject;LNSObject;", "postSetAttribute", "setCustomHandleScroll", "setSelection", "IILNSObject;", "setContentSizeWidth", "setContentSizeHeight", "setMaximum", "flashScrollIndicators", "setContentOffsetX", "setContentOffsetY", "getContentOffsetX", "getContentOffsetY", "getContentHeight", "getContentWidth", "setMinimum", "setCustomMakeFrameForChildWidget", "IIIIII", "updateContentSizeOfScrolledProvider", "getScrollBarMax", "LNSObject;F", "adjustScrollOffsetWhenEdgeReached", &ASRecyclerViewImpl_LOCAL_NAME, &ASRecyclerViewImpl_GROUP_NAME, "Landroidx/recyclerview/widget/RecyclerView$Adapter<+Landroidx/recyclerview/widget/RecyclerView$ViewHolder;>;", "Ljava/util/List<Ljava/lang/String;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "Ljava/util/Map<Ljava/lang/String;Lcom/ashera/recycleview/RecyclerViewImpl$SectionHolder;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;>;", "LASRecyclerViewImpl_Orientation;LASRecyclerViewImpl_RecyclerViewExt;LASRecyclerViewImpl_ScrollProviderType;LASRecyclerViewImpl_ListAdapter;LASRecyclerViewImpl_ViewHolder;LASRecyclerViewImpl_SectionHolder;LASRecyclerViewImpl_GenericExpandableItem;LASRecyclerViewImpl_GenericItem;LASRecyclerViewImpl_GroupieAdapter;LASRecyclerViewImpl_GroupieViewHolder;LASRecyclerViewImpl_OnScrollListener;LASRecyclerViewImpl_UIScrollViewDelegate;" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl = { "RecyclerViewImpl", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 120, 40, -1, 141, -1, -1, -1 };
+  static const void *ptrTable[] = { "loadAttributes", "LNSString;", "LNSString;LNSString;", "create", "LASIFragment;LJavaUtilMap;", "(Lcom/ashera/core/IFragment;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "nativeRemoveView", "LASIWidget;", "add", "LASIWidget;I", "createLayoutParams", "LADView;", "getLayoutParams", "setChildAttribute", "LASIWidget;LASWidgetAttribute;LNSString;LNSObject;", "getChildAttribute", "LASIWidget;LASWidgetAttribute;", "setAttribute", "LASWidgetAttribute;LNSString;LNSObject;LASILifeCycleDecorator;", "getAttribute", "LASWidgetAttribute;LASILifeCycleDecorator;", "checkIosVersion", "addObject", "LASLoopParam;LNSString;ILNSString;", "addAllModel", "LNSObject;", "remove", "I", "setScrollBarIncrement", "setNestedScrollStopDelay", "getScrollBarDimen", "II", "nativeMakeFrameForChildWidget", "IIII", "setOnScroll", "setOnScrollStateChange", "nativeCreateRecycleView", "LJavaUtilMap;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "setLayoutManager", "setViewHolderIds", "setSpanCount", "setOrientation", "setLayout", "createSections", "LASRecyclerViewImpl_GroupieAdapter;", "LNSObject;LNSObject;LASLoopParam;", "createExpandable", "LJavaUtilMap;LADXSection;LASLoopParam;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/xwray/groupie/Section;Lcom/ashera/model/LoopParam;)V", "addSection", "createItems", "createItem", "LADXSection;LJavaUtilMap;LASLoopParam;LNSObject;", "(Lcom/xwray/groupie/Section;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/ashera/model/LoopParam;Ljava/lang/Object;)V", "createFooter", "LASLoopParam;LADXSection;LJavaUtilMap;", "(Lcom/ashera/model/LoopParam;Lcom/xwray/groupie/Section;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)V", "createHeader", "setItemViewParams", "LASIWidget;LADView;", "addSectionItem", "LNSString;LNSString;LNSObject;", "getModelChildItems", "LJavaUtilMap;LASLoopParam;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Lcom/ashera/model/LoopParam;)Ljava/util/List<Ljava/lang/Object;>;", "notifyDataSetChanged", "LASRecyclerViewImpl_SectionHolder;", "getChildItems", "LASRecyclerViewImpl_SectionHolder;LJavaUtilMap;", "(Lcom/ashera/recycleview/RecyclerViewImpl$SectionHolder;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;)Ljava/util/List<Ljava/lang/Object;>;", "removeSectionItem", "LNSString;LNSString;LNSString;", "syncObjectRemoveSectionItem", "LNSString;LNSString;LJavaUtilList;", "(Ljava/lang/String;Ljava/lang/String;Ljava/util/List<Ljava/lang/Object;>;)V", "syncObjectUpdateSectionItem", "LNSString;LNSString;LJavaUtilList;LNSObject;", "(Ljava/lang/String;Ljava/lang/String;Ljava/util/List<Ljava/lang/Object;>;Ljava/lang/Object;)V", "removeAllItems", "updateSectionItem", "LNSString;LNSString;LNSString;LNSObject;", "scrollToPosition", "scrollToTop", "scrollToEnd", "setStackFromBottom", "setReverseLayout", "invalidateChildIfRequired", "setFooterDisabled", "setHeaderDisabled", "customMeasure", "measureFixedGridViewManager", "setDragDropMode", "LNSString;LNSObject;", "setFixedgridTileHeight", "setFixedgridTileWidth", "setFixedgridColumnCount", "setFixedgridRowCount", "setResetHighlightAttributes", "setSelectHighlightAttributes", "setSwapMode", "setDragStartMode", "setHasFixedSize", "setSwipeSwapMode", "setDeleteOnSwipe", "setonSwiped", "setOnMoved", "setOnMove", "setOnSelectedChanged", "LASMyItemTouchHelper_MyCallback;", "setSwipeDirs", "setDragDirs", "addEventInfoTargetViewHolder", "LJavaUtilMap;LADXRecyclerView_ViewHolder;", "(Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;Landroidx/recyclerview/widget/RecyclerView$ViewHolder;)V", "addEventInfoViewHolder", "filter", "setFilterDelay", "setFilterId", "filterData", "LNSObject;[LNSString;", "setFilterSectionItemPath", "setFilterItemPath", "setFilterQueryGetPath", "setFilterQueryStorePath", "setId", "setVisible", "Z", "nativeCreate", "scrollEnabled", "LNSObject;Z", "nativescrollViewCreate", "ZZZ", "stopScrollEnd", "stopScrollStart", "updateContentSize", "ILNSObject;", "applyTransform", "LNSObject;LNSObject;", "postSetAttribute", "setCustomHandleScroll", "setSelection", "IILNSObject;", "setContentSizeWidth", "setContentSizeHeight", "setMaximum", "flashScrollIndicators", "setContentOffsetX", "setContentOffsetY", "getContentOffsetX", "getContentOffsetY", "getContentHeight", "getContentWidth", "setMinimum", "setCustomMakeFrameForChildWidget", "IIIIII", "updateContentSizeOfScrolledProvider", "getScrollBarMax", "LNSObject;F", "adjustScrollOffsetWhenEdgeReached", "addStartDrag", "LASRecyclerViewImpl_MyViewHolder;", &ASRecyclerViewImpl_LOCAL_NAME, &ASRecyclerViewImpl_GROUP_NAME, "Landroidx/recyclerview/widget/RecyclerView$Adapter<+Landroidx/recyclerview/widget/RecyclerView$ViewHolder;>;", "Ljava/util/List<Ljava/lang/String;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "Ljava/util/Map<Ljava/lang/String;Lcom/ashera/recycleview/RecyclerViewImpl$SectionHolder;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;>;", "LASRecyclerViewImpl_DragDirs;LASRecyclerViewImpl_SwipeDirs;LASRecyclerViewImpl_DragDropMode;LASRecyclerViewImpl_DragStartMode;LASRecyclerViewImpl_DragSwapMode;LASRecyclerViewImpl_SwipeSwapMode;LASRecyclerViewImpl_Orientation;LASRecyclerViewImpl_RecyclerViewExt;LASRecyclerViewImpl_ScrollProviderType;LASRecyclerViewImpl_ListAdapter;LASRecyclerViewImpl_MyViewHolder;LASRecyclerViewImpl_SectionHolder;LASRecyclerViewImpl_GenericExpandableItem;LASRecyclerViewImpl_GenericItem;LASRecyclerViewImpl_GroupieAdapter;LASRecyclerViewImpl_GroupieViewHolder;LASRecyclerViewImpl_MyCallback;LASRecyclerViewImpl_OnScrollListener;LASRecyclerViewImpl_UIScrollViewDelegate;LASRecyclerViewImpl_CustomItemTouchHelper;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl = { "RecyclerViewImpl", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 152, 48, -1, 169, -1, -1, -1 };
   return &_ASRecyclerViewImpl;
 }
 
@@ -2173,6 +2850,8 @@ void ASRecyclerViewImpl_init(ASRecyclerViewImpl *self) {
   self->orientation_ = ADXRecyclerView_VERTICAL;
   self->sectionMap_ = new_JavaUtilHashMap_init();
   self->itemConfigMap_ = new_JavaUtilHashMap_init();
+  self->dragDirs_ = ADXItemTouchHelper_UP | ADXItemTouchHelper_DOWN;
+  self->swipeDirs_ = ADXItemTouchHelper_LEFT | ADXItemTouchHelper_RIGHT;
   self->filterDelay_ = 100;
   self->filterId_ = JreLoadStatic(ASFilterFactory, DEFAULT_FILTER);
   self->oldScrollY_ = 0;
@@ -2203,6 +2882,8 @@ void ASRecyclerViewImpl_initWithNSString_(ASRecyclerViewImpl *self, NSString *lo
   self->orientation_ = ADXRecyclerView_VERTICAL;
   self->sectionMap_ = new_JavaUtilHashMap_init();
   self->itemConfigMap_ = new_JavaUtilHashMap_init();
+  self->dragDirs_ = ADXItemTouchHelper_UP | ADXItemTouchHelper_DOWN;
+  self->swipeDirs_ = ADXItemTouchHelper_LEFT | ADXItemTouchHelper_RIGHT;
   self->filterDelay_ = 100;
   self->filterId_ = JreLoadStatic(ASFilterFactory, DEFAULT_FILTER);
   self->oldScrollY_ = 0;
@@ -2233,6 +2914,8 @@ void ASRecyclerViewImpl_initWithNSString_withNSString_(ASRecyclerViewImpl *self,
   self->orientation_ = ADXRecyclerView_VERTICAL;
   self->sectionMap_ = new_JavaUtilHashMap_init();
   self->itemConfigMap_ = new_JavaUtilHashMap_init();
+  self->dragDirs_ = ADXItemTouchHelper_UP | ADXItemTouchHelper_DOWN;
+  self->swipeDirs_ = ADXItemTouchHelper_LEFT | ADXItemTouchHelper_RIGHT;
   self->filterDelay_ = 100;
   self->filterId_ = JreLoadStatic(ASFilterFactory, DEFAULT_FILTER);
   self->oldScrollY_ = 0;
@@ -2444,8 +3127,14 @@ void ASRecyclerViewImpl_nativeCreateRecycleViewWithJavaUtilMap_(ASRecyclerViewIm
 
 void ASRecyclerViewImpl_setLayoutManagerWithId_(ASRecyclerViewImpl *self, id objValue) {
   NSString *layoutManager = (NSString *) cast_chk(objValue, [NSString class]);
-  switch (JreIndexOfStr(layoutManager, (id[]){ @"androidx.recyclerview.widget.GridLayoutManager", @"androidx.recyclerview.widget.LinearLayoutManager", @"androidx.recyclerview.widget.StaggeredGridLayoutManager" }, 3)) {
+  switch (JreIndexOfStr(layoutManager, (id[]){ @"com.ashera.recycleview.FixedGridViewManager", @"androidx.recyclerview.widget.GridLayoutManager", @"androidx.recyclerview.widget.LinearLayoutManager", @"androidx.recyclerview.widget.StaggeredGridLayoutManager" }, 4)) {
     case 0:
+    {
+      ASFixedGridViewManager *gridLayoutManager = new_ASFixedGridViewManager_initWithInt_withInt_(self->fixedGridRowCount_, self->fixedGridColumnCount_);
+      [((ADXRecyclerView *) nil_chk(self->recyclerView_)) setLayoutManagerWithADXRecyclerView_LayoutManager:gridLayoutManager];
+      break;
+    }
+    case 1:
     {
       ADXGridLayoutManager *gridLayoutManager = new_ADXGridLayoutManager_initWithADContext_withInt_([((ADXRecyclerView *) nil_chk(self->recyclerView_)) getContext], self->spanCount_);
       [((ADXRecyclerView *) nil_chk(self->recyclerView_)) setLayoutManagerWithADXRecyclerView_LayoutManager:gridLayoutManager];
@@ -2453,14 +3142,14 @@ void ASRecyclerViewImpl_setLayoutManagerWithId_(ASRecyclerViewImpl *self, id obj
       [((ADXGridLayoutManager *) nil_chk(((ADXGridLayoutManager *) cast_chk([((ADXRecyclerView *) nil_chk(self->recyclerView_)) getLayoutManager], [ADXGridLayoutManager class])))) setSpanSizeLookupWithADXGridLayoutManager_SpanSizeLookup:new_ASRecyclerViewImpl_1_initWithASRecyclerViewImpl_(self)];
     }
     break;
-    case 1:
+    case 2:
     {
       ADXLinearLayoutManager *linearLayoutManager = new_ADXLinearLayoutManager_initWithADContext_([((ADXRecyclerView *) nil_chk(self->recyclerView_)) getContext]);
       [((ADXRecyclerView *) nil_chk(self->recyclerView_)) setLayoutManagerWithADXRecyclerView_LayoutManager:linearLayoutManager];
       [linearLayoutManager setOrientationWithInt:self->orientation_];
     }
     break;
-    case 2:
+    case 3:
     {
       ADXStaggeredGridLayoutManager *gridLayoutManager = new_ADXStaggeredGridLayoutManager_initWithInt_withInt_(self->orientation_, self->spanCount_);
       [((ADXRecyclerView *) nil_chk(self->recyclerView_)) setLayoutManagerWithADXRecyclerView_LayoutManager:gridLayoutManager];
@@ -2726,6 +3415,18 @@ void ASRecyclerViewImpl_createItemWithADXSection_withJavaUtilMap_withASLoopParam
   if ([itemMap containsKeyWithId:@"@gridInsets"]) {
     margin = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:[itemMap getWithId:@"@gridInsets"] withNSString:ASCommonConverters_dimension], [JavaLangInteger class]))) intValue];
   }
+  int32_t swipeDirs = -1;
+  if ([itemMap containsKeyWithId:@"@swipeDirs"]) {
+    swipeDirs = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:[itemMap getWithId:@"@swipeDirs"] withNSString:@"androidx.recyclerview.widget.RecyclerView.swipeDirs"], [JavaLangInteger class]))) intValue];
+  }
+  int32_t dragDirs = -1;
+  if ([itemMap containsKeyWithId:@"@dragDirs"]) {
+    dragDirs = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:[itemMap getWithId:@"@dragDirs"] withNSString:@"androidx.recyclerview.widget.RecyclerView.dragDirs"], [JavaLangInteger class]))) intValue];
+  }
+  bool dragAcrossSections = false;
+  if ([itemMap containsKeyWithId:@"@dragAcrossSections"]) {
+    dragAcrossSections = [((JavaLangBoolean *) nil_chk((JavaLangBoolean *) cast_chk([self quickConvertWithId:[itemMap getWithId:@"@dragAcrossSections"] withNSString:@"boolean"], [JavaLangBoolean class]))) booleanValue];
+  }
   if ([itemMap containsKeyWithId:@"@modelFor"]) {
     NSString *modelFor = ASPluginInvoker_getStringWithId_([itemMap getWithId:@"@modelFor"]);
     ASModelExpressionParser_ModelLoopHolder *modelLoopHolder = ASModelExpressionParser_parseModelLoopExpressionWithNSString_(modelFor);
@@ -2745,9 +3446,12 @@ void ASRecyclerViewImpl_createItemWithADXSection_withJavaUtilMap_withASLoopParam
           if ([self filterDataWithId:model]) {
             ASLoopParam *loopParam = new_ASLoopParam_init();
             [self storeModelToScopeWithNSString:modelLoopHolder->varName_ withASModelScope:modelLoopHolder->varScope_ withId:model withASLoopParam:loopParam];
-            ASRecyclerViewImpl_GenericItem *item = new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(self, [nil_chk(layout) description], template_, loopParam, viewHolderIds);
+            ASRecyclerViewImpl_GenericItem *item = new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(self, [nil_chk(layout) description], template_, loopParam, viewHolderIds, section);
             [item setNumberOfColumsWithInt:numberOfColumns];
+            [item setDragDirsWithInt:dragDirs];
+            [item setSwipeDirsWithInt:swipeDirs];
             [item setMarginWithInt:margin];
+            [item setDragAcrossSectionsWithBoolean:dragAcrossSections];
             [((ADXSection *) nil_chk(section)) addWithADXRVGroup:item];
           }
         }
@@ -2758,9 +3462,12 @@ void ASRecyclerViewImpl_createItemWithADXSection_withJavaUtilMap_withASLoopParam
           obj = [self changeModelDataTypeWithASModelDataType:((ASModelExpressionParser_ModelLoopHolder *) nil_chk(modelLoopHolder))->dataType_ withId:obj];
           ASLoopParam *loopParam = new_ASLoopParam_init();
           [self storeModelToScopeWithNSString:modelLoopHolder->varName_ withASModelScope:modelLoopHolder->varScope_ withId:obj withASLoopParam:loopParam];
-          ASRecyclerViewImpl_GenericItem *item = new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(self, [nil_chk(layout) description], template_, loopParam, viewHolderIds);
+          ASRecyclerViewImpl_GenericItem *item = new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(self, [nil_chk(layout) description], template_, loopParam, viewHolderIds, section);
           [item setNumberOfColumsWithInt:numberOfColumns];
+          [item setDragDirsWithInt:dragDirs];
+          [item setSwipeDirsWithInt:swipeDirs];
           [item setMarginWithInt:margin];
+          [item setDragAcrossSectionsWithBoolean:dragAcrossSections];
           [((ADXSection *) nil_chk(section)) addWithADXRVGroup:item];
         }
       }
@@ -2783,16 +3490,22 @@ void ASRecyclerViewImpl_createItemWithADXSection_withJavaUtilMap_withASLoopParam
         obj = [self changeModelDataTypeWithASModelDataType:((ASModelExpressionParser_ModelVarHolder *) nil_chk(modelVarHolder))->dataType_ withId:obj];
         [self storeModelToScopeWithNSString:modelVarHolder->varName_ withASModelScope:modelVarHolder->varScope_ withId:obj withASLoopParam:loopParam];
       }
-      ASRecyclerViewImpl_GenericItem *item = new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(self, [nil_chk(layout) description], template_, loopParam, viewHolderIds);
+      ASRecyclerViewImpl_GenericItem *item = new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(self, [nil_chk(layout) description], template_, loopParam, viewHolderIds, section);
       [item setNumberOfColumsWithInt:numberOfColumns];
+      [item setDragDirsWithInt:dragDirs];
+      [item setSwipeDirsWithInt:swipeDirs];
       [item setMarginWithInt:margin];
+      [item setDragAcrossSectionsWithBoolean:dragAcrossSections];
       [((ADXSection *) nil_chk(section)) addWithADXRVGroup:item];
     }
   }
   else {
-    ASRecyclerViewImpl_GenericItem *item = new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(self, [nil_chk(layout) description], template_, pLoopParam, viewHolderIds);
+    ASRecyclerViewImpl_GenericItem *item = new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(self, [nil_chk(layout) description], template_, pLoopParam, viewHolderIds, section);
     [item setNumberOfColumsWithInt:numberOfColumns];
+    [item setDragDirsWithInt:dragDirs];
+    [item setSwipeDirsWithInt:swipeDirs];
     [item setMarginWithInt:margin];
+    [item setDragAcrossSectionsWithBoolean:dragAcrossSections];
     [((ADXSection *) nil_chk(section)) addWithADXRVGroup:item];
   }
 }
@@ -2807,7 +3520,23 @@ void ASRecyclerViewImpl_createFooterWithASLoopParam_withADXSection_withJavaUtilM
     if (viewHolderId != nil) {
       viewHolderIds = (id<JavaUtilList>) cast_check([self quickConvertWithId:viewHolderId withNSString:ASCommonConverters_array withNSString:@"list" withNSString:nil], JavaUtilList_class_());
     }
-    [((ADXSection *) nil_chk(section)) setFooterWithADXRVGroup:new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(self, [nil_chk(layout) description], template_, loopParam, viewHolderIds)];
+    int32_t swipeDirs = -1;
+    if ([footerMap containsKeyWithId:@"@swipeDirs"]) {
+      swipeDirs = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:[footerMap getWithId:@"@swipeDirs"] withNSString:@"androidx.recyclerview.widget.RecyclerView.swipeDirs"], [JavaLangInteger class]))) intValue];
+    }
+    int32_t dragDirs = -1;
+    if ([footerMap containsKeyWithId:@"@dragDirs"]) {
+      dragDirs = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:[footerMap getWithId:@"@dragDirs"] withNSString:@"androidx.recyclerview.widget.RecyclerView.dragDirs"], [JavaLangInteger class]))) intValue];
+    }
+    bool dragAcrossSections = false;
+    if ([footerMap containsKeyWithId:@"@dragAcrossSections"]) {
+      dragAcrossSections = [((JavaLangBoolean *) nil_chk((JavaLangBoolean *) cast_chk([self quickConvertWithId:[footerMap getWithId:@"@dragAcrossSections"] withNSString:@"boolean"], [JavaLangBoolean class]))) booleanValue];
+    }
+    ASRecyclerViewImpl_GenericItem *footer = new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(self, [nil_chk(layout) description], template_, loopParam, viewHolderIds, section);
+    [footer setDragDirsWithInt:dragDirs];
+    [footer setSwipeDirsWithInt:swipeDirs];
+    [footer setDragAcrossSectionsWithBoolean:dragAcrossSections];
+    [((ADXSection *) nil_chk(section)) setFooterWithADXRVGroup:footer];
   }
 }
 
@@ -2821,7 +3550,23 @@ void ASRecyclerViewImpl_createHeaderWithASLoopParam_withADXSection_withJavaUtilM
     if (viewHolderId != nil) {
       viewHolderIds = (id<JavaUtilList>) cast_check([self quickConvertWithId:viewHolderId withNSString:ASCommonConverters_array withNSString:@"list" withNSString:nil], JavaUtilList_class_());
     }
-    [((ADXSection *) nil_chk(section)) setHeaderWithADXRVGroup:new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(self, [nil_chk(layout) description], template_, loopParam, viewHolderIds)];
+    int32_t swipeDirs = -1;
+    if ([headerMap containsKeyWithId:@"@swipeDirs"]) {
+      swipeDirs = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:[headerMap getWithId:@"@swipeDirs"] withNSString:@"androidx.recyclerview.widget.RecyclerView.swipeDirs"], [JavaLangInteger class]))) intValue];
+    }
+    int32_t dragDirs = -1;
+    if ([headerMap containsKeyWithId:@"@dragDirs"]) {
+      dragDirs = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk([self quickConvertWithId:[headerMap getWithId:@"@dragDirs"] withNSString:@"androidx.recyclerview.widget.RecyclerView.dragDirs"], [JavaLangInteger class]))) intValue];
+    }
+    bool dragAcrossSections = false;
+    if ([headerMap containsKeyWithId:@"@dragAcrossSections"]) {
+      dragAcrossSections = [((JavaLangBoolean *) nil_chk((JavaLangBoolean *) cast_chk([self quickConvertWithId:[headerMap getWithId:@"@dragAcrossSections"] withNSString:@"boolean"], [JavaLangBoolean class]))) booleanValue];
+    }
+    ASRecyclerViewImpl_GenericItem *header = new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(self, [nil_chk(layout) description], template_, loopParam, viewHolderIds, section);
+    [header setDragDirsWithInt:dragDirs];
+    [header setSwipeDirsWithInt:swipeDirs];
+    [header setDragAcrossSectionsWithBoolean:dragAcrossSections];
+    [((ADXSection *) nil_chk(section)) setHeaderWithADXRVGroup:header];
   }
 }
 
@@ -3071,6 +3816,173 @@ void ASRecyclerViewImpl_setFooterDisabledWithId_(ASRecyclerViewImpl *self, id ob
 void ASRecyclerViewImpl_setHeaderDisabledWithId_(ASRecyclerViewImpl *self, id objValue) {
   self->headerDisabled_ = [((JavaLangBoolean *) nil_chk((JavaLangBoolean *) cast_chk(objValue, [JavaLangBoolean class]))) booleanValue];
   ASRecyclerViewImpl_reloadTable(self);
+}
+
+bool ASRecyclerViewImpl_isCustomMeasure(ASRecyclerViewImpl *self) {
+  return ASRecyclerViewImpl_isFixedGridViewManager(self);
+}
+
+IOSIntArray *ASRecyclerViewImpl_customMeasureWithInt_withInt_(ASRecyclerViewImpl *self, int32_t widthSpec, int32_t heightSpec) {
+  return ASRecyclerViewImpl_measureFixedGridViewManagerWithInt_withInt_(self, widthSpec, heightSpec);
+}
+
+bool ASRecyclerViewImpl_isFixedGridViewManager(ASRecyclerViewImpl *self) {
+  return [[((ADXRecyclerView *) nil_chk(self->recyclerView_)) getLayoutManager] isKindOfClass:[ASFixedGridViewManager class]];
+}
+
+IOSIntArray *ASRecyclerViewImpl_measureFixedGridViewManagerWithInt_withInt_(ASRecyclerViewImpl *self, int32_t widthSpec, int32_t heightSpec) {
+  int32_t parentWidth = ADView_MeasureSpec_getSizeWithInt_(widthSpec);
+  int32_t parentHeight = ADView_MeasureSpec_getSizeWithInt_(heightSpec);
+  float imageWidth = self->fixedGridTileWidth_ * self->fixedGridColumnCount_;
+  float imageHeight = self->fixedGridTileHeight_ * self->fixedGridRowCount_;
+  float ratio = imageWidth / imageHeight;
+  bool isLandscape = parentWidth > parentHeight;
+  int32_t finalWidth;
+  int32_t finalHeight;
+  if (isLandscape) {
+    finalHeight = parentHeight;
+    finalWidth = JreFpToInt((finalHeight * ratio));
+  }
+  else {
+    finalWidth = parentWidth;
+    finalHeight = JreFpToInt((finalWidth / ratio));
+  }
+  int32_t w = ADView_MeasureSpec_makeMeasureSpecWithInt_withInt_(finalWidth, ADView_MeasureSpec_EXACTLY);
+  int32_t h = ADView_MeasureSpec_makeMeasureSpecWithInt_withInt_(finalHeight, ADView_MeasureSpec_EXACTLY);
+  return [IOSIntArray newArrayWithInts:(int32_t[]){ w, h } count:2];
+}
+
+void ASRecyclerViewImpl_setDragDropModeWithNSString_withId_(ASRecyclerViewImpl *self, NSString *strValue, id objValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setDragmodeWithNSString:strValue];
+}
+
+void ASRecyclerViewImpl_initTouchHelperSimpleCallback(ASRecyclerViewImpl *self) {
+  if (self->touchHelperSimpleCallback_ == nil) {
+    self->touchHelperSimpleCallback_ = new_ASGenericTouchHelperSimpleCallback_initWithADXRecyclerView_Adapter_withInt_withInt_(self->adapter_, self->dragDirs_, self->swipeDirs_);
+    self->itemTouchHelper_ = ASRecyclerViewImpl_createItemTouchHelper(self);
+    [((ADXItemTouchHelper *) nil_chk(self->itemTouchHelper_)) attachToRecyclerViewWithADXRecyclerView:self->recyclerView_];
+  }
+}
+
+void ASRecyclerViewImpl_setFixedgridTileHeightWithId_(ASRecyclerViewImpl *self, id objValue) {
+  self->fixedGridTileHeight_ = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk(objValue, [JavaLangInteger class]))) intValue];
+}
+
+void ASRecyclerViewImpl_setFixedgridTileWidthWithId_(ASRecyclerViewImpl *self, id objValue) {
+  self->fixedGridTileWidth_ = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk(objValue, [JavaLangInteger class]))) intValue];
+}
+
+void ASRecyclerViewImpl_setFixedgridColumnCountWithId_(ASRecyclerViewImpl *self, id objValue) {
+  self->fixedGridColumnCount_ = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk(objValue, [JavaLangInteger class]))) intValue];
+}
+
+void ASRecyclerViewImpl_setFixedgridRowCountWithId_(ASRecyclerViewImpl *self, id objValue) {
+  self->fixedGridRowCount_ = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk(objValue, [JavaLangInteger class]))) intValue];
+}
+
+void ASRecyclerViewImpl_setResetHighlightAttributesWithId_(ASRecyclerViewImpl *self, id objValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setResetHighlightAttributesWithNSString:(NSString *) cast_chk(objValue, [NSString class])];
+}
+
+void ASRecyclerViewImpl_setSelectHighlightAttributesWithId_(ASRecyclerViewImpl *self, id objValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setSelectHighlightAttributesWithNSString:(NSString *) cast_chk(objValue, [NSString class])];
+}
+
+void ASRecyclerViewImpl_setSwapModeWithNSString_withId_(ASRecyclerViewImpl *self, NSString *strValue, id objValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setSwapModeWithNSString:strValue];
+}
+
+void ASRecyclerViewImpl_setDragStartModeWithNSString_withId_(ASRecyclerViewImpl *self, NSString *strValue, id objValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setDragStartModeWithNSString:strValue];
+}
+
+void ASRecyclerViewImpl_setHasFixedSizeWithId_(ASRecyclerViewImpl *self, id objValue) {
+  [((ADXRecyclerView *) nil_chk(self->recyclerView_)) setHasFixedSizeWithBoolean:[((JavaLangBoolean *) nil_chk((JavaLangBoolean *) cast_chk(objValue, [JavaLangBoolean class]))) booleanValue]];
+}
+
+void ASRecyclerViewImpl_disableItemAnimator(ASRecyclerViewImpl *self) {
+  [((ADXRecyclerView *) nil_chk(self->recyclerView_)) setItemAnimatorWithADXRecyclerView_ItemAnimator:nil];
+}
+
+void ASRecyclerViewImpl_setSwipeSwapModeWithNSString_withId_(ASRecyclerViewImpl *self, NSString *strValue, id objValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setSwipeSwapModeWithNSString:strValue];
+}
+
+void ASRecyclerViewImpl_setDeleteOnSwipeWithId_(ASRecyclerViewImpl *self, id objValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setDeleteOnSwipeWithBoolean:[((JavaLangBoolean *) nil_chk((JavaLangBoolean *) cast_chk(objValue, [JavaLangBoolean class]))) booleanValue]];
+}
+
+void ASRecyclerViewImpl_setonSwipedWithNSString_(ASRecyclerViewImpl *self, NSString *strValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  ASRecyclerViewImpl_MyCallback *mycallback = new_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_withNSString_(self, strValue, @"onSwipe");
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setSwipeListenerWithASMyItemTouchHelper_MyCallback:mycallback];
+}
+
+void ASRecyclerViewImpl_setOnMovedWithNSString_(ASRecyclerViewImpl *self, NSString *strValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  ASRecyclerViewImpl_MyCallback *mycallback = new_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_withNSString_(self, strValue, @"onMoved");
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setOnMovedListenerWithASMyItemTouchHelper_MyCallback:mycallback];
+}
+
+void ASRecyclerViewImpl_setOnMoveWithNSString_(ASRecyclerViewImpl *self, NSString *strValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  ASRecyclerViewImpl_MyCallback *mycallback = new_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_withNSString_(self, strValue, @"onMove");
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setOnMoveListenerWithASMyItemTouchHelper_MyCallback:mycallback];
+}
+
+void ASRecyclerViewImpl_setOnSelectedChangedWithNSString_(ASRecyclerViewImpl *self, NSString *strValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  ASRecyclerViewImpl_MyCallback *mycallback = new_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_withNSString_(self, strValue, @"onSelectedChanged");
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setOnSelectedChangedListenerWithASMyItemTouchHelper_MyCallback:mycallback];
+}
+
+void ASRecyclerViewImpl_setonSwipedWithASMyItemTouchHelper_MyCallback_(ASRecyclerViewImpl *self, id<ASMyItemTouchHelper_MyCallback> objValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setSwipeListenerWithASMyItemTouchHelper_MyCallback:objValue];
+}
+
+void ASRecyclerViewImpl_setOnMovedWithASMyItemTouchHelper_MyCallback_(ASRecyclerViewImpl *self, id<ASMyItemTouchHelper_MyCallback> objValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setOnMovedListenerWithASMyItemTouchHelper_MyCallback:objValue];
+}
+
+void ASRecyclerViewImpl_setOnMoveWithASMyItemTouchHelper_MyCallback_(ASRecyclerViewImpl *self, id<ASMyItemTouchHelper_MyCallback> objValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setOnMoveListenerWithASMyItemTouchHelper_MyCallback:objValue];
+}
+
+void ASRecyclerViewImpl_setOnSelectedChangedWithASMyItemTouchHelper_MyCallback_(ASRecyclerViewImpl *self, id<ASMyItemTouchHelper_MyCallback> objValue) {
+  ASRecyclerViewImpl_initTouchHelperSimpleCallback(self);
+  [((ASGenericTouchHelperSimpleCallback *) nil_chk(self->touchHelperSimpleCallback_)) setOnSelectedChangedListenerWithASMyItemTouchHelper_MyCallback:objValue];
+}
+
+void ASRecyclerViewImpl_setSwipeDirsWithId_(ASRecyclerViewImpl *self, id objValue) {
+  self->swipeDirs_ = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk(objValue, [JavaLangInteger class]))) intValue];
+}
+
+void ASRecyclerViewImpl_setDragDirsWithId_(ASRecyclerViewImpl *self, id objValue) {
+  self->dragDirs_ = [((JavaLangInteger *) nil_chk((JavaLangInteger *) cast_chk(objValue, [JavaLangInteger class]))) intValue];
+}
+
+void ASRecyclerViewImpl_addEventInfoTargetViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(id<JavaUtilMap> obj, ADXRecyclerView_ViewHolder *target) {
+  ASRecyclerViewImpl_initialize();
+  if (target != nil) {
+    (void) [((id<JavaUtilMap>) nil_chk(obj)) putWithId:@"targetViewHolderAdapterPoition" withId:JavaLangInteger_valueOfWithInt_([target getAdapterPosition])];
+  }
+}
+
+void ASRecyclerViewImpl_addEventInfoViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(id<JavaUtilMap> obj, ADXRecyclerView_ViewHolder *viewHolder) {
+  ASRecyclerViewImpl_initialize();
+  if (viewHolder != nil) {
+    (void) [((id<JavaUtilMap>) nil_chk(obj)) putWithId:@"viewHolderAdapterPoition" withId:JavaLangInteger_valueOfWithInt_([viewHolder getAdapterPosition])];
+  }
 }
 
 void ASRecyclerViewImpl_filterWithId_(ASRecyclerViewImpl *self, id query) {
@@ -3364,9 +4276,381 @@ int32_t ASRecyclerViewImpl_getScrollBarMaxWithId_withFloat_(ASRecyclerViewImpl *
   return JreFpToInt(maxVal);
 }
 
+void ASRecyclerViewImpl_addStartDragWithASRecyclerViewImpl_MyViewHolder_(ASRecyclerViewImpl *self, ASRecyclerViewImpl_MyViewHolder *viewHolder) {
+}
+
+ADXItemTouchHelper *ASRecyclerViewImpl_createItemTouchHelper(ASRecyclerViewImpl *self) {
+  ADXItemTouchHelper *itemTouchHelper = new_ASRecyclerViewImpl_CustomItemTouchHelper_initWithASRecyclerViewImpl_withADXItemTouchHelper_Callback_(self, self->touchHelperSimpleCallback_);
+  return itemTouchHelper;
+}
+
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl)
 
 J2OBJC_NAME_MAPPING(ASRecyclerViewImpl, "com.ashera.recycleview", "AS")
+
+@implementation ASRecyclerViewImpl_DragDirs
+
+J2OBJC_IGNORE_DESIGNATED_BEGIN
+- (instancetype)init {
+  ASRecyclerViewImpl_DragDirs_init(self);
+  return self;
+}
+J2OBJC_IGNORE_DESIGNATED_END
+
+- (id<JavaUtilMap>)getMapping {
+  return mapping_;
+}
+
+- (JavaLangInteger *)getDefault {
+  return JavaLangInteger_valueOfWithInt_(0);
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "LJavaUtilMap;", 0x1, -1, -1, -1, 0, -1, -1 },
+    { NULL, "LJavaLangInteger;", 0x1, -1, -1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(init);
+  methods[1].selector = @selector(getMapping);
+  methods[2].selector = @selector(getDefault);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "mapping_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 1, -1 },
+  };
+  static const void *ptrTable[] = { "()Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "LASRecyclerViewImpl;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_DragDirs = { "DragDirs", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x18, 3, 1, 2, -1, -1, -1, -1 };
+  return &_ASRecyclerViewImpl_DragDirs;
+}
+
+@end
+
+void ASRecyclerViewImpl_DragDirs_init(ASRecyclerViewImpl_DragDirs *self) {
+  ASAbstractBitFlagConverter_init(self);
+  self->mapping_ = new_JavaUtilHashMap_init();
+  {
+    (void) [self->mapping_ putWithId:@"none" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x0)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"up" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x1)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"down" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x2)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"left" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x4)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"right" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x8)];
+  }
+}
+
+ASRecyclerViewImpl_DragDirs *new_ASRecyclerViewImpl_DragDirs_init() {
+  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_DragDirs, init)
+}
+
+ASRecyclerViewImpl_DragDirs *create_ASRecyclerViewImpl_DragDirs_init() {
+  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_DragDirs, init)
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_DragDirs)
+
+@implementation ASRecyclerViewImpl_SwipeDirs
+
+J2OBJC_IGNORE_DESIGNATED_BEGIN
+- (instancetype)init {
+  ASRecyclerViewImpl_SwipeDirs_init(self);
+  return self;
+}
+J2OBJC_IGNORE_DESIGNATED_END
+
+- (id<JavaUtilMap>)getMapping {
+  return mapping_;
+}
+
+- (JavaLangInteger *)getDefault {
+  return JavaLangInteger_valueOfWithInt_(0);
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "LJavaUtilMap;", 0x1, -1, -1, -1, 0, -1, -1 },
+    { NULL, "LJavaLangInteger;", 0x1, -1, -1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(init);
+  methods[1].selector = @selector(getMapping);
+  methods[2].selector = @selector(getDefault);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "mapping_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 1, -1 },
+  };
+  static const void *ptrTable[] = { "()Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "LASRecyclerViewImpl;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_SwipeDirs = { "SwipeDirs", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x18, 3, 1, 2, -1, -1, -1, -1 };
+  return &_ASRecyclerViewImpl_SwipeDirs;
+}
+
+@end
+
+void ASRecyclerViewImpl_SwipeDirs_init(ASRecyclerViewImpl_SwipeDirs *self) {
+  ASAbstractBitFlagConverter_init(self);
+  self->mapping_ = new_JavaUtilHashMap_init();
+  {
+    (void) [self->mapping_ putWithId:@"none" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x0)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"up" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x1)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"down" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x2)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"left" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x4)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"right" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x8)];
+  }
+}
+
+ASRecyclerViewImpl_SwipeDirs *new_ASRecyclerViewImpl_SwipeDirs_init() {
+  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_SwipeDirs, init)
+}
+
+ASRecyclerViewImpl_SwipeDirs *create_ASRecyclerViewImpl_SwipeDirs_init() {
+  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_SwipeDirs, init)
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_SwipeDirs)
+
+@implementation ASRecyclerViewImpl_DragDropMode
+
+J2OBJC_IGNORE_DESIGNATED_BEGIN
+- (instancetype)init {
+  ASRecyclerViewImpl_DragDropMode_init(self);
+  return self;
+}
+J2OBJC_IGNORE_DESIGNATED_END
+
+- (id<JavaUtilMap>)getMapping {
+  return mapping_;
+}
+
+- (JavaLangInteger *)getDefault {
+  return JavaLangInteger_valueOfWithInt_(0);
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "LJavaUtilMap;", 0x1, -1, -1, -1, 0, -1, -1 },
+    { NULL, "LJavaLangInteger;", 0x1, -1, -1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(init);
+  methods[1].selector = @selector(getMapping);
+  methods[2].selector = @selector(getDefault);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "mapping_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 1, -1 },
+  };
+  static const void *ptrTable[] = { "()Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "LASRecyclerViewImpl;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_DragDropMode = { "DragDropMode", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x18, 3, 1, 2, -1, -1, -1, -1 };
+  return &_ASRecyclerViewImpl_DragDropMode;
+}
+
+@end
+
+void ASRecyclerViewImpl_DragDropMode_init(ASRecyclerViewImpl_DragDropMode *self) {
+  ASAbstractEnumToIntConverter_init(self);
+  self->mapping_ = new_JavaUtilHashMap_init();
+  {
+    (void) [self->mapping_ putWithId:@"none" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x0)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"swaponhighlight" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x1)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"swapwhendropped" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x2)];
+  }
+}
+
+ASRecyclerViewImpl_DragDropMode *new_ASRecyclerViewImpl_DragDropMode_init() {
+  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_DragDropMode, init)
+}
+
+ASRecyclerViewImpl_DragDropMode *create_ASRecyclerViewImpl_DragDropMode_init() {
+  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_DragDropMode, init)
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_DragDropMode)
+
+@implementation ASRecyclerViewImpl_DragStartMode
+
+J2OBJC_IGNORE_DESIGNATED_BEGIN
+- (instancetype)init {
+  ASRecyclerViewImpl_DragStartMode_init(self);
+  return self;
+}
+J2OBJC_IGNORE_DESIGNATED_END
+
+- (id<JavaUtilMap>)getMapping {
+  return mapping_;
+}
+
+- (JavaLangInteger *)getDefault {
+  return JavaLangInteger_valueOfWithInt_(0);
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "LJavaUtilMap;", 0x1, -1, -1, -1, 0, -1, -1 },
+    { NULL, "LJavaLangInteger;", 0x1, -1, -1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(init);
+  methods[1].selector = @selector(getMapping);
+  methods[2].selector = @selector(getDefault);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "mapping_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 1, -1 },
+  };
+  static const void *ptrTable[] = { "()Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "LASRecyclerViewImpl;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_DragStartMode = { "DragStartMode", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x18, 3, 1, 2, -1, -1, -1, -1 };
+  return &_ASRecyclerViewImpl_DragStartMode;
+}
+
+@end
+
+void ASRecyclerViewImpl_DragStartMode_init(ASRecyclerViewImpl_DragStartMode *self) {
+  ASAbstractEnumToIntConverter_init(self);
+  self->mapping_ = new_JavaUtilHashMap_init();
+  {
+    (void) [self->mapping_ putWithId:@"none" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x0)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"longpress" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x1)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"onclick" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x2)];
+  }
+}
+
+ASRecyclerViewImpl_DragStartMode *new_ASRecyclerViewImpl_DragStartMode_init() {
+  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_DragStartMode, init)
+}
+
+ASRecyclerViewImpl_DragStartMode *create_ASRecyclerViewImpl_DragStartMode_init() {
+  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_DragStartMode, init)
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_DragStartMode)
+
+@implementation ASRecyclerViewImpl_DragSwapMode
+
+J2OBJC_IGNORE_DESIGNATED_BEGIN
+- (instancetype)init {
+  ASRecyclerViewImpl_DragSwapMode_init(self);
+  return self;
+}
+J2OBJC_IGNORE_DESIGNATED_END
+
+- (id<JavaUtilMap>)getMapping {
+  return mapping_;
+}
+
+- (JavaLangInteger *)getDefault {
+  return JavaLangInteger_valueOfWithInt_(0);
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "LJavaUtilMap;", 0x1, -1, -1, -1, 0, -1, -1 },
+    { NULL, "LJavaLangInteger;", 0x1, -1, -1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(init);
+  methods[1].selector = @selector(getMapping);
+  methods[2].selector = @selector(getDefault);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "mapping_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 1, -1 },
+  };
+  static const void *ptrTable[] = { "()Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "LASRecyclerViewImpl;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_DragSwapMode = { "DragSwapMode", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x18, 3, 1, 2, -1, -1, -1, -1 };
+  return &_ASRecyclerViewImpl_DragSwapMode;
+}
+
+@end
+
+void ASRecyclerViewImpl_DragSwapMode_init(ASRecyclerViewImpl_DragSwapMode *self) {
+  ASAbstractEnumToIntConverter_init(self);
+  self->mapping_ = new_JavaUtilHashMap_init();
+  {
+    (void) [self->mapping_ putWithId:@"none" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x0)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"notifyDataSetChanged" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x1)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"notifyItemMoved" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x2)];
+  }
+}
+
+ASRecyclerViewImpl_DragSwapMode *new_ASRecyclerViewImpl_DragSwapMode_init() {
+  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_DragSwapMode, init)
+}
+
+ASRecyclerViewImpl_DragSwapMode *create_ASRecyclerViewImpl_DragSwapMode_init() {
+  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_DragSwapMode, init)
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_DragSwapMode)
+
+@implementation ASRecyclerViewImpl_SwipeSwapMode
+
+J2OBJC_IGNORE_DESIGNATED_BEGIN
+- (instancetype)init {
+  ASRecyclerViewImpl_SwipeSwapMode_init(self);
+  return self;
+}
+J2OBJC_IGNORE_DESIGNATED_END
+
+- (id<JavaUtilMap>)getMapping {
+  return mapping_;
+}
+
+- (JavaLangInteger *)getDefault {
+  return JavaLangInteger_valueOfWithInt_(0);
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "LJavaUtilMap;", 0x1, -1, -1, -1, 0, -1, -1 },
+    { NULL, "LJavaLangInteger;", 0x1, -1, -1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(init);
+  methods[1].selector = @selector(getMapping);
+  methods[2].selector = @selector(getDefault);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "mapping_", "LJavaUtilMap;", .constantValue.asLong = 0, 0x2, -1, -1, 1, -1 },
+  };
+  static const void *ptrTable[] = { "()Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;", "LASRecyclerViewImpl;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_SwipeSwapMode = { "SwipeSwapMode", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x18, 3, 1, 2, -1, -1, -1, -1 };
+  return &_ASRecyclerViewImpl_SwipeSwapMode;
+}
+
+@end
+
+void ASRecyclerViewImpl_SwipeSwapMode_init(ASRecyclerViewImpl_SwipeSwapMode *self) {
+  ASAbstractEnumToIntConverter_init(self);
+  self->mapping_ = new_JavaUtilHashMap_init();
+  {
+    (void) [self->mapping_ putWithId:@"none" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x0)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"notifyDataSetChanged" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x1)];
+    (void) [((id<JavaUtilMap>) nil_chk(self->mapping_)) putWithId:@"notifyItemRemoved" withId:JavaLangInteger_valueOfWithInt_((int32_t) 0x2)];
+  }
+}
+
+ASRecyclerViewImpl_SwipeSwapMode *new_ASRecyclerViewImpl_SwipeSwapMode_init() {
+  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_SwipeSwapMode, init)
+}
+
+ASRecyclerViewImpl_SwipeSwapMode *create_ASRecyclerViewImpl_SwipeSwapMode_init() {
+  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_SwipeSwapMode, init)
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_SwipeSwapMode)
 
 @implementation ASRecyclerViewImpl_Orientation
 
@@ -3456,6 +4740,11 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_Orientation)
 
 - (void)onMeasureWithInt:(int32_t)widthMeasureSpec
                  withInt:(int32_t)heightMeasureSpec {
+  if (ASRecyclerViewImpl_isCustomMeasure(this$0_)) {
+    IOSIntArray *wh = ASRecyclerViewImpl_customMeasureWithInt_withInt_(this$0_, widthMeasureSpec, heightMeasureSpec);
+    [super onMeasureWithInt:IOSIntArray_Get(nil_chk(wh), 0) withInt:IOSIntArray_Get(wh, 1)];
+    return;
+  }
   if (mMaxWidth_ > 0) {
     widthMeasureSpec = ADView_MeasureSpec_makeMeasureSpecWithInt_withInt_(mMaxWidth_, ADView_MeasureSpec_AT_MOST);
   }
@@ -3895,6 +5184,57 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
   return self;
 }
 
+- (bool)isDragEnabledWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  return [((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder)) getItemViewType] == 0;
+}
+
+- (void)onItemMoveWithInt:(int32_t)fromPosition
+                  withInt:(int32_t)toPosition
+             withNSString:(NSString *)mode {
+  int32_t fromItem = ASRecyclerViewImpl_ListAdapter_adapterPositionToItemIndexWithInt_(self, fromPosition);
+  int32_t toItem = ASRecyclerViewImpl_ListAdapter_adapterPositionToItemIndexWithInt_(self, toPosition);
+  JavaUtilCollections_swapWithJavaUtilList_withInt_withInt_(this$0_->dataList_, fromItem, toItem);
+  JavaUtilCollections_swapWithJavaUtilList_withInt_withInt_(this$0_->ids_, fromItem, toItem);
+  if (mode != nil) {
+    switch (JreIndexOfStr(mode, (id[]){ @"notifyDataSetChanged", @"notifyItemMoved" }, 2)) {
+      case 0:
+      [self notifyDataSetChanged];
+      break;
+      case 1:
+      [self notifyItemMovedWithInt:fromPosition withInt:toPosition];
+      break;
+      default:
+      break;
+    }
+  }
+}
+
+- (int32_t)adapterPositionToItemIndexWithInt:(int32_t)index {
+  return ASRecyclerViewImpl_ListAdapter_adapterPositionToItemIndexWithInt_(self, index);
+}
+
+- (void)onItemRemoveWithInt:(int32_t)position
+               withNSString:(NSString *)mode {
+  int32_t itemIndex = ASRecyclerViewImpl_ListAdapter_adapterPositionToItemIndexWithInt_(self, position);
+  (void) [((id<JavaUtilList>) nil_chk(this$0_->ids_)) removeWithInt:itemIndex];
+  (void) [((id<JavaUtilList>) nil_chk(this$0_->dataList_)) removeWithInt:itemIndex];
+  if (mode != nil) {
+    switch (JreIndexOfStr(mode, (id[]){ @"notifyDataSetChanged", @"notifyItemRemoved" }, 2)) {
+      case 0:
+      [self notifyDataSetChanged];
+      break;
+      case 1:
+      [self notifyItemRemovedWithInt:position];
+      break;
+      default:
+      break;
+    }
+  }
+  else {
+    [self notifyItemRemovedWithInt:position];
+  }
+}
+
 - (int64_t)getItemIdWithInt:(int32_t)position {
   if (ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(self, position) || ASRecyclerViewImpl_ListAdapter_isFooterWithInt_(self, position)) {
     return [super getItemIdWithInt:position];
@@ -3909,14 +5249,14 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
   return [(JavaLangInteger *) cast_chk(id_, [JavaLangInteger class]) longLongValue];
 }
 
-- (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_ViewHolder *)holder {
+- (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_MyViewHolder *)holder {
   [super onViewAttachedToWindowWithADXRecyclerView_ViewHolder:holder];
-  [((ADView *) nil_chk(((ASRecyclerViewImpl_ViewHolder *) nil_chk(holder))->itemView_)) setVisibilityWithInt:ADView_VISIBLE];
+  [((ADView *) nil_chk(((ASRecyclerViewImpl_MyViewHolder *) nil_chk(holder))->itemView_)) setVisibilityWithInt:ADView_VISIBLE];
 }
 
-- (void)onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_ViewHolder *)holder {
+- (void)onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_MyViewHolder *)holder {
   [super onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:holder];
-  [((ADView *) nil_chk(((ASRecyclerViewImpl_ViewHolder *) nil_chk(holder))->itemView_)) setVisibilityWithInt:ADView_GONE];
+  [((ADView *) nil_chk(((ASRecyclerViewImpl_MyViewHolder *) nil_chk(holder))->itemView_)) setVisibilityWithInt:ADView_INVISIBLE];
 }
 
 - (int32_t)getItemViewTypeWithInt:(int32_t)position {
@@ -3937,8 +5277,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
   return ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(self, position);
 }
 
-- (ASRecyclerViewImpl_ViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                             withInt:(int32_t)viewType {
+- (ASRecyclerViewImpl_MyViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
+                                                               withInt:(int32_t)viewType {
   id<ASIWidget> listItem = nil;
   id<JavaUtilList> viewHolderIds;
   if (viewType == 1) {
@@ -3959,20 +5299,21 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
   }
   ADView *itemView = (ADView *) cast_chk([((id<ASIWidget>) nil_chk(widget)) asWidget], [ADView class]);
   [this$0_ setItemViewParamsWithASIWidget:widget withADView:itemView];
-  ASRecyclerViewImpl_ViewHolder *viewHolder = new_ASRecyclerViewImpl_ViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(this$0_, widget, itemView, viewHolderIds);
+  ASRecyclerViewImpl_MyViewHolder *viewHolder = new_ASRecyclerViewImpl_MyViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(this$0_, widget, itemView, viewHolderIds);
+  ASRecyclerViewImpl_addStartDragWithASRecyclerViewImpl_MyViewHolder_(this$0_, viewHolder);
   return viewHolder;
 }
 
-- (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_ViewHolder *)viewHolder
+- (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_MyViewHolder *)viewHolder
                                                withInt:(int32_t)position {
   if (ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(self, position) || ASRecyclerViewImpl_ListAdapter_isFooterWithInt_(self, position)) {
-    [this$0_ setAttributeOnViewHolderWithASWidgetViewHolder:((ASRecyclerViewImpl_ViewHolder *) nil_chk(viewHolder))->widgetViewHolder_ withASLoopParam:nil];
+    [this$0_ setAttributeOnViewHolderWithASWidgetViewHolder:((ASRecyclerViewImpl_MyViewHolder *) nil_chk(viewHolder))->widgetViewHolder_ withASLoopParam:nil];
     return;
   }
   if (this$0_->headerTemplate_ != nil && !this$0_->headerDisabled_) {
     position = position - 1;
   }
-  [this$0_ setAttributeOnViewHolderWithASWidgetViewHolder:((ASRecyclerViewImpl_ViewHolder *) nil_chk(viewHolder))->widgetViewHolder_ withInt:position];
+  [this$0_ setAttributeOnViewHolderWithASWidgetViewHolder:((ASRecyclerViewImpl_MyViewHolder *) nil_chk(viewHolder))->widgetViewHolder_ withInt:position];
 }
 
 - (int32_t)getItemCount {
@@ -3986,38 +5327,58 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
   return size;
 }
 
+- (int32_t)getSwipeDirsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  return -1;
+}
+
+- (int32_t)getDragDirsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  return -1;
+}
+
 + (const J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { NULL, NULL, 0x1, -1, 0, -1, -1, -1, -1 },
-    { NULL, "J", 0x1, 1, 2, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 1, 2, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 3, 4, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 5, 4, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 6, 2, -1, -1, -1, -1 },
-    { NULL, "Z", 0x2, 7, 2, -1, -1, -1, -1 },
-    { NULL, "Z", 0x2, 8, 2, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_ViewHolder;", 0x1, 9, 10, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 11, 12, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 5, 6, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 7, 8, -1, -1, -1, -1 },
+    { NULL, "J", 0x1, 9, 6, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 10, 11, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 12, 11, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 13, 6, -1, -1, -1, -1 },
+    { NULL, "Z", 0x2, 14, 6, -1, -1, -1, -1 },
+    { NULL, "Z", 0x2, 15, 6, -1, -1, -1, -1 },
+    { NULL, "LASRecyclerViewImpl_MyViewHolder;", 0x1, 16, 17, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 18, 19, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 20, 2, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 21, 2, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
   #pragma clang diagnostic ignored "-Wundeclared-selector"
   methods[0].selector = @selector(initWithASRecyclerViewImpl:);
-  methods[1].selector = @selector(getItemIdWithInt:);
-  methods[2].selector = @selector(onViewAttachedToWindowWithADXRecyclerView_ViewHolder:);
-  methods[3].selector = @selector(onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:);
-  methods[4].selector = @selector(getItemViewTypeWithInt:);
-  methods[5].selector = @selector(isFooterWithInt:);
-  methods[6].selector = @selector(isHeaderWithInt:);
-  methods[7].selector = @selector(onCreateViewHolderWithADViewGroup:withInt:);
-  methods[8].selector = @selector(onBindViewHolderWithADXRecyclerView_ViewHolder:withInt:);
-  methods[9].selector = @selector(getItemCount);
+  methods[1].selector = @selector(isDragEnabledWithADXRecyclerView_ViewHolder:);
+  methods[2].selector = @selector(onItemMoveWithInt:withInt:withNSString:);
+  methods[3].selector = @selector(adapterPositionToItemIndexWithInt:);
+  methods[4].selector = @selector(onItemRemoveWithInt:withNSString:);
+  methods[5].selector = @selector(getItemIdWithInt:);
+  methods[6].selector = @selector(onViewAttachedToWindowWithADXRecyclerView_ViewHolder:);
+  methods[7].selector = @selector(onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:);
+  methods[8].selector = @selector(getItemViewTypeWithInt:);
+  methods[9].selector = @selector(isFooterWithInt:);
+  methods[10].selector = @selector(isHeaderWithInt:);
+  methods[11].selector = @selector(onCreateViewHolderWithADViewGroup:withInt:);
+  methods[12].selector = @selector(onBindViewHolderWithADXRecyclerView_ViewHolder:withInt:);
+  methods[13].selector = @selector(getItemCount);
+  methods[14].selector = @selector(getSwipeDirsWithADXRecyclerView_ViewHolder:);
+  methods[15].selector = @selector(getDragDirsWithADXRecyclerView_ViewHolder:);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
     { "this$0_", "LASRecyclerViewImpl;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "LASRecyclerViewImpl;", "getItemId", "I", "onViewAttachedToWindow", "LASRecyclerViewImpl_ViewHolder;", "onViewDetachedFromWindow", "getItemViewType", "isFooter", "isHeader", "onCreateViewHolder", "LADViewGroup;I", "onBindViewHolder", "LASRecyclerViewImpl_ViewHolder;I", "Landroidx/recyclerview/widget/RecyclerView$Adapter<Lcom/ashera/recycleview/RecyclerViewImpl$ViewHolder;>;" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl_ListAdapter = { "ListAdapter", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 10, 1, 0, -1, -1, 13, -1 };
+  static const void *ptrTable[] = { "LASRecyclerViewImpl;", "isDragEnabled", "LADXRecyclerView_ViewHolder;", "onItemMove", "IILNSString;", "adapterPositionToItemIndex", "I", "onItemRemove", "ILNSString;", "getItemId", "onViewAttachedToWindow", "LASRecyclerViewImpl_MyViewHolder;", "onViewDetachedFromWindow", "getItemViewType", "isFooter", "isHeader", "onCreateViewHolder", "LADViewGroup;I", "onBindViewHolder", "LASRecyclerViewImpl_MyViewHolder;I", "getSwipeDirs", "getDragDirs", "Landroidx/recyclerview/widget/RecyclerView$Adapter<Lcom/ashera/recycleview/RecyclerViewImpl$MyViewHolder;>;Lcom/ashera/recycleview/ItemActionHandler;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_ListAdapter = { "ListAdapter", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 16, 1, 0, -1, -1, 22, -1 };
   return &_ASRecyclerViewImpl_ListAdapter;
 }
 
@@ -4036,6 +5397,13 @@ ASRecyclerViewImpl_ListAdapter *create_ASRecyclerViewImpl_ListAdapter_initWithAS
   J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_ListAdapter, initWithASRecyclerViewImpl_, outer$)
 }
 
+int32_t ASRecyclerViewImpl_ListAdapter_adapterPositionToItemIndexWithInt_(ASRecyclerViewImpl_ListAdapter *self, int32_t index) {
+  if (self->this$0_->headerTemplate_ != nil && !self->this$0_->headerDisabled_) {
+    return index - 1;
+  }
+  return index;
+}
+
 bool ASRecyclerViewImpl_ListAdapter_isFooterWithInt_(ASRecyclerViewImpl_ListAdapter *self, int32_t position) {
   return !self->this$0_->footerDisabled_ && self->this$0_->footerTemplate_ != nil && position == [self getItemCount] - 1;
 }
@@ -4046,13 +5414,13 @@ bool ASRecyclerViewImpl_ListAdapter_isHeaderWithInt_(ASRecyclerViewImpl_ListAdap
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ListAdapter)
 
-@implementation ASRecyclerViewImpl_ViewHolder
+@implementation ASRecyclerViewImpl_MyViewHolder
 
 - (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$
                              withASIWidget:(id<ASIWidget>)widget
                                 withADView:(ADView *)itemView
                           withJavaUtilList:(id<JavaUtilList>)viewHolderIds {
-  ASRecyclerViewImpl_ViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(self, outer$, widget, itemView, viewHolderIds);
+  ASRecyclerViewImpl_MyViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(self, outer$, widget, itemView, viewHolderIds);
   return self;
 }
 
@@ -4069,28 +5437,28 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ListAdapter)
     { "widgetViewHolder_", "LASWidgetViewHolder;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LASRecyclerViewImpl;LASIWidget;LADView;LJavaUtilList;", "(Lcom/ashera/widget/IWidget;Lr/android/view/View;Ljava/util/List<Ljava/lang/String;>;)V", "LASRecyclerViewImpl;" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl_ViewHolder = { "ViewHolder", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 1, 1, 2, -1, -1, -1, -1 };
-  return &_ASRecyclerViewImpl_ViewHolder;
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_MyViewHolder = { "MyViewHolder", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 1, 1, 2, -1, -1, -1, -1 };
+  return &_ASRecyclerViewImpl_MyViewHolder;
 }
 
 @end
 
-void ASRecyclerViewImpl_ViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl_ViewHolder *self, ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds) {
+void ASRecyclerViewImpl_MyViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl_MyViewHolder *self, ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds) {
   ADXRecyclerView_ViewHolder_initWithADView_(self, itemView);
   if (viewHolderIds != nil) {
     self->widgetViewHolder_ = [outer$ createWidgetViewHolderWithJavaUtilList:viewHolderIds withASIWidget:widget];
   }
 }
 
-ASRecyclerViewImpl_ViewHolder *new_ASRecyclerViewImpl_ViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds) {
-  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_ViewHolder, initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_, outer$, widget, itemView, viewHolderIds)
+ASRecyclerViewImpl_MyViewHolder *new_ASRecyclerViewImpl_MyViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds) {
+  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_MyViewHolder, initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_, outer$, widget, itemView, viewHolderIds)
 }
 
-ASRecyclerViewImpl_ViewHolder *create_ASRecyclerViewImpl_ViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds) {
-  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_ViewHolder, initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_, outer$, widget, itemView, viewHolderIds)
+ASRecyclerViewImpl_MyViewHolder *create_ASRecyclerViewImpl_MyViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds) {
+  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_MyViewHolder, initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_, outer$, widget, itemView, viewHolderIds)
 }
 
-J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ViewHolder)
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_MyViewHolder)
 
 @implementation ASRecyclerViewImpl_1
 
@@ -4235,6 +5603,30 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_SectionHolder)
 
 @implementation ASRecyclerViewImpl_GenericItem
 
+- (bool)isDragAcrossSections {
+  return dragAcrossSections_;
+}
+
+- (void)setDragAcrossSectionsWithBoolean:(bool)dragAcrossSections {
+  self->dragAcrossSections_ = dragAcrossSections;
+}
+
+- (int32_t)getDragDirs {
+  return dragDirs_;
+}
+
+- (void)setDragDirsWithInt:(int32_t)dragDirs {
+  self->dragDirs_ = dragDirs;
+}
+
+- (int32_t)getSwipeDirs {
+  return swipeDirs_;
+}
+
+- (void)setSwipeDirsWithInt:(int32_t)swipeDirs {
+  self->swipeDirs_ = swipeDirs;
+}
+
 - (bool)isModified {
   return modified_;
 }
@@ -4264,8 +5656,9 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_SectionHolder)
                               withNSString:(NSString *)layout
                              withASIWidget:(id<ASIWidget>)template_
                            withASLoopParam:(ASLoopParam *)loopParam
-                          withJavaUtilList:(id<JavaUtilList>)viewHolderIds {
-  ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(self, outer$, layout, template_, loopParam, viewHolderIds);
+                          withJavaUtilList:(id<JavaUtilList>)viewHolderIds
+                            withADXSection:(ADXSection *)section {
+  ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(self, outer$, layout, template_, loopParam, viewHolderIds, section);
   return self;
 }
 
@@ -4290,70 +5683,101 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_SectionHolder)
   return template__;
 }
 
+- (ADXSection *)getSection {
+  return section_;
+}
+
+- (void)setSectionWithADXSection:(ADXSection *)section {
+  self->section_ = section;
+}
+
 + (const J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 0, 1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 2, 3, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 4, 5, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 2, 3, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 4, 3, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 5, 1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 6, 3, -1, -1, -1, -1 },
-    { NULL, NULL, 0x1, -1, 7, -1, 8, -1, -1 },
-    { NULL, "LJavaUtilList;", 0x1, -1, -1, -1, 9, -1, -1 },
+    { NULL, "I", 0x1, 7, 8, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 9, 3, -1, -1, -1, -1 },
+    { NULL, NULL, 0x1, -1, 10, -1, 11, -1, -1 },
+    { NULL, "LJavaUtilList;", 0x1, -1, -1, -1, 12, -1, -1 },
     { NULL, "LASLoopParam;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 10, 11, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 13, 14, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "LASIWidget;", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "LADXSection;", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 15, 16, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
   #pragma clang diagnostic ignored "-Wundeclared-selector"
-  methods[0].selector = @selector(isModified);
-  methods[1].selector = @selector(setModifiedWithBoolean:);
-  methods[2].selector = @selector(setNumberOfColumsWithInt:);
-  methods[3].selector = @selector(getSpanSizeWithInt:withInt:);
-  methods[4].selector = @selector(getMargin);
-  methods[5].selector = @selector(setMarginWithInt:);
-  methods[6].selector = @selector(initWithASRecyclerViewImpl:withNSString:withASIWidget:withASLoopParam:withJavaUtilList:);
-  methods[7].selector = @selector(getViewHolderIds);
-  methods[8].selector = @selector(getLoopParam);
-  methods[9].selector = @selector(bindWithADXGroupieViewHolder:withInt:);
-  methods[10].selector = @selector(getLayout);
-  methods[11].selector = @selector(getTemplate);
+  methods[0].selector = @selector(isDragAcrossSections);
+  methods[1].selector = @selector(setDragAcrossSectionsWithBoolean:);
+  methods[2].selector = @selector(getDragDirs);
+  methods[3].selector = @selector(setDragDirsWithInt:);
+  methods[4].selector = @selector(getSwipeDirs);
+  methods[5].selector = @selector(setSwipeDirsWithInt:);
+  methods[6].selector = @selector(isModified);
+  methods[7].selector = @selector(setModifiedWithBoolean:);
+  methods[8].selector = @selector(setNumberOfColumsWithInt:);
+  methods[9].selector = @selector(getSpanSizeWithInt:withInt:);
+  methods[10].selector = @selector(getMargin);
+  methods[11].selector = @selector(setMarginWithInt:);
+  methods[12].selector = @selector(initWithASRecyclerViewImpl:withNSString:withASIWidget:withASLoopParam:withJavaUtilList:withADXSection:);
+  methods[13].selector = @selector(getViewHolderIds);
+  methods[14].selector = @selector(getLoopParam);
+  methods[15].selector = @selector(bindWithADXGroupieViewHolder:withInt:);
+  methods[16].selector = @selector(getLayout);
+  methods[17].selector = @selector(getTemplate);
+  methods[18].selector = @selector(getSection);
+  methods[19].selector = @selector(setSectionWithADXSection:);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
     { "this$0_", "LASRecyclerViewImpl;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
-    { "template__", "LASIWidget;", .constantValue.asLong = 0, 0x2, 12, -1, -1, -1 },
+    { "template__", "LASIWidget;", .constantValue.asLong = 0, 0x2, 17, -1, -1, -1 },
     { "loopParam_", "LASLoopParam;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "viewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 13, -1 },
+    { "viewHolderIds_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 18, -1 },
     { "layout_", "LNSString;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "section_", "LADXSection;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "margin_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "modified_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "numberOfColums_", "I", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "dragDirs_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "swipeDirs_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "dragAcrossSections_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "setModified", "Z", "setNumberOfColums", "I", "getSpanSize", "II", "setMargin", "LASRecyclerViewImpl;LNSString;LASIWidget;LASLoopParam;LJavaUtilList;", "(Ljava/lang/String;Lcom/ashera/widget/IWidget;Lcom/ashera/model/LoopParam;Ljava/util/List<Ljava/lang/String;>;)V", "()Ljava/util/List<Ljava/lang/String;>;", "bind", "LASRecyclerViewImpl_GroupieViewHolder;I", "template", "Ljava/util/List<Ljava/lang/String;>;", "LASRecyclerViewImpl;", "Lcom/xwray/groupie/Item<Lcom/ashera/recycleview/RecyclerViewImpl$GroupieViewHolder;>;" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl_GenericItem = { "GenericItem", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 12, 8, 14, -1, -1, 15, -1 };
+  static const void *ptrTable[] = { "setDragAcrossSections", "Z", "setDragDirs", "I", "setSwipeDirs", "setModified", "setNumberOfColums", "getSpanSize", "II", "setMargin", "LASRecyclerViewImpl;LNSString;LASIWidget;LASLoopParam;LJavaUtilList;LADXSection;", "(Ljava/lang/String;Lcom/ashera/widget/IWidget;Lcom/ashera/model/LoopParam;Ljava/util/List<Ljava/lang/String;>;Lcom/xwray/groupie/Section;)V", "()Ljava/util/List<Ljava/lang/String;>;", "bind", "LASRecyclerViewImpl_GroupieViewHolder;I", "setSection", "LADXSection;", "template", "Ljava/util/List<Ljava/lang/String;>;", "LASRecyclerViewImpl;", "Lcom/xwray/groupie/Item<Lcom/ashera/recycleview/RecyclerViewImpl$GroupieViewHolder;>;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_GenericItem = { "GenericItem", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 20, 12, 19, -1, -1, 20, -1 };
   return &_ASRecyclerViewImpl_GenericItem;
 }
 
 @end
 
-void ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(ASRecyclerViewImpl_GenericItem *self, ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds) {
+void ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(ASRecyclerViewImpl_GenericItem *self, ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds, ADXSection *section) {
   self->this$0_ = outer$;
   ADXItem_init(self);
   self->numberOfColums_ = 1;
+  self->dragDirs_ = -1;
+  self->swipeDirs_ = -1;
   self->template__ = template_;
   self->loopParam_ = loopParam;
   self->layout_ = layout;
   self->viewHolderIds_ = viewHolderIds;
+  self->section_ = section;
 }
 
-ASRecyclerViewImpl_GenericItem *new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds) {
-  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_GenericItem, initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_, outer$, layout, template_, loopParam, viewHolderIds)
+ASRecyclerViewImpl_GenericItem *new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds, ADXSection *section) {
+  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_GenericItem, initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_, outer$, layout, template_, loopParam, viewHolderIds, section)
 }
 
-ASRecyclerViewImpl_GenericItem *create_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds) {
-  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_GenericItem, initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_, outer$, layout, template_, loopParam, viewHolderIds)
+ASRecyclerViewImpl_GenericItem *create_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds, ADXSection *section) {
+  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_GenericItem, initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_, outer$, layout, template_, loopParam, viewHolderIds, section)
 }
 
 void ASRecyclerViewImpl_GenericItem_bindWithASRecyclerViewImpl_GroupieViewHolder_withInt_(ASRecyclerViewImpl_GenericItem *self, ASRecyclerViewImpl_GroupieViewHolder *viewHolder, int32_t position) {
@@ -4430,7 +5854,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GenericItem)
 
 void ASRecyclerViewImpl_GenericExpandableItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withJavaUtilList_(ASRecyclerViewImpl_GenericExpandableItem *self, ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds, id<JavaUtilList> onClickIds) {
   self->this$1_ = outer$;
-  ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(self, outer$, layout, template_, loopParam, viewHolderIds);
+  ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(self, outer$, layout, template_, loopParam, viewHolderIds, nil);
   self->onClickIds_ = onClickIds;
 }
 
@@ -4512,6 +5936,86 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GenericExpandableItem_Expand
   return self;
 }
 
+- (int32_t)getSwipeDirsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  if ([viewHolder isKindOfClass:[ASRecyclerViewImpl_GroupieViewHolder class]]) {
+    return [((ASRecyclerViewImpl_GroupieViewHolder *) nil_chk(((ASRecyclerViewImpl_GroupieViewHolder *) viewHolder))) getSwipeDirs];
+  }
+  return -1;
+}
+
+- (int32_t)getDragDirsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  if ([viewHolder isKindOfClass:[ASRecyclerViewImpl_GroupieViewHolder class]]) {
+    return [((ASRecyclerViewImpl_GroupieViewHolder *) nil_chk(((ASRecyclerViewImpl_GroupieViewHolder *) viewHolder))) getDragDirs];
+  }
+  return -1;
+}
+
+- (void)onItemMoveWithInt:(int32_t)fromPosition
+                  withInt:(int32_t)toPosition
+             withNSString:(NSString *)mode {
+  ADXItem *item = [self getItemWithInt:fromPosition];
+  ADXItem *targetItem = [self getItemWithInt:toPosition];
+  if ([item isKindOfClass:[ASRecyclerViewImpl_GenericItem class]] && [targetItem isKindOfClass:[ASRecyclerViewImpl_GenericItem class]]) {
+    ASRecyclerViewImpl_GenericItem *genericItem = (ASRecyclerViewImpl_GenericItem *) cast_chk(item, [ASRecyclerViewImpl_GenericItem class]);
+    ASRecyclerViewImpl_GenericItem *targetGenericItem = (ASRecyclerViewImpl_GenericItem *) cast_chk(targetItem, [ASRecyclerViewImpl_GenericItem class]);
+    if ([((ASRecyclerViewImpl_GenericItem *) nil_chk(genericItem)) getLayout] == [((ASRecyclerViewImpl_GenericItem *) nil_chk(targetGenericItem)) getLayout]) {
+      ADXSection *section = [genericItem getSection];
+      ADXSection *dragSection = [targetGenericItem getSection];
+      if (dragSection != nil && JreObjectEqualsEquals(section, dragSection)) {
+        id<JavaUtilList> dragItems = [((ADXSection *) nil_chk(section)) getGroups];
+        int32_t targetIndex = [((id<JavaUtilList>) nil_chk(dragItems)) indexOfWithId:targetItem];
+        [dragItems removeWithId:item];
+        if (targetIndex == -1) {
+          if (toPosition < fromPosition) {
+            targetIndex = 0;
+          }
+          else {
+            targetIndex = [dragItems size] - 1;
+          }
+        }
+        [dragItems addWithInt:targetIndex withId:item];
+        [dragSection updateWithJavaUtilCollection:dragItems];
+      }
+      else {
+        if ([genericItem isDragAcrossSections] && section != nil && dragSection != nil && !JreObjectEqualsEquals(section, dragSection)) {
+          id<JavaUtilList> sourceItems = new_JavaUtilArrayList_initWithJavaUtilCollection_([section getGroups]);
+          id<JavaUtilList> targetItems = new_JavaUtilArrayList_initWithJavaUtilCollection_([dragSection getGroups]);
+          int32_t sourceIndex = [sourceItems indexOfWithId:item];
+          int32_t targetIndex = [targetItems indexOfWithId:targetItem];
+          if (sourceIndex == -1 || targetIndex == -1) {
+            return;
+          }
+          (void) [sourceItems removeWithInt:sourceIndex];
+          [targetItems addWithInt:targetIndex withId:item];
+          [genericItem setSectionWithADXSection:dragSection];
+          [section updateWithJavaUtilCollection:sourceItems];
+          [dragSection updateWithJavaUtilCollection:targetItems];
+        }
+      }
+    }
+  }
+}
+
+- (void)onItemRemoveWithInt:(int32_t)position
+               withNSString:(NSString *)mode {
+  ADXItem *item = [self getItemWithInt:position];
+  if ([item isKindOfClass:[ASRecyclerViewImpl_GenericItem class]]) {
+    ASRecyclerViewImpl_GenericItem *genericItem = (ASRecyclerViewImpl_GenericItem *) item;
+    ADXSection *section = [((ASRecyclerViewImpl_GenericItem *) nil_chk(genericItem)) getSection];
+    [((ADXSection *) nil_chk(section)) removeWithADXRVGroup:item];
+  }
+}
+
+- (bool)isDragEnabledWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  ADXItem *item = [self getItemWithInt:[((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder)) getAdapterPosition]];
+  if ([item isKindOfClass:[ASRecyclerViewImpl_GenericItem class]]) {
+    ASRecyclerViewImpl_GenericItem *genericItem = (ASRecyclerViewImpl_GenericItem *) item;
+    ADXSection *section = [((ASRecyclerViewImpl_GenericItem *) nil_chk(genericItem)) getSection];
+    return section != nil;
+  }
+  return false;
+}
+
 - (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_GroupieViewHolder *)holder {
   [super onViewAttachedToWindowWithADXRecyclerView_ViewHolder:holder];
   [((ADView *) nil_chk(((ASRecyclerViewImpl_GroupieViewHolder *) nil_chk(holder))->itemView_)) setVisibilityWithInt:ADView_VISIBLE];
@@ -4519,7 +6023,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GenericExpandableItem_Expand
 
 - (void)onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_GroupieViewHolder *)holder {
   [super onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:holder];
-  [((ADView *) nil_chk(((ASRecyclerViewImpl_GroupieViewHolder *) nil_chk(holder))->itemView_)) setVisibilityWithInt:ADView_GONE];
+  [((ADView *) nil_chk(((ASRecyclerViewImpl_GroupieViewHolder *) nil_chk(holder))->itemView_)) setVisibilityWithInt:ADView_INVISIBLE];
 }
 
 - (ASRecyclerViewImpl_GroupieViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
@@ -4539,23 +6043,33 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GenericExpandableItem_Expand
 + (const J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { NULL, NULL, 0x1, -1, 0, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 1, 2, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 3, 2, -1, -1, -1, -1 },
-    { NULL, "LASRecyclerViewImpl_GroupieViewHolder;", 0x1, 4, 5, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 1, 2, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 3, 2, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 4, 5, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 6, 7, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 8, 2, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 9, 10, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 11, 10, -1, -1, -1, -1 },
+    { NULL, "LASRecyclerViewImpl_GroupieViewHolder;", 0x1, 12, 13, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
   #pragma clang diagnostic ignored "-Wundeclared-selector"
   methods[0].selector = @selector(initWithASRecyclerViewImpl:);
-  methods[1].selector = @selector(onViewAttachedToWindowWithADXRecyclerView_ViewHolder:);
-  methods[2].selector = @selector(onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:);
-  methods[3].selector = @selector(onCreateViewHolderWithADViewGroup:withInt:);
+  methods[1].selector = @selector(getSwipeDirsWithADXRecyclerView_ViewHolder:);
+  methods[2].selector = @selector(getDragDirsWithADXRecyclerView_ViewHolder:);
+  methods[3].selector = @selector(onItemMoveWithInt:withInt:withNSString:);
+  methods[4].selector = @selector(onItemRemoveWithInt:withNSString:);
+  methods[5].selector = @selector(isDragEnabledWithADXRecyclerView_ViewHolder:);
+  methods[6].selector = @selector(onViewAttachedToWindowWithADXRecyclerView_ViewHolder:);
+  methods[7].selector = @selector(onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:);
+  methods[8].selector = @selector(onCreateViewHolderWithADViewGroup:withInt:);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
     { "this$0_", "LASRecyclerViewImpl;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "LASRecyclerViewImpl;", "onViewAttachedToWindow", "LASRecyclerViewImpl_GroupieViewHolder;", "onViewDetachedFromWindow", "onCreateViewHolder", "LADViewGroup;I", "Lcom/xwray/groupie/GroupAdapter<Lcom/ashera/recycleview/RecyclerViewImpl$GroupieViewHolder;>;" };
-  static const J2ObjcClassInfo _ASRecyclerViewImpl_GroupieAdapter = { "GroupieAdapter", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 4, 1, 0, -1, -1, 6, -1 };
+  static const void *ptrTable[] = { "LASRecyclerViewImpl;", "getSwipeDirs", "LADXRecyclerView_ViewHolder;", "getDragDirs", "onItemMove", "IILNSString;", "onItemRemove", "ILNSString;", "isDragEnabled", "onViewAttachedToWindow", "LASRecyclerViewImpl_GroupieViewHolder;", "onViewDetachedFromWindow", "onCreateViewHolder", "LADViewGroup;I", "Lcom/xwray/groupie/GroupAdapter<Lcom/ashera/recycleview/RecyclerViewImpl$GroupieViewHolder;>;Lcom/ashera/recycleview/ItemActionHandler;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_GroupieAdapter = { "GroupieAdapter", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 9, 1, 0, -1, -1, 14, -1 };
   return &_ASRecyclerViewImpl_GroupieAdapter;
 }
 
@@ -4621,6 +6135,326 @@ ASRecyclerViewImpl_GroupieViewHolder *create_ASRecyclerViewImpl_GroupieViewHolde
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
+
+@implementation ASRecyclerViewImpl_MyCallback
+
+- (NSString *)getAction {
+  return action_;
+}
+
+- (instancetype)initWithASIWidget:(id<ASIWidget>)w
+                     withNSString:(NSString *)strValue {
+  ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_(self, w, strValue);
+  return self;
+}
+
+- (instancetype)initWithASIWidget:(id<ASIWidget>)w
+                     withNSString:(NSString *)strValue
+                     withNSString:(NSString *)action {
+  ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_withNSString_(self, w, strValue, action);
+  return self;
+}
+
+- (void)onSwipedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                       withInt:(int32_t)direction {
+  if (action_ == nil || [action_ isEqual:@"onSwiped"]) {
+    [((id<ASIWidget>) nil_chk(w_)) syncModelFromUiToPojoWithNSString:@"onSwiped"];
+    id<JavaUtilMap> obj = [self getOnSwipedEventObjWithADXRecyclerView_ViewHolder:viewHolder withInt:direction];
+    NSString *commandName = (NSString *) cast_chk([((id<JavaUtilMap>) nil_chk(obj)) getWithId:ASEventExpressionParser_KEY_COMMAND_NAME], [NSString class]);
+    NSString *commandType = (NSString *) cast_chk([obj getWithId:ASEventExpressionParser_KEY_COMMAND_TYPE], [NSString class]);
+    switch (JreIndexOfStr(commandType, (id[]){ @"+" }, 1)) {
+      case 0:
+      if (ASEventCommandFactory_hasCommandWithNSString_(commandName)) {
+        (void) [((id<ASEventCommand>) nil_chk(ASEventCommandFactory_getCommandWithNSString_(commandName))) executeCommandWithASIWidget:w_ withJavaUtilMap:obj withNSObjectArray:[IOSObjectArray newArrayWithObjects:(id[]){ viewHolder, JavaLangInteger_valueOfWithInt_(direction) } count:2 type:NSObject_class_()]];
+      }
+      break;
+      default:
+      break;
+    }
+    if ([obj containsKeyWithId:@"refreshUiFromModel"]) {
+      id widgets = [obj removeWithId:@"refreshUiFromModel"];
+      ASViewImpl_refreshUiFromModelWithASIWidget_withId_withBoolean_(w_, widgets, true);
+    }
+    if ([((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds] != nil) {
+      ASViewImpl_refreshUiFromModelWithASIWidget_withId_withBoolean_(w_, [((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds], true);
+    }
+    if (strValue_ != nil && ![strValue_ isEmpty] && ![((NSString *) nil_chk([((NSString *) nil_chk(strValue_)) java_trim])) java_hasPrefix:@"+"]) {
+      id<ASIActivity> activity = [((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getRootActivity];
+      if (activity != nil) {
+        [activity sendEventMessageWithJavaUtilMap:obj];
+      }
+    }
+  }
+  return;
+}
+
+- (id<JavaUtilMap>)getOnSwipedEventObjWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                             withInt:(int32_t)direction {
+  id<JavaUtilMap> obj = ASPluginInvoker_getJSONCompatMap();
+  (void) [((id<JavaUtilMap>) nil_chk(obj)) putWithId:@"action" withId:@"action"];
+  (void) [obj putWithId:@"eventType" withId:@"swiped"];
+  (void) [obj putWithId:@"fragmentId" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getFragmentId]];
+  (void) [obj putWithId:@"actionUrl" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getActionUrl]];
+  (void) [obj putWithId:@"namespace" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getNamespace]];
+  if ([((id<ASIWidget>) nil_chk(w_)) getComponentId] != nil) {
+    (void) [obj putWithId:@"componentId" withId:[((id<ASIWidget>) nil_chk(w_)) getComponentId]];
+  }
+  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"id", [((id<ASIWidget>) nil_chk(w_)) getId]);
+  ASRecyclerViewImpl_addEventInfoViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(obj, viewHolder);
+  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"direction", JavaLangInteger_valueOfWithInt_(direction));
+  (void) ASEventExpressionParser_parseEventExpressionWithNSString_withJavaUtilMap_(strValue_, obj);
+  [((id<ASIWidget>) nil_chk(w_)) updateModelToEventMapWithJavaUtilMap:obj withNSString:@"onSwiped" withNSString:(NSString *) cast_chk([obj getWithId:ASEventExpressionParser_KEY_EVENT_ARGS], [NSString class])];
+  return obj;
+}
+
+- (bool)onMoveWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+   withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+   withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target {
+  bool result = true;
+  if (action_ == nil || [action_ isEqual:@"onMove"]) {
+    [((id<ASIWidget>) nil_chk(w_)) syncModelFromUiToPojoWithNSString:@"onMove"];
+    id<JavaUtilMap> obj = [self getOnMoveEventObjWithADXRecyclerView:recyclerView withADXRecyclerView_ViewHolder:viewHolder withADXRecyclerView_ViewHolder:target];
+    NSString *commandName = (NSString *) cast_chk([((id<JavaUtilMap>) nil_chk(obj)) getWithId:ASEventExpressionParser_KEY_COMMAND_NAME], [NSString class]);
+    NSString *commandType = (NSString *) cast_chk([obj getWithId:ASEventExpressionParser_KEY_COMMAND_TYPE], [NSString class]);
+    switch (JreIndexOfStr(commandType, (id[]){ @"+" }, 1)) {
+      case 0:
+      if (ASEventCommandFactory_hasCommandWithNSString_(commandName)) {
+        id commandResult = [((id<ASEventCommand>) nil_chk(ASEventCommandFactory_getCommandWithNSString_(commandName))) executeCommandWithASIWidget:w_ withJavaUtilMap:obj withNSObjectArray:[IOSObjectArray newArrayWithObjects:(id[]){ recyclerView, viewHolder, target } count:3 type:NSObject_class_()]];
+        if (commandResult != nil) {
+          result = [(JavaLangBoolean *) cast_chk(commandResult, [JavaLangBoolean class]) booleanValue];
+        }
+      }
+      break;
+      default:
+      break;
+    }
+    if ([obj containsKeyWithId:@"refreshUiFromModel"]) {
+      id widgets = [obj removeWithId:@"refreshUiFromModel"];
+      ASViewImpl_refreshUiFromModelWithASIWidget_withId_withBoolean_(w_, widgets, true);
+    }
+    if ([((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds] != nil) {
+      ASViewImpl_refreshUiFromModelWithASIWidget_withId_withBoolean_(w_, [((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds], true);
+    }
+    if (strValue_ != nil && ![strValue_ isEmpty] && ![((NSString *) nil_chk([((NSString *) nil_chk(strValue_)) java_trim])) java_hasPrefix:@"+"]) {
+      id<ASIActivity> activity = [((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getRootActivity];
+      if (activity != nil) {
+        [activity sendEventMessageWithJavaUtilMap:obj];
+      }
+    }
+  }
+  return result;
+}
+
+- (id<JavaUtilMap>)getOnMoveEventObjWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                         withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                         withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target {
+  id<JavaUtilMap> obj = ASPluginInvoker_getJSONCompatMap();
+  (void) [((id<JavaUtilMap>) nil_chk(obj)) putWithId:@"action" withId:@"action"];
+  (void) [obj putWithId:@"eventType" withId:@"move"];
+  (void) [obj putWithId:@"fragmentId" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getFragmentId]];
+  (void) [obj putWithId:@"actionUrl" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getActionUrl]];
+  (void) [obj putWithId:@"namespace" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getNamespace]];
+  if ([((id<ASIWidget>) nil_chk(w_)) getComponentId] != nil) {
+    (void) [obj putWithId:@"componentId" withId:[((id<ASIWidget>) nil_chk(w_)) getComponentId]];
+  }
+  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"id", [((id<ASIWidget>) nil_chk(w_)) getId]);
+  ASRecyclerViewImpl_addEventInfoViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(obj, viewHolder);
+  ASRecyclerViewImpl_addEventInfoTargetViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(obj, target);
+  (void) ASEventExpressionParser_parseEventExpressionWithNSString_withJavaUtilMap_(strValue_, obj);
+  [((id<ASIWidget>) nil_chk(w_)) updateModelToEventMapWithJavaUtilMap:obj withNSString:@"onMove" withNSString:(NSString *) cast_chk([obj getWithId:ASEventExpressionParser_KEY_EVENT_ARGS], [NSString class])];
+  return obj;
+}
+
+- (void)onMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                           withInt:(int32_t)fromPos
+    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
+                           withInt:(int32_t)toPos
+                           withInt:(int32_t)x
+                           withInt:(int32_t)y {
+  if (action_ == nil || [action_ isEqual:@"onMoved"]) {
+    [((id<ASIWidget>) nil_chk(w_)) syncModelFromUiToPojoWithNSString:@"onMoved"];
+    id<JavaUtilMap> obj = [self getOnMovedEventObjWithADXRecyclerView:recyclerView withADXRecyclerView_ViewHolder:viewHolder withInt:fromPos withADXRecyclerView_ViewHolder:target withInt:toPos withInt:x withInt:y];
+    NSString *commandName = (NSString *) cast_chk([((id<JavaUtilMap>) nil_chk(obj)) getWithId:ASEventExpressionParser_KEY_COMMAND_NAME], [NSString class]);
+    NSString *commandType = (NSString *) cast_chk([obj getWithId:ASEventExpressionParser_KEY_COMMAND_TYPE], [NSString class]);
+    switch (JreIndexOfStr(commandType, (id[]){ @"+" }, 1)) {
+      case 0:
+      if (ASEventCommandFactory_hasCommandWithNSString_(commandName)) {
+        (void) [((id<ASEventCommand>) nil_chk(ASEventCommandFactory_getCommandWithNSString_(commandName))) executeCommandWithASIWidget:w_ withJavaUtilMap:obj withNSObjectArray:[IOSObjectArray newArrayWithObjects:(id[]){ recyclerView, viewHolder, JavaLangInteger_valueOfWithInt_(fromPos), target, JavaLangInteger_valueOfWithInt_(toPos), JavaLangInteger_valueOfWithInt_(x), JavaLangInteger_valueOfWithInt_(y) } count:7 type:NSObject_class_()]];
+      }
+      break;
+      default:
+      break;
+    }
+    if ([obj containsKeyWithId:@"refreshUiFromModel"]) {
+      id widgets = [obj removeWithId:@"refreshUiFromModel"];
+      ASViewImpl_refreshUiFromModelWithASIWidget_withId_withBoolean_(w_, widgets, true);
+    }
+    if ([((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds] != nil) {
+      ASViewImpl_refreshUiFromModelWithASIWidget_withId_withBoolean_(w_, [((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds], true);
+    }
+    if (strValue_ != nil && ![strValue_ isEmpty] && ![((NSString *) nil_chk([((NSString *) nil_chk(strValue_)) java_trim])) java_hasPrefix:@"+"]) {
+      id<ASIActivity> activity = [((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getRootActivity];
+      if (activity != nil) {
+        [activity sendEventMessageWithJavaUtilMap:obj];
+      }
+    }
+  }
+  return;
+}
+
+- (id<JavaUtilMap>)getOnMovedEventObjWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                          withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                 withInt:(int32_t)fromPos
+                          withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
+                                                 withInt:(int32_t)toPos
+                                                 withInt:(int32_t)x
+                                                 withInt:(int32_t)y {
+  id<JavaUtilMap> obj = ASPluginInvoker_getJSONCompatMap();
+  (void) [((id<JavaUtilMap>) nil_chk(obj)) putWithId:@"action" withId:@"action"];
+  (void) [obj putWithId:@"eventType" withId:@"moved"];
+  (void) [obj putWithId:@"fragmentId" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getFragmentId]];
+  (void) [obj putWithId:@"actionUrl" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getActionUrl]];
+  (void) [obj putWithId:@"namespace" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getNamespace]];
+  if ([((id<ASIWidget>) nil_chk(w_)) getComponentId] != nil) {
+    (void) [obj putWithId:@"componentId" withId:[((id<ASIWidget>) nil_chk(w_)) getComponentId]];
+  }
+  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"id", [((id<ASIWidget>) nil_chk(w_)) getId]);
+  ASRecyclerViewImpl_addEventInfoViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(obj, viewHolder);
+  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"fromPos", JavaLangInteger_valueOfWithInt_(fromPos));
+  ASRecyclerViewImpl_addEventInfoTargetViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(obj, target);
+  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"toPos", JavaLangInteger_valueOfWithInt_(toPos));
+  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"x", JavaLangInteger_valueOfWithInt_(x));
+  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"y", JavaLangInteger_valueOfWithInt_(y));
+  (void) ASEventExpressionParser_parseEventExpressionWithNSString_withJavaUtilMap_(strValue_, obj);
+  [((id<ASIWidget>) nil_chk(w_)) updateModelToEventMapWithJavaUtilMap:obj withNSString:@"onMoved" withNSString:(NSString *) cast_chk([obj getWithId:ASEventExpressionParser_KEY_EVENT_ARGS], [NSString class])];
+  return obj;
+}
+
+- (void)onSelectedChangedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                withInt:(int32_t)actionState {
+  if (action_ == nil || [action_ isEqual:@"onSelectedChanged"]) {
+    [((id<ASIWidget>) nil_chk(w_)) syncModelFromUiToPojoWithNSString:@"onSelectedChanged"];
+    id<JavaUtilMap> obj = [self getOnSelectedChangedEventObjWithADXRecyclerView_ViewHolder:viewHolder withInt:actionState];
+    NSString *commandName = (NSString *) cast_chk([((id<JavaUtilMap>) nil_chk(obj)) getWithId:ASEventExpressionParser_KEY_COMMAND_NAME], [NSString class]);
+    NSString *commandType = (NSString *) cast_chk([obj getWithId:ASEventExpressionParser_KEY_COMMAND_TYPE], [NSString class]);
+    switch (JreIndexOfStr(commandType, (id[]){ @"+" }, 1)) {
+      case 0:
+      if (ASEventCommandFactory_hasCommandWithNSString_(commandName)) {
+        (void) [((id<ASEventCommand>) nil_chk(ASEventCommandFactory_getCommandWithNSString_(commandName))) executeCommandWithASIWidget:w_ withJavaUtilMap:obj withNSObjectArray:[IOSObjectArray newArrayWithObjects:(id[]){ viewHolder, JavaLangInteger_valueOfWithInt_(actionState) } count:2 type:NSObject_class_()]];
+      }
+      break;
+      default:
+      break;
+    }
+    if ([obj containsKeyWithId:@"refreshUiFromModel"]) {
+      id widgets = [obj removeWithId:@"refreshUiFromModel"];
+      ASViewImpl_refreshUiFromModelWithASIWidget_withId_withBoolean_(w_, widgets, true);
+    }
+    if ([((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds] != nil) {
+      ASViewImpl_refreshUiFromModelWithASIWidget_withId_withBoolean_(w_, [((id<ASIWidget>) nil_chk(w_)) getModelUiToPojoEventIds], true);
+    }
+    if (strValue_ != nil && ![strValue_ isEmpty] && ![((NSString *) nil_chk([((NSString *) nil_chk(strValue_)) java_trim])) java_hasPrefix:@"+"]) {
+      id<ASIActivity> activity = [((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getRootActivity];
+      if (activity != nil) {
+        [activity sendEventMessageWithJavaUtilMap:obj];
+      }
+    }
+  }
+  return;
+}
+
+- (id<JavaUtilMap>)getOnSelectedChangedEventObjWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                                      withInt:(int32_t)actionState {
+  id<JavaUtilMap> obj = ASPluginInvoker_getJSONCompatMap();
+  (void) [((id<JavaUtilMap>) nil_chk(obj)) putWithId:@"action" withId:@"action"];
+  (void) [obj putWithId:@"eventType" withId:@"selectedchanged"];
+  (void) [obj putWithId:@"fragmentId" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getFragmentId]];
+  (void) [obj putWithId:@"actionUrl" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getActionUrl]];
+  (void) [obj putWithId:@"namespace" withId:[((id<ASIFragment>) nil_chk([((id<ASIWidget>) nil_chk(w_)) getFragment])) getNamespace]];
+  if ([((id<ASIWidget>) nil_chk(w_)) getComponentId] != nil) {
+    (void) [obj putWithId:@"componentId" withId:[((id<ASIWidget>) nil_chk(w_)) getComponentId]];
+  }
+  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"id", [((id<ASIWidget>) nil_chk(w_)) getId]);
+  ASRecyclerViewImpl_addEventInfoViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(obj, viewHolder);
+  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"actionState", JavaLangInteger_valueOfWithInt_(actionState));
+  (void) ASEventExpressionParser_parseEventExpressionWithNSString_withJavaUtilMap_(strValue_, obj);
+  [((id<ASIWidget>) nil_chk(w_)) updateModelToEventMapWithJavaUtilMap:obj withNSString:@"onSelectedChanged" withNSString:(NSString *) cast_chk([obj getWithId:ASEventExpressionParser_KEY_EVENT_ARGS], [NSString class])];
+  return obj;
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, "LNSString;", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, NULL, 0x1, -1, 0, -1, -1, -1, -1 },
+    { NULL, NULL, 0x1, -1, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 2, 3, -1, -1, -1, -1 },
+    { NULL, "LJavaUtilMap;", 0x1, 4, 3, -1, 5, -1, -1 },
+    { NULL, "Z", 0x1, 6, 7, -1, -1, -1, -1 },
+    { NULL, "LJavaUtilMap;", 0x1, 8, 7, -1, 9, -1, -1 },
+    { NULL, "V", 0x1, 10, 11, -1, -1, -1, -1 },
+    { NULL, "LJavaUtilMap;", 0x1, 12, 11, -1, 13, -1, -1 },
+    { NULL, "V", 0x1, 14, 3, -1, -1, -1, -1 },
+    { NULL, "LJavaUtilMap;", 0x1, 15, 3, -1, 5, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(getAction);
+  methods[1].selector = @selector(initWithASIWidget:withNSString:);
+  methods[2].selector = @selector(initWithASIWidget:withNSString:withNSString:);
+  methods[3].selector = @selector(onSwipedWithADXRecyclerView_ViewHolder:withInt:);
+  methods[4].selector = @selector(getOnSwipedEventObjWithADXRecyclerView_ViewHolder:withInt:);
+  methods[5].selector = @selector(onMoveWithADXRecyclerView:withADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:);
+  methods[6].selector = @selector(getOnMoveEventObjWithADXRecyclerView:withADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:);
+  methods[7].selector = @selector(onMovedWithADXRecyclerView:withADXRecyclerView_ViewHolder:withInt:withADXRecyclerView_ViewHolder:withInt:withInt:withInt:);
+  methods[8].selector = @selector(getOnMovedEventObjWithADXRecyclerView:withADXRecyclerView_ViewHolder:withInt:withADXRecyclerView_ViewHolder:withInt:withInt:withInt:);
+  methods[9].selector = @selector(onSelectedChangedWithADXRecyclerView_ViewHolder:withInt:);
+  methods[10].selector = @selector(getOnSelectedChangedEventObjWithADXRecyclerView_ViewHolder:withInt:);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "w_", "LASIWidget;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "view_", "LADView;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "strValue_", "LNSString;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "action_", "LNSString;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LASIWidget;LNSString;", "LASIWidget;LNSString;LNSString;", "onSwiped", "LADXRecyclerView_ViewHolder;I", "getOnSwipedEventObj", "(Landroidx/recyclerview/widget/RecyclerView$ViewHolder;I)Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "onMove", "LADXRecyclerView;LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "getOnMoveEventObj", "(Landroidx/recyclerview/widget/RecyclerView;Landroidx/recyclerview/widget/RecyclerView$ViewHolder;Landroidx/recyclerview/widget/RecyclerView$ViewHolder;)Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "onMoved", "LADXRecyclerView;LADXRecyclerView_ViewHolder;ILADXRecyclerView_ViewHolder;III", "getOnMovedEventObj", "(Landroidx/recyclerview/widget/RecyclerView;Landroidx/recyclerview/widget/RecyclerView$ViewHolder;ILandroidx/recyclerview/widget/RecyclerView$ViewHolder;III)Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "onSelectedChanged", "getOnSelectedChangedEventObj", "LASRecyclerViewImpl;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_MyCallback = { "MyCallback", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0xa, 11, 4, 16, -1, -1, -1, -1 };
+  return &_ASRecyclerViewImpl_MyCallback;
+}
+
+@end
+
+void ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_(ASRecyclerViewImpl_MyCallback *self, id<ASIWidget> w, NSString *strValue) {
+  NSObject_init(self);
+  self->w_ = w;
+  self->strValue_ = strValue;
+}
+
+ASRecyclerViewImpl_MyCallback *new_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_(id<ASIWidget> w, NSString *strValue) {
+  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_MyCallback, initWithASIWidget_withNSString_, w, strValue)
+}
+
+ASRecyclerViewImpl_MyCallback *create_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_(id<ASIWidget> w, NSString *strValue) {
+  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_MyCallback, initWithASIWidget_withNSString_, w, strValue)
+}
+
+void ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_withNSString_(ASRecyclerViewImpl_MyCallback *self, id<ASIWidget> w, NSString *strValue, NSString *action) {
+  NSObject_init(self);
+  self->w_ = w;
+  self->strValue_ = strValue;
+  self->action_ = action;
+}
+
+ASRecyclerViewImpl_MyCallback *new_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_withNSString_(id<ASIWidget> w, NSString *strValue, NSString *action) {
+  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_MyCallback, initWithASIWidget_withNSString_withNSString_, w, strValue, action)
+}
+
+ASRecyclerViewImpl_MyCallback *create_ASRecyclerViewImpl_MyCallback_initWithASIWidget_withNSString_withNSString_(id<ASIWidget> w, NSString *strValue, NSString *action) {
+  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_MyCallback, initWithASIWidget_withNSString_withNSString_, w, strValue, action)
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_MyCallback)
 
 @implementation ASRecyclerViewImpl_OnScrollListener
 
@@ -4821,7 +6655,9 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_OnScrollListener)
 - (void)handlePanStartWithASIWidget:(id<ASIWidget>)widget
                              withId:(id)eventWidget
                             withInt:(int32_t)x
-                            withInt:(int32_t)y {
+                            withInt:(int32_t)y
+                            withInt:(int32_t)rawX
+                            withInt:(int32_t)rawY {
   if ([this$0_ isHorizontal]) {
     this$0_->oldOverScroll_ = x;
   }
@@ -4834,7 +6670,9 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_OnScrollListener)
 - (void)handlePanDragWithASIWidget:(id<ASIWidget>)widget
                             withId:(id)eventWidget
                            withInt:(int32_t)x
-                           withInt:(int32_t)y {
+                           withInt:(int32_t)y
+                           withInt:(int32_t)rawX
+                           withInt:(int32_t)rawY {
   int32_t selection = ASRecyclerViewImpl_getSelection(this$0_);
   if (![((ADXRecyclerView *) nil_chk(this$0_->recyclerView_)) isEnabled]) {
     return;
@@ -4868,7 +6706,9 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_OnScrollListener)
 - (void)handlePanEndWithASIWidget:(id<ASIWidget>)widget
                            withId:(id)eventWidget
                           withInt:(int32_t)x
-                          withInt:(int32_t)y {
+                          withInt:(int32_t)y
+                          withInt:(int32_t)rawX
+                          withInt:(int32_t)rawY {
 }
 
 + (const J2ObjcClassInfo *)__metadata {
@@ -4882,14 +6722,14 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_OnScrollListener)
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
   #pragma clang diagnostic ignored "-Wundeclared-selector"
   methods[0].selector = @selector(initWithASRecyclerViewImpl:);
-  methods[1].selector = @selector(handlePanStartWithASIWidget:withId:withInt:withInt:);
-  methods[2].selector = @selector(handlePanDragWithASIWidget:withId:withInt:withInt:);
-  methods[3].selector = @selector(handlePanEndWithASIWidget:withId:withInt:withInt:);
+  methods[1].selector = @selector(handlePanStartWithASIWidget:withId:withInt:withInt:withInt:withInt:);
+  methods[2].selector = @selector(handlePanDragWithASIWidget:withId:withInt:withInt:withInt:withInt:);
+  methods[3].selector = @selector(handlePanEndWithASIWidget:withId:withInt:withInt:withInt:withInt:);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
     { "this$0_", "LASRecyclerViewImpl;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "LASRecyclerViewImpl;", "handlePanStart", "LASIWidget;LNSObject;II", "handlePanDrag", "handlePanEnd", "nativeCreateWithJavaUtilMap:" };
+  static const void *ptrTable[] = { "LASRecyclerViewImpl;", "handlePanStart", "LASIWidget;LNSObject;IIII", "handlePanDrag", "handlePanEnd", "nativeCreateWithJavaUtilMap:" };
   static const J2ObjcClassInfo _ASRecyclerViewImpl_3 = { "", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x8000, 4, 1, 0, -1, 5, -1, -1 };
   return &_ASRecyclerViewImpl_3;
 }
@@ -5031,6 +6871,85 @@ ASRecyclerViewImpl_UIScrollViewDelegate *create_ASRecyclerViewImpl_UIScrollViewD
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_UIScrollViewDelegate)
+
+@implementation ASRecyclerViewImpl_CustomItemTouchHelper
+
+- (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$
+           withADXItemTouchHelper_Callback:(ADXItemTouchHelper_Callback *)callback {
+  ASRecyclerViewImpl_CustomItemTouchHelper_initWithASRecyclerViewImpl_withADXItemTouchHelper_Callback_(self, outer$, callback);
+  return self;
+}
+
+- (void)selectWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)selected
+                                     withInt:(int32_t)actionState {
+  if (actionState == ADXItemTouchHelper_ACTION_STATE_DRAG || actionState == ADXItemTouchHelper_ACTION_STATE_SWIPE) {
+    [((ADXRecyclerView *) nil_chk(this$0_->recyclerView_)) setEnabledWithBoolean:false];
+    ASRecyclerViewImpl_scrollEnabledWithId_withBoolean_(this$0_, this$0_->uiView_, false);
+  }
+  else {
+    ASRecyclerViewImpl_scrollEnabledWithId_withBoolean_(this$0_, this$0_->uiView_, true);
+    [((ADXRecyclerView *) nil_chk(this$0_->recyclerView_)) setEnabledWithBoolean:true];
+  }
+  [super selectWithADXRecyclerView_ViewHolder:selected withInt:actionState];
+}
+
+- (bool)isScrolling {
+  return ASRecyclerViewImpl_CustomItemTouchHelper_nativeIsScrollingWithId_(self, this$0_->uiView_);
+}
+
+- (bool)nativeIsScrollingWithId:(id)uiView {
+  return ASRecyclerViewImpl_CustomItemTouchHelper_nativeIsScrollingWithId_(self, uiView);
+}
+
+- (void)__javaClone:(ASRecyclerViewImpl_CustomItemTouchHelper *)original {
+  [super __javaClone:original];
+  JreRelease(this$0_);
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x2, -1, 0, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 1, 2, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "Z", 0x102, 3, 4, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(initWithASRecyclerViewImpl:withADXItemTouchHelper_Callback:);
+  methods[1].selector = @selector(selectWithADXRecyclerView_ViewHolder:withInt:);
+  methods[2].selector = @selector(isScrolling);
+  methods[3].selector = @selector(nativeIsScrollingWithId:);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "this$0_", "LASRecyclerViewImpl;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LASRecyclerViewImpl;LADXItemTouchHelper_Callback;", "select", "LADXRecyclerView_ViewHolder;I", "nativeIsScrolling", "LNSObject;", "LASRecyclerViewImpl;" };
+  static const J2ObjcClassInfo _ASRecyclerViewImpl_CustomItemTouchHelper = { "CustomItemTouchHelper", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x12, 4, 1, 5, -1, -1, -1, -1 };
+  return &_ASRecyclerViewImpl_CustomItemTouchHelper;
+}
+
+@end
+
+void ASRecyclerViewImpl_CustomItemTouchHelper_initWithASRecyclerViewImpl_withADXItemTouchHelper_Callback_(ASRecyclerViewImpl_CustomItemTouchHelper *self, ASRecyclerViewImpl *outer$, ADXItemTouchHelper_Callback *callback) {
+  self->this$0_ = outer$;
+  ADXItemTouchHelper_initWithADXItemTouchHelper_Callback_(self, callback);
+}
+
+ASRecyclerViewImpl_CustomItemTouchHelper *new_ASRecyclerViewImpl_CustomItemTouchHelper_initWithASRecyclerViewImpl_withADXItemTouchHelper_Callback_(ASRecyclerViewImpl *outer$, ADXItemTouchHelper_Callback *callback) {
+  J2OBJC_NEW_IMPL(ASRecyclerViewImpl_CustomItemTouchHelper, initWithASRecyclerViewImpl_withADXItemTouchHelper_Callback_, outer$, callback)
+}
+
+ASRecyclerViewImpl_CustomItemTouchHelper *create_ASRecyclerViewImpl_CustomItemTouchHelper_initWithASRecyclerViewImpl_withADXItemTouchHelper_Callback_(ASRecyclerViewImpl *outer$, ADXItemTouchHelper_Callback *callback) {
+  J2OBJC_CREATE_IMPL(ASRecyclerViewImpl_CustomItemTouchHelper, initWithASRecyclerViewImpl_withADXItemTouchHelper_Callback_, outer$, callback)
+}
+
+bool ASRecyclerViewImpl_CustomItemTouchHelper_nativeIsScrollingWithId_(ASRecyclerViewImpl_CustomItemTouchHelper *self, id uiView) {
+  ASUIScrollView* scrollView = (ASUIScrollView*) uiView;
+  return scrollView.dragging || scrollView.decelerating;
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_CustomItemTouchHelper)
 
 @implementation ASRecyclerViewImpl_$Lambda$1
 

@@ -22,8 +22,16 @@
      <source-file src="ios/src/CordovaRecycleViewPlugin.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
      <header-file src="ios/src/CustomUICollectionViewCell.h" target-dir="RecycleViewPlugin/ios/src"/>
      <source-file src="ios/src/CustomUICollectionViewCell.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
+     <header-file src="ios/src/FixedGridViewManager.h" target-dir="RecycleViewPlugin/ios/src"/>
+     <source-file src="ios/src/FixedGridViewManager.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
+     <header-file src="ios/src/GenericTouchHelperSimpleCallback.h" target-dir="RecycleViewPlugin/ios/src"/>
+     <source-file src="ios/src/GenericTouchHelperSimpleCallback.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
      <header-file src="ios/src/InsetItemDecoration.h" target-dir="RecycleViewPlugin/ios/src"/>
      <source-file src="ios/src/InsetItemDecoration.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
+     <header-file src="ios/src/ItemActionHandler.h" target-dir="RecycleViewPlugin/ios/src"/>
+     <source-file src="ios/src/ItemActionHandler.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
+     <header-file src="ios/src/MyItemTouchHelper.h" target-dir="RecycleViewPlugin/ios/src"/>
+     <source-file src="ios/src/MyItemTouchHelper.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
      <header-file src="ios/src/RecyclerViewImpl.h" target-dir="RecycleViewPlugin/ios/src"/>
      <source-file src="ios/src/RecyclerViewImpl.m" target-dir="RecycleViewPlugin/ios/src" compiler-flags="-fobjc-arc-exceptions"/>
      <header-file src="ios/src/RecycleViewPlugin.h" target-dir="RecycleViewPlugin/ios/src"/>
@@ -43,6 +51,8 @@
      <source-file src="library/AndroidXRecyclerView/src/BatchingListUpdateCallback.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/ChildHelper.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
      <source-file src="library/AndroidXRecyclerView/src/ChildHelper.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/DefaultItemAnimator.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/DefaultItemAnimator.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/DiffCallback.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
      <source-file src="library/AndroidXRecyclerView/src/DiffCallback.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/DiffTask.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
@@ -97,6 +107,8 @@
      <source-file src="library/AndroidXRecyclerView/src/ScrollbarHelper.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/Section.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
      <source-file src="library/AndroidXRecyclerView/src/Section.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
+     <header-file src="library/AndroidXRecyclerView/src/SimpleItemAnimator.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
+     <source-file src="library/AndroidXRecyclerView/src/SimpleItemAnimator.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/SpanSizeProvider.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>
      <source-file src="library/AndroidXRecyclerView/src/SpanSizeProvider.m" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src" compiler-flags="-fno-objc-arc"/>
      <header-file src="library/AndroidXRecyclerView/src/StaggeredGridLayoutManager.h" target-dir="AndroidXRecyclerView/AndroidXRecyclerView/src"/>

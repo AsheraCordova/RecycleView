@@ -187,6 +187,228 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl)
 
 #endif
 
+#if !defined (ASRecyclerViewImpl_DragDirs_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_DragDirs))
+#define ASRecyclerViewImpl_DragDirs_
+
+#define RESTRICT_AbstractBitFlagConverter 1
+#define INCLUDE_ASAbstractBitFlagConverter 1
+#include "AbstractBitFlagConverter.h"
+
+@class JavaLangInteger;
+@protocol JavaUtilMap;
+
+@interface ASRecyclerViewImpl_DragDirs : ASAbstractBitFlagConverter
+
+#pragma mark Public
+
+- (JavaLangInteger *)getDefault;
+
+- (id<JavaUtilMap>)getMapping;
+
+#pragma mark Package-Private
+
+- (instancetype)init;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_DragDirs)
+
+FOUNDATION_EXPORT void ASRecyclerViewImpl_DragDirs_init(ASRecyclerViewImpl_DragDirs *self);
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_DragDirs *new_ASRecyclerViewImpl_DragDirs_init(void) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_DragDirs *create_ASRecyclerViewImpl_DragDirs_init(void);
+
+J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_DragDirs)
+
+
+#endif
+
+#if !defined (ASRecyclerViewImpl_SwipeDirs_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_SwipeDirs))
+#define ASRecyclerViewImpl_SwipeDirs_
+
+#define RESTRICT_AbstractBitFlagConverter 1
+#define INCLUDE_ASAbstractBitFlagConverter 1
+#include "AbstractBitFlagConverter.h"
+
+@class JavaLangInteger;
+@protocol JavaUtilMap;
+
+@interface ASRecyclerViewImpl_SwipeDirs : ASAbstractBitFlagConverter
+
+#pragma mark Public
+
+- (JavaLangInteger *)getDefault;
+
+- (id<JavaUtilMap>)getMapping;
+
+#pragma mark Package-Private
+
+- (instancetype)init;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_SwipeDirs)
+
+FOUNDATION_EXPORT void ASRecyclerViewImpl_SwipeDirs_init(ASRecyclerViewImpl_SwipeDirs *self);
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_SwipeDirs *new_ASRecyclerViewImpl_SwipeDirs_init(void) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_SwipeDirs *create_ASRecyclerViewImpl_SwipeDirs_init(void);
+
+J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_SwipeDirs)
+
+
+#endif
+
+#if !defined (ASRecyclerViewImpl_DragDropMode_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_DragDropMode))
+#define ASRecyclerViewImpl_DragDropMode_
+
+#define RESTRICT_AbstractEnumToIntConverter 1
+#define INCLUDE_ASAbstractEnumToIntConverter 1
+#include "AbstractEnumToIntConverter.h"
+
+@class JavaLangInteger;
+@protocol JavaUtilMap;
+
+@interface ASRecyclerViewImpl_DragDropMode : ASAbstractEnumToIntConverter
+
+#pragma mark Public
+
+- (JavaLangInteger *)getDefault;
+
+- (id<JavaUtilMap>)getMapping;
+
+#pragma mark Package-Private
+
+- (instancetype)init;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_DragDropMode)
+
+FOUNDATION_EXPORT void ASRecyclerViewImpl_DragDropMode_init(ASRecyclerViewImpl_DragDropMode *self);
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_DragDropMode *new_ASRecyclerViewImpl_DragDropMode_init(void) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_DragDropMode *create_ASRecyclerViewImpl_DragDropMode_init(void);
+
+J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_DragDropMode)
+
+
+#endif
+
+#if !defined (ASRecyclerViewImpl_DragStartMode_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_DragStartMode))
+#define ASRecyclerViewImpl_DragStartMode_
+
+#define RESTRICT_AbstractEnumToIntConverter 1
+#define INCLUDE_ASAbstractEnumToIntConverter 1
+#include "AbstractEnumToIntConverter.h"
+
+@class JavaLangInteger;
+@protocol JavaUtilMap;
+
+@interface ASRecyclerViewImpl_DragStartMode : ASAbstractEnumToIntConverter
+
+#pragma mark Public
+
+- (JavaLangInteger *)getDefault;
+
+- (id<JavaUtilMap>)getMapping;
+
+#pragma mark Package-Private
+
+- (instancetype)init;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_DragStartMode)
+
+FOUNDATION_EXPORT void ASRecyclerViewImpl_DragStartMode_init(ASRecyclerViewImpl_DragStartMode *self);
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_DragStartMode *new_ASRecyclerViewImpl_DragStartMode_init(void) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_DragStartMode *create_ASRecyclerViewImpl_DragStartMode_init(void);
+
+J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_DragStartMode)
+
+
+#endif
+
+#if !defined (ASRecyclerViewImpl_DragSwapMode_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_DragSwapMode))
+#define ASRecyclerViewImpl_DragSwapMode_
+
+#define RESTRICT_AbstractEnumToIntConverter 1
+#define INCLUDE_ASAbstractEnumToIntConverter 1
+#include "AbstractEnumToIntConverter.h"
+
+@class JavaLangInteger;
+@protocol JavaUtilMap;
+
+@interface ASRecyclerViewImpl_DragSwapMode : ASAbstractEnumToIntConverter
+
+#pragma mark Public
+
+- (JavaLangInteger *)getDefault;
+
+- (id<JavaUtilMap>)getMapping;
+
+#pragma mark Package-Private
+
+- (instancetype)init;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_DragSwapMode)
+
+FOUNDATION_EXPORT void ASRecyclerViewImpl_DragSwapMode_init(ASRecyclerViewImpl_DragSwapMode *self);
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_DragSwapMode *new_ASRecyclerViewImpl_DragSwapMode_init(void) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_DragSwapMode *create_ASRecyclerViewImpl_DragSwapMode_init(void);
+
+J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_DragSwapMode)
+
+
+#endif
+
+#if !defined (ASRecyclerViewImpl_SwipeSwapMode_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_SwipeSwapMode))
+#define ASRecyclerViewImpl_SwipeSwapMode_
+
+#define RESTRICT_AbstractEnumToIntConverter 1
+#define INCLUDE_ASAbstractEnumToIntConverter 1
+#include "AbstractEnumToIntConverter.h"
+
+@class JavaLangInteger;
+@protocol JavaUtilMap;
+
+@interface ASRecyclerViewImpl_SwipeSwapMode : ASAbstractEnumToIntConverter
+
+#pragma mark Public
+
+- (JavaLangInteger *)getDefault;
+
+- (id<JavaUtilMap>)getMapping;
+
+#pragma mark Package-Private
+
+- (instancetype)init;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_SwipeSwapMode)
+
+FOUNDATION_EXPORT void ASRecyclerViewImpl_SwipeSwapMode_init(ASRecyclerViewImpl_SwipeSwapMode *self);
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_SwipeSwapMode *new_ASRecyclerViewImpl_SwipeSwapMode_init(void) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT ASRecyclerViewImpl_SwipeSwapMode *create_ASRecyclerViewImpl_SwipeSwapMode_init(void);
+
+J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_SwipeSwapMode)
+
+
+#endif
+
 #if !defined (ASRecyclerViewImpl_Orientation_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_Orientation))
 #define ASRecyclerViewImpl_Orientation_
 
@@ -434,20 +656,29 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_ScrollProviderType)
 #define INCLUDE_ADXRecyclerView_Adapter 1
 #include "RecyclerView.h"
 
+#define RESTRICT_ItemActionHandler 1
+#define INCLUDE_ASItemActionHandler 1
+#include "ItemActionHandler.h"
+
 @class ADViewGroup;
+@class ADXRecyclerView_ViewHolder;
 @class ASRecyclerViewImpl;
-@class ASRecyclerViewImpl_ViewHolder;
+@class ASRecyclerViewImpl_MyViewHolder;
+@class JavaLangBoolean;
 @class JavaLangInteger;
 @class JavaLangLong;
+@class NSString;
 
-@interface ASRecyclerViewImpl_ListAdapter : ADXRecyclerView_Adapter
+@interface ASRecyclerViewImpl_ListAdapter : ADXRecyclerView_Adapter < ASItemActionHandler >
 
 #pragma mark Public
 
 - (instancetype)initWithASRecyclerViewImpl:(ASRecyclerViewImpl *)outer$;
 
-- (ASRecyclerViewImpl_ViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                           withInt:(int32_t)viewType;
+- (ASRecyclerViewImpl_MyViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)parent
+                                                             withInt:(int32_t)viewType;
+
+- (int32_t)getDragDirsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
 
 - (int32_t)getItemCount;
 
@@ -455,15 +686,26 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_ScrollProviderType)
 
 - (int32_t)getItemViewTypeWithInt:(int32_t)position;
 
-- (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_ViewHolder *)viewHolder
+- (int32_t)getSwipeDirsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+
+- (bool)isDragEnabledWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+
+- (void)onBindViewHolderWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_MyViewHolder *)viewHolder
                                                withInt:(int32_t)position;
 
-- (ASRecyclerViewImpl_ViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
-                                                             withInt:(int32_t)viewType;
+- (ASRecyclerViewImpl_MyViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
+                                                               withInt:(int32_t)viewType;
 
-- (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_ViewHolder *)holder;
+- (void)onItemMoveWithInt:(int32_t)fromPosition
+                  withInt:(int32_t)toPosition
+             withNSString:(NSString *)mode;
 
-- (void)onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_ViewHolder *)holder;
+- (void)onItemRemoveWithInt:(int32_t)position
+               withNSString:(NSString *)mode;
+
+- (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_MyViewHolder *)holder;
+
+- (void)onViewDetachedFromWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_MyViewHolder *)holder;
 
 // Disallowed inherited constructors, do not use.
 
@@ -484,8 +726,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_ListAdapter)
 
 #endif
 
-#if !defined (ASRecyclerViewImpl_ViewHolder_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_ViewHolder))
-#define ASRecyclerViewImpl_ViewHolder_
+#if !defined (ASRecyclerViewImpl_MyViewHolder_) && (INCLUDE_ALL_RecyclerViewImpl || defined(INCLUDE_ASRecyclerViewImpl_MyViewHolder))
+#define ASRecyclerViewImpl_MyViewHolder_
 
 #define RESTRICT_RecyclerView 1
 #define INCLUDE_ADXRecyclerView_ViewHolder 1
@@ -497,7 +739,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_ListAdapter)
 @protocol ASIWidget;
 @protocol JavaUtilList;
 
-@interface ASRecyclerViewImpl_ViewHolder : ADXRecyclerView_ViewHolder {
+@interface ASRecyclerViewImpl_MyViewHolder : ADXRecyclerView_ViewHolder {
  @public
   ASWidgetViewHolder *widgetViewHolder_;
 }
@@ -515,17 +757,17 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_ListAdapter)
 
 @end
 
-J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_ViewHolder)
+J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_MyViewHolder)
 
-J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_ViewHolder, widgetViewHolder_, ASWidgetViewHolder *)
+J2OBJC_FIELD_SETTER(ASRecyclerViewImpl_MyViewHolder, widgetViewHolder_, ASWidgetViewHolder *)
 
-FOUNDATION_EXPORT void ASRecyclerViewImpl_ViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl_ViewHolder *self, ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds);
+FOUNDATION_EXPORT void ASRecyclerViewImpl_MyViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl_MyViewHolder *self, ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds);
 
-FOUNDATION_EXPORT ASRecyclerViewImpl_ViewHolder *new_ASRecyclerViewImpl_ViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ASRecyclerViewImpl_MyViewHolder *new_ASRecyclerViewImpl_MyViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ASRecyclerViewImpl_ViewHolder *create_ASRecyclerViewImpl_ViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds);
+FOUNDATION_EXPORT ASRecyclerViewImpl_MyViewHolder *create_ASRecyclerViewImpl_MyViewHolder_initWithASRecyclerViewImpl_withASIWidget_withADView_withJavaUtilList_(ASRecyclerViewImpl *outer$, id<ASIWidget> widget, ADView *itemView, id<JavaUtilList> viewHolderIds);
 
-J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_ViewHolder)
+J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_MyViewHolder)
 
 
 #endif
@@ -580,6 +822,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_SectionHolder)
 #include "Item.h"
 
 @class ADView;
+@class ADXSection;
 @class ASLoopParam;
 @class ASRecyclerViewImpl;
 @class ASRecyclerViewImpl_GroupieViewHolder;
@@ -601,12 +844,15 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_SectionHolder)
                               withNSString:(NSString *)layout
                              withASIWidget:(id<ASIWidget>)template_
                            withASLoopParam:(ASLoopParam *)loopParam
-                          withJavaUtilList:(id<JavaUtilList>)viewHolderIds;
+                          withJavaUtilList:(id<JavaUtilList>)viewHolderIds
+                            withADXSection:(ADXSection *)section;
 
 - (void)bindWithADXGroupieViewHolder:(ASRecyclerViewImpl_GroupieViewHolder *)viewHolder
                              withInt:(int32_t)position;
 
 - (ASRecyclerViewImpl_GroupieViewHolder *)createViewHolderWithADView:(ADView *)itemView;
+
+- (int32_t)getDragDirs;
 
 - (int32_t)getLayout;
 
@@ -614,20 +860,34 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_SectionHolder)
 
 - (int32_t)getMargin;
 
+- (ADXSection *)getSection;
+
 - (int32_t)getSpanSizeWithInt:(int32_t)spanCount
                       withInt:(int32_t)position;
+
+- (int32_t)getSwipeDirs;
 
 - (id<ASIWidget>)getTemplate;
 
 - (id<JavaUtilList>)getViewHolderIds;
 
+- (bool)isDragAcrossSections;
+
 - (bool)isModified;
+
+- (void)setDragAcrossSectionsWithBoolean:(bool)dragAcrossSections;
+
+- (void)setDragDirsWithInt:(int32_t)dragDirs;
 
 - (void)setMarginWithInt:(int32_t)margin;
 
 - (void)setModifiedWithBoolean:(bool)modified;
 
 - (void)setNumberOfColumsWithInt:(int32_t)numberOfColums;
+
+- (void)setSectionWithADXSection:(ADXSection *)section;
+
+- (void)setSwipeDirsWithInt:(int32_t)swipeDirs;
 
 // Disallowed inherited constructors, do not use.
 
@@ -639,11 +899,11 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_SectionHolder)
 
 J2OBJC_EMPTY_STATIC_INIT(ASRecyclerViewImpl_GenericItem)
 
-FOUNDATION_EXPORT void ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(ASRecyclerViewImpl_GenericItem *self, ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds);
+FOUNDATION_EXPORT void ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(ASRecyclerViewImpl_GenericItem *self, ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds, ADXSection *section);
 
-FOUNDATION_EXPORT ASRecyclerViewImpl_GenericItem *new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT ASRecyclerViewImpl_GenericItem *new_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds, ADXSection *section) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT ASRecyclerViewImpl_GenericItem *create_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_(ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds);
+FOUNDATION_EXPORT ASRecyclerViewImpl_GenericItem *create_ASRecyclerViewImpl_GenericItem_initWithASRecyclerViewImpl_withNSString_withASIWidget_withASLoopParam_withJavaUtilList_withADXSection_(ASRecyclerViewImpl *outer$, NSString *layout, id<ASIWidget> template_, ASLoopParam *loopParam, id<JavaUtilList> viewHolderIds, ADXSection *section);
 
 J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericItem)
 
@@ -659,6 +919,7 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericItem)
 
 @class ADView;
 @class ADXExpandableGroup;
+@class ADXSection;
 @class ASLoopParam;
 @class ASRecyclerViewImpl;
 @class ASRecyclerViewImpl_GroupieViewHolder;
@@ -691,7 +952,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericItem)
                               withNSString:(NSString *)arg0
                              withASIWidget:(id<ASIWidget>)arg1
                            withASLoopParam:(ASLoopParam *)arg2
-                          withJavaUtilList:(id<JavaUtilList>)arg3 NS_UNAVAILABLE;
+                          withJavaUtilList:(id<JavaUtilList>)arg3
+                            withADXSection:(ADXSection *)arg4 NS_UNAVAILABLE;
 
 @end
 
@@ -715,12 +977,19 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericExpandableItem)
 #define INCLUDE_ADXGroupAdapter 1
 #include "GroupAdapter.h"
 
+#define RESTRICT_ItemActionHandler 1
+#define INCLUDE_ASItemActionHandler 1
+#include "ItemActionHandler.h"
+
 @class ADViewGroup;
+@class ADXRecyclerView_ViewHolder;
 @class ASRecyclerViewImpl;
 @class ASRecyclerViewImpl_GroupieViewHolder;
+@class JavaLangBoolean;
 @class JavaLangInteger;
+@class NSString;
 
-@interface ASRecyclerViewImpl_GroupieAdapter : ADXGroupAdapter
+@interface ASRecyclerViewImpl_GroupieAdapter : ADXGroupAdapter < ASItemActionHandler >
 
 #pragma mark Public
 
@@ -729,8 +998,21 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericExpandableItem)
 - (ASRecyclerViewImpl_GroupieViewHolder *)createViewHolderWithADViewGroup:(ADViewGroup *)parent
                                                                   withInt:(int32_t)viewType;
 
+- (int32_t)getDragDirsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+
+- (int32_t)getSwipeDirsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+
+- (bool)isDragEnabledWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+
 - (ASRecyclerViewImpl_GroupieViewHolder *)onCreateViewHolderWithADViewGroup:(ADViewGroup *)parent
                                                                     withInt:(int32_t)viewType;
+
+- (void)onItemMoveWithInt:(int32_t)fromPosition
+                  withInt:(int32_t)toPosition
+             withNSString:(NSString *)mode;
+
+- (void)onItemRemoveWithInt:(int32_t)position
+               withNSString:(NSString *)mode;
 
 - (void)onViewAttachedToWindowWithADXRecyclerView_ViewHolder:(ASRecyclerViewImpl_GroupieViewHolder *)holder;
 

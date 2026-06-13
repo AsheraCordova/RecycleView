@@ -8,107 +8,2580 @@
 
 
 
+#include "Animator.h"
+#include "Context.h"
+#include "GestureDetector.h"
+#include "IOSClass.h"
+#include "IOSPrimitiveArray.h"
+#include "Interpolator.h"
 #include "ItemTouchHelper.h"
 #include "J2ObjC_source.h"
+#include "Log.h"
+#include "MotionEvent.h"
+#include "Rect.h"
 #include "RecyclerView.h"
+#include "Resources.h"
+#include "ValueAnimator.h"
+#include "VelocityTracker.h"
+#include "View.h"
+#include "ViewCompat.h"
+#include "ViewConfiguration.h"
+#include "ViewParent.h"
+#include "java/lang/Boolean.h"
+#include "java/lang/Float.h"
+#include "java/lang/IllegalArgumentException.h"
 #include "java/lang/Integer.h"
+#include "java/lang/Long.h"
+#include "java/lang/Math.h"
+#include "java/lang/Runnable.h"
+#include "java/lang/System.h"
+#include "java/util/ArrayList.h"
+#include "java/util/List.h"
 
 
+@class ADXItemTouchHelper_ItemTouchHelperGestureListener;
+@class NSString;
 
 
 #pragma clang diagnostic error "-Wreturn-type"
 #pragma clang diagnostic ignored "-Wswitch"
 
 
+@interface ADXItemTouchHelper () {
+ @public
+  IOSFloatArray *mTmpPosition_;
+  float mSwipeEscapeVelocity_;
+  float mMaxSwipeVelocity_;
+  float mSelectedStartX_;
+  float mSelectedStartY_;
+  int32_t mActionState_;
+  int32_t mSlop_;
+  id<JavaUtilList> mSwapTargets_;
+  id<JavaUtilList> mDistances_;
+  ADXItemTouchHelper_ItemTouchHelperGestureListener *mItemTouchHelperGestureListener_;
+  id<ADXRecyclerView_OnItemTouchListener> mOnItemTouchListener_;
+  ADRect *mTmpRect_;
+  int64_t mDragScrollStartTimeInMs_;
+}
+
++ (bool)hitTestWithADView:(ADView *)child
+                withFloat:(float)x
+                withFloat:(float)y
+                withFloat:(float)left
+                withFloat:(float)top;
+
+- (void)setupCallbacks;
+
+- (void)destroyCallbacks;
+
+- (void)startGestureDetection;
+
+- (void)stopGestureDetection;
+
+- (void)getSelectedDxDyWithFloatArray:(IOSFloatArray *)outPosition;
+
+- (id<JavaUtilList>)findSwapTargetsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+
+- (void)releaseVelocityTracker;
+
+- (ADXRecyclerView_ViewHolder *)findSwipedViewWithADMotionEvent:(ADMotionEvent *)motionEvent;
+
+- (int32_t)swipeIfNecessaryWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
+
+- (int32_t)checkHorizontalSwipeWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                      withInt:(int32_t)flags;
+
+- (int32_t)checkVerticalSwipeWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                    withInt:(int32_t)flags;
+
+- (void)obtainVelocityTracker;
+
+- (void)translateSelectedView;
+
+- (void)startDragOnDownWithADMotionEvent:(ADMotionEvent *)e;
+
+@end
+
+J2OBJC_FIELD_SETTER(ADXItemTouchHelper, mTmpPosition_, IOSFloatArray *)
+J2OBJC_FIELD_SETTER(ADXItemTouchHelper, mSwapTargets_, id<JavaUtilList>)
+J2OBJC_FIELD_SETTER(ADXItemTouchHelper, mDistances_, id<JavaUtilList>)
+J2OBJC_FIELD_SETTER(ADXItemTouchHelper, mItemTouchHelperGestureListener_, ADXItemTouchHelper_ItemTouchHelperGestureListener *)
+J2OBJC_FIELD_SETTER(ADXItemTouchHelper, mOnItemTouchListener_, id<ADXRecyclerView_OnItemTouchListener>)
+J2OBJC_FIELD_SETTER(ADXItemTouchHelper, mTmpRect_, ADRect *)
+
+inline NSString *ADXItemTouchHelper_get_TAG(void);
+static NSString *ADXItemTouchHelper_TAG = @"ItemTouchHelper";
+J2OBJC_STATIC_FIELD_OBJ_FINAL(ADXItemTouchHelper, TAG, NSString *)
+
+inline bool ADXItemTouchHelper_get_DEBUG(void);
+#define ADXItemTouchHelper_DEBUG false
+J2OBJC_STATIC_FIELD_CONSTANT(ADXItemTouchHelper, DEBUG, bool)
+
+inline int32_t ADXItemTouchHelper_get_ACTIVE_POINTER_ID_NONE(void);
+#define ADXItemTouchHelper_ACTIVE_POINTER_ID_NONE -1
+J2OBJC_STATIC_FIELD_CONSTANT(ADXItemTouchHelper, ACTIVE_POINTER_ID_NONE, int32_t)
+
+inline int32_t ADXItemTouchHelper_get_ACTION_MODE_IDLE_MASK(void);
+#define ADXItemTouchHelper_ACTION_MODE_IDLE_MASK 255
+J2OBJC_STATIC_FIELD_CONSTANT(ADXItemTouchHelper, ACTION_MODE_IDLE_MASK, int32_t)
+
+inline int32_t ADXItemTouchHelper_get_PIXELS_PER_SECOND(void);
+#define ADXItemTouchHelper_PIXELS_PER_SECOND 1000
+J2OBJC_STATIC_FIELD_CONSTANT(ADXItemTouchHelper, PIXELS_PER_SECOND, int32_t)
+
+__attribute__((unused)) static bool ADXItemTouchHelper_hitTestWithADView_withFloat_withFloat_withFloat_withFloat_(ADView *child, float x, float y, float left, float top);
+
+__attribute__((unused)) static void ADXItemTouchHelper_setupCallbacks(ADXItemTouchHelper *self);
+
+__attribute__((unused)) static void ADXItemTouchHelper_destroyCallbacks(ADXItemTouchHelper *self);
+
+__attribute__((unused)) static void ADXItemTouchHelper_startGestureDetection(ADXItemTouchHelper *self);
+
+__attribute__((unused)) static void ADXItemTouchHelper_stopGestureDetection(ADXItemTouchHelper *self);
+
+__attribute__((unused)) static void ADXItemTouchHelper_getSelectedDxDyWithFloatArray_(ADXItemTouchHelper *self, IOSFloatArray *outPosition);
+
+__attribute__((unused)) static id<JavaUtilList> ADXItemTouchHelper_findSwapTargetsWithADXRecyclerView_ViewHolder_(ADXItemTouchHelper *self, ADXRecyclerView_ViewHolder *viewHolder);
+
+__attribute__((unused)) static void ADXItemTouchHelper_releaseVelocityTracker(ADXItemTouchHelper *self);
+
+__attribute__((unused)) static ADXRecyclerView_ViewHolder *ADXItemTouchHelper_findSwipedViewWithADMotionEvent_(ADXItemTouchHelper *self, ADMotionEvent *motionEvent);
+
+__attribute__((unused)) static int32_t ADXItemTouchHelper_swipeIfNecessaryWithADXRecyclerView_ViewHolder_(ADXItemTouchHelper *self, ADXRecyclerView_ViewHolder *viewHolder);
+
+__attribute__((unused)) static int32_t ADXItemTouchHelper_checkHorizontalSwipeWithADXRecyclerView_ViewHolder_withInt_(ADXItemTouchHelper *self, ADXRecyclerView_ViewHolder *viewHolder, int32_t flags);
+
+__attribute__((unused)) static int32_t ADXItemTouchHelper_checkVerticalSwipeWithADXRecyclerView_ViewHolder_withInt_(ADXItemTouchHelper *self, ADXRecyclerView_ViewHolder *viewHolder, int32_t flags);
+
+__attribute__((unused)) static void ADXItemTouchHelper_obtainVelocityTracker(ADXItemTouchHelper *self);
+
+__attribute__((unused)) static void ADXItemTouchHelper_translateSelectedView(ADXItemTouchHelper *self);
+
+__attribute__((unused)) static void ADXItemTouchHelper_startDragOnDownWithADMotionEvent_(ADXItemTouchHelper *self, ADMotionEvent *e);
+
+@interface ADXItemTouchHelper_1 : NSObject < JavaLangRunnable > {
+ @public
+  ADXItemTouchHelper *this$0_;
+}
+
+- (instancetype)initWithADXItemTouchHelper:(ADXItemTouchHelper *)outer$;
+
+- (void)run;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ADXItemTouchHelper_1)
+
+__attribute__((unused)) static void ADXItemTouchHelper_1_initWithADXItemTouchHelper_(ADXItemTouchHelper_1 *self, ADXItemTouchHelper *outer$);
+
+__attribute__((unused)) static ADXItemTouchHelper_1 *new_ADXItemTouchHelper_1_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ADXItemTouchHelper_1 *create_ADXItemTouchHelper_1_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$);
+
+
+@interface ADXItemTouchHelper_2 : NSObject < ADXRecyclerView_OnItemTouchListener > {
+ @public
+  ADXItemTouchHelper *this$0_;
+}
+
+- (instancetype)initWithADXItemTouchHelper:(ADXItemTouchHelper *)outer$;
+
+- (bool)onInterceptTouchEventWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                               withADMotionEvent:(ADMotionEvent *)event;
+
+- (void)onTouchEventWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                      withADMotionEvent:(ADMotionEvent *)event;
+
+- (void)onRequestDisallowInterceptTouchEventWithBoolean:(bool)disallowIntercept;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ADXItemTouchHelper_2)
+
+__attribute__((unused)) static void ADXItemTouchHelper_2_initWithADXItemTouchHelper_(ADXItemTouchHelper_2 *self, ADXItemTouchHelper *outer$);
+
+__attribute__((unused)) static ADXItemTouchHelper_2 *new_ADXItemTouchHelper_2_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ADXItemTouchHelper_2 *create_ADXItemTouchHelper_2_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$);
+
+
+@interface ADXItemTouchHelper_RecoverAnimation () {
+ @public
+  float mFraction_;
+}
+
+@end
+
+__attribute__((unused)) static void ADXItemTouchHelper_RecoverAnimation_onAnimationEndWithADAnimator_(ADXItemTouchHelper_RecoverAnimation *self, ADAnimator *animation);
+
+@interface ADXItemTouchHelper_3 : ADXItemTouchHelper_RecoverAnimation {
+ @public
+  ADXItemTouchHelper *this$0_;
+  int32_t val$swipeDir_;
+  ADXRecyclerView_ViewHolder *val$prevSelected_;
+}
+
+- (instancetype)initWithADXItemTouchHelper:(ADXItemTouchHelper *)outer$
+                                   withInt:(int32_t)capture$0
+            withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)capture$1
+            withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                   withInt:(int32_t)animationType
+                                   withInt:(int32_t)actionState
+                                 withFloat:(float)startDx
+                                 withFloat:(float)startDy
+                                 withFloat:(float)targetX
+                                 withFloat:(float)targetY;
+
+- (void)onAnimationEndWithADAnimator:(ADAnimator *)animation;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ADXItemTouchHelper_3)
+
+__attribute__((unused)) static void ADXItemTouchHelper_3_initWithADXItemTouchHelper_withInt_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(ADXItemTouchHelper_3 *self, ADXItemTouchHelper *outer$, int32_t capture$0, ADXRecyclerView_ViewHolder *capture$1, ADXRecyclerView_ViewHolder *viewHolder, int32_t animationType, int32_t actionState, float startDx, float startDy, float targetX, float targetY);
+
+__attribute__((unused)) static ADXItemTouchHelper_3 *new_ADXItemTouchHelper_3_initWithADXItemTouchHelper_withInt_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(ADXItemTouchHelper *outer$, int32_t capture$0, ADXRecyclerView_ViewHolder *capture$1, ADXRecyclerView_ViewHolder *viewHolder, int32_t animationType, int32_t actionState, float startDx, float startDy, float targetX, float targetY) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ADXItemTouchHelper_3 *create_ADXItemTouchHelper_3_initWithADXItemTouchHelper_withInt_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(ADXItemTouchHelper *outer$, int32_t capture$0, ADXRecyclerView_ViewHolder *capture$1, ADXRecyclerView_ViewHolder *viewHolder, int32_t animationType, int32_t actionState, float startDx, float startDy, float targetX, float targetY);
+
+
+@interface ADXItemTouchHelper_4 : NSObject < JavaLangRunnable > {
+ @public
+  ADXItemTouchHelper *this$0_;
+  ADXItemTouchHelper_RecoverAnimation *val$anim_;
+  int32_t val$swipeDir_;
+}
+
+- (instancetype)initWithADXItemTouchHelper:(ADXItemTouchHelper *)outer$
+   withADXItemTouchHelper_RecoverAnimation:(ADXItemTouchHelper_RecoverAnimation *)capture$0
+                                   withInt:(int32_t)capture$1;
+
+- (void)run;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ADXItemTouchHelper_4)
+
+__attribute__((unused)) static void ADXItemTouchHelper_4_initWithADXItemTouchHelper_withADXItemTouchHelper_RecoverAnimation_withInt_(ADXItemTouchHelper_4 *self, ADXItemTouchHelper *outer$, ADXItemTouchHelper_RecoverAnimation *capture$0, int32_t capture$1);
+
+__attribute__((unused)) static ADXItemTouchHelper_4 *new_ADXItemTouchHelper_4_initWithADXItemTouchHelper_withADXItemTouchHelper_RecoverAnimation_withInt_(ADXItemTouchHelper *outer$, ADXItemTouchHelper_RecoverAnimation *capture$0, int32_t capture$1) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ADXItemTouchHelper_4 *create_ADXItemTouchHelper_4_initWithADXItemTouchHelper_withADXItemTouchHelper_RecoverAnimation_withInt_(ADXItemTouchHelper *outer$, ADXItemTouchHelper_RecoverAnimation *capture$0, int32_t capture$1);
+
+
+@interface ADXItemTouchHelper_ViewDropHandler : NSObject
+
+@end
+
+@interface ADXItemTouchHelper_Callback () {
+ @public
+  int32_t mCachedMaxScrollSpeed_;
+}
+
+- (int32_t)getMaxDragScrollWithADXRecyclerView:(ADXRecyclerView *)recyclerView;
+
+@end
+
+inline int32_t ADXItemTouchHelper_Callback_get_ABS_HORIZONTAL_DIR_FLAGS(void);
+#define ADXItemTouchHelper_Callback_ABS_HORIZONTAL_DIR_FLAGS 789516
+J2OBJC_STATIC_FIELD_CONSTANT(ADXItemTouchHelper_Callback, ABS_HORIZONTAL_DIR_FLAGS, int32_t)
+
+inline id<ADInterpolator> ADXItemTouchHelper_Callback_get_sDragScrollInterpolator(void);
+static id<ADInterpolator> ADXItemTouchHelper_Callback_sDragScrollInterpolator;
+J2OBJC_STATIC_FIELD_OBJ_FINAL(ADXItemTouchHelper_Callback, sDragScrollInterpolator, id<ADInterpolator>)
+
+inline id<ADInterpolator> ADXItemTouchHelper_Callback_get_sDragViewScrollCapInterpolator(void);
+static id<ADInterpolator> ADXItemTouchHelper_Callback_sDragViewScrollCapInterpolator;
+J2OBJC_STATIC_FIELD_OBJ_FINAL(ADXItemTouchHelper_Callback, sDragViewScrollCapInterpolator, id<ADInterpolator>)
+
+inline int64_t ADXItemTouchHelper_Callback_get_DRAG_SCROLL_ACCELERATION_LIMIT_TIME_MS(void);
+#define ADXItemTouchHelper_Callback_DRAG_SCROLL_ACCELERATION_LIMIT_TIME_MS 2000LL
+J2OBJC_STATIC_FIELD_CONSTANT(ADXItemTouchHelper_Callback, DRAG_SCROLL_ACCELERATION_LIMIT_TIME_MS, int64_t)
+
+__attribute__((unused)) static int32_t ADXItemTouchHelper_Callback_getAbsoluteMovementFlagsWithADXRecyclerView_withADXRecyclerView_ViewHolder_(ADXItemTouchHelper_Callback *self, ADXRecyclerView *recyclerView, ADXRecyclerView_ViewHolder *viewHolder);
+
+__attribute__((unused)) static int32_t ADXItemTouchHelper_Callback_getMaxDragScrollWithADXRecyclerView_(ADXItemTouchHelper_Callback *self, ADXRecyclerView *recyclerView);
+
+@interface ADXItemTouchHelper_Callback_1 : NSObject < ADInterpolator >
+
+- (instancetype)init;
+
+- (float)getInterpolationWithFloat:(float)t;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ADXItemTouchHelper_Callback_1)
+
+__attribute__((unused)) static void ADXItemTouchHelper_Callback_1_init(ADXItemTouchHelper_Callback_1 *self);
+
+__attribute__((unused)) static ADXItemTouchHelper_Callback_1 *new_ADXItemTouchHelper_Callback_1_init(void) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ADXItemTouchHelper_Callback_1 *create_ADXItemTouchHelper_Callback_1_init(void);
+
+
+@interface ADXItemTouchHelper_Callback_2 : NSObject < ADInterpolator >
+
+- (instancetype)init;
+
+- (float)getInterpolationWithFloat:(float)t;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ADXItemTouchHelper_Callback_2)
+
+__attribute__((unused)) static void ADXItemTouchHelper_Callback_2_init(ADXItemTouchHelper_Callback_2 *self);
+
+__attribute__((unused)) static ADXItemTouchHelper_Callback_2 *new_ADXItemTouchHelper_Callback_2_init(void) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ADXItemTouchHelper_Callback_2 *create_ADXItemTouchHelper_Callback_2_init(void);
+
+
+@interface ADXItemTouchHelper_SimpleCallback () {
+ @public
+  int32_t mDefaultSwipeDirs_;
+  int32_t mDefaultDragDirs_;
+}
+
+@end
+
+@interface ADXItemTouchHelper_ItemTouchHelperGestureListener : ADGestureDetector_SimpleOnGestureListener {
+ @public
+  ADXItemTouchHelper *this$0_;
+  bool mShouldReactToLongPress_;
+}
+
+- (instancetype)initWithADXItemTouchHelper:(ADXItemTouchHelper *)outer$;
+
+- (void)doNotReactToLongPress;
+
+- (bool)onDownWithADMotionEvent:(ADMotionEvent *)e;
+
+- (void)onLongPressWithADMotionEvent:(ADMotionEvent *)e;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ADXItemTouchHelper_ItemTouchHelperGestureListener)
+
+__attribute__((unused)) static void ADXItemTouchHelper_ItemTouchHelperGestureListener_initWithADXItemTouchHelper_(ADXItemTouchHelper_ItemTouchHelperGestureListener *self, ADXItemTouchHelper *outer$);
+
+__attribute__((unused)) static ADXItemTouchHelper_ItemTouchHelperGestureListener *new_ADXItemTouchHelper_ItemTouchHelperGestureListener_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ADXItemTouchHelper_ItemTouchHelperGestureListener *create_ADXItemTouchHelper_ItemTouchHelperGestureListener_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$);
+
+J2OBJC_TYPE_LITERAL_HEADER(ADXItemTouchHelper_ItemTouchHelperGestureListener)
+
+
+@interface ADXItemTouchHelper_RecoverAnimation_1 : NSObject < ADValueAnimator_AnimatorUpdateListener > {
+ @public
+  ADXItemTouchHelper_RecoverAnimation *this$0_;
+}
+
+- (instancetype)initWithADXItemTouchHelper_RecoverAnimation:(ADXItemTouchHelper_RecoverAnimation *)outer$;
+
+- (void)onAnimationUpdateWithADValueAnimator:(ADValueAnimator *)animation;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ADXItemTouchHelper_RecoverAnimation_1)
+
+__attribute__((unused)) static void ADXItemTouchHelper_RecoverAnimation_1_initWithADXItemTouchHelper_RecoverAnimation_(ADXItemTouchHelper_RecoverAnimation_1 *self, ADXItemTouchHelper_RecoverAnimation *outer$);
+
+__attribute__((unused)) static ADXItemTouchHelper_RecoverAnimation_1 *new_ADXItemTouchHelper_RecoverAnimation_1_initWithADXItemTouchHelper_RecoverAnimation_(ADXItemTouchHelper_RecoverAnimation *outer$) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ADXItemTouchHelper_RecoverAnimation_1 *create_ADXItemTouchHelper_RecoverAnimation_1_initWithADXItemTouchHelper_RecoverAnimation_(ADXItemTouchHelper_RecoverAnimation *outer$);
+
+
+@interface ADXItemTouchHelper_ItemTouchUIUtil : NSObject
+
+@end
+
 @implementation ADXItemTouchHelper
 
-J2OBJC_IGNORE_DESIGNATED_BEGIN
-- (instancetype)init {
-  ADXItemTouchHelper_init(self);
+- (instancetype)initWithADXItemTouchHelper_Callback:(ADXItemTouchHelper_Callback *)callback {
+  ADXItemTouchHelper_initWithADXItemTouchHelper_Callback_(self, callback);
   return self;
 }
-J2OBJC_IGNORE_DESIGNATED_END
+
++ (bool)hitTestWithADView:(ADView *)child
+                withFloat:(float)x
+                withFloat:(float)y
+                withFloat:(float)left
+                withFloat:(float)top {
+  return ADXItemTouchHelper_hitTestWithADView_withFloat_withFloat_withFloat_withFloat_(child, x, y, left, top);
+}
+
+- (void)attachToRecyclerViewWithADXRecyclerView:(ADXRecyclerView *)recyclerView {
+  if (JreObjectEqualsEquals(mRecyclerView_, recyclerView)) {
+    return;
+  }
+  if (mRecyclerView_ != nil) {
+    ADXItemTouchHelper_destroyCallbacks(self);
+  }
+  JreStrongAssign(&mRecyclerView_, recyclerView);
+  if (recyclerView != nil) {
+    ADResources *resources = [recyclerView getResources];
+    mSwipeEscapeVelocity_ = [((ADResources *) nil_chk(resources)) getDimensionWithNSString:@"item_touch_helper_swipe_escape_velocity"];
+    mMaxSwipeVelocity_ = [resources getDimensionWithNSString:@"item_touch_helper_swipe_escape_max_velocity"];
+    ADXItemTouchHelper_setupCallbacks(self);
+  }
+}
+
+- (void)setupCallbacks {
+  ADXItemTouchHelper_setupCallbacks(self);
+}
+
+- (void)destroyCallbacks {
+  ADXItemTouchHelper_destroyCallbacks(self);
+}
+
+- (void)startGestureDetection {
+  ADXItemTouchHelper_startGestureDetection(self);
+}
+
+- (void)stopGestureDetection {
+  ADXItemTouchHelper_stopGestureDetection(self);
+}
+
+- (void)getSelectedDxDyWithFloatArray:(IOSFloatArray *)outPosition {
+  ADXItemTouchHelper_getSelectedDxDyWithFloatArray_(self, outPosition);
+}
+
+- (void)selectWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)selected
+                                     withInt:(int32_t)actionState {
+  if (JreObjectEqualsEquals(selected, mSelected_) && actionState == mActionState_) {
+    return;
+  }
+  mDragScrollStartTimeInMs_ = JavaLangLong_MIN_VALUE;
+  int32_t prevActionState = mActionState_;
+  [self endRecoverAnimationWithADXRecyclerView_ViewHolder:selected withBoolean:true];
+  mActionState_ = actionState;
+  if (actionState == ADXItemTouchHelper_ACTION_STATE_DRAG) {
+    if (selected == nil) {
+      @throw create_JavaLangIllegalArgumentException_initWithNSString_(@"Must pass a ViewHolder when dragging");
+    }
+    JreStrongAssign(&mOverdrawChild_, selected->itemView_);
+  }
+  int32_t actionStateMask = (JreLShift32(1, (ADXItemTouchHelper_DIRECTION_FLAG_COUNT + ADXItemTouchHelper_DIRECTION_FLAG_COUNT * actionState))) - 1;
+  bool preventLayout = false;
+  if (mSelected_ != nil) {
+    ADXRecyclerView_ViewHolder *prevSelected = mSelected_;
+    if ([((ADView *) nil_chk(prevSelected->itemView_)) getParent] != nil) {
+      int32_t swipeDir = prevActionState == ADXItemTouchHelper_ACTION_STATE_DRAG ? 0 : ADXItemTouchHelper_swipeIfNecessaryWithADXRecyclerView_ViewHolder_(self, prevSelected);
+      ADXItemTouchHelper_releaseVelocityTracker(self);
+      float targetTranslateX;
+      float targetTranslateY;
+      int32_t animationType;
+      switch (swipeDir) {
+        case ADXItemTouchHelper_LEFT:
+        case ADXItemTouchHelper_RIGHT:
+        case ADXItemTouchHelper_START:
+        case ADXItemTouchHelper_END:
+        targetTranslateY = 0;
+        targetTranslateX = JavaLangMath_signumWithFloat_(mDx_) * [((ADXRecyclerView *) nil_chk(mRecyclerView_)) getWidth];
+        break;
+        case ADXItemTouchHelper_UP:
+        case ADXItemTouchHelper_DOWN:
+        targetTranslateX = 0;
+        targetTranslateY = JavaLangMath_signumWithFloat_(mDy_) * [((ADXRecyclerView *) nil_chk(mRecyclerView_)) getHeight];
+        break;
+        default:
+        targetTranslateX = 0;
+        targetTranslateY = 0;
+      }
+      if (prevActionState == ADXItemTouchHelper_ACTION_STATE_DRAG) {
+        animationType = ADXItemTouchHelper_ANIMATION_TYPE_DRAG;
+      }
+      else if (swipeDir > 0) {
+        animationType = ADXItemTouchHelper_ANIMATION_TYPE_SWIPE_SUCCESS;
+      }
+      else {
+        animationType = ADXItemTouchHelper_ANIMATION_TYPE_SWIPE_CANCEL;
+      }
+      ADXItemTouchHelper_getSelectedDxDyWithFloatArray_(self, mTmpPosition_);
+      float currentTranslateX = IOSFloatArray_Get(nil_chk(mTmpPosition_), 0);
+      float currentTranslateY = IOSFloatArray_Get(mTmpPosition_, 1);
+      ADXItemTouchHelper_RecoverAnimation *rv = create_ADXItemTouchHelper_3_initWithADXItemTouchHelper_withInt_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(self, swipeDir, prevSelected, prevSelected, animationType, prevActionState, currentTranslateX, currentTranslateY, targetTranslateX, targetTranslateY);
+      int64_t duration = [((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) getAnimationDurationWithADXRecyclerView:mRecyclerView_ withInt:animationType withFloat:targetTranslateX - currentTranslateX withFloat:targetTranslateY - currentTranslateY];
+      [rv setDurationWithLong:duration];
+      [((id<JavaUtilList>) nil_chk(mRecoverAnimations_)) addWithId:rv];
+      [rv start];
+      if (mSwapTargets_ != nil && [mSwapTargets_ size] > 0) {
+        [rv cancel];
+      }
+      preventLayout = true;
+    }
+    else {
+      [self removeChildDrawingOrderCallbackIfNecessaryWithADView:prevSelected->itemView_];
+      [((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) clearViewWithADXRecyclerView:mRecyclerView_ withADXRecyclerView_ViewHolder:prevSelected];
+    }
+    JreStrongAssign(&mSelected_, nil);
+  }
+  if (selected != nil) {
+    mSelectedFlags_ = JreRShift32((ADXItemTouchHelper_Callback_getAbsoluteMovementFlagsWithADXRecyclerView_withADXRecyclerView_ViewHolder_(nil_chk(mCallback_), mRecyclerView_, selected) & actionStateMask), (mActionState_ * ADXItemTouchHelper_DIRECTION_FLAG_COUNT));
+    mSelectedStartX_ = [((ADView *) nil_chk(selected->itemView_)) getLeft];
+    mSelectedStartY_ = [selected->itemView_ getTop];
+    JreStrongAssign(&mSelected_, selected);
+    if (actionState == ADXItemTouchHelper_ACTION_STATE_DRAG) {
+    }
+  }
+  id<ADViewParent> rvParent = [((ADXRecyclerView *) nil_chk(mRecyclerView_)) getParent];
+  if (rvParent != nil) {
+    [rvParent requestDisallowInterceptTouchEventWithBoolean:mSelected_ != nil];
+  }
+  if (!preventLayout) {
+    [((ADXRecyclerView_LayoutManager *) nil_chk([((ADXRecyclerView *) nil_chk(mRecyclerView_)) getLayoutManager])) requestSimpleAnimationsInNextLayout];
+  }
+  [((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) onSelectedChangedWithADXRecyclerView_ViewHolder:mSelected_ withInt:mActionState_];
+  [((ADXRecyclerView *) nil_chk(mRecyclerView_)) invalidate];
+}
+
+- (void)postDispatchSwipeWithADXItemTouchHelper_RecoverAnimation:(ADXItemTouchHelper_RecoverAnimation *)anim
+                                                         withInt:(int32_t)swipeDir {
+  [((ADXRecyclerView *) nil_chk(mRecyclerView_)) postWithJavaLangRunnable:create_ADXItemTouchHelper_4_initWithADXItemTouchHelper_withADXItemTouchHelper_RecoverAnimation_withInt_(self, anim, swipeDir)];
+}
+
+- (bool)hasRunningRecoverAnim {
+  int32_t size = [((id<JavaUtilList>) nil_chk(mRecoverAnimations_)) size];
+  for (int32_t i = 0; i < size; i++) {
+    if (!((ADXItemTouchHelper_RecoverAnimation *) nil_chk([((id<JavaUtilList>) nil_chk(mRecoverAnimations_)) getWithInt:i]))->mEnded_) {
+      return true;
+    }
+  }
+  return false;
+}
+
+- (bool)scrollIfNecessary {
+  if (mSelected_ == nil) {
+    mDragScrollStartTimeInMs_ = JavaLangLong_MIN_VALUE;
+    return false;
+  }
+  int64_t now = JavaLangSystem_currentTimeMillis();
+  int64_t scrollDuration = mDragScrollStartTimeInMs_ == JavaLangLong_MIN_VALUE ? 0 : now - mDragScrollStartTimeInMs_;
+  ADXRecyclerView_LayoutManager *lm = JreRetainedLocalValue([((ADXRecyclerView *) nil_chk(mRecyclerView_)) getLayoutManager]);
+  if (mTmpRect_ == nil) {
+    JreStrongAssignAndConsume(&mTmpRect_, new_ADRect_init());
+  }
+  int32_t scrollX = 0;
+  int32_t scrollY = 0;
+  [((ADXRecyclerView_LayoutManager *) nil_chk(lm)) calculateItemDecorationsForChildWithADView:((ADXRecyclerView_ViewHolder *) nil_chk(mSelected_))->itemView_ withADRect:mTmpRect_];
+  if ([lm canScrollHorizontally]) {
+    int32_t curX = JreFpToInt((mSelectedStartX_ + mDx_));
+    int32_t leftDiff = curX - ((ADRect *) nil_chk(mTmpRect_))->left_ - [((ADXRecyclerView *) nil_chk(mRecyclerView_)) getPaddingLeft];
+    if (mDx_ < 0 && leftDiff < 0) {
+      scrollX = leftDiff;
+    }
+    else if (mDx_ > 0) {
+      int32_t rightDiff = curX + [((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(mSelected_))->itemView_)) getWidth] + ((ADRect *) nil_chk(mTmpRect_))->right_ - ([((ADXRecyclerView *) nil_chk(mRecyclerView_)) getWidth] - [((ADXRecyclerView *) nil_chk(mRecyclerView_)) getPaddingRight]);
+      if (rightDiff > 0) {
+        scrollX = rightDiff;
+      }
+    }
+  }
+  if ([lm canScrollVertically]) {
+    int32_t curY = JreFpToInt((mSelectedStartY_ + mDy_));
+    int32_t topDiff = curY - ((ADRect *) nil_chk(mTmpRect_))->top_ - [((ADXRecyclerView *) nil_chk(mRecyclerView_)) getPaddingTop];
+    if (mDy_ < 0 && topDiff < 0) {
+      scrollY = topDiff;
+    }
+    else if (mDy_ > 0) {
+      int32_t bottomDiff = curY + [((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(mSelected_))->itemView_)) getHeight] + ((ADRect *) nil_chk(mTmpRect_))->bottom_ - ([((ADXRecyclerView *) nil_chk(mRecyclerView_)) getHeight] - [((ADXRecyclerView *) nil_chk(mRecyclerView_)) getPaddingBottom]);
+      if (bottomDiff > 0) {
+        scrollY = bottomDiff;
+      }
+    }
+  }
+  if (scrollX != 0) {
+    scrollX = [((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) interpolateOutOfBoundsScrollWithADXRecyclerView:mRecyclerView_ withInt:[((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(mSelected_))->itemView_)) getWidth] withInt:scrollX withInt:[((ADXRecyclerView *) nil_chk(mRecyclerView_)) getWidth] withLong:scrollDuration];
+  }
+  if (scrollY != 0) {
+    scrollY = [((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) interpolateOutOfBoundsScrollWithADXRecyclerView:mRecyclerView_ withInt:[((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(mSelected_))->itemView_)) getHeight] withInt:scrollY withInt:[((ADXRecyclerView *) nil_chk(mRecyclerView_)) getHeight] withLong:scrollDuration];
+  }
+  if (scrollX != 0 || scrollY != 0) {
+    if (mDragScrollStartTimeInMs_ == JavaLangLong_MIN_VALUE) {
+      mDragScrollStartTimeInMs_ = now;
+    }
+    [((ADXRecyclerView *) nil_chk(mRecyclerView_)) scrollByWithInt:scrollX withInt:scrollY];
+    return true;
+  }
+  mDragScrollStartTimeInMs_ = JavaLangLong_MIN_VALUE;
+  return false;
+}
+
+- (id<JavaUtilList>)findSwapTargetsWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  return ADXItemTouchHelper_findSwapTargetsWithADXRecyclerView_ViewHolder_(self, viewHolder);
+}
+
+- (void)moveIfNecessaryWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  if (mActionState_ != ADXItemTouchHelper_ACTION_STATE_DRAG) {
+    return;
+  }
+  float threshold = [((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) getMoveThresholdWithADXRecyclerView_ViewHolder:viewHolder];
+  int32_t x = JreFpToInt((mSelectedStartX_ + mDx_));
+  int32_t y = JreFpToInt((mSelectedStartY_ + mDy_));
+  if (JavaLangMath_absWithInt_(y - [((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder))->itemView_)) getTop]) < [viewHolder->itemView_ getHeight] * threshold && JavaLangMath_absWithInt_(x - [viewHolder->itemView_ getLeft]) < [viewHolder->itemView_ getWidth] * threshold) {
+    return;
+  }
+  id<JavaUtilList> swapTargets = ADXItemTouchHelper_findSwapTargetsWithADXRecyclerView_ViewHolder_(self, viewHolder);
+  if ([((id<JavaUtilList>) nil_chk(swapTargets)) size] == 0) {
+    return;
+  }
+  ADXRecyclerView_ViewHolder *target = JreRetainedLocalValue([((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) chooseDropTargetWithADXRecyclerView_ViewHolder:viewHolder withJavaUtilList:swapTargets withInt:x withInt:y]);
+  if (target == nil) {
+    [((id<JavaUtilList>) nil_chk(mSwapTargets_)) clear];
+    [((id<JavaUtilList>) nil_chk(mDistances_)) clear];
+    return;
+  }
+  int32_t toPosition = [target getAbsoluteAdapterPosition];
+  int32_t fromPosition = [viewHolder getAbsoluteAdapterPosition];
+  if ([((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) onMoveWithADXRecyclerView:mRecyclerView_ withADXRecyclerView_ViewHolder:viewHolder withADXRecyclerView_ViewHolder:target]) {
+    [((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) onMovedWithADXRecyclerView:mRecyclerView_ withADXRecyclerView_ViewHolder:viewHolder withInt:fromPosition withADXRecyclerView_ViewHolder:target withInt:toPosition withInt:x withInt:y];
+  }
+}
+
+- (void)onChildViewAttachedToWindowWithADView:(ADView *)view {
+}
+
+- (void)onChildViewDetachedFromWindowWithADView:(ADView *)view {
+  [self removeChildDrawingOrderCallbackIfNecessaryWithADView:view];
+  ADXRecyclerView_ViewHolder *holder = [((ADXRecyclerView *) nil_chk(mRecyclerView_)) getChildViewHolderWithADView:view];
+  if (holder == nil) {
+    return;
+  }
+  if (mSelected_ != nil && JreObjectEqualsEquals(holder, mSelected_)) {
+    [self selectWithADXRecyclerView_ViewHolder:nil withInt:ADXItemTouchHelper_ACTION_STATE_IDLE];
+  }
+  else {
+    [self endRecoverAnimationWithADXRecyclerView_ViewHolder:holder withBoolean:false];
+    if ([((id<JavaUtilList>) nil_chk(mPendingCleanup_)) removeWithId:holder->itemView_]) {
+      [((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) clearViewWithADXRecyclerView:mRecyclerView_ withADXRecyclerView_ViewHolder:holder];
+    }
+  }
+}
+
+- (void)endRecoverAnimationWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                              withBoolean:(bool)override {
+  int32_t recoverAnimSize = [((id<JavaUtilList>) nil_chk(mRecoverAnimations_)) size];
+  for (int32_t i = recoverAnimSize - 1; i >= 0; i--) {
+    ADXItemTouchHelper_RecoverAnimation *anim = [((id<JavaUtilList>) nil_chk(mRecoverAnimations_)) getWithInt:i];
+    if (JreObjectEqualsEquals(((ADXItemTouchHelper_RecoverAnimation *) nil_chk(anim))->mViewHolder_, viewHolder)) {
+      anim->mOverridden_ |= override;
+      if (!anim->mEnded_) {
+        [anim cancel];
+      }
+      [((id<JavaUtilList>) nil_chk(mRecoverAnimations_)) removeWithInt:i];
+      return;
+    }
+  }
+}
+
+- (void)releaseVelocityTracker {
+  ADXItemTouchHelper_releaseVelocityTracker(self);
+}
+
+- (ADXRecyclerView_ViewHolder *)findSwipedViewWithADMotionEvent:(ADMotionEvent *)motionEvent {
+  return ADXItemTouchHelper_findSwipedViewWithADMotionEvent_(self, motionEvent);
+}
+
+- (void)checkSelectForSwipeWithInt:(int32_t)action
+                 withADMotionEvent:(ADMotionEvent *)motionEvent
+                           withInt:(int32_t)pointerIndex {
+  if (mSelected_ != nil || action != ADMotionEvent_ACTION_MOVE || mActionState_ == ADXItemTouchHelper_ACTION_STATE_DRAG || ![((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) isItemViewSwipeEnabled]) {
+    return;
+  }
+  if ([((ADXRecyclerView *) nil_chk(mRecyclerView_)) getScrollState] == ADXRecyclerView_SCROLL_STATE_DRAGGING) {
+    return;
+  }
+  ADXRecyclerView_ViewHolder *vh = ADXItemTouchHelper_findSwipedViewWithADMotionEvent_(self, motionEvent);
+  if (vh == nil) {
+    return;
+  }
+  int32_t movementFlags = ADXItemTouchHelper_Callback_getAbsoluteMovementFlagsWithADXRecyclerView_withADXRecyclerView_ViewHolder_(nil_chk(mCallback_), mRecyclerView_, vh);
+  int32_t swipeFlags = JreRShift32((movementFlags & ADXItemTouchHelper_ACTION_MODE_SWIPE_MASK), (ADXItemTouchHelper_DIRECTION_FLAG_COUNT * ADXItemTouchHelper_ACTION_STATE_SWIPE));
+  if (swipeFlags == 0) {
+    return;
+  }
+  float x = [((ADMotionEvent *) nil_chk(motionEvent)) getXWithInt:pointerIndex];
+  float y = [motionEvent getYWithInt:pointerIndex];
+  float dx = x - mInitialTouchX_;
+  float dy = y - mInitialTouchY_;
+  float absDx = JavaLangMath_absWithFloat_(dx);
+  float absDy = JavaLangMath_absWithFloat_(dy);
+  if (absDx < mSlop_ && absDy < mSlop_) {
+    return;
+  }
+  if (absDx > absDy) {
+    if (dx < 0 && (swipeFlags & ADXItemTouchHelper_LEFT) == 0) {
+      return;
+    }
+    if (dx > 0 && (swipeFlags & ADXItemTouchHelper_RIGHT) == 0) {
+      return;
+    }
+  }
+  else {
+    if (dy < 0 && (swipeFlags & ADXItemTouchHelper_UP) == 0) {
+      return;
+    }
+    if (dy > 0 && (swipeFlags & ADXItemTouchHelper_DOWN) == 0) {
+      return;
+    }
+  }
+  mDx_ = mDy_ = 0.0f;
+  mActivePointerId_ = [motionEvent getPointerIdWithInt:0];
+  [self selectWithADXRecyclerView_ViewHolder:vh withInt:ADXItemTouchHelper_ACTION_STATE_SWIPE];
+}
+
+- (ADView *)findChildViewWithADMotionEvent:(ADMotionEvent *)event {
+  float x = [((ADMotionEvent *) nil_chk(event)) getX];
+  float y = [event getY];
+  if (mSelected_ != nil) {
+    ADView *selectedView = mSelected_->itemView_;
+    if (ADXItemTouchHelper_hitTestWithADView_withFloat_withFloat_withFloat_withFloat_(selectedView, x, y, mSelectedStartX_ + mDx_, mSelectedStartY_ + mDy_)) {
+      return selectedView;
+    }
+  }
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(mRecoverAnimations_)) size] - 1; i >= 0; i--) {
+    ADXItemTouchHelper_RecoverAnimation *anim = [((id<JavaUtilList>) nil_chk(mRecoverAnimations_)) getWithInt:i];
+    ADView *view = ((ADXRecyclerView_ViewHolder *) nil_chk(((ADXItemTouchHelper_RecoverAnimation *) nil_chk(anim))->mViewHolder_))->itemView_;
+    if (ADXItemTouchHelper_hitTestWithADView_withFloat_withFloat_withFloat_withFloat_(view, x, y, anim->mX_, anim->mY_)) {
+      return view;
+    }
+  }
+  return [((ADXRecyclerView *) nil_chk(mRecyclerView_)) findChildViewUnderWithFloat:x withFloat:y];
+}
+
+- (void)startDragWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  if (![((ADXItemTouchHelper_Callback *) nil_chk(mCallback_)) hasDragFlagWithADXRecyclerView:mRecyclerView_ withADXRecyclerView_ViewHolder:viewHolder]) {
+    ADLog_eWithNSString_withNSString_(ADXItemTouchHelper_TAG, @"Start drag has been called but dragging is not enabled");
+    return;
+  }
+  if (!JreObjectEqualsEquals([((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder))->itemView_)) getParent], mRecyclerView_)) {
+    ADLog_eWithNSString_withNSString_(ADXItemTouchHelper_TAG, @"Start drag has been called with a view holder which is not a child of the RecyclerView which is controlled by this ItemTouchHelper.");
+    return;
+  }
+  ADXItemTouchHelper_obtainVelocityTracker(self);
+  mDx_ = mDy_ = 0.0f;
+  [self selectWithADXRecyclerView_ViewHolder:viewHolder withInt:ADXItemTouchHelper_ACTION_STATE_DRAG];
+}
+
+- (ADXItemTouchHelper_RecoverAnimation *)findAnimationWithADMotionEvent:(ADMotionEvent *)event {
+  if ([((id<JavaUtilList>) nil_chk(mRecoverAnimations_)) isEmpty]) {
+    return nil;
+  }
+  ADView *target = JreRetainedLocalValue([self findChildViewWithADMotionEvent:event]);
+  for (int32_t i = [((id<JavaUtilList>) nil_chk(mRecoverAnimations_)) size] - 1; i >= 0; i--) {
+    ADXItemTouchHelper_RecoverAnimation *anim = [((id<JavaUtilList>) nil_chk(mRecoverAnimations_)) getWithInt:i];
+    if (JreObjectEqualsEquals(((ADXRecyclerView_ViewHolder *) nil_chk(((ADXItemTouchHelper_RecoverAnimation *) nil_chk(anim))->mViewHolder_))->itemView_, target)) {
+      return anim;
+    }
+  }
+  return nil;
+}
+
+- (void)updateDxDyWithADMotionEvent:(ADMotionEvent *)ev
+                            withInt:(int32_t)directionFlags
+                            withInt:(int32_t)pointerIndex {
+  float x = [((ADMotionEvent *) nil_chk(ev)) getXWithInt:pointerIndex];
+  float y = [ev getYWithInt:pointerIndex];
+  mDx_ = x - mInitialTouchX_;
+  mDy_ = y - mInitialTouchY_;
+  if ((directionFlags & ADXItemTouchHelper_LEFT) == 0) {
+    mDx_ = JavaLangMath_maxWithFloat_withFloat_(0, mDx_);
+  }
+  if ((directionFlags & ADXItemTouchHelper_RIGHT) == 0) {
+    mDx_ = JavaLangMath_minWithFloat_withFloat_(0, mDx_);
+  }
+  if ((directionFlags & ADXItemTouchHelper_UP) == 0) {
+    mDy_ = JavaLangMath_maxWithFloat_withFloat_(0, mDy_);
+  }
+  if ((directionFlags & ADXItemTouchHelper_DOWN) == 0) {
+    mDy_ = JavaLangMath_minWithFloat_withFloat_(0, mDy_);
+  }
+}
+
+- (int32_t)swipeIfNecessaryWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  return ADXItemTouchHelper_swipeIfNecessaryWithADXRecyclerView_ViewHolder_(self, viewHolder);
+}
+
+- (int32_t)checkHorizontalSwipeWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                      withInt:(int32_t)flags {
+  return ADXItemTouchHelper_checkHorizontalSwipeWithADXRecyclerView_ViewHolder_withInt_(self, viewHolder, flags);
+}
+
+- (int32_t)checkVerticalSwipeWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                    withInt:(int32_t)flags {
+  return ADXItemTouchHelper_checkVerticalSwipeWithADXRecyclerView_ViewHolder_withInt_(self, viewHolder, flags);
+}
+
+- (void)removeChildDrawingOrderCallbackIfNecessaryWithADView:(ADView *)view {
+  if (JreObjectEqualsEquals(view, mOverdrawChild_)) {
+    JreStrongAssign(&mOverdrawChild_, nil);
+    if (mChildDrawingOrderCallback_ != nil) {
+    }
+  }
+}
+
+- (void)obtainVelocityTracker {
+  ADXItemTouchHelper_obtainVelocityTracker(self);
+}
+
+- (void)translateSelectedView {
+  ADXItemTouchHelper_translateSelectedView(self);
+}
+
+- (void)startDragOnDownWithADMotionEvent:(ADMotionEvent *)e {
+  ADXItemTouchHelper_startDragOnDownWithADMotionEvent_(self, e);
+}
+
+- (bool)isScrolling {
+  return false;
+}
+
+- (void)dealloc {
+  RELEASE_(mPendingCleanup_);
+  RELEASE_(mTmpPosition_);
+  RELEASE_(mSelected_);
+  RELEASE_(mCallback_);
+  RELEASE_(mRecoverAnimations_);
+  RELEASE_(mRecyclerView_);
+  RELEASE_(mScrollRunnable_);
+  RELEASE_(mVelocityTracker_);
+  RELEASE_(mSwapTargets_);
+  RELEASE_(mDistances_);
+  RELEASE_(mOverdrawChild_);
+  RELEASE_(mGestureDetector_);
+  RELEASE_(mItemTouchHelperGestureListener_);
+  RELEASE_(mOnItemTouchListener_);
+  RELEASE_(mTmpRect_);
+  RELEASE_(mChildDrawingOrderCallback_);
+  [super dealloc];
+}
 
 + (const J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
-    { NULL, NULL, 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, NULL, 0x1, -1, 0, -1, -1, -1, -1 },
+    { NULL, "Z", 0xa, 1, 2, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 3, 4, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 5, 6, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 7, 8, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 9, 10, -1, -1, -1, -1 },
+    { NULL, "Z", 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "Z", 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "LJavaUtilList;", 0x2, 11, 12, -1, 13, -1, -1 },
+    { NULL, "V", 0x0, 14, 12, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 15, 16, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 17, 16, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 18, 19, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "LADXRecyclerView_ViewHolder;", 0x2, 20, 21, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 22, 23, -1, -1, -1, -1 },
+    { NULL, "LADView;", 0x0, 24, 21, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 25, 12, -1, -1, -1, -1 },
+    { NULL, "LADXItemTouchHelper_RecoverAnimation;", 0x0, 26, 21, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 27, 28, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 29, 12, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 30, 8, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 31, 8, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 32, 16, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 33, 21, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
   #pragma clang diagnostic ignored "-Wundeclared-selector"
-  methods[0].selector = @selector(init);
+  methods[0].selector = @selector(initWithADXItemTouchHelper_Callback:);
+  methods[1].selector = @selector(hitTestWithADView:withFloat:withFloat:withFloat:withFloat:);
+  methods[2].selector = @selector(attachToRecyclerViewWithADXRecyclerView:);
+  methods[3].selector = @selector(setupCallbacks);
+  methods[4].selector = @selector(destroyCallbacks);
+  methods[5].selector = @selector(startGestureDetection);
+  methods[6].selector = @selector(stopGestureDetection);
+  methods[7].selector = @selector(getSelectedDxDyWithFloatArray:);
+  methods[8].selector = @selector(selectWithADXRecyclerView_ViewHolder:withInt:);
+  methods[9].selector = @selector(postDispatchSwipeWithADXItemTouchHelper_RecoverAnimation:withInt:);
+  methods[10].selector = @selector(hasRunningRecoverAnim);
+  methods[11].selector = @selector(scrollIfNecessary);
+  methods[12].selector = @selector(findSwapTargetsWithADXRecyclerView_ViewHolder:);
+  methods[13].selector = @selector(moveIfNecessaryWithADXRecyclerView_ViewHolder:);
+  methods[14].selector = @selector(onChildViewAttachedToWindowWithADView:);
+  methods[15].selector = @selector(onChildViewDetachedFromWindowWithADView:);
+  methods[16].selector = @selector(endRecoverAnimationWithADXRecyclerView_ViewHolder:withBoolean:);
+  methods[17].selector = @selector(releaseVelocityTracker);
+  methods[18].selector = @selector(findSwipedViewWithADMotionEvent:);
+  methods[19].selector = @selector(checkSelectForSwipeWithInt:withADMotionEvent:withInt:);
+  methods[20].selector = @selector(findChildViewWithADMotionEvent:);
+  methods[21].selector = @selector(startDragWithADXRecyclerView_ViewHolder:);
+  methods[22].selector = @selector(findAnimationWithADMotionEvent:);
+  methods[23].selector = @selector(updateDxDyWithADMotionEvent:withInt:withInt:);
+  methods[24].selector = @selector(swipeIfNecessaryWithADXRecyclerView_ViewHolder:);
+  methods[25].selector = @selector(checkHorizontalSwipeWithADXRecyclerView_ViewHolder:withInt:);
+  methods[26].selector = @selector(checkVerticalSwipeWithADXRecyclerView_ViewHolder:withInt:);
+  methods[27].selector = @selector(removeChildDrawingOrderCallbackIfNecessaryWithADView:);
+  methods[28].selector = @selector(obtainVelocityTracker);
+  methods[29].selector = @selector(translateSelectedView);
+  methods[30].selector = @selector(startDragOnDownWithADMotionEvent:);
+  methods[31].selector = @selector(isScrolling);
   #pragma clang diagnostic pop
-  static const void *ptrTable[] = { "LADXItemTouchHelper_SimpleCallback;" };
-  static const J2ObjcClassInfo _ADXItemTouchHelper = { "ItemTouchHelper", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x1, 1, 0, -1, 0, -1, -1, -1 };
+  static const J2ObjcFieldInfo fields[] = {
+    { "UP", "I", .constantValue.asInt = ADXItemTouchHelper_UP, 0x19, -1, -1, -1, -1 },
+    { "DOWN", "I", .constantValue.asInt = ADXItemTouchHelper_DOWN, 0x19, -1, -1, -1, -1 },
+    { "LEFT", "I", .constantValue.asInt = ADXItemTouchHelper_LEFT, 0x19, -1, -1, -1, -1 },
+    { "RIGHT", "I", .constantValue.asInt = ADXItemTouchHelper_RIGHT, 0x19, -1, -1, -1, -1 },
+    { "START", "I", .constantValue.asInt = ADXItemTouchHelper_START, 0x19, -1, -1, -1, -1 },
+    { "END", "I", .constantValue.asInt = ADXItemTouchHelper_END, 0x19, -1, -1, -1, -1 },
+    { "ACTION_STATE_IDLE", "I", .constantValue.asInt = ADXItemTouchHelper_ACTION_STATE_IDLE, 0x19, -1, -1, -1, -1 },
+    { "ACTION_STATE_SWIPE", "I", .constantValue.asInt = ADXItemTouchHelper_ACTION_STATE_SWIPE, 0x19, -1, -1, -1, -1 },
+    { "ACTION_STATE_DRAG", "I", .constantValue.asInt = ADXItemTouchHelper_ACTION_STATE_DRAG, 0x19, -1, -1, -1, -1 },
+    { "ANIMATION_TYPE_SWIPE_SUCCESS", "I", .constantValue.asInt = ADXItemTouchHelper_ANIMATION_TYPE_SWIPE_SUCCESS, 0x19, -1, -1, -1, -1 },
+    { "ANIMATION_TYPE_SWIPE_CANCEL", "I", .constantValue.asInt = ADXItemTouchHelper_ANIMATION_TYPE_SWIPE_CANCEL, 0x19, -1, -1, -1, -1 },
+    { "ANIMATION_TYPE_DRAG", "I", .constantValue.asInt = ADXItemTouchHelper_ANIMATION_TYPE_DRAG, 0x19, -1, -1, -1, -1 },
+    { "TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 34, -1, -1 },
+    { "DEBUG", "Z", .constantValue.asBOOL = ADXItemTouchHelper_DEBUG, 0x1a, -1, -1, -1, -1 },
+    { "ACTIVE_POINTER_ID_NONE", "I", .constantValue.asInt = ADXItemTouchHelper_ACTIVE_POINTER_ID_NONE, 0x1a, -1, -1, -1, -1 },
+    { "DIRECTION_FLAG_COUNT", "I", .constantValue.asInt = ADXItemTouchHelper_DIRECTION_FLAG_COUNT, 0x18, -1, -1, -1, -1 },
+    { "ACTION_MODE_IDLE_MASK", "I", .constantValue.asInt = ADXItemTouchHelper_ACTION_MODE_IDLE_MASK, 0x1a, -1, -1, -1, -1 },
+    { "ACTION_MODE_SWIPE_MASK", "I", .constantValue.asInt = ADXItemTouchHelper_ACTION_MODE_SWIPE_MASK, 0x18, -1, -1, -1, -1 },
+    { "ACTION_MODE_DRAG_MASK", "I", .constantValue.asInt = ADXItemTouchHelper_ACTION_MODE_DRAG_MASK, 0x18, -1, -1, -1, -1 },
+    { "PIXELS_PER_SECOND", "I", .constantValue.asInt = ADXItemTouchHelper_PIXELS_PER_SECOND, 0x1a, -1, -1, -1, -1 },
+    { "mPendingCleanup_", "LJavaUtilList;", .constantValue.asLong = 0, 0x10, -1, -1, 35, -1 },
+    { "mTmpPosition_", "[F", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
+    { "mSelected_", "LADXRecyclerView_ViewHolder;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mInitialTouchX_", "F", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mInitialTouchY_", "F", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mSwipeEscapeVelocity_", "F", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mMaxSwipeVelocity_", "F", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mDx_", "F", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mDy_", "F", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mSelectedStartX_", "F", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mSelectedStartY_", "F", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mActivePointerId_", "I", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mCallback_", "LADXItemTouchHelper_Callback;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mActionState_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mSelectedFlags_", "I", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mRecoverAnimations_", "LJavaUtilList;", .constantValue.asLong = 0, 0x0, -1, -1, 36, -1 },
+    { "mSlop_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mRecyclerView_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mScrollRunnable_", "LJavaLangRunnable;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
+    { "mVelocityTracker_", "LADVelocityTracker;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mSwapTargets_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 37, -1 },
+    { "mDistances_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 38, -1 },
+    { "mOverdrawChild_", "LADView;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mOverdrawChildPosition_", "I", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mGestureDetector_", "LADGestureDetector;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mItemTouchHelperGestureListener_", "LADXItemTouchHelper_ItemTouchHelperGestureListener;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mOnItemTouchListener_", "LADXRecyclerView_OnItemTouchListener;", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
+    { "mTmpRect_", "LADRect;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mDragScrollStartTimeInMs_", "J", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mChildDrawingOrderCallback_", "LNSObject;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LADXItemTouchHelper_Callback;", "hitTest", "LADView;FFFF", "attachToRecyclerView", "LADXRecyclerView;", "getSelectedDxDy", "[F", "select", "LADXRecyclerView_ViewHolder;I", "postDispatchSwipe", "LADXItemTouchHelper_RecoverAnimation;I", "findSwapTargets", "LADXRecyclerView_ViewHolder;", "(Landroidx/recyclerview/widget/RecyclerView$ViewHolder;)Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$ViewHolder;>;", "moveIfNecessary", "onChildViewAttachedToWindow", "LADView;", "onChildViewDetachedFromWindow", "endRecoverAnimation", "LADXRecyclerView_ViewHolder;Z", "findSwipedView", "LADMotionEvent;", "checkSelectForSwipe", "ILADMotionEvent;I", "findChildView", "startDrag", "findAnimation", "updateDxDy", "LADMotionEvent;II", "swipeIfNecessary", "checkHorizontalSwipe", "checkVerticalSwipe", "removeChildDrawingOrderCallbackIfNecessary", "startDragOnDown", &ADXItemTouchHelper_TAG, "Ljava/util/List<Lr/android/view/View;>;", "Ljava/util/List<Landroidx/recyclerview/widget/ItemTouchHelper$RecoverAnimation;>;", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$ViewHolder;>;", "Ljava/util/List<Ljava/lang/Integer;>;", "LADXItemTouchHelper_ViewDropHandler;LADXItemTouchHelper_Callback;LADXItemTouchHelper_SimpleCallback;LADXItemTouchHelper_ItemTouchHelperGestureListener;LADXItemTouchHelper_RecoverAnimation;LADXItemTouchHelper_ItemTouchUIUtilImpl;LADXItemTouchHelper_ItemTouchUIUtil;" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper = { "ItemTouchHelper", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 32, 50, -1, 39, -1, -1, -1 };
   return &_ADXItemTouchHelper;
 }
 
 @end
 
-void ADXItemTouchHelper_init(ADXItemTouchHelper *self) {
-  NSObject_init(self);
+void ADXItemTouchHelper_initWithADXItemTouchHelper_Callback_(ADXItemTouchHelper *self, ADXItemTouchHelper_Callback *callback) {
+  ADXRecyclerView_ItemDecoration_init(self);
+  JreStrongAssignAndConsume(&self->mPendingCleanup_, new_JavaUtilArrayList_init());
+  JreStrongAssignAndConsume(&self->mTmpPosition_, [IOSFloatArray newArrayWithLength:2]);
+  JreStrongAssign(&self->mSelected_, nil);
+  self->mActivePointerId_ = ADXItemTouchHelper_ACTIVE_POINTER_ID_NONE;
+  self->mActionState_ = ADXItemTouchHelper_ACTION_STATE_IDLE;
+  JreStrongAssignAndConsume(&self->mRecoverAnimations_, new_JavaUtilArrayList_init());
+  JreStrongAssignAndConsume(&self->mScrollRunnable_, new_ADXItemTouchHelper_1_initWithADXItemTouchHelper_(self));
+  JreStrongAssign(&self->mOverdrawChild_, nil);
+  self->mOverdrawChildPosition_ = -1;
+  JreStrongAssignAndConsume(&self->mOnItemTouchListener_, new_ADXItemTouchHelper_2_initWithADXItemTouchHelper_(self));
+  JreStrongAssign(&self->mChildDrawingOrderCallback_, nil);
+  JreStrongAssign(&self->mCallback_, callback);
 }
 
-ADXItemTouchHelper *new_ADXItemTouchHelper_init() {
-  J2OBJC_NEW_IMPL(ADXItemTouchHelper, init)
+ADXItemTouchHelper *new_ADXItemTouchHelper_initWithADXItemTouchHelper_Callback_(ADXItemTouchHelper_Callback *callback) {
+  J2OBJC_NEW_IMPL(ADXItemTouchHelper, initWithADXItemTouchHelper_Callback_, callback)
 }
 
-ADXItemTouchHelper *create_ADXItemTouchHelper_init() {
-  J2OBJC_CREATE_IMPL(ADXItemTouchHelper, init)
+ADXItemTouchHelper *create_ADXItemTouchHelper_initWithADXItemTouchHelper_Callback_(ADXItemTouchHelper_Callback *callback) {
+  J2OBJC_CREATE_IMPL(ADXItemTouchHelper, initWithADXItemTouchHelper_Callback_, callback)
+}
+
+bool ADXItemTouchHelper_hitTestWithADView_withFloat_withFloat_withFloat_withFloat_(ADView *child, float x, float y, float left, float top) {
+  ADXItemTouchHelper_initialize();
+  return x >= left && x <= left + [((ADView *) nil_chk(child)) getWidth] && y >= top && y <= top + [child getHeight];
+}
+
+void ADXItemTouchHelper_setupCallbacks(ADXItemTouchHelper *self) {
+  ADViewConfiguration *vc = ADViewConfiguration_getWithADContext_([((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getContext]);
+  self->mSlop_ = [((ADViewConfiguration *) nil_chk(vc)) getScaledTouchSlop];
+  [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) addItemDecorationWithADXRecyclerView_ItemDecoration:self];
+  [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) addOnItemTouchListenerWithADXRecyclerView_OnItemTouchListener:self->mOnItemTouchListener_];
+  [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) addOnChildAttachStateChangeListenerWithADXRecyclerView_OnChildAttachStateChangeListener:self];
+  ADXItemTouchHelper_startGestureDetection(self);
+}
+
+void ADXItemTouchHelper_destroyCallbacks(ADXItemTouchHelper *self) {
+  [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) removeItemDecorationWithADXRecyclerView_ItemDecoration:self];
+  [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) removeOnItemTouchListenerWithADXRecyclerView_OnItemTouchListener:self->mOnItemTouchListener_];
+  [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) removeOnChildAttachStateChangeListenerWithADXRecyclerView_OnChildAttachStateChangeListener:self];
+  int32_t recoverAnimSize = [((id<JavaUtilList>) nil_chk(self->mRecoverAnimations_)) size];
+  for (int32_t i = recoverAnimSize - 1; i >= 0; i--) {
+    ADXItemTouchHelper_RecoverAnimation *recoverAnimation = [((id<JavaUtilList>) nil_chk(self->mRecoverAnimations_)) getWithInt:0];
+    [((ADXItemTouchHelper_RecoverAnimation *) nil_chk(recoverAnimation)) cancel];
+    [((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) clearViewWithADXRecyclerView:self->mRecyclerView_ withADXRecyclerView_ViewHolder:recoverAnimation->mViewHolder_];
+  }
+  [((id<JavaUtilList>) nil_chk(self->mRecoverAnimations_)) clear];
+  JreStrongAssign(&self->mOverdrawChild_, nil);
+  self->mOverdrawChildPosition_ = -1;
+  ADXItemTouchHelper_releaseVelocityTracker(self);
+  ADXItemTouchHelper_stopGestureDetection(self);
+}
+
+void ADXItemTouchHelper_startGestureDetection(ADXItemTouchHelper *self) {
+  JreStrongAssignAndConsume(&self->mItemTouchHelperGestureListener_, new_ADXItemTouchHelper_ItemTouchHelperGestureListener_initWithADXItemTouchHelper_(self));
+  JreStrongAssignAndConsume(&self->mGestureDetector_, new_ADGestureDetector_initWithADContext_withADGestureDetector_OnGestureListener_([((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getContext], self->mItemTouchHelperGestureListener_));
+}
+
+void ADXItemTouchHelper_stopGestureDetection(ADXItemTouchHelper *self) {
+  if (self->mItemTouchHelperGestureListener_ != nil) {
+    [self->mItemTouchHelperGestureListener_ doNotReactToLongPress];
+    JreStrongAssign(&self->mItemTouchHelperGestureListener_, nil);
+  }
+  if (self->mGestureDetector_ != nil) {
+    JreStrongAssign(&self->mGestureDetector_, nil);
+  }
+}
+
+void ADXItemTouchHelper_getSelectedDxDyWithFloatArray_(ADXItemTouchHelper *self, IOSFloatArray *outPosition) {
+  if ((self->mSelectedFlags_ & (ADXItemTouchHelper_LEFT | ADXItemTouchHelper_RIGHT)) != 0) {
+    *IOSFloatArray_GetRef(nil_chk(outPosition), 0) = self->mSelectedStartX_ + self->mDx_ - [((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(self->mSelected_))->itemView_)) getLeft];
+  }
+  else {
+    *IOSFloatArray_GetRef(nil_chk(outPosition), 0) = [((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(self->mSelected_))->itemView_)) getTranslationX];
+  }
+  if ((self->mSelectedFlags_ & (ADXItemTouchHelper_UP | ADXItemTouchHelper_DOWN)) != 0) {
+    *IOSFloatArray_GetRef(outPosition, 1) = self->mSelectedStartY_ + self->mDy_ - [((ADXRecyclerView_ViewHolder *) nil_chk(self->mSelected_))->itemView_ getTop];
+  }
+  else {
+    *IOSFloatArray_GetRef(outPosition, 1) = [((ADXRecyclerView_ViewHolder *) nil_chk(self->mSelected_))->itemView_ getTranslationY];
+  }
+}
+
+id<JavaUtilList> ADXItemTouchHelper_findSwapTargetsWithADXRecyclerView_ViewHolder_(ADXItemTouchHelper *self, ADXRecyclerView_ViewHolder *viewHolder) {
+  if (self->mSwapTargets_ == nil) {
+    JreStrongAssignAndConsume(&self->mSwapTargets_, new_JavaUtilArrayList_init());
+    JreStrongAssignAndConsume(&self->mDistances_, new_JavaUtilArrayList_init());
+  }
+  else {
+    [self->mSwapTargets_ clear];
+    [((id<JavaUtilList>) nil_chk(self->mDistances_)) clear];
+  }
+  int32_t margin = [((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) getBoundingBoxMargin];
+  int32_t left = JavaLangMath_roundWithFloat_(self->mSelectedStartX_ + self->mDx_) - margin;
+  int32_t top = JavaLangMath_roundWithFloat_(self->mSelectedStartY_ + self->mDy_) - margin;
+  int32_t right = left + [((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder))->itemView_)) getWidth] + 2 * margin;
+  int32_t bottom = top + [viewHolder->itemView_ getHeight] + 2 * margin;
+  int32_t centerX = JreIntDiv((left + right), 2);
+  int32_t centerY = JreIntDiv((top + bottom), 2);
+  ADXRecyclerView_LayoutManager *lm = [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getLayoutManager];
+  int32_t childCount = [((ADXRecyclerView_LayoutManager *) nil_chk(lm)) getChildCount];
+  for (int32_t i = 0; i < childCount; i++) {
+    ADView *other = JreRetainedLocalValue([lm getChildAtWithInt:i]);
+    if (JreObjectEqualsEquals(other, viewHolder->itemView_)) {
+      continue;
+    }
+    if ([((ADView *) nil_chk(other)) getBottom] < top || [other getTop] > bottom || [other getRight] < left || [other getLeft] > right) {
+      continue;
+    }
+    ADXRecyclerView_ViewHolder *otherVh = [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getChildViewHolderWithADView:other];
+    if ([((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) canDropOverWithADXRecyclerView:self->mRecyclerView_ withADXRecyclerView_ViewHolder:self->mSelected_ withADXRecyclerView_ViewHolder:otherVh]) {
+      int32_t dx = JavaLangMath_absWithInt_(centerX - JreIntDiv(([other getLeft] + [other getRight]), 2));
+      int32_t dy = JavaLangMath_absWithInt_(centerY - JreIntDiv(([other getTop] + [other getBottom]), 2));
+      int32_t dist = dx * dx + dy * dy;
+      int32_t pos = 0;
+      int32_t cnt = [((id<JavaUtilList>) nil_chk(self->mSwapTargets_)) size];
+      for (int32_t j = 0; j < cnt; j++) {
+        if (dist > [((JavaLangInteger *) nil_chk([((id<JavaUtilList>) nil_chk(self->mDistances_)) getWithInt:j])) intValue]) {
+          pos++;
+        }
+        else {
+          break;
+        }
+      }
+      [((id<JavaUtilList>) nil_chk(self->mSwapTargets_)) addWithInt:pos withId:otherVh];
+      [((id<JavaUtilList>) nil_chk(self->mDistances_)) addWithInt:pos withId:JavaLangInteger_valueOfWithInt_(dist)];
+    }
+  }
+  return self->mSwapTargets_;
+}
+
+void ADXItemTouchHelper_releaseVelocityTracker(ADXItemTouchHelper *self) {
+  if (self->mVelocityTracker_ != nil) {
+    [self->mVelocityTracker_ recycle];
+    JreStrongAssign(&self->mVelocityTracker_, nil);
+  }
+}
+
+ADXRecyclerView_ViewHolder *ADXItemTouchHelper_findSwipedViewWithADMotionEvent_(ADXItemTouchHelper *self, ADMotionEvent *motionEvent) {
+  if ([self isScrolling]) {
+    return nil;
+  }
+  ADXRecyclerView_LayoutManager *lm = [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getLayoutManager];
+  if (self->mActivePointerId_ == ADXItemTouchHelper_ACTIVE_POINTER_ID_NONE) {
+    return nil;
+  }
+  int32_t pointerIndex = [((ADMotionEvent *) nil_chk(motionEvent)) findPointerIndexWithInt:self->mActivePointerId_];
+  float dx = [motionEvent getXWithInt:pointerIndex] - self->mInitialTouchX_;
+  float dy = [motionEvent getYWithInt:pointerIndex] - self->mInitialTouchY_;
+  float absDx = JavaLangMath_absWithFloat_(dx);
+  float absDy = JavaLangMath_absWithFloat_(dy);
+  if (absDx < self->mSlop_ && absDy < self->mSlop_) {
+    return nil;
+  }
+  if (absDx > absDy && [((ADXRecyclerView_LayoutManager *) nil_chk(lm)) canScrollHorizontally]) {
+    return nil;
+  }
+  else if (absDy > absDx && [((ADXRecyclerView_LayoutManager *) nil_chk(lm)) canScrollVertically]) {
+    return nil;
+  }
+  ADView *child = JreRetainedLocalValue([self findChildViewWithADMotionEvent:motionEvent]);
+  if (child == nil) {
+    return nil;
+  }
+  return [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getChildViewHolderWithADView:child];
+}
+
+int32_t ADXItemTouchHelper_swipeIfNecessaryWithADXRecyclerView_ViewHolder_(ADXItemTouchHelper *self, ADXRecyclerView_ViewHolder *viewHolder) {
+  if (self->mActionState_ == ADXItemTouchHelper_ACTION_STATE_DRAG) {
+    return 0;
+  }
+  int32_t originalMovementFlags = [((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) getMovementFlagsWithADXRecyclerView:self->mRecyclerView_ withADXRecyclerView_ViewHolder:viewHolder];
+  int32_t absoluteMovementFlags = [((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) convertToAbsoluteDirectionWithInt:originalMovementFlags withInt:[((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getLayoutDirection]];
+  int32_t flags = JreRShift32((absoluteMovementFlags & ADXItemTouchHelper_ACTION_MODE_SWIPE_MASK), (ADXItemTouchHelper_ACTION_STATE_SWIPE * ADXItemTouchHelper_DIRECTION_FLAG_COUNT));
+  if (flags == 0) {
+    return 0;
+  }
+  int32_t originalFlags = JreRShift32((originalMovementFlags & ADXItemTouchHelper_ACTION_MODE_SWIPE_MASK), (ADXItemTouchHelper_ACTION_STATE_SWIPE * ADXItemTouchHelper_DIRECTION_FLAG_COUNT));
+  int32_t swipeDir;
+  if (JavaLangMath_absWithFloat_(self->mDx_) > JavaLangMath_absWithFloat_(self->mDy_)) {
+    if ((swipeDir = ADXItemTouchHelper_checkHorizontalSwipeWithADXRecyclerView_ViewHolder_withInt_(self, viewHolder, flags)) > 0) {
+      if ((originalFlags & swipeDir) == 0) {
+        return ADXItemTouchHelper_Callback_convertToRelativeDirectionWithInt_withInt_(swipeDir, [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getLayoutDirection]);
+      }
+      return swipeDir;
+    }
+    if ((swipeDir = ADXItemTouchHelper_checkVerticalSwipeWithADXRecyclerView_ViewHolder_withInt_(self, viewHolder, flags)) > 0) {
+      return swipeDir;
+    }
+  }
+  else {
+    if ((swipeDir = ADXItemTouchHelper_checkVerticalSwipeWithADXRecyclerView_ViewHolder_withInt_(self, viewHolder, flags)) > 0) {
+      return swipeDir;
+    }
+    if ((swipeDir = ADXItemTouchHelper_checkHorizontalSwipeWithADXRecyclerView_ViewHolder_withInt_(self, viewHolder, flags)) > 0) {
+      if ((originalFlags & swipeDir) == 0) {
+        return ADXItemTouchHelper_Callback_convertToRelativeDirectionWithInt_withInt_(swipeDir, [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getLayoutDirection]);
+      }
+      return swipeDir;
+    }
+  }
+  return 0;
+}
+
+int32_t ADXItemTouchHelper_checkHorizontalSwipeWithADXRecyclerView_ViewHolder_withInt_(ADXItemTouchHelper *self, ADXRecyclerView_ViewHolder *viewHolder, int32_t flags) {
+  if ((flags & (ADXItemTouchHelper_LEFT | ADXItemTouchHelper_RIGHT)) != 0) {
+    int32_t dirFlag = self->mDx_ > 0 ? ADXItemTouchHelper_RIGHT : ADXItemTouchHelper_LEFT;
+    if (self->mVelocityTracker_ != nil && self->mActivePointerId_ > -1) {
+      [self->mVelocityTracker_ computeCurrentVelocityWithInt:ADXItemTouchHelper_PIXELS_PER_SECOND withFloat:[((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) getSwipeVelocityThresholdWithFloat:self->mMaxSwipeVelocity_]];
+      float xVelocity = [((ADVelocityTracker *) nil_chk(self->mVelocityTracker_)) getXVelocityWithInt:self->mActivePointerId_];
+      float yVelocity = [((ADVelocityTracker *) nil_chk(self->mVelocityTracker_)) getYVelocityWithInt:self->mActivePointerId_];
+      int32_t velDirFlag = xVelocity > 0.0f ? ADXItemTouchHelper_RIGHT : ADXItemTouchHelper_LEFT;
+      float absXVelocity = JavaLangMath_absWithFloat_(xVelocity);
+      if ((velDirFlag & flags) != 0 && dirFlag == velDirFlag && absXVelocity >= [((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) getSwipeEscapeVelocityWithFloat:self->mSwipeEscapeVelocity_] && absXVelocity > JavaLangMath_absWithFloat_(yVelocity)) {
+        return velDirFlag;
+      }
+    }
+    float threshold = [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getWidth] * [((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) getSwipeThresholdWithADXRecyclerView_ViewHolder:viewHolder];
+    if ((flags & dirFlag) != 0 && JavaLangMath_absWithFloat_(self->mDx_) > threshold) {
+      return dirFlag;
+    }
+  }
+  return 0;
+}
+
+int32_t ADXItemTouchHelper_checkVerticalSwipeWithADXRecyclerView_ViewHolder_withInt_(ADXItemTouchHelper *self, ADXRecyclerView_ViewHolder *viewHolder, int32_t flags) {
+  if ((flags & (ADXItemTouchHelper_UP | ADXItemTouchHelper_DOWN)) != 0) {
+    int32_t dirFlag = self->mDy_ > 0 ? ADXItemTouchHelper_DOWN : ADXItemTouchHelper_UP;
+    if (self->mVelocityTracker_ != nil && self->mActivePointerId_ > -1) {
+      [self->mVelocityTracker_ computeCurrentVelocityWithInt:ADXItemTouchHelper_PIXELS_PER_SECOND withFloat:[((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) getSwipeVelocityThresholdWithFloat:self->mMaxSwipeVelocity_]];
+      float xVelocity = [((ADVelocityTracker *) nil_chk(self->mVelocityTracker_)) getXVelocityWithInt:self->mActivePointerId_];
+      float yVelocity = [((ADVelocityTracker *) nil_chk(self->mVelocityTracker_)) getYVelocityWithInt:self->mActivePointerId_];
+      int32_t velDirFlag = yVelocity > 0.0f ? ADXItemTouchHelper_DOWN : ADXItemTouchHelper_UP;
+      float absYVelocity = JavaLangMath_absWithFloat_(yVelocity);
+      if ((velDirFlag & flags) != 0 && velDirFlag == dirFlag && absYVelocity >= [((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) getSwipeEscapeVelocityWithFloat:self->mSwipeEscapeVelocity_] && absYVelocity > JavaLangMath_absWithFloat_(xVelocity)) {
+        return velDirFlag;
+      }
+    }
+    float threshold = [((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getHeight] * [((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) getSwipeThresholdWithADXRecyclerView_ViewHolder:viewHolder];
+    if ((flags & dirFlag) != 0 && JavaLangMath_absWithFloat_(self->mDy_) > threshold) {
+      return dirFlag;
+    }
+  }
+  return 0;
+}
+
+void ADXItemTouchHelper_obtainVelocityTracker(ADXItemTouchHelper *self) {
+}
+
+void ADXItemTouchHelper_translateSelectedView(ADXItemTouchHelper *self) {
+  if (self->mSelected_ != nil) {
+    ADXItemTouchHelper_getSelectedDxDyWithFloatArray_(self, self->mTmpPosition_);
+    ADView *draggedView = JreRetainedLocalValue(((ADXRecyclerView_ViewHolder *) nil_chk(self->mSelected_))->itemView_);
+    [((ADView *) nil_chk(draggedView)) setTranslationXWithFloat:IOSFloatArray_Get(nil_chk(self->mTmpPosition_), 0)];
+    [draggedView setTranslationYWithFloat:IOSFloatArray_Get(self->mTmpPosition_, 1)];
+  }
+}
+
+void ADXItemTouchHelper_startDragOnDownWithADMotionEvent_(ADXItemTouchHelper *self, ADMotionEvent *e) {
+  if ([((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) isDownPressDragEnabled]) {
+    ADView *child = JreRetainedLocalValue([self findChildViewWithADMotionEvent:e]);
+    if (child != nil) {
+      ADXRecyclerView_ViewHolder *vh = JreRetainedLocalValue([((ADXRecyclerView *) nil_chk(self->mRecyclerView_)) getChildViewHolderWithADView:child]);
+      if ([((ADXItemTouchHelper_Callback *) nil_chk(self->mCallback_)) hasDragFlagWithADXRecyclerView:self->mRecyclerView_ withADXRecyclerView_ViewHolder:vh]) {
+        if (vh != nil) {
+          [self selectWithADXRecyclerView_ViewHolder:vh withInt:ADXItemTouchHelper_ACTION_STATE_DRAG];
+        }
+      }
+    }
+  }
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXItemTouchHelper)
 
 J2OBJC_NAME_MAPPING(ADXItemTouchHelper, "androidx.recyclerview.widget", "ADX")
 
+@implementation ADXItemTouchHelper_1
+
+- (instancetype)initWithADXItemTouchHelper:(ADXItemTouchHelper *)outer$ {
+  ADXItemTouchHelper_1_initWithADXItemTouchHelper_(self, outer$);
+  return self;
+}
+
+- (void)run {
+  if (this$0_->mSelected_ != nil && [this$0_ scrollIfNecessary]) {
+    if (this$0_->mSelected_ != nil) {
+      [this$0_ moveIfNecessaryWithADXRecyclerView_ViewHolder:this$0_->mSelected_];
+    }
+    [((ADXRecyclerView *) nil_chk(this$0_->mRecyclerView_)) removeCallbacksWithJavaLangRunnable:this$0_->mScrollRunnable_];
+    ADXViewCompat_postOnAnimationWithADView_withJavaLangRunnable_(this$0_->mRecyclerView_, self);
+  }
+}
+
+- (void)dealloc {
+  RELEASE_(this$0_);
+  [super dealloc];
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, 0, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(initWithADXItemTouchHelper:);
+  methods[1].selector = @selector(run);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "this$0_", "LADXItemTouchHelper;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LADXItemTouchHelper;" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 2, 1, 0, -1, -1, -1, -1 };
+  return &_ADXItemTouchHelper_1;
+}
+
+@end
+
+void ADXItemTouchHelper_1_initWithADXItemTouchHelper_(ADXItemTouchHelper_1 *self, ADXItemTouchHelper *outer$) {
+  JreStrongAssign(&self->this$0_, outer$);
+  NSObject_init(self);
+}
+
+ADXItemTouchHelper_1 *new_ADXItemTouchHelper_1_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$) {
+  J2OBJC_NEW_IMPL(ADXItemTouchHelper_1, initWithADXItemTouchHelper_, outer$)
+}
+
+ADXItemTouchHelper_1 *create_ADXItemTouchHelper_1_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$) {
+  J2OBJC_CREATE_IMPL(ADXItemTouchHelper_1, initWithADXItemTouchHelper_, outer$)
+}
+
+@implementation ADXItemTouchHelper_2
+
+- (instancetype)initWithADXItemTouchHelper:(ADXItemTouchHelper *)outer$ {
+  ADXItemTouchHelper_2_initWithADXItemTouchHelper_(self, outer$);
+  return self;
+}
+
+- (bool)onInterceptTouchEventWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                               withADMotionEvent:(ADMotionEvent *)event {
+  [((ADGestureDetector *) nil_chk(this$0_->mGestureDetector_)) onTouchEventWithADMotionEvent:event];
+  int32_t action = [((ADMotionEvent *) nil_chk(event)) getActionMasked];
+  if (action == ADMotionEvent_ACTION_DOWN) {
+    this$0_->mActivePointerId_ = [event getPointerIdWithInt:0];
+    this$0_->mInitialTouchX_ = [event getX];
+    this$0_->mInitialTouchY_ = [event getY];
+    ADXItemTouchHelper_obtainVelocityTracker(this$0_);
+    if (this$0_->mSelected_ == nil) {
+      ADXItemTouchHelper_RecoverAnimation *animation = [this$0_ findAnimationWithADMotionEvent:event];
+      if (animation != nil) {
+        JreMinusAssignFloatF(&this$0_->mInitialTouchX_, animation->mX_);
+        JreMinusAssignFloatF(&this$0_->mInitialTouchY_, animation->mY_);
+        [this$0_ endRecoverAnimationWithADXRecyclerView_ViewHolder:animation->mViewHolder_ withBoolean:true];
+        if ([((id<JavaUtilList>) nil_chk(this$0_->mPendingCleanup_)) removeWithId:((ADXRecyclerView_ViewHolder *) nil_chk(animation->mViewHolder_))->itemView_]) {
+          [((ADXItemTouchHelper_Callback *) nil_chk(this$0_->mCallback_)) clearViewWithADXRecyclerView:this$0_->mRecyclerView_ withADXRecyclerView_ViewHolder:animation->mViewHolder_];
+        }
+        [this$0_ selectWithADXRecyclerView_ViewHolder:animation->mViewHolder_ withInt:animation->mActionState_];
+        [this$0_ updateDxDyWithADMotionEvent:event withInt:this$0_->mSelectedFlags_ withInt:0];
+      }
+    }
+  }
+  else if (action == ADMotionEvent_ACTION_CANCEL || action == ADMotionEvent_ACTION_UP) {
+    this$0_->mActivePointerId_ = ADXItemTouchHelper_ACTIVE_POINTER_ID_NONE;
+    [this$0_ selectWithADXRecyclerView_ViewHolder:nil withInt:ADXItemTouchHelper_ACTION_STATE_IDLE];
+  }
+  else if (this$0_->mActivePointerId_ != ADXItemTouchHelper_ACTIVE_POINTER_ID_NONE) {
+    int32_t index = [event findPointerIndexWithInt:this$0_->mActivePointerId_];
+    if (index >= 0) {
+      [this$0_ checkSelectForSwipeWithInt:action withADMotionEvent:event withInt:index];
+    }
+  }
+  if (this$0_->mVelocityTracker_ != nil) {
+    [this$0_->mVelocityTracker_ addMovementWithADMotionEvent:event];
+  }
+  return this$0_->mSelected_ != nil;
+}
+
+- (void)onTouchEventWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                      withADMotionEvent:(ADMotionEvent *)event {
+  [((ADGestureDetector *) nil_chk(this$0_->mGestureDetector_)) onTouchEventWithADMotionEvent:event];
+  if (this$0_->mVelocityTracker_ != nil) {
+    [this$0_->mVelocityTracker_ addMovementWithADMotionEvent:event];
+  }
+  if (this$0_->mActivePointerId_ == ADXItemTouchHelper_ACTIVE_POINTER_ID_NONE) {
+    return;
+  }
+  int32_t action = [((ADMotionEvent *) nil_chk(event)) getActionMasked];
+  int32_t activePointerIndex = [event findPointerIndexWithInt:this$0_->mActivePointerId_];
+  if (activePointerIndex >= 0) {
+    [this$0_ checkSelectForSwipeWithInt:action withADMotionEvent:event withInt:activePointerIndex];
+  }
+  ADXRecyclerView_ViewHolder *viewHolder = JreRetainedLocalValue(this$0_->mSelected_);
+  if (viewHolder == nil) {
+    return;
+  }
+  switch (action) {
+    case ADMotionEvent_ACTION_MOVE:
+    {
+      if (activePointerIndex >= 0) {
+        [this$0_ updateDxDyWithADMotionEvent:event withInt:this$0_->mSelectedFlags_ withInt:activePointerIndex];
+        ADXItemTouchHelper_translateSelectedView(this$0_);
+        [this$0_ moveIfNecessaryWithADXRecyclerView_ViewHolder:viewHolder];
+        [((ADXRecyclerView *) nil_chk(this$0_->mRecyclerView_)) removeCallbacksWithJavaLangRunnable:this$0_->mScrollRunnable_];
+        [((id<JavaLangRunnable>) nil_chk(this$0_->mScrollRunnable_)) run];
+        [((ADXRecyclerView *) nil_chk(this$0_->mRecyclerView_)) invalidate];
+      }
+      break;
+    }
+    case ADMotionEvent_ACTION_CANCEL:
+    if (this$0_->mVelocityTracker_ != nil) {
+      [this$0_->mVelocityTracker_ clear];
+    }
+    case ADMotionEvent_ACTION_UP:
+    [this$0_ selectWithADXRecyclerView_ViewHolder:nil withInt:ADXItemTouchHelper_ACTION_STATE_IDLE];
+    this$0_->mActivePointerId_ = ADXItemTouchHelper_ACTIVE_POINTER_ID_NONE;
+    break;
+    case ADMotionEvent_ACTION_POINTER_UP:
+    {
+      int32_t pointerIndex = [event getActionIndex];
+      int32_t pointerId = [event getPointerIdWithInt:pointerIndex];
+      if (pointerId == this$0_->mActivePointerId_) {
+        int32_t newPointerIndex = pointerIndex == 0 ? 1 : 0;
+        this$0_->mActivePointerId_ = [event getPointerIdWithInt:newPointerIndex];
+        [this$0_ updateDxDyWithADMotionEvent:event withInt:this$0_->mSelectedFlags_ withInt:pointerIndex];
+      }
+      break;
+    }
+  }
+}
+
+- (void)onRequestDisallowInterceptTouchEventWithBoolean:(bool)disallowIntercept {
+  if (!disallowIntercept) {
+    return;
+  }
+  [this$0_ selectWithADXRecyclerView_ViewHolder:nil withInt:ADXItemTouchHelper_ACTION_STATE_IDLE];
+}
+
+- (void)dealloc {
+  RELEASE_(this$0_);
+  [super dealloc];
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, 0, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 1, 2, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 3, 2, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 4, 5, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(initWithADXItemTouchHelper:);
+  methods[1].selector = @selector(onInterceptTouchEventWithADXRecyclerView:withADMotionEvent:);
+  methods[2].selector = @selector(onTouchEventWithADXRecyclerView:withADMotionEvent:);
+  methods[3].selector = @selector(onRequestDisallowInterceptTouchEventWithBoolean:);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "this$0_", "LADXItemTouchHelper;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LADXItemTouchHelper;", "onInterceptTouchEvent", "LADXRecyclerView;LADMotionEvent;", "onTouchEvent", "onRequestDisallowInterceptTouchEvent", "Z" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_2 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 4, 1, 0, -1, -1, -1, -1 };
+  return &_ADXItemTouchHelper_2;
+}
+
+@end
+
+void ADXItemTouchHelper_2_initWithADXItemTouchHelper_(ADXItemTouchHelper_2 *self, ADXItemTouchHelper *outer$) {
+  JreStrongAssign(&self->this$0_, outer$);
+  NSObject_init(self);
+}
+
+ADXItemTouchHelper_2 *new_ADXItemTouchHelper_2_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$) {
+  J2OBJC_NEW_IMPL(ADXItemTouchHelper_2, initWithADXItemTouchHelper_, outer$)
+}
+
+ADXItemTouchHelper_2 *create_ADXItemTouchHelper_2_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$) {
+  J2OBJC_CREATE_IMPL(ADXItemTouchHelper_2, initWithADXItemTouchHelper_, outer$)
+}
+
+@implementation ADXItemTouchHelper_RecoverAnimation
+
+- (instancetype)initWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                           withInt:(int32_t)animationType
+                                           withInt:(int32_t)actionState
+                                         withFloat:(float)startDx
+                                         withFloat:(float)startDy
+                                         withFloat:(float)targetX
+                                         withFloat:(float)targetY {
+  ADXItemTouchHelper_RecoverAnimation_initWithADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(self, viewHolder, animationType, actionState, startDx, startDy, targetX, targetY);
+  return self;
+}
+
+- (void)setDurationWithLong:(int64_t)duration {
+  [((ADValueAnimator *) nil_chk(mValueAnimator_)) setDurationWithLong:duration];
+}
+
+- (void)start {
+  [((ADXRecyclerView_ViewHolder *) nil_chk(mViewHolder_)) setIsRecyclableWithBoolean:false];
+  [((ADValueAnimator *) nil_chk(mValueAnimator_)) start];
+}
+
+- (void)cancel {
+  [((ADValueAnimator *) nil_chk(mValueAnimator_)) cancel];
+}
+
+- (void)setFractionWithFloat:(float)fraction {
+  mFraction_ = fraction;
+}
+
+- (void)update {
+  if (mStartDx_ == mTargetX_) {
+    mX_ = [((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(mViewHolder_))->itemView_)) getTranslationX];
+  }
+  else {
+    mX_ = mStartDx_ + mFraction_ * (mTargetX_ - mStartDx_);
+  }
+  if (mStartDy_ == mTargetY_) {
+    mY_ = [((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(mViewHolder_))->itemView_)) getTranslationY];
+  }
+  else {
+    mY_ = mStartDy_ + mFraction_ * (mTargetY_ - mStartDy_);
+  }
+}
+
+- (void)onAnimationStartWithADAnimator:(ADAnimator *)animation {
+}
+
+- (void)onAnimationEndWithADAnimator:(ADAnimator *)animation {
+  ADXItemTouchHelper_RecoverAnimation_onAnimationEndWithADAnimator_(self, animation);
+}
+
+- (void)onAnimationCancelWithADAnimator:(ADAnimator *)animation {
+  [self setFractionWithFloat:1.0f];
+}
+
+- (void)onAnimationRepeatWithADAnimator:(ADAnimator *)animation {
+}
+
+- (void)onAnimationStartWithADAnimator:(ADAnimator *)arg0
+                           withBoolean:(bool)arg1 {
+  ADAnimator_AnimatorListener_onAnimationStartWithADAnimator_withBoolean_(self, arg0, arg1);
+}
+
+- (void)onAnimationEndWithADAnimator:(ADAnimator *)arg0
+                         withBoolean:(bool)arg1 {
+  ADAnimator_AnimatorListener_onAnimationEndWithADAnimator_withBoolean_(self, arg0, arg1);
+}
+
+- (void)dealloc {
+  RELEASE_(mViewHolder_);
+  RELEASE_(mValueAnimator_);
+  [super dealloc];
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, 0, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 1, 2, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 3, 4, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 5, 6, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 7, 6, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 8, 6, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 9, 6, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(initWithADXRecyclerView_ViewHolder:withInt:withInt:withFloat:withFloat:withFloat:withFloat:);
+  methods[1].selector = @selector(setDurationWithLong:);
+  methods[2].selector = @selector(start);
+  methods[3].selector = @selector(cancel);
+  methods[4].selector = @selector(setFractionWithFloat:);
+  methods[5].selector = @selector(update);
+  methods[6].selector = @selector(onAnimationStartWithADAnimator:);
+  methods[7].selector = @selector(onAnimationEndWithADAnimator:);
+  methods[8].selector = @selector(onAnimationCancelWithADAnimator:);
+  methods[9].selector = @selector(onAnimationRepeatWithADAnimator:);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "mStartDx_", "F", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
+    { "mStartDy_", "F", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
+    { "mTargetX_", "F", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
+    { "mTargetY_", "F", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
+    { "mViewHolder_", "LADXRecyclerView_ViewHolder;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
+    { "mActionState_", "I", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
+    { "mValueAnimator_", "LADValueAnimator;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
+    { "mAnimationType_", "I", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
+    { "mIsPendingCleanup_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mX_", "F", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mY_", "F", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mOverridden_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mEnded_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mFraction_", "F", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LADXRecyclerView_ViewHolder;IIFFFF", "setDuration", "J", "setFraction", "F", "onAnimationStart", "LADAnimator;", "onAnimationEnd", "onAnimationCancel", "onAnimationRepeat", "LADXItemTouchHelper;" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_RecoverAnimation = { "RecoverAnimation", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8, 10, 14, 10, -1, -1, -1, -1 };
+  return &_ADXItemTouchHelper_RecoverAnimation;
+}
+
+@end
+
+void ADXItemTouchHelper_RecoverAnimation_initWithADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(ADXItemTouchHelper_RecoverAnimation *self, ADXRecyclerView_ViewHolder *viewHolder, int32_t animationType, int32_t actionState, float startDx, float startDy, float targetX, float targetY) {
+  NSObject_init(self);
+  self->mOverridden_ = false;
+  self->mEnded_ = false;
+  self->mActionState_ = actionState;
+  self->mAnimationType_ = animationType;
+  JreStrongAssign(&self->mViewHolder_, viewHolder);
+  self->mStartDx_ = startDx;
+  self->mStartDy_ = startDy;
+  self->mTargetX_ = targetX;
+  self->mTargetY_ = targetY;
+  JreStrongAssign(&self->mValueAnimator_, ADValueAnimator_ofFloatWithFloatArray_([IOSFloatArray arrayWithFloats:(float[]){ 0.0f, 1.0f } count:2]));
+  [((ADValueAnimator *) nil_chk(self->mValueAnimator_)) addUpdateListenerWithADValueAnimator_AnimatorUpdateListener:create_ADXItemTouchHelper_RecoverAnimation_1_initWithADXItemTouchHelper_RecoverAnimation_(self)];
+  [self->mValueAnimator_ setTargetWithId:((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder))->itemView_];
+  [self->mValueAnimator_ addListenerWithADAnimator_AnimatorListener:self];
+  [self setFractionWithFloat:0.0f];
+}
+
+ADXItemTouchHelper_RecoverAnimation *new_ADXItemTouchHelper_RecoverAnimation_initWithADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(ADXRecyclerView_ViewHolder *viewHolder, int32_t animationType, int32_t actionState, float startDx, float startDy, float targetX, float targetY) {
+  J2OBJC_NEW_IMPL(ADXItemTouchHelper_RecoverAnimation, initWithADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_, viewHolder, animationType, actionState, startDx, startDy, targetX, targetY)
+}
+
+ADXItemTouchHelper_RecoverAnimation *create_ADXItemTouchHelper_RecoverAnimation_initWithADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(ADXRecyclerView_ViewHolder *viewHolder, int32_t animationType, int32_t actionState, float startDx, float startDy, float targetX, float targetY) {
+  J2OBJC_CREATE_IMPL(ADXItemTouchHelper_RecoverAnimation, initWithADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_, viewHolder, animationType, actionState, startDx, startDy, targetX, targetY)
+}
+
+void ADXItemTouchHelper_RecoverAnimation_onAnimationEndWithADAnimator_(ADXItemTouchHelper_RecoverAnimation *self, ADAnimator *animation) {
+  if (!self->mEnded_) {
+    [((ADXRecyclerView_ViewHolder *) nil_chk(self->mViewHolder_)) setIsRecyclableWithBoolean:true];
+  }
+  self->mEnded_ = true;
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXItemTouchHelper_RecoverAnimation)
+
+@implementation ADXItemTouchHelper_3
+
+- (instancetype)initWithADXItemTouchHelper:(ADXItemTouchHelper *)outer$
+                                   withInt:(int32_t)capture$0
+            withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)capture$1
+            withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                   withInt:(int32_t)animationType
+                                   withInt:(int32_t)actionState
+                                 withFloat:(float)startDx
+                                 withFloat:(float)startDy
+                                 withFloat:(float)targetX
+                                 withFloat:(float)targetY {
+  ADXItemTouchHelper_3_initWithADXItemTouchHelper_withInt_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(self, outer$, capture$0, capture$1, viewHolder, animationType, actionState, startDx, startDy, targetX, targetY);
+  return self;
+}
+
+- (void)onAnimationEndWithADAnimator:(ADAnimator *)animation {
+  ADXItemTouchHelper_RecoverAnimation_onAnimationEndWithADAnimator_(self, animation);
+  [((id<JavaUtilList>) nil_chk(this$0_->mRecoverAnimations_)) removeWithId:self];
+  if (self->mOverridden_) {
+    return;
+  }
+  if (val$swipeDir_ <= 0) {
+    [((ADXItemTouchHelper_Callback *) nil_chk(this$0_->mCallback_)) clearViewWithADXRecyclerView:this$0_->mRecyclerView_ withADXRecyclerView_ViewHolder:val$prevSelected_];
+  }
+  else {
+    [((id<JavaUtilList>) nil_chk(this$0_->mPendingCleanup_)) addWithId:((ADXRecyclerView_ViewHolder *) nil_chk(val$prevSelected_))->itemView_];
+    mIsPendingCleanup_ = true;
+    if (val$swipeDir_ > 0) {
+      [this$0_ postDispatchSwipeWithADXItemTouchHelper_RecoverAnimation:self withInt:val$swipeDir_];
+    }
+  }
+  if (JreObjectEqualsEquals(this$0_->mOverdrawChild_, ((ADXRecyclerView_ViewHolder *) nil_chk(val$prevSelected_))->itemView_)) {
+    [this$0_ removeChildDrawingOrderCallbackIfNecessaryWithADView:val$prevSelected_->itemView_];
+  }
+}
+
+- (void)dealloc {
+  RELEASE_(this$0_);
+  RELEASE_(val$prevSelected_);
+  [super dealloc];
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, 0, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 1, 2, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(initWithADXItemTouchHelper:withInt:withADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:withInt:withInt:withFloat:withFloat:withFloat:withFloat:);
+  methods[1].selector = @selector(onAnimationEndWithADAnimator:);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "this$0_", "LADXItemTouchHelper;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+    { "val$swipeDir_", "I", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+    { "val$prevSelected_", "LADXRecyclerView_ViewHolder;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LADXItemTouchHelper;ILADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;IIFFFF", "onAnimationEnd", "LADAnimator;", "LADXItemTouchHelper;", "selectWithADXRecyclerView_ViewHolder:withInt:" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_3 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 2, 3, 3, -1, 4, -1, -1 };
+  return &_ADXItemTouchHelper_3;
+}
+
+@end
+
+void ADXItemTouchHelper_3_initWithADXItemTouchHelper_withInt_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(ADXItemTouchHelper_3 *self, ADXItemTouchHelper *outer$, int32_t capture$0, ADXRecyclerView_ViewHolder *capture$1, ADXRecyclerView_ViewHolder *viewHolder, int32_t animationType, int32_t actionState, float startDx, float startDy, float targetX, float targetY) {
+  JreStrongAssign(&self->this$0_, outer$);
+  self->val$swipeDir_ = capture$0;
+  JreStrongAssign(&self->val$prevSelected_, capture$1);
+  ADXItemTouchHelper_RecoverAnimation_initWithADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(self, viewHolder, animationType, actionState, startDx, startDy, targetX, targetY);
+}
+
+ADXItemTouchHelper_3 *new_ADXItemTouchHelper_3_initWithADXItemTouchHelper_withInt_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(ADXItemTouchHelper *outer$, int32_t capture$0, ADXRecyclerView_ViewHolder *capture$1, ADXRecyclerView_ViewHolder *viewHolder, int32_t animationType, int32_t actionState, float startDx, float startDy, float targetX, float targetY) {
+  J2OBJC_NEW_IMPL(ADXItemTouchHelper_3, initWithADXItemTouchHelper_withInt_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_, outer$, capture$0, capture$1, viewHolder, animationType, actionState, startDx, startDy, targetX, targetY)
+}
+
+ADXItemTouchHelper_3 *create_ADXItemTouchHelper_3_initWithADXItemTouchHelper_withInt_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_(ADXItemTouchHelper *outer$, int32_t capture$0, ADXRecyclerView_ViewHolder *capture$1, ADXRecyclerView_ViewHolder *viewHolder, int32_t animationType, int32_t actionState, float startDx, float startDy, float targetX, float targetY) {
+  J2OBJC_CREATE_IMPL(ADXItemTouchHelper_3, initWithADXItemTouchHelper_withInt_withADXRecyclerView_ViewHolder_withADXRecyclerView_ViewHolder_withInt_withInt_withFloat_withFloat_withFloat_withFloat_, outer$, capture$0, capture$1, viewHolder, animationType, actionState, startDx, startDy, targetX, targetY)
+}
+
+@implementation ADXItemTouchHelper_4
+
+- (instancetype)initWithADXItemTouchHelper:(ADXItemTouchHelper *)outer$
+   withADXItemTouchHelper_RecoverAnimation:(ADXItemTouchHelper_RecoverAnimation *)capture$0
+                                   withInt:(int32_t)capture$1 {
+  ADXItemTouchHelper_4_initWithADXItemTouchHelper_withADXItemTouchHelper_RecoverAnimation_withInt_(self, outer$, capture$0, capture$1);
+  return self;
+}
+
+- (void)run {
+  if (this$0_->mRecyclerView_ != nil && [this$0_->mRecyclerView_ isAttachedToWindow] && !((ADXItemTouchHelper_RecoverAnimation *) nil_chk(val$anim_))->mOverridden_ && [((ADXRecyclerView_ViewHolder *) nil_chk(val$anim_->mViewHolder_)) getAbsoluteAdapterPosition] != ADXRecyclerView_NO_POSITION) {
+    ADXRecyclerView_ItemAnimator *animator = [this$0_->mRecyclerView_ getItemAnimator];
+    if ((animator == nil || ![animator isRunningWithADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener:nil]) && ![this$0_ hasRunningRecoverAnim]) {
+      [((ADXItemTouchHelper_Callback *) nil_chk(this$0_->mCallback_)) onSwipedWithADXRecyclerView_ViewHolder:((ADXItemTouchHelper_RecoverAnimation *) nil_chk(val$anim_))->mViewHolder_ withInt:val$swipeDir_];
+    }
+    else {
+      [((ADXRecyclerView *) nil_chk(this$0_->mRecyclerView_)) postWithJavaLangRunnable:self];
+    }
+  }
+}
+
+- (void)dealloc {
+  RELEASE_(this$0_);
+  RELEASE_(val$anim_);
+  [super dealloc];
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, 0, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(initWithADXItemTouchHelper:withADXItemTouchHelper_RecoverAnimation:withInt:);
+  methods[1].selector = @selector(run);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "this$0_", "LADXItemTouchHelper;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+    { "val$anim_", "LADXItemTouchHelper_RecoverAnimation;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+    { "val$swipeDir_", "I", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LADXItemTouchHelper;LADXItemTouchHelper_RecoverAnimation;I", "LADXItemTouchHelper;", "postDispatchSwipeWithADXItemTouchHelper_RecoverAnimation:withInt:" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_4 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 2, 3, 1, -1, 2, -1, -1 };
+  return &_ADXItemTouchHelper_4;
+}
+
+@end
+
+void ADXItemTouchHelper_4_initWithADXItemTouchHelper_withADXItemTouchHelper_RecoverAnimation_withInt_(ADXItemTouchHelper_4 *self, ADXItemTouchHelper *outer$, ADXItemTouchHelper_RecoverAnimation *capture$0, int32_t capture$1) {
+  JreStrongAssign(&self->this$0_, outer$);
+  JreStrongAssign(&self->val$anim_, capture$0);
+  self->val$swipeDir_ = capture$1;
+  NSObject_init(self);
+}
+
+ADXItemTouchHelper_4 *new_ADXItemTouchHelper_4_initWithADXItemTouchHelper_withADXItemTouchHelper_RecoverAnimation_withInt_(ADXItemTouchHelper *outer$, ADXItemTouchHelper_RecoverAnimation *capture$0, int32_t capture$1) {
+  J2OBJC_NEW_IMPL(ADXItemTouchHelper_4, initWithADXItemTouchHelper_withADXItemTouchHelper_RecoverAnimation_withInt_, outer$, capture$0, capture$1)
+}
+
+ADXItemTouchHelper_4 *create_ADXItemTouchHelper_4_initWithADXItemTouchHelper_withADXItemTouchHelper_RecoverAnimation_withInt_(ADXItemTouchHelper *outer$, ADXItemTouchHelper_RecoverAnimation *capture$0, int32_t capture$1) {
+  J2OBJC_CREATE_IMPL(ADXItemTouchHelper_4, initWithADXItemTouchHelper_withADXItemTouchHelper_RecoverAnimation_withInt_, outer$, capture$0, capture$1)
+}
+
+@implementation ADXItemTouchHelper_ViewDropHandler
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, "V", 0x401, 0, 1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(prepareForDropWithADView:withADView:withInt:withInt:);
+  #pragma clang diagnostic pop
+  static const void *ptrTable[] = { "prepareForDrop", "LADView;LADView;II", "LADXItemTouchHelper;" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_ViewDropHandler = { "ViewDropHandler", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x609, 1, 0, 2, -1, -1, -1, -1 };
+  return &_ADXItemTouchHelper_ViewDropHandler;
+}
+
+@end
+
+J2OBJC_INTERFACE_TYPE_LITERAL_SOURCE(ADXItemTouchHelper_ViewDropHandler)
+
+J2OBJC_INITIALIZED_DEFN(ADXItemTouchHelper_Callback)
+
+@implementation ADXItemTouchHelper_Callback
+
+J2OBJC_IGNORE_DESIGNATED_BEGIN
+- (instancetype)init {
+  ADXItemTouchHelper_Callback_init(self);
+  return self;
+}
+J2OBJC_IGNORE_DESIGNATED_END
+
+- (bool)isDownPressDragEnabled {
+  return false;
+}
+
++ (id<ADXItemTouchHelper_ItemTouchUIUtil>)getDefaultUIUtil {
+  return ADXItemTouchHelper_Callback_getDefaultUIUtil();
+}
+
++ (int32_t)convertToRelativeDirectionWithInt:(int32_t)flags
+                                     withInt:(int32_t)layoutDirection {
+  return ADXItemTouchHelper_Callback_convertToRelativeDirectionWithInt_withInt_(flags, layoutDirection);
+}
+
++ (int32_t)makeMovementFlagsWithInt:(int32_t)dragFlags
+                            withInt:(int32_t)swipeFlags {
+  return ADXItemTouchHelper_Callback_makeMovementFlagsWithInt_withInt_(dragFlags, swipeFlags);
+}
+
++ (int32_t)makeFlagWithInt:(int32_t)actionState
+                   withInt:(int32_t)directions {
+  return ADXItemTouchHelper_Callback_makeFlagWithInt_withInt_(actionState, directions);
+}
+
+- (int32_t)getMovementFlagsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  // can't call an abstract method
+  [self doesNotRecognizeSelector:_cmd];
+  return 0;
+}
+
+- (int32_t)convertToAbsoluteDirectionWithInt:(int32_t)flags
+                                     withInt:(int32_t)layoutDirection {
+  int32_t masked = flags & ADXItemTouchHelper_Callback_RELATIVE_DIR_FLAGS;
+  if (masked == 0) {
+    return flags;
+  }
+  flags &= ~masked;
+  if (layoutDirection == ADView_LAYOUT_DIRECTION_LTR) {
+    flags |= JreRShift32(masked, 2);
+    return flags;
+  }
+  else {
+    flags |= ((JreRShift32(masked, 1)) & ~ADXItemTouchHelper_Callback_RELATIVE_DIR_FLAGS);
+    flags |= JreRShift32(((JreRShift32(masked, 1)) & ADXItemTouchHelper_Callback_RELATIVE_DIR_FLAGS), 2);
+  }
+  return flags;
+}
+
+- (int32_t)getAbsoluteMovementFlagsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                        withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  return ADXItemTouchHelper_Callback_getAbsoluteMovementFlagsWithADXRecyclerView_withADXRecyclerView_ViewHolder_(self, recyclerView, viewHolder);
+}
+
+- (bool)hasDragFlagWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+        withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  int32_t flags = ADXItemTouchHelper_Callback_getAbsoluteMovementFlagsWithADXRecyclerView_withADXRecyclerView_ViewHolder_(self, recyclerView, viewHolder);
+  return (flags & ADXItemTouchHelper_ACTION_MODE_DRAG_MASK) != 0;
+}
+
+- (bool)hasSwipeFlagWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+         withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  int32_t flags = ADXItemTouchHelper_Callback_getAbsoluteMovementFlagsWithADXRecyclerView_withADXRecyclerView_ViewHolder_(self, recyclerView, viewHolder);
+  return (flags & ADXItemTouchHelper_ACTION_MODE_SWIPE_MASK) != 0;
+}
+
+- (bool)canDropOverWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+        withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)current
+        withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target {
+  return true;
+}
+
+- (bool)onMoveWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+   withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+   withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target {
+  // can't call an abstract method
+  [self doesNotRecognizeSelector:_cmd];
+  return 0;
+}
+
+- (bool)isLongPressDragEnabled {
+  return true;
+}
+
+- (bool)isItemViewSwipeEnabled {
+  return true;
+}
+
+- (int32_t)getBoundingBoxMargin {
+  return 0;
+}
+
+- (float)getSwipeThresholdWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  return .5f;
+}
+
+- (float)getMoveThresholdWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  return .5f;
+}
+
+- (float)getSwipeEscapeVelocityWithFloat:(float)defaultValue {
+  return defaultValue;
+}
+
+- (float)getSwipeVelocityThresholdWithFloat:(float)defaultValue {
+  return defaultValue;
+}
+
+- (ADXRecyclerView_ViewHolder *)chooseDropTargetWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)selected
+                                                              withJavaUtilList:(id<JavaUtilList>)dropTargets
+                                                                       withInt:(int32_t)curX
+                                                                       withInt:(int32_t)curY {
+  int32_t right = curX + [((ADView *) nil_chk(((ADXRecyclerView_ViewHolder *) nil_chk(selected))->itemView_)) getWidth];
+  int32_t bottom = curY + [selected->itemView_ getHeight];
+  ADXRecyclerView_ViewHolder *winner = nil;
+  int32_t winnerScore = -1;
+  int32_t dx = curX - [selected->itemView_ getLeft];
+  int32_t dy = curY - [selected->itemView_ getTop];
+  int32_t targetsSize = [((id<JavaUtilList>) nil_chk(dropTargets)) size];
+  for (int32_t i = 0; i < targetsSize; i++) {
+    ADXRecyclerView_ViewHolder *target = [dropTargets getWithInt:i];
+    if (dx > 0) {
+      int32_t diff = [((ADXRecyclerView_ViewHolder *) nil_chk(target))->itemView_ getRight] - right;
+      if (diff < 0 && [target->itemView_ getRight] > [selected->itemView_ getRight]) {
+        int32_t score = JavaLangMath_absWithInt_(diff);
+        if (score > winnerScore) {
+          winnerScore = score;
+          winner = target;
+        }
+      }
+    }
+    if (dx < 0) {
+      int32_t diff = [((ADXRecyclerView_ViewHolder *) nil_chk(target))->itemView_ getLeft] - curX;
+      if (diff > 0 && [target->itemView_ getLeft] < [selected->itemView_ getLeft]) {
+        int32_t score = JavaLangMath_absWithInt_(diff);
+        if (score > winnerScore) {
+          winnerScore = score;
+          winner = target;
+        }
+      }
+    }
+    if (dy < 0) {
+      int32_t diff = [((ADXRecyclerView_ViewHolder *) nil_chk(target))->itemView_ getTop] - curY;
+      if (diff > 0 && [target->itemView_ getTop] < [selected->itemView_ getTop]) {
+        int32_t score = JavaLangMath_absWithInt_(diff);
+        if (score > winnerScore) {
+          winnerScore = score;
+          winner = target;
+        }
+      }
+    }
+    if (dy > 0) {
+      int32_t diff = [((ADXRecyclerView_ViewHolder *) nil_chk(target))->itemView_ getBottom] - bottom;
+      if (diff < 0 && [target->itemView_ getBottom] > [selected->itemView_ getBottom]) {
+        int32_t score = JavaLangMath_absWithInt_(diff);
+        if (score > winnerScore) {
+          winnerScore = score;
+          winner = target;
+        }
+      }
+    }
+  }
+  return winner;
+}
+
+- (void)onSwipedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                       withInt:(int32_t)direction {
+  // can't call an abstract method
+  [self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)onSelectedChangedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                                                withInt:(int32_t)actionState {
+  if (viewHolder != nil) {
+    [((id<ADXItemTouchHelper_ItemTouchUIUtil>) nil_chk(JreLoadStatic(ADXItemTouchHelper_ItemTouchUIUtilImpl, INSTANCE))) onSelectedWithADView:viewHolder->itemView_];
+  }
+}
+
+- (int32_t)getMaxDragScrollWithADXRecyclerView:(ADXRecyclerView *)recyclerView {
+  return ADXItemTouchHelper_Callback_getMaxDragScrollWithADXRecyclerView_(self, recyclerView);
+}
+
+- (void)onMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
+                           withInt:(int32_t)fromPos
+    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
+                           withInt:(int32_t)toPos
+                           withInt:(int32_t)x
+                           withInt:(int32_t)y {
+  ADXRecyclerView_LayoutManager *layoutManager = [((ADXRecyclerView *) nil_chk(recyclerView)) getLayoutManager];
+  if ([ADXItemTouchHelper_ViewDropHandler_class_() isInstance:layoutManager]) {
+    [((id<ADXItemTouchHelper_ViewDropHandler>) nil_chk(((id<ADXItemTouchHelper_ViewDropHandler>) cast_check(layoutManager, ADXItemTouchHelper_ViewDropHandler_class_())))) prepareForDropWithADView:((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder))->itemView_ withADView:((ADXRecyclerView_ViewHolder *) nil_chk(target))->itemView_ withInt:x withInt:y];
+    return;
+  }
+  if ([((ADXRecyclerView_LayoutManager *) nil_chk(layoutManager)) canScrollHorizontally]) {
+    int32_t minLeft = [layoutManager getDecoratedLeftWithADView:((ADXRecyclerView_ViewHolder *) nil_chk(target))->itemView_];
+    if (minLeft <= [recyclerView getPaddingLeft]) {
+      [recyclerView scrollToPositionWithInt:toPos];
+    }
+    int32_t maxRight = [layoutManager getDecoratedRightWithADView:target->itemView_];
+    if (maxRight >= [recyclerView getWidth] - [recyclerView getPaddingRight]) {
+      [recyclerView scrollToPositionWithInt:toPos];
+    }
+  }
+  if ([layoutManager canScrollVertically]) {
+    int32_t minTop = [layoutManager getDecoratedTopWithADView:((ADXRecyclerView_ViewHolder *) nil_chk(target))->itemView_];
+    if (minTop <= [recyclerView getPaddingTop]) {
+      [recyclerView scrollToPositionWithInt:toPos];
+    }
+    int32_t maxBottom = [layoutManager getDecoratedBottomWithADView:target->itemView_];
+    if (maxBottom >= [recyclerView getHeight] - [recyclerView getPaddingBottom]) {
+      [recyclerView scrollToPositionWithInt:toPos];
+    }
+  }
+}
+
+- (void)clearViewWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+      withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  [((id<ADXItemTouchHelper_ItemTouchUIUtil>) nil_chk(JreLoadStatic(ADXItemTouchHelper_ItemTouchUIUtilImpl, INSTANCE))) clearViewWithADView:((ADXRecyclerView_ViewHolder *) nil_chk(viewHolder))->itemView_];
+}
+
+- (int64_t)getAnimationDurationWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                                           withInt:(int32_t)animationType
+                                         withFloat:(float)animateDx
+                                         withFloat:(float)animateDy {
+  ADXRecyclerView_ItemAnimator *itemAnimator = [((ADXRecyclerView *) nil_chk(recyclerView)) getItemAnimator];
+  if (itemAnimator == nil) {
+    return animationType == ADXItemTouchHelper_ANIMATION_TYPE_DRAG ? ADXItemTouchHelper_Callback_DEFAULT_DRAG_ANIMATION_DURATION : ADXItemTouchHelper_Callback_DEFAULT_SWIPE_ANIMATION_DURATION;
+  }
+  else {
+    return animationType == ADXItemTouchHelper_ANIMATION_TYPE_DRAG ? [itemAnimator getMoveDuration] : [itemAnimator getRemoveDuration];
+  }
+}
+
+- (int32_t)interpolateOutOfBoundsScrollWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                                                   withInt:(int32_t)viewSize
+                                                   withInt:(int32_t)viewSizeOutOfBounds
+                                                   withInt:(int32_t)totalSize
+                                                  withLong:(int64_t)msSinceStartScroll {
+  int32_t maxScroll = ADXItemTouchHelper_Callback_getMaxDragScrollWithADXRecyclerView_(self, recyclerView);
+  int32_t absOutOfBounds = JavaLangMath_absWithInt_(viewSizeOutOfBounds);
+  int32_t direction = JreFpToInt(JavaLangMath_signumWithFloat_(viewSizeOutOfBounds));
+  float outOfBoundsRatio = JavaLangMath_minWithFloat_withFloat_(1.0f, 1.0f * absOutOfBounds / viewSize);
+  int32_t cappedScroll = JreFpToInt((direction * maxScroll * [((id<ADInterpolator>) nil_chk(ADXItemTouchHelper_Callback_sDragViewScrollCapInterpolator)) getInterpolationWithFloat:outOfBoundsRatio]));
+  float timeRatio;
+  if (msSinceStartScroll > ADXItemTouchHelper_Callback_DRAG_SCROLL_ACCELERATION_LIMIT_TIME_MS) {
+    timeRatio = 1.0f;
+  }
+  else {
+    timeRatio = (float) msSinceStartScroll / ADXItemTouchHelper_Callback_DRAG_SCROLL_ACCELERATION_LIMIT_TIME_MS;
+  }
+  int32_t value = JreFpToInt((cappedScroll * [((id<ADInterpolator>) nil_chk(ADXItemTouchHelper_Callback_sDragScrollInterpolator)) getInterpolationWithFloat:timeRatio]));
+  if (value == 0) {
+    return viewSizeOutOfBounds > 0 ? 1 : -1;
+  }
+  return value;
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "LADXItemTouchHelper_ItemTouchUIUtil;", 0x9, -1, -1, -1, -1, -1, -1 },
+    { NULL, "I", 0x9, 0, 1, -1, -1, -1, -1 },
+    { NULL, "I", 0x9, 2, 1, -1, -1, -1, -1 },
+    { NULL, "I", 0x9, 3, 1, -1, -1, -1, -1 },
+    { NULL, "I", 0x401, 4, 5, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 6, 1, -1, -1, -1, -1 },
+    { NULL, "I", 0x10, 7, 5, -1, -1, -1, -1 },
+    { NULL, "Z", 0x0, 8, 5, -1, -1, -1, -1 },
+    { NULL, "Z", 0x0, 9, 5, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 10, 11, -1, -1, -1, -1 },
+    { NULL, "Z", 0x401, 12, 11, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "F", 0x1, 13, 14, -1, -1, -1, -1 },
+    { NULL, "F", 0x1, 15, 14, -1, -1, -1, -1 },
+    { NULL, "F", 0x1, 16, 17, -1, -1, -1, -1 },
+    { NULL, "F", 0x1, 18, 17, -1, -1, -1, -1 },
+    { NULL, "LADXRecyclerView_ViewHolder;", 0x1, 19, 20, -1, 21, -1, -1 },
+    { NULL, "V", 0x401, 22, 23, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 24, 23, -1, -1, -1, -1 },
+    { NULL, "I", 0x2, 25, 26, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 27, 28, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 29, 5, -1, -1, -1, -1 },
+    { NULL, "J", 0x1, 30, 31, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 32, 33, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(init);
+  methods[1].selector = @selector(isDownPressDragEnabled);
+  methods[2].selector = @selector(getDefaultUIUtil);
+  methods[3].selector = @selector(convertToRelativeDirectionWithInt:withInt:);
+  methods[4].selector = @selector(makeMovementFlagsWithInt:withInt:);
+  methods[5].selector = @selector(makeFlagWithInt:withInt:);
+  methods[6].selector = @selector(getMovementFlagsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[7].selector = @selector(convertToAbsoluteDirectionWithInt:withInt:);
+  methods[8].selector = @selector(getAbsoluteMovementFlagsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[9].selector = @selector(hasDragFlagWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[10].selector = @selector(hasSwipeFlagWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[11].selector = @selector(canDropOverWithADXRecyclerView:withADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:);
+  methods[12].selector = @selector(onMoveWithADXRecyclerView:withADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:);
+  methods[13].selector = @selector(isLongPressDragEnabled);
+  methods[14].selector = @selector(isItemViewSwipeEnabled);
+  methods[15].selector = @selector(getBoundingBoxMargin);
+  methods[16].selector = @selector(getSwipeThresholdWithADXRecyclerView_ViewHolder:);
+  methods[17].selector = @selector(getMoveThresholdWithADXRecyclerView_ViewHolder:);
+  methods[18].selector = @selector(getSwipeEscapeVelocityWithFloat:);
+  methods[19].selector = @selector(getSwipeVelocityThresholdWithFloat:);
+  methods[20].selector = @selector(chooseDropTargetWithADXRecyclerView_ViewHolder:withJavaUtilList:withInt:withInt:);
+  methods[21].selector = @selector(onSwipedWithADXRecyclerView_ViewHolder:withInt:);
+  methods[22].selector = @selector(onSelectedChangedWithADXRecyclerView_ViewHolder:withInt:);
+  methods[23].selector = @selector(getMaxDragScrollWithADXRecyclerView:);
+  methods[24].selector = @selector(onMovedWithADXRecyclerView:withADXRecyclerView_ViewHolder:withInt:withADXRecyclerView_ViewHolder:withInt:withInt:withInt:);
+  methods[25].selector = @selector(clearViewWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[26].selector = @selector(getAnimationDurationWithADXRecyclerView:withInt:withFloat:withFloat:);
+  methods[27].selector = @selector(interpolateOutOfBoundsScrollWithADXRecyclerView:withInt:withInt:withInt:withLong:);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "DEFAULT_DRAG_ANIMATION_DURATION", "I", .constantValue.asInt = ADXItemTouchHelper_Callback_DEFAULT_DRAG_ANIMATION_DURATION, 0x19, -1, -1, -1, -1 },
+    { "DEFAULT_SWIPE_ANIMATION_DURATION", "I", .constantValue.asInt = ADXItemTouchHelper_Callback_DEFAULT_SWIPE_ANIMATION_DURATION, 0x19, -1, -1, -1, -1 },
+    { "RELATIVE_DIR_FLAGS", "I", .constantValue.asInt = ADXItemTouchHelper_Callback_RELATIVE_DIR_FLAGS, 0x18, -1, -1, -1, -1 },
+    { "ABS_HORIZONTAL_DIR_FLAGS", "I", .constantValue.asInt = ADXItemTouchHelper_Callback_ABS_HORIZONTAL_DIR_FLAGS, 0x1a, -1, -1, -1, -1 },
+    { "sDragScrollInterpolator", "LADInterpolator;", .constantValue.asLong = 0, 0x1a, -1, 34, -1, -1 },
+    { "sDragViewScrollCapInterpolator", "LADInterpolator;", .constantValue.asLong = 0, 0x1a, -1, 35, -1, -1 },
+    { "DRAG_SCROLL_ACCELERATION_LIMIT_TIME_MS", "J", .constantValue.asLong = ADXItemTouchHelper_Callback_DRAG_SCROLL_ACCELERATION_LIMIT_TIME_MS, 0x1a, -1, -1, -1, -1 },
+    { "mCachedMaxScrollSpeed_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "convertToRelativeDirection", "II", "makeMovementFlags", "makeFlag", "getMovementFlags", "LADXRecyclerView;LADXRecyclerView_ViewHolder;", "convertToAbsoluteDirection", "getAbsoluteMovementFlags", "hasDragFlag", "hasSwipeFlag", "canDropOver", "LADXRecyclerView;LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "onMove", "getSwipeThreshold", "LADXRecyclerView_ViewHolder;", "getMoveThreshold", "getSwipeEscapeVelocity", "F", "getSwipeVelocityThreshold", "chooseDropTarget", "LADXRecyclerView_ViewHolder;LJavaUtilList;II", "(Landroidx/recyclerview/widget/RecyclerView$ViewHolder;Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$ViewHolder;>;II)Landroidx/recyclerview/widget/RecyclerView$ViewHolder;", "onSwiped", "LADXRecyclerView_ViewHolder;I", "onSelectedChanged", "getMaxDragScroll", "LADXRecyclerView;", "onMoved", "LADXRecyclerView;LADXRecyclerView_ViewHolder;ILADXRecyclerView_ViewHolder;III", "clearView", "getAnimationDuration", "LADXRecyclerView;IFF", "interpolateOutOfBoundsScroll", "LADXRecyclerView;IIIJ", &ADXItemTouchHelper_Callback_sDragScrollInterpolator, &ADXItemTouchHelper_Callback_sDragViewScrollCapInterpolator, "LADXItemTouchHelper;" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_Callback = { "Callback", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x409, 28, 8, 36, -1, -1, -1, -1 };
+  return &_ADXItemTouchHelper_Callback;
+}
+
++ (void)initialize {
+  if (self == [ADXItemTouchHelper_Callback class]) {
+    JreStrongAssignAndConsume(&ADXItemTouchHelper_Callback_sDragScrollInterpolator, new_ADXItemTouchHelper_Callback_1_init());
+    JreStrongAssignAndConsume(&ADXItemTouchHelper_Callback_sDragViewScrollCapInterpolator, new_ADXItemTouchHelper_Callback_2_init());
+    J2OBJC_SET_INITIALIZED(ADXItemTouchHelper_Callback)
+  }
+}
+
+@end
+
+void ADXItemTouchHelper_Callback_init(ADXItemTouchHelper_Callback *self) {
+  NSObject_init(self);
+  self->mCachedMaxScrollSpeed_ = -1;
+}
+
+id<ADXItemTouchHelper_ItemTouchUIUtil> ADXItemTouchHelper_Callback_getDefaultUIUtil() {
+  ADXItemTouchHelper_Callback_initialize();
+  return JreLoadStatic(ADXItemTouchHelper_ItemTouchUIUtilImpl, INSTANCE);
+}
+
+int32_t ADXItemTouchHelper_Callback_convertToRelativeDirectionWithInt_withInt_(int32_t flags, int32_t layoutDirection) {
+  ADXItemTouchHelper_Callback_initialize();
+  int32_t masked = flags & ADXItemTouchHelper_Callback_ABS_HORIZONTAL_DIR_FLAGS;
+  if (masked == 0) {
+    return flags;
+  }
+  flags &= ~masked;
+  if (layoutDirection == ADView_LAYOUT_DIRECTION_LTR) {
+    flags |= JreLShift32(masked, 2);
+    return flags;
+  }
+  else {
+    flags |= ((JreLShift32(masked, 1)) & ~ADXItemTouchHelper_Callback_ABS_HORIZONTAL_DIR_FLAGS);
+    flags |= JreLShift32(((JreLShift32(masked, 1)) & ADXItemTouchHelper_Callback_ABS_HORIZONTAL_DIR_FLAGS), 2);
+  }
+  return flags;
+}
+
+int32_t ADXItemTouchHelper_Callback_makeMovementFlagsWithInt_withInt_(int32_t dragFlags, int32_t swipeFlags) {
+  ADXItemTouchHelper_Callback_initialize();
+  return ADXItemTouchHelper_Callback_makeFlagWithInt_withInt_(ADXItemTouchHelper_ACTION_STATE_IDLE, swipeFlags | dragFlags) | ADXItemTouchHelper_Callback_makeFlagWithInt_withInt_(ADXItemTouchHelper_ACTION_STATE_SWIPE, swipeFlags) | ADXItemTouchHelper_Callback_makeFlagWithInt_withInt_(ADXItemTouchHelper_ACTION_STATE_DRAG, dragFlags);
+}
+
+int32_t ADXItemTouchHelper_Callback_makeFlagWithInt_withInt_(int32_t actionState, int32_t directions) {
+  ADXItemTouchHelper_Callback_initialize();
+  return JreLShift32(directions, (actionState * ADXItemTouchHelper_DIRECTION_FLAG_COUNT));
+}
+
+int32_t ADXItemTouchHelper_Callback_getAbsoluteMovementFlagsWithADXRecyclerView_withADXRecyclerView_ViewHolder_(ADXItemTouchHelper_Callback *self, ADXRecyclerView *recyclerView, ADXRecyclerView_ViewHolder *viewHolder) {
+  int32_t flags = [self getMovementFlagsWithADXRecyclerView:recyclerView withADXRecyclerView_ViewHolder:viewHolder];
+  return [self convertToAbsoluteDirectionWithInt:flags withInt:[((ADXRecyclerView *) nil_chk(recyclerView)) getLayoutDirection]];
+}
+
+int32_t ADXItemTouchHelper_Callback_getMaxDragScrollWithADXRecyclerView_(ADXItemTouchHelper_Callback *self, ADXRecyclerView *recyclerView) {
+  if (self->mCachedMaxScrollSpeed_ == -1) {
+    self->mCachedMaxScrollSpeed_ = [((ADResources *) nil_chk([((ADXRecyclerView *) nil_chk(recyclerView)) getResources])) getDimensionPixelSizeWithNSString:@"item_touch_helper_max_drag_scroll_per_frame"];
+  }
+  return self->mCachedMaxScrollSpeed_;
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXItemTouchHelper_Callback)
+
+@implementation ADXItemTouchHelper_Callback_1
+
+J2OBJC_IGNORE_DESIGNATED_BEGIN
+- (instancetype)init {
+  ADXItemTouchHelper_Callback_1_init(self);
+  return self;
+}
+J2OBJC_IGNORE_DESIGNATED_END
+
+- (float)getInterpolationWithFloat:(float)t {
+  return t * t * t * t * t;
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "F", 0x1, 0, 1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(init);
+  methods[1].selector = @selector(getInterpolationWithFloat:);
+  #pragma clang diagnostic pop
+  static const void *ptrTable[] = { "getInterpolation", "F", "LADXItemTouchHelper_Callback;" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_Callback_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8000, 2, 0, 2, -1, -1, -1, -1 };
+  return &_ADXItemTouchHelper_Callback_1;
+}
+
+@end
+
+void ADXItemTouchHelper_Callback_1_init(ADXItemTouchHelper_Callback_1 *self) {
+  NSObject_init(self);
+}
+
+ADXItemTouchHelper_Callback_1 *new_ADXItemTouchHelper_Callback_1_init() {
+  J2OBJC_NEW_IMPL(ADXItemTouchHelper_Callback_1, init)
+}
+
+ADXItemTouchHelper_Callback_1 *create_ADXItemTouchHelper_Callback_1_init() {
+  J2OBJC_CREATE_IMPL(ADXItemTouchHelper_Callback_1, init)
+}
+
+@implementation ADXItemTouchHelper_Callback_2
+
+J2OBJC_IGNORE_DESIGNATED_BEGIN
+- (instancetype)init {
+  ADXItemTouchHelper_Callback_2_init(self);
+  return self;
+}
+J2OBJC_IGNORE_DESIGNATED_END
+
+- (float)getInterpolationWithFloat:(float)t {
+  JreMinusAssignFloatF(&t, 1.0f);
+  return t * t * t * t * t + 1.0f;
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "F", 0x1, 0, 1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(init);
+  methods[1].selector = @selector(getInterpolationWithFloat:);
+  #pragma clang diagnostic pop
+  static const void *ptrTable[] = { "getInterpolation", "F", "LADXItemTouchHelper_Callback;" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_Callback_2 = { "", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x8000, 2, 0, 2, -1, -1, -1, -1 };
+  return &_ADXItemTouchHelper_Callback_2;
+}
+
+@end
+
+void ADXItemTouchHelper_Callback_2_init(ADXItemTouchHelper_Callback_2 *self) {
+  NSObject_init(self);
+}
+
+ADXItemTouchHelper_Callback_2 *new_ADXItemTouchHelper_Callback_2_init() {
+  J2OBJC_NEW_IMPL(ADXItemTouchHelper_Callback_2, init)
+}
+
+ADXItemTouchHelper_Callback_2 *create_ADXItemTouchHelper_Callback_2_init() {
+  J2OBJC_CREATE_IMPL(ADXItemTouchHelper_Callback_2, init)
+}
+
 @implementation ADXItemTouchHelper_SimpleCallback
 
-- (instancetype)initWithInt:(int32_t)i
-                    withInt:(int32_t)j {
-  ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(self, i, j);
+- (instancetype)initWithInt:(int32_t)dragDirs
+                    withInt:(int32_t)swipeDirs {
+  ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(self, dragDirs, swipeDirs);
   return self;
+}
+
+- (void)setDefaultSwipeDirsWithInt:(int32_t)defaultSwipeDirs {
+  mDefaultSwipeDirs_ = defaultSwipeDirs;
+}
+
+- (void)setDefaultDragDirsWithInt:(int32_t)defaultDragDirs {
+  mDefaultDragDirs_ = defaultDragDirs;
 }
 
 - (int32_t)getSwipeDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
             withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
-  return 0;
+  return mDefaultSwipeDirs_;
 }
 
 - (int32_t)getDragDirsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
            withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
-  return 0;
+  return mDefaultDragDirs_;
+}
+
+- (int32_t)getMovementFlagsWithADXRecyclerView:(ADXRecyclerView *)recyclerView
+                withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  return ADXItemTouchHelper_Callback_makeMovementFlagsWithInt_withInt_([self getDragDirsWithADXRecyclerView:recyclerView withADXRecyclerView_ViewHolder:viewHolder], [self getSwipeDirsWithADXRecyclerView:recyclerView withADXRecyclerView_ViewHolder:viewHolder]);
 }
 
 + (const J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { NULL, NULL, 0x1, -1, 0, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 1, 2, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 3, 2, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 1, 2, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 3, 2, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 4, 5, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 6, 5, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 7, 5, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
   #pragma clang diagnostic ignored "-Wundeclared-selector"
   methods[0].selector = @selector(initWithInt:withInt:);
-  methods[1].selector = @selector(getSwipeDirsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
-  methods[2].selector = @selector(getDragDirsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[1].selector = @selector(setDefaultSwipeDirsWithInt:);
+  methods[2].selector = @selector(setDefaultDragDirsWithInt:);
+  methods[3].selector = @selector(getSwipeDirsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[4].selector = @selector(getDragDirsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[5].selector = @selector(getMovementFlagsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
   #pragma clang diagnostic pop
-  static const void *ptrTable[] = { "II", "getSwipeDirs", "LADXRecyclerView;LADXRecyclerView_ViewHolder;", "getDragDirs", "LADXItemTouchHelper;" };
-  static const J2ObjcClassInfo _ADXItemTouchHelper_SimpleCallback = { "SimpleCallback", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x9, 3, 0, 4, -1, -1, -1, -1 };
+  static const J2ObjcFieldInfo fields[] = {
+    { "mDefaultSwipeDirs_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mDefaultDragDirs_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "II", "setDefaultSwipeDirs", "I", "setDefaultDragDirs", "getSwipeDirs", "LADXRecyclerView;LADXRecyclerView_ViewHolder;", "getDragDirs", "getMovementFlags", "LADXItemTouchHelper;" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_SimpleCallback = { "SimpleCallback", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x409, 6, 2, 8, -1, -1, -1, -1 };
   return &_ADXItemTouchHelper_SimpleCallback;
 }
 
 @end
 
-void ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(ADXItemTouchHelper_SimpleCallback *self, int32_t i, int32_t j) {
-  NSObject_init(self);
-}
-
-ADXItemTouchHelper_SimpleCallback *new_ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(int32_t i, int32_t j) {
-  J2OBJC_NEW_IMPL(ADXItemTouchHelper_SimpleCallback, initWithInt_withInt_, i, j)
-}
-
-ADXItemTouchHelper_SimpleCallback *create_ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(int32_t i, int32_t j) {
-  J2OBJC_CREATE_IMPL(ADXItemTouchHelper_SimpleCallback, initWithInt_withInt_, i, j)
+void ADXItemTouchHelper_SimpleCallback_initWithInt_withInt_(ADXItemTouchHelper_SimpleCallback *self, int32_t dragDirs, int32_t swipeDirs) {
+  ADXItemTouchHelper_Callback_init(self);
+  self->mDefaultSwipeDirs_ = swipeDirs;
+  self->mDefaultDragDirs_ = dragDirs;
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXItemTouchHelper_SimpleCallback)
+
+@implementation ADXItemTouchHelper_ItemTouchHelperGestureListener
+
+- (instancetype)initWithADXItemTouchHelper:(ADXItemTouchHelper *)outer$ {
+  ADXItemTouchHelper_ItemTouchHelperGestureListener_initWithADXItemTouchHelper_(self, outer$);
+  return self;
+}
+
+- (void)doNotReactToLongPress {
+  mShouldReactToLongPress_ = false;
+}
+
+- (bool)onDownWithADMotionEvent:(ADMotionEvent *)e {
+  ADXItemTouchHelper_startDragOnDownWithADMotionEvent_(this$0_, e);
+  return true;
+}
+
+- (void)onLongPressWithADMotionEvent:(ADMotionEvent *)e {
+  if (!mShouldReactToLongPress_) {
+    return;
+  }
+  ADView *child = JreRetainedLocalValue([this$0_ findChildViewWithADMotionEvent:e]);
+  if (child != nil) {
+    ADXRecyclerView_ViewHolder *vh = JreRetainedLocalValue([((ADXRecyclerView *) nil_chk(this$0_->mRecyclerView_)) getChildViewHolderWithADView:child]);
+    if (vh != nil) {
+      if (![((ADXItemTouchHelper_Callback *) nil_chk(this$0_->mCallback_)) hasDragFlagWithADXRecyclerView:this$0_->mRecyclerView_ withADXRecyclerView_ViewHolder:vh]) {
+        return;
+      }
+      int32_t pointerId = [((ADMotionEvent *) nil_chk(e)) getPointerIdWithInt:0];
+      if (pointerId == this$0_->mActivePointerId_) {
+        int32_t index = [e findPointerIndexWithInt:this$0_->mActivePointerId_];
+        float x = [e getXWithInt:index];
+        float y = [e getYWithInt:index];
+        this$0_->mInitialTouchX_ = x;
+        this$0_->mInitialTouchY_ = y;
+        this$0_->mDx_ = this$0_->mDy_ = 0.0f;
+        if ([((ADXItemTouchHelper_Callback *) nil_chk(this$0_->mCallback_)) isLongPressDragEnabled]) {
+          [this$0_ selectWithADXRecyclerView_ViewHolder:vh withInt:ADXItemTouchHelper_ACTION_STATE_DRAG];
+        }
+      }
+    }
+  }
+}
+
+- (void)dealloc {
+  RELEASE_(this$0_);
+  [super dealloc];
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, 0, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 1, 2, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 3, 2, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(initWithADXItemTouchHelper:);
+  methods[1].selector = @selector(doNotReactToLongPress);
+  methods[2].selector = @selector(onDownWithADMotionEvent:);
+  methods[3].selector = @selector(onLongPressWithADMotionEvent:);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "this$0_", "LADXItemTouchHelper;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+    { "mShouldReactToLongPress_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LADXItemTouchHelper;", "onDown", "LADMotionEvent;", "onLongPress" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_ItemTouchHelperGestureListener = { "ItemTouchHelperGestureListener", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x2, 4, 2, 0, -1, -1, -1, -1 };
+  return &_ADXItemTouchHelper_ItemTouchHelperGestureListener;
+}
+
+@end
+
+void ADXItemTouchHelper_ItemTouchHelperGestureListener_initWithADXItemTouchHelper_(ADXItemTouchHelper_ItemTouchHelperGestureListener *self, ADXItemTouchHelper *outer$) {
+  JreStrongAssign(&self->this$0_, outer$);
+  ADGestureDetector_SimpleOnGestureListener_init(self);
+  self->mShouldReactToLongPress_ = true;
+}
+
+ADXItemTouchHelper_ItemTouchHelperGestureListener *new_ADXItemTouchHelper_ItemTouchHelperGestureListener_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$) {
+  J2OBJC_NEW_IMPL(ADXItemTouchHelper_ItemTouchHelperGestureListener, initWithADXItemTouchHelper_, outer$)
+}
+
+ADXItemTouchHelper_ItemTouchHelperGestureListener *create_ADXItemTouchHelper_ItemTouchHelperGestureListener_initWithADXItemTouchHelper_(ADXItemTouchHelper *outer$) {
+  J2OBJC_CREATE_IMPL(ADXItemTouchHelper_ItemTouchHelperGestureListener, initWithADXItemTouchHelper_, outer$)
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXItemTouchHelper_ItemTouchHelperGestureListener)
+
+@implementation ADXItemTouchHelper_RecoverAnimation_1
+
+- (instancetype)initWithADXItemTouchHelper_RecoverAnimation:(ADXItemTouchHelper_RecoverAnimation *)outer$ {
+  ADXItemTouchHelper_RecoverAnimation_1_initWithADXItemTouchHelper_RecoverAnimation_(self, outer$);
+  return self;
+}
+
+- (void)onAnimationUpdateWithADValueAnimator:(ADValueAnimator *)animation {
+  [this$0_ setFractionWithFloat:[((ADValueAnimator *) nil_chk(animation)) getAnimatedFraction]];
+}
+
+- (void)dealloc {
+  RELEASE_(this$0_);
+  [super dealloc];
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, 0, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 1, 2, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(initWithADXItemTouchHelper_RecoverAnimation:);
+  methods[1].selector = @selector(onAnimationUpdateWithADValueAnimator:);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "this$0_", "LADXItemTouchHelper_RecoverAnimation;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LADXItemTouchHelper_RecoverAnimation;", "onAnimationUpdate", "LADValueAnimator;", "initWithADXRecyclerView_ViewHolder:withInt:withInt:withFloat:withFloat:withFloat:withFloat:" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_RecoverAnimation_1 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 2, 1, 0, -1, 3, -1, -1 };
+  return &_ADXItemTouchHelper_RecoverAnimation_1;
+}
+
+@end
+
+void ADXItemTouchHelper_RecoverAnimation_1_initWithADXItemTouchHelper_RecoverAnimation_(ADXItemTouchHelper_RecoverAnimation_1 *self, ADXItemTouchHelper_RecoverAnimation *outer$) {
+  JreStrongAssign(&self->this$0_, outer$);
+  NSObject_init(self);
+}
+
+ADXItemTouchHelper_RecoverAnimation_1 *new_ADXItemTouchHelper_RecoverAnimation_1_initWithADXItemTouchHelper_RecoverAnimation_(ADXItemTouchHelper_RecoverAnimation *outer$) {
+  J2OBJC_NEW_IMPL(ADXItemTouchHelper_RecoverAnimation_1, initWithADXItemTouchHelper_RecoverAnimation_, outer$)
+}
+
+ADXItemTouchHelper_RecoverAnimation_1 *create_ADXItemTouchHelper_RecoverAnimation_1_initWithADXItemTouchHelper_RecoverAnimation_(ADXItemTouchHelper_RecoverAnimation *outer$) {
+  J2OBJC_CREATE_IMPL(ADXItemTouchHelper_RecoverAnimation_1, initWithADXItemTouchHelper_RecoverAnimation_, outer$)
+}
+
+@implementation ADXItemTouchHelper_ItemTouchUIUtil
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, "V", 0x401, 0, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x401, 2, 1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(onSelectedWithADView:);
+  methods[1].selector = @selector(clearViewWithADView:);
+  #pragma clang diagnostic pop
+  static const void *ptrTable[] = { "onSelected", "LADView;", "clearView", "LADXItemTouchHelper;" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_ItemTouchUIUtil = { "ItemTouchUIUtil", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x608, 2, 0, 3, -1, -1, -1, -1 };
+  return &_ADXItemTouchHelper_ItemTouchUIUtil;
+}
+
+@end
+
+J2OBJC_INTERFACE_TYPE_LITERAL_SOURCE(ADXItemTouchHelper_ItemTouchUIUtil)
+
+J2OBJC_INITIALIZED_DEFN(ADXItemTouchHelper_ItemTouchUIUtilImpl)
+
+id<ADXItemTouchHelper_ItemTouchUIUtil> ADXItemTouchHelper_ItemTouchUIUtilImpl_INSTANCE;
+
+@implementation ADXItemTouchHelper_ItemTouchUIUtilImpl
+
+J2OBJC_IGNORE_DESIGNATED_BEGIN
+- (instancetype)init {
+  ADXItemTouchHelper_ItemTouchUIUtilImpl_init(self);
+  return self;
+}
+J2OBJC_IGNORE_DESIGNATED_END
+
+- (void)onSelectedWithADView:(ADView *)itemView {
+}
+
+- (void)clearViewWithADView:(ADView *)itemView {
+  [((ADView *) nil_chk(itemView)) setTranslationXWithFloat:0];
+  [itemView setTranslationYWithFloat:0];
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 0, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 2, 1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(init);
+  methods[1].selector = @selector(onSelectedWithADView:);
+  methods[2].selector = @selector(clearViewWithADView:);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "INSTANCE", "LADXItemTouchHelper_ItemTouchUIUtil;", .constantValue.asLong = 0, 0x19, -1, 3, -1, -1 },
+  };
+  static const void *ptrTable[] = { "onSelected", "LADView;", "clearView", &ADXItemTouchHelper_ItemTouchUIUtilImpl_INSTANCE, "LADXItemTouchHelper;" };
+  static const J2ObjcClassInfo _ADXItemTouchHelper_ItemTouchUIUtilImpl = { "ItemTouchUIUtilImpl", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8, 3, 1, 4, -1, -1, -1, -1 };
+  return &_ADXItemTouchHelper_ItemTouchUIUtilImpl;
+}
+
++ (void)initialize {
+  if (self == [ADXItemTouchHelper_ItemTouchUIUtilImpl class]) {
+    JreStrongAssignAndConsume(&ADXItemTouchHelper_ItemTouchUIUtilImpl_INSTANCE, new_ADXItemTouchHelper_ItemTouchUIUtilImpl_init());
+    J2OBJC_SET_INITIALIZED(ADXItemTouchHelper_ItemTouchUIUtilImpl)
+  }
+}
+
+@end
+
+void ADXItemTouchHelper_ItemTouchUIUtilImpl_init(ADXItemTouchHelper_ItemTouchUIUtilImpl *self) {
+  NSObject_init(self);
+}
+
+ADXItemTouchHelper_ItemTouchUIUtilImpl *new_ADXItemTouchHelper_ItemTouchUIUtilImpl_init() {
+  J2OBJC_NEW_IMPL(ADXItemTouchHelper_ItemTouchUIUtilImpl, init)
+}
+
+ADXItemTouchHelper_ItemTouchUIUtilImpl *create_ADXItemTouchHelper_ItemTouchUIUtilImpl_init() {
+  J2OBJC_CREATE_IMPL(ADXItemTouchHelper_ItemTouchUIUtilImpl, init)
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXItemTouchHelper_ItemTouchUIUtilImpl)

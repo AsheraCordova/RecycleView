@@ -27,6 +27,14 @@
 #define INCLUDE_ADXRecyclerView_LayoutManager 1
 #include "RecyclerView.h"
 
+#define RESTRICT_ItemTouchHelper 1
+#define INCLUDE_ADXItemTouchHelper_ViewDropHandler 1
+#include "ItemTouchHelper.h"
+
+#define RESTRICT_RecyclerView 1
+#define INCLUDE_ADXRecyclerView_SmoothScroller_ScrollVectorProvider 1
+#include "RecyclerView.h"
+
 @class ADContext;
 @class ADView;
 @class ADXLinearLayoutManager_AnchorInfo;
@@ -49,7 +57,7 @@
  @brief A <code>RecyclerView.LayoutManager</code> implementation which provides
   similar functionality to <code>r.android.widget.ListView</code>.
  */
-@interface ADXLinearLayoutManager : ADXRecyclerView_LayoutManager {
+@interface ADXLinearLayoutManager : ADXRecyclerView_LayoutManager < ADXItemTouchHelper_ViewDropHandler, ADXRecyclerView_SmoothScroller_ScrollVectorProvider > {
  @public
   /*!
    @brief Current orientation.Either <code>HORIZONTAL</code> or <code>VERTICAL</code>

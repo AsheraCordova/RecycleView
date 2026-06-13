@@ -11,6 +11,7 @@
 #include "AdapterHelper.h"
 #include "ChildHelper.h"
 #include "Context.h"
+#include "DefaultItemAnimator.h"
 #include "GapWorker.h"
 #include "IOSClass.h"
 #include "IOSObjectArray.h"
@@ -24,6 +25,7 @@
 #include "RectF.h"
 #include "RecyclerView.h"
 #include "SparseArray.h"
+#include "SystemClock.h"
 #include "TraceCompat.h"
 #include "View.h"
 #include "ViewBoundsCheck.h"
@@ -44,6 +46,7 @@
 #include "java/lang/Runnable.h"
 #include "java/lang/StringBuilder.h"
 #include "java/lang/System.h"
+#include "java/lang/ThreadLocal.h"
 #include "java/lang/ref/WeakReference.h"
 #include "java/util/ArrayList.h"
 #include "java/util/Collections.h"
@@ -61,6 +64,8 @@
 @interface ADXRecyclerView () {
  @public
   ADXRecyclerView_RecyclerViewDataObserver *mObserver_;
+  JavaUtilArrayList *mOnItemTouchListeners_;
+  id<ADXRecyclerView_OnItemTouchListener> mInterceptingOnItemTouchListener_;
   int32_t mInterceptRequestLayoutDepth_;
   bool mIgnoreMotionEventTillDown_;
   int32_t mEatenAccessibilityChangeFlags_;
@@ -79,6 +84,7 @@
   bool mPreserveFocusAfterLayout_;
   ADXRecyclerView_OnScrollListener *mScrollListener_;
   id<JavaUtilList> mScrollListeners_;
+  id<ADXRecyclerView_ItemAnimator_ItemAnimatorListener> mItemAnimatorListener_;
   IOSIntArray *mMinMaxLayoutPositions_;
   ADXNestedScrollingChildHelper *mScrollingChildHelper_;
   IOSIntArray *mScrollOffset_;
@@ -99,6 +105,12 @@
 - (void)addAnimatingViewWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder;
 
 - (bool)hasUpdatedView;
+
+- (bool)dispatchToOnItemTouchListenersWithADMotionEvent:(ADMotionEvent *)e;
+
+- (bool)findInterceptingOnItemTouchListenerWithADMotionEvent:(ADMotionEvent *)e;
+
+- (bool)predictiveItemAnimationsEnabled;
 
 - (void)processAdapterUpdatesAndSetAnimationFlags;
 
@@ -128,8 +140,6 @@
 
 - (void)dispatchContentChangedIfNecessary;
 
-- (bool)predictiveItemAnimationsEnabled;
-
 - (void)saveFocusInfo;
 
 - (void)recoverFocusFromState;
@@ -152,9 +162,12 @@
 @end
 
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mObserver_, ADXRecyclerView_RecyclerViewDataObserver *)
+J2OBJC_FIELD_SETTER(ADXRecyclerView, mOnItemTouchListeners_, JavaUtilArrayList *)
+J2OBJC_FIELD_SETTER(ADXRecyclerView, mInterceptingOnItemTouchListener_, id<ADXRecyclerView_OnItemTouchListener>)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mOnChildAttachStateListeners_, id<JavaUtilList>)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mScrollListener_, ADXRecyclerView_OnScrollListener *)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mScrollListeners_, id<JavaUtilList>)
+J2OBJC_FIELD_SETTER(ADXRecyclerView, mItemAnimatorListener_, id<ADXRecyclerView_ItemAnimator_ItemAnimatorListener>)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mMinMaxLayoutPositions_, IOSIntArray *)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mScrollingChildHelper_, ADXNestedScrollingChildHelper *)
 J2OBJC_FIELD_SETTER(ADXRecyclerView, mScrollOffset_, IOSIntArray *)
@@ -196,6 +209,12 @@ __attribute__((unused)) static bool ADXRecyclerView_hasUpdatedView(ADXRecyclerVi
 
 __attribute__((unused)) static void ADXRecyclerView_suppressLayoutWithBoolean_(ADXRecyclerView *self, bool suppress);
 
+__attribute__((unused)) static bool ADXRecyclerView_dispatchToOnItemTouchListenersWithADMotionEvent_(ADXRecyclerView *self, ADMotionEvent *e);
+
+__attribute__((unused)) static bool ADXRecyclerView_findInterceptingOnItemTouchListenerWithADMotionEvent_(ADXRecyclerView *self, ADMotionEvent *e);
+
+__attribute__((unused)) static bool ADXRecyclerView_predictiveItemAnimationsEnabled(ADXRecyclerView *self);
+
 __attribute__((unused)) static void ADXRecyclerView_processAdapterUpdatesAndSetAnimationFlags(ADXRecyclerView *self);
 
 __attribute__((unused)) static void ADXRecyclerView_dispatchLayoutStep1(ADXRecyclerView *self);
@@ -217,8 +236,6 @@ __attribute__((unused)) static void ADXRecyclerView_dispatchNestedScrollWithInt_
 __attribute__((unused)) static ADXNestedScrollingChildHelper *ADXRecyclerView_getScrollingChildHelper(ADXRecyclerView *self);
 
 __attribute__((unused)) static void ADXRecyclerView_dispatchContentChangedIfNecessary(ADXRecyclerView *self);
-
-__attribute__((unused)) static bool ADXRecyclerView_predictiveItemAnimationsEnabled(ADXRecyclerView *self);
 
 __attribute__((unused)) static void ADXRecyclerView_saveFocusInfo(ADXRecyclerView *self);
 
@@ -254,7 +271,27 @@ __attribute__((unused)) static ADXRecyclerView_1 *new_ADXRecyclerView_1_initWith
 __attribute__((unused)) static ADXRecyclerView_1 *create_ADXRecyclerView_1_initWithADXRecyclerView_(ADXRecyclerView *outer$);
 
 
-@interface ADXRecyclerView_2 : NSObject < ADXViewInfoStore_ProcessCallback > {
+@interface ADXRecyclerView_2 : NSObject < JavaLangRunnable > {
+ @public
+  ADXRecyclerView *this$0_;
+}
+
+- (instancetype)initWithADXRecyclerView:(ADXRecyclerView *)outer$;
+
+- (void)run;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_2)
+
+__attribute__((unused)) static void ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView_2 *self, ADXRecyclerView *outer$);
+
+__attribute__((unused)) static ADXRecyclerView_2 *new_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView *outer$) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ADXRecyclerView_2 *create_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView *outer$);
+
+
+@interface ADXRecyclerView_3 : NSObject < ADXViewInfoStore_ProcessCallback > {
  @public
   ADXRecyclerView *this$0_;
 }
@@ -277,16 +314,16 @@ __attribute__((unused)) static ADXRecyclerView_1 *create_ADXRecyclerView_1_initW
 
 @end
 
-J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_2)
+J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_3)
 
-__attribute__((unused)) static void ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView_2 *self, ADXRecyclerView *outer$);
+__attribute__((unused)) static void ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView_3 *self, ADXRecyclerView *outer$);
 
-__attribute__((unused)) static ADXRecyclerView_2 *new_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView *outer$) NS_RETURNS_RETAINED;
+__attribute__((unused)) static ADXRecyclerView_3 *new_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView *outer$) NS_RETURNS_RETAINED;
 
-__attribute__((unused)) static ADXRecyclerView_2 *create_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView *outer$);
+__attribute__((unused)) static ADXRecyclerView_3 *create_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView *outer$);
 
 
-@interface ADXRecyclerView_3 : NSObject < ADXChildHelper_Callback > {
+@interface ADXRecyclerView_4 : NSObject < ADXChildHelper_Callback > {
  @public
   ADXRecyclerView *this$0_;
 }
@@ -320,16 +357,16 @@ __attribute__((unused)) static ADXRecyclerView_2 *create_ADXRecyclerView_2_initW
 
 @end
 
-J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_3)
+J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_4)
 
-__attribute__((unused)) static void ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView_3 *self, ADXRecyclerView *outer$);
+__attribute__((unused)) static void ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView_4 *self, ADXRecyclerView *outer$);
 
-__attribute__((unused)) static ADXRecyclerView_3 *new_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView *outer$) NS_RETURNS_RETAINED;
+__attribute__((unused)) static ADXRecyclerView_4 *new_ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView *outer$) NS_RETURNS_RETAINED;
 
-__attribute__((unused)) static ADXRecyclerView_3 *create_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView *outer$);
+__attribute__((unused)) static ADXRecyclerView_4 *create_ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView *outer$);
 
 
-@interface ADXRecyclerView_4 : NSObject < ADXAdapterHelper_Callback > {
+@interface ADXRecyclerView_5 : NSObject < ADXAdapterHelper_Callback > {
  @public
   ADXRecyclerView *this$0_;
 }
@@ -362,13 +399,13 @@ __attribute__((unused)) static ADXRecyclerView_3 *create_ADXRecyclerView_3_initW
 
 @end
 
-J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_4)
+J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_5)
 
-__attribute__((unused)) static void ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView_4 *self, ADXRecyclerView *outer$);
+__attribute__((unused)) static void ADXRecyclerView_5_initWithADXRecyclerView_(ADXRecyclerView_5 *self, ADXRecyclerView *outer$);
 
-__attribute__((unused)) static ADXRecyclerView_4 *new_ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView *outer$) NS_RETURNS_RETAINED;
+__attribute__((unused)) static ADXRecyclerView_5 *new_ADXRecyclerView_5_initWithADXRecyclerView_(ADXRecyclerView *outer$) NS_RETURNS_RETAINED;
 
-__attribute__((unused)) static ADXRecyclerView_4 *create_ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView *outer$);
+__attribute__((unused)) static ADXRecyclerView_5 *create_ADXRecyclerView_5_initWithADXRecyclerView_(ADXRecyclerView *outer$);
 
 
 @interface ADXRecyclerView_RecyclerViewDataObserver : ADXRecyclerView_AdapterDataObserver {
@@ -575,6 +612,10 @@ __attribute__((unused)) static ADXRecyclerView_LayoutManager_2 *create_ADXRecycl
 
 @end
 
+@interface ADXRecyclerView_OnItemTouchListener : NSObject
+
+@end
+
 @interface ADXRecyclerView_RecyclerListener : NSObject
 
 @end
@@ -624,13 +665,56 @@ __attribute__((unused)) static bool ADXRecyclerView_ViewHolder_isRecyclable(ADXR
 
 J2OBJC_FIELD_SETTER(ADXRecyclerView_State, mData_, ADSparseArray *)
 
+@interface ADXRecyclerView_ItemAnimator_ItemAnimatorListener : NSObject
+
+@end
+
+@interface ADXRecyclerView_ItemAnimatorRestoreListener : NSObject < ADXRecyclerView_ItemAnimator_ItemAnimatorListener > {
+ @public
+  ADXRecyclerView *this$0_;
+}
+
+- (instancetype)initWithADXRecyclerView:(ADXRecyclerView *)outer$;
+
+- (void)onAnimationFinishedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)item;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(ADXRecyclerView_ItemAnimatorRestoreListener)
+
+__attribute__((unused)) static void ADXRecyclerView_ItemAnimatorRestoreListener_initWithADXRecyclerView_(ADXRecyclerView_ItemAnimatorRestoreListener *self, ADXRecyclerView *outer$);
+
+__attribute__((unused)) static ADXRecyclerView_ItemAnimatorRestoreListener *new_ADXRecyclerView_ItemAnimatorRestoreListener_initWithADXRecyclerView_(ADXRecyclerView *outer$) NS_RETURNS_RETAINED;
+
+__attribute__((unused)) static ADXRecyclerView_ItemAnimatorRestoreListener *create_ADXRecyclerView_ItemAnimatorRestoreListener_initWithADXRecyclerView_(ADXRecyclerView *outer$);
+
+J2OBJC_TYPE_LITERAL_HEADER(ADXRecyclerView_ItemAnimatorRestoreListener)
+
+
 @interface ADXRecyclerView_ItemAnimator () {
  @public
+  id<ADXRecyclerView_ItemAnimator_ItemAnimatorListener> mListener_;
+  JavaUtilArrayList *mFinishedListeners_;
   int64_t mAddDuration_;
   int64_t mRemoveDuration_;
   int64_t mMoveDuration_;
   int64_t mChangeDuration_;
 }
+
+@end
+
+J2OBJC_FIELD_SETTER(ADXRecyclerView_ItemAnimator, mListener_, id<ADXRecyclerView_ItemAnimator_ItemAnimatorListener>)
+J2OBJC_FIELD_SETTER(ADXRecyclerView_ItemAnimator, mFinishedListeners_, JavaUtilArrayList *)
+
+@interface ADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener : NSObject
+
+@end
+
+@interface ADXRecyclerView_SmoothScroller : NSObject
+
+@end
+
+@interface ADXRecyclerView_SmoothScroller_ScrollVectorProvider : NSObject
 
 @end
 
@@ -652,7 +736,11 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 }
 
 - (void)initAdapterManager {
-  JreStrongAssignAndConsume(&mAdapterHelper_, new_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_(create_ADXRecyclerView_4_initWithADXRecyclerView_(self)));
+  JreStrongAssignAndConsume(&mAdapterHelper_, new_ADXAdapterHelper_initPackagePrivateWithADXAdapterHelper_Callback_(create_ADXRecyclerView_5_initWithADXRecyclerView_(self)));
+}
+
+- (void)setHasFixedSizeWithBoolean:(bool)hasFixedSize {
+  mHasFixedSize_ = hasFixedSize;
 }
 
 - (void)setAdapterWithADXRecyclerView_Adapter:(ADXRecyclerView_Adapter *)adapter {
@@ -681,6 +769,20 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 
 - (ADXRecyclerView_Adapter *)getAdapter {
   return mAdapter_;
+}
+
+- (void)addOnChildAttachStateChangeListenerWithADXRecyclerView_OnChildAttachStateChangeListener:(id<ADXRecyclerView_OnChildAttachStateChangeListener>)listener {
+  if (mOnChildAttachStateListeners_ == nil) {
+    JreStrongAssignAndConsume(&mOnChildAttachStateListeners_, new_JavaUtilArrayList_init());
+  }
+  [mOnChildAttachStateListeners_ addWithId:listener];
+}
+
+- (void)removeOnChildAttachStateChangeListenerWithADXRecyclerView_OnChildAttachStateChangeListener:(id<ADXRecyclerView_OnChildAttachStateChangeListener>)listener {
+  if (mOnChildAttachStateListeners_ == nil) {
+    return;
+  }
+  [mOnChildAttachStateListeners_ removeWithId:listener];
 }
 
 - (void)setLayoutManagerWithADXRecyclerView_LayoutManager:(ADXRecyclerView_LayoutManager *)layout {
@@ -723,6 +825,18 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   ADXRecyclerView_addAnimatingViewWithADXRecyclerView_ViewHolder_(self, viewHolder);
 }
 
+- (bool)removeAnimatingViewWithADView:(ADView *)view {
+  [self startInterceptRequestLayout];
+  bool removed = [((ADXChildHelper *) nil_chk(mChildHelper_)) removeViewIfHiddenWithADView:view];
+  if (removed) {
+    ADXRecyclerView_ViewHolder *viewHolder = ADXRecyclerView_getChildViewHolderIntWithADView_(view);
+    [((ADXRecyclerView_Recycler *) nil_chk(mRecycler_)) unscrapViewWithADXRecyclerView_ViewHolder:viewHolder];
+    [mRecycler_ recycleViewHolderInternalWithADXRecyclerView_ViewHolder:viewHolder];
+  }
+  [self stopInterceptRequestLayoutWithBoolean:!removed];
+  return removed;
+}
+
 - (ADXRecyclerView_LayoutManager *)getLayoutManager {
   return mLayout_;
 }
@@ -755,6 +869,18 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 
 - (void)addItemDecorationWithADXRecyclerView_ItemDecoration:(ADXRecyclerView_ItemDecoration *)decor {
   [self addItemDecorationWithADXRecyclerView_ItemDecoration:decor withInt:-1];
+}
+
+- (void)removeItemDecorationWithADXRecyclerView_ItemDecoration:(ADXRecyclerView_ItemDecoration *)decor {
+  if (mLayout_ != nil) {
+    [mLayout_ assertNotInLayoutOrScrollWithNSString:@"Cannot remove item decoration during a scroll  or layout"];
+  }
+  [((JavaUtilArrayList *) nil_chk(mItemDecorations_)) removeWithId:decor];
+  if ([mItemDecorations_ isEmpty]) {
+    [self setWillNotDrawWithBoolean:[self getOverScrollMode] == ADView_OVER_SCROLL_NEVER];
+  }
+  [self markItemDecorInsetsDirty];
+  [self requestLayout];
 }
 
 - (void)setOnScrollListenerWithADXRecyclerView_OnScrollListener:(ADXRecyclerView_OnScrollListener *)listener {
@@ -974,6 +1100,55 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   ADXRecyclerView_suppressLayoutWithBoolean_(self, frozen);
 }
 
+- (void)onAttachedToWindow {
+  [super onAttachedToWindow];
+  mLayoutOrScrollCounter_ = 0;
+  mIsAttached_ = true;
+  mFirstLayoutComplete_ = (mFirstLayoutComplete_ && ![self isLayoutRequested]);
+  if (mLayout_ != nil) {
+    [mLayout_ dispatchAttachedToWindowWithADXRecyclerView:self];
+  }
+  mPostedAnimatorRunner_ = false;
+  {
+    JreStrongAssign(&mGapWorker_, [((JavaLangThreadLocal *) nil_chk(JreLoadStatic(ADXGapWorker, sGapWorker))) get]);
+    if (mGapWorker_ == nil) {
+      JreStrongAssignAndConsume(&mGapWorker_, new_ADXGapWorker_initPackagePrivate());
+      ADXRecyclerView_Display *display = nil;
+      
+      ;
+      float refreshRate = 60.0f;
+      if (![self isInEditMode] && display != nil) {
+        float displayRefreshRate = [display getRefreshRate];
+        if (displayRefreshRate >= 30.0f) {
+          refreshRate = displayRefreshRate;
+        }
+      }
+      ((ADXGapWorker *) nil_chk(mGapWorker_))->mFrameIntervalNs_ = JreFpToLong((1000000000 / refreshRate));
+      [JreLoadStatic(ADXGapWorker, sGapWorker) setWithId:mGapWorker_];
+    }
+    [((ADXGapWorker *) nil_chk(mGapWorker_)) addWithADXRecyclerView:self];
+  }
+}
+
+- (void)onDetachedFromWindow {
+  [super onDetachedFromWindow];
+  if (mItemAnimator_ != nil) {
+    [mItemAnimator_ endAnimations];
+  }
+  [self stopScroll];
+  mIsAttached_ = false;
+  if (mLayout_ != nil) {
+    [mLayout_ dispatchDetachedFromWindowWithADXRecyclerView:self withADXRecyclerView_Recycler:mRecycler_];
+  }
+  [((id<JavaUtilList>) nil_chk(mPendingAccessibilityImportanceChange_)) clear];
+  [self removeCallbacksWithJavaLangRunnable:mItemAnimatorRunner_];
+  [((ADXViewInfoStore *) nil_chk(mViewInfoStore_)) onDetach];
+  if (mGapWorker_ != nil) {
+    [mGapWorker_ removeWithADXRecyclerView:self];
+    JreStrongAssign(&mGapWorker_, nil);
+  }
+}
+
 - (void)assertInLayoutOrScrollWithNSString:(NSString *)message {
   if (![self isComputingLayout]) {
     if (message == nil) {
@@ -993,6 +1168,34 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   if (mDispatchScrollCounter_ > 0) {
     ADLog_wWithNSString_withNSString_withJavaLangThrowable_(ADXRecyclerView_TAG, @"Cannot call this method in a scroll callback. Scroll callbacks mightbe run during a measure & layout pass where you cannot change theRecyclerView data. Any method call that might change the structureof the RecyclerView or the adapter contents should be postponed tothe next frame.", create_JavaLangIllegalStateException_initWithNSString_([self exceptionLabel]));
   }
+}
+
+- (void)addOnItemTouchListenerWithADXRecyclerView_OnItemTouchListener:(id<ADXRecyclerView_OnItemTouchListener>)listener {
+  [((JavaUtilArrayList *) nil_chk(mOnItemTouchListeners_)) addWithId:listener];
+}
+
+- (void)removeOnItemTouchListenerWithADXRecyclerView_OnItemTouchListener:(id<ADXRecyclerView_OnItemTouchListener>)listener {
+  [((JavaUtilArrayList *) nil_chk(mOnItemTouchListeners_)) removeWithId:listener];
+  if (JreObjectEqualsEquals(mInterceptingOnItemTouchListener_, listener)) {
+    JreStrongAssign(&mInterceptingOnItemTouchListener_, nil);
+  }
+}
+
+- (bool)dispatchToOnItemTouchListenersWithADMotionEvent:(ADMotionEvent *)e {
+  return ADXRecyclerView_dispatchToOnItemTouchListenersWithADMotionEvent_(self, e);
+}
+
+- (bool)findInterceptingOnItemTouchListenerWithADMotionEvent:(ADMotionEvent *)e {
+  return ADXRecyclerView_findInterceptingOnItemTouchListenerWithADMotionEvent_(self, e);
+}
+
+- (void)requestDisallowInterceptTouchEventWithBoolean:(bool)disallowIntercept {
+  int32_t listenerCount = [((JavaUtilArrayList *) nil_chk(mOnItemTouchListeners_)) size];
+  for (int32_t i = 0; i < listenerCount; i++) {
+    id<ADXRecyclerView_OnItemTouchListener> listener = [mOnItemTouchListeners_ getWithInt:i];
+    [((id<ADXRecyclerView_OnItemTouchListener>) nil_chk(listener)) onRequestDisallowInterceptTouchEventWithBoolean:disallowIntercept];
+  }
+  [super requestDisallowInterceptTouchEventWithBoolean:disallowIntercept];
 }
 
 - (void)onMeasureWithInt:(int32_t)widthSpec
@@ -1069,6 +1272,17 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   [self setMeasuredDimensionWithInt:width withInt:height];
 }
 
+- (void)setItemAnimatorWithADXRecyclerView_ItemAnimator:(ADXRecyclerView_ItemAnimator *)animator {
+  if (mItemAnimator_ != nil) {
+    [mItemAnimator_ endAnimations];
+    [((ADXRecyclerView_ItemAnimator *) nil_chk(mItemAnimator_)) setListenerWithADXRecyclerView_ItemAnimator_ItemAnimatorListener:nil];
+  }
+  JreStrongAssign(&mItemAnimator_, animator);
+  if (mItemAnimator_ != nil) {
+    [mItemAnimator_ setListenerWithADXRecyclerView_ItemAnimator_ItemAnimatorListener:mItemAnimatorListener_];
+  }
+}
+
 - (void)onEnterLayoutOrScroll {
   mLayoutOrScrollCounter_++;
 }
@@ -1090,6 +1304,21 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
 
 - (bool)isComputingLayout {
   return mLayoutOrScrollCounter_ > 0;
+}
+
+- (ADXRecyclerView_ItemAnimator *)getItemAnimator {
+  return mItemAnimator_;
+}
+
+- (void)postAnimationRunner {
+  if (!mPostedAnimatorRunner_ && mIsAttached_) {
+    ADXViewCompat_postOnAnimationWithADView_withJavaLangRunnable_(self, mItemAnimatorRunner_);
+    mPostedAnimatorRunner_ = true;
+  }
+}
+
+- (bool)predictiveItemAnimationsEnabled {
+  return ADXRecyclerView_predictiveItemAnimationsEnabled(self);
 }
 
 - (void)processAdapterUpdatesAndSetAnimationFlags {
@@ -1174,6 +1403,7 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
     }
   }
   [self dispatchChildDetachedWithADView:child];
+  [super removeDetachedViewWithADView:child withBoolean:animate];
 }
 
 - (int64_t)getChangedHolderKeyWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)holder {
@@ -1411,6 +1641,20 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   return hidden;
 }
 
+- (ADView *)findChildViewUnderWithFloat:(float)x
+                              withFloat:(float)y {
+  int32_t count = [((ADXChildHelper *) nil_chk(mChildHelper_)) getChildCount];
+  for (int32_t i = count - 1; i >= 0; i--) {
+    ADView *child = [((ADXChildHelper *) nil_chk(mChildHelper_)) getChildAtWithInt:i];
+    float translationX = [((ADView *) nil_chk(child)) getTranslationX];
+    float translationY = [child getTranslationY];
+    if (x >= [child getLeft] + translationX && x <= [child getRight] + translationX && y >= [child getTop] + translationY && y <= [child getBottom] + translationY) {
+      return child;
+    }
+  }
+  return nil;
+}
+
 - (void)offsetChildrenVerticalWithInt:(int32_t)dy {
   int32_t childCount = [((ADXChildHelper *) nil_chk(mChildHelper_)) getChildCount];
   for (int32_t i = 0; i < childCount; i++) {
@@ -1636,6 +1880,35 @@ NSString *ADXRecyclerView_TRACE_CREATE_VIEW_TAG = @"RV CreateView";
   return ADXRecyclerView_getScrollingChildHelper(self);
 }
 
+- (bool)onTouchEventWithADMotionEvent:(ADMotionEvent *)e {
+  if (mLayoutSuppressed_ || mIgnoreMotionEventTillDown_) {
+    return false;
+  }
+  if (ADXRecyclerView_dispatchToOnItemTouchListenersWithADMotionEvent_(self, e)) {
+    [self cancelScroll];
+    return true;
+  }
+  if (mLayout_ == nil) {
+    return false;
+  }
+  return false;
+}
+
+- (bool)onInterceptTouchEventWithADMotionEvent:(ADMotionEvent *)e {
+  if (mLayoutSuppressed_) {
+    return false;
+  }
+  JreStrongAssign(&mInterceptingOnItemTouchListener_, nil);
+  if (ADXRecyclerView_findInterceptingOnItemTouchListenerWithADMotionEvent_(self, e)) {
+    [self cancelScroll];
+    return true;
+  }
+  return false;
+}
+
+- (void)cancelScroll {
+}
+
 - (void)startNestedScroll {
   bool canScrollHorizontally = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollHorizontally];
   bool canScrollVertically = [((ADXRecyclerView_LayoutManager *) nil_chk(mLayout_)) canScrollVertically];
@@ -1663,15 +1936,8 @@ J2OBJC_IGNORE_DESIGNATED_END
   ADXRecyclerView_dispatchContentChangedIfNecessary(self);
 }
 
-- (bool)predictiveItemAnimationsEnabled {
-  return ADXRecyclerView_predictiveItemAnimationsEnabled(self);
-}
-
 - (void)saveFocusInfo {
   ADXRecyclerView_saveFocusInfo(self);
-}
-
-- (void)postAnimationRunner {
 }
 
 - (void)recoverFocusFromState {
@@ -1761,6 +2027,7 @@ J2OBJC_IGNORE_DESIGNATED_END
   RELEASE_(mAdapterHelper_);
   RELEASE_(mChildHelper_);
   RELEASE_(mViewInfoStore_);
+  RELEASE_(mUpdateChildViewsRunnable_);
   RELEASE_(mTempRect_);
   RELEASE_(mTempRectF_);
   RELEASE_(mAdapter_);
@@ -1768,20 +2035,25 @@ J2OBJC_IGNORE_DESIGNATED_END
   RELEASE_(mRecyclerListener_);
   RELEASE_(mRecyclerListeners_);
   RELEASE_(mItemDecorations_);
+  RELEASE_(mOnItemTouchListeners_);
+  RELEASE_(mInterceptingOnItemTouchListener_);
   RELEASE_(mOnChildAttachStateListeners_);
+  RELEASE_(mItemAnimator_);
+  RELEASE_(mGapWorker_);
   RELEASE_(mPrefetchRegistry_);
   RELEASE_(mState_);
   RELEASE_(mScrollListener_);
   RELEASE_(mScrollListeners_);
+  RELEASE_(mItemAnimatorListener_);
   RELEASE_(mMinMaxLayoutPositions_);
   RELEASE_(mScrollingChildHelper_);
   RELEASE_(mScrollOffset_);
   RELEASE_(mNestedOffsets_);
   RELEASE_(mReusableIntPair_);
+  RELEASE_(mPendingAccessibilityImportanceChange_);
   RELEASE_(mItemAnimatorRunner_);
   RELEASE_(mViewInfoProcessCallback_);
   RELEASE_(mPendingSavedState_);
-  RELEASE_(mItemAnimator_);
   [super dealloc];
 }
 
@@ -1791,23 +2063,28 @@ J2OBJC_IGNORE_DESIGNATED_END
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 0, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 2, 3, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 2, 3, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 4, 5, -1, -1, -1, -1 },
     { NULL, "LADXRecyclerView_Adapter;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 4, 5, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 6, 7, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 6, 7, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 8, 7, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 9, 10, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 11, 12, -1, -1, -1, -1 },
+    { NULL, "Z", 0x0, 13, 14, -1, -1, -1, -1 },
     { NULL, "LADXRecyclerView_LayoutManager;", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "LADXRecyclerView_RecycledViewPool;", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 8, 9, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 8, 10, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 11, 12, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 13, 14, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 15, 16, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 17, 18, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 15, 17, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 18, 17, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 19, 20, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 21, 22, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 23, 24, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 25, 26, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "Z", 0x2, -1, -1, -1, -1, -1, -1 },
-    { NULL, "Z", 0x0, 19, 20, -1, -1, -1, -1 },
+    { NULL, "Z", 0x0, 27, 28, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
@@ -1815,100 +2092,113 @@ J2OBJC_IGNORE_DESIGNATED_END
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 21, 22, -1, -1, -1, -1 },
-    { NULL, "V", 0x11, 23, 22, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 24, 22, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 25, 26, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 27, 26, -1, -1, -1, -1 },
-    { NULL, "V", 0x4, 28, 16, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 29, 16, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 29, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x11, 30, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 31, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x4, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x4, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 32, 33, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 34, 33, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 35, 36, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 37, 36, -1, -1, -1, -1 },
+    { NULL, "Z", 0x2, 38, 39, -1, -1, -1, -1 },
+    { NULL, "Z", 0x2, 40, 39, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 41, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x4, 42, 24, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 43, 24, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 44, 45, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 30, 22, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 46, 1, -1, -1, -1, -1 },
     { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "LADXRecyclerView_ItemAnimator;", 0x1, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
+    { NULL, "Z", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 31, 32, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 33, 34, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 35, 36, -1, -1, -1, -1 },
-    { NULL, "Z", 0x2, 37, 16, -1, -1, -1, -1 },
-    { NULL, "V", 0x4, 38, 39, -1, -1, -1, -1 },
-    { NULL, "J", 0x0, 40, 7, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 41, 42, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 43, 42, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 44, 45, -1, -1, -1, -1 },
-    { NULL, "V", 0x4, 46, 47, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 47, 48, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 49, 50, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 51, 52, -1, -1, -1, -1 },
+    { NULL, "Z", 0x2, 53, 24, -1, -1, -1, -1 },
+    { NULL, "V", 0x4, 54, 55, -1, -1, -1, -1 },
+    { NULL, "J", 0x0, 56, 12, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 57, 58, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 59, 58, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 60, 61, -1, -1, -1, -1 },
+    { NULL, "V", 0x4, 62, 63, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 48, 16, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 49, 16, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 50, 51, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 52, 53, -1, -1, -1, -1 },
-    { NULL, "Z", 0x0, 54, 7, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 55, 22, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 64, 24, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 65, 24, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 66, 67, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 68, 69, -1, -1, -1, -1 },
+    { NULL, "Z", 0x0, 70, 12, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 71, 1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LADXRecyclerView_ViewHolder;", 0x1, 56, 57, -1, -1, -1, -1 },
-    { NULL, "LADView;", 0x1, 58, 57, -1, -1, -1, -1 },
-    { NULL, "LADXRecyclerView_ViewHolder;", 0x8, 59, 57, -1, -1, -1, -1 },
-    { NULL, "LADXRecyclerView_ViewHolder;", 0x1, 60, 14, -1, -1, -1, -1 },
-    { NULL, "LADXRecyclerView_ViewHolder;", 0x0, 60, 61, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 62, 14, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 63, 57, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 64, 57, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 65, 14, -1, -1, -1, -1 },
-    { NULL, "V", 0x8, 66, 67, -1, -1, -1, -1 },
-    { NULL, "LADRect;", 0x0, 68, 57, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 69, 16, -1, -1, -1, -1 },
+    { NULL, "LADXRecyclerView_ViewHolder;", 0x1, 72, 14, -1, -1, -1, -1 },
+    { NULL, "LADView;", 0x1, 73, 14, -1, -1, -1, -1 },
+    { NULL, "LADXRecyclerView_ViewHolder;", 0x8, 74, 14, -1, -1, -1, -1 },
+    { NULL, "LADXRecyclerView_ViewHolder;", 0x1, 75, 22, -1, -1, -1, -1 },
+    { NULL, "LADXRecyclerView_ViewHolder;", 0x0, 75, 76, -1, -1, -1, -1 },
+    { NULL, "LADView;", 0x1, 77, 78, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 79, 22, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 80, 14, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 81, 14, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 82, 22, -1, -1, -1, -1 },
+    { NULL, "V", 0x8, 83, 84, -1, -1, -1, -1 },
+    { NULL, "LADRect;", 0x0, 85, 14, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 86, 24, -1, -1, -1, -1 },
     { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
-    { NULL, "LADXRecyclerView;", 0x8, 70, 57, -1, -1, -1, -1 },
-    { NULL, "V", 0x8, 71, 7, -1, -1, -1, -1 },
+    { NULL, "LADXRecyclerView;", 0x8, 87, 14, -1, -1, -1, -1 },
+    { NULL, "V", 0x8, 88, 12, -1, -1, -1, -1 },
     { NULL, "J", 0x0, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 72, 57, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 73, 57, -1, -1, -1, -1 },
-    { NULL, "I", 0x0, 74, 7, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 75, 22, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 89, 14, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 90, 14, -1, -1, -1, -1 },
+    { NULL, "I", 0x0, 91, 12, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 92, 1, -1, -1, -1, -1 },
     { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 76, 14, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 76, 16, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 93, 22, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 93, 24, -1, -1, -1, -1 },
     { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 77, 14, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 94, 22, -1, -1, -1, -1 },
     { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 78, 14, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 79, 80, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 79, 81, -1, -1, -1, -1 },
-    { NULL, "V", 0x11, 79, 82, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 83, 84, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 83, 85, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 86, 87, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 88, 89, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 95, 22, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 96, 97, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 96, 98, -1, -1, -1, -1 },
+    { NULL, "V", 0x11, 96, 99, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 100, 101, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 100, 102, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 103, 104, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 105, 78, -1, -1, -1, -1 },
     { NULL, "LADXNestedScrollingChildHelper;", 0x2, -1, -1, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 106, 39, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 107, 39, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, NULL, 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
-    { NULL, "Z", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x2, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "I", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 90, 91, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 92, 16, -1, -1, -1, -1 },
-    { NULL, "V", 0x10, 93, 94, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 108, 109, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 110, 24, -1, -1, -1, -1 },
+    { NULL, "V", 0x10, 111, 112, -1, -1, -1, -1 },
     { NULL, "Z", 0x0, -1, -1, -1, -1, -1, -1 },
     { NULL, "J", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 83, 14, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 95, 96, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 100, 22, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 113, 114, -1, -1, -1, -1 },
     { NULL, "Z", 0x4, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x0, 97, 16, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 98, 99, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 115, 24, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 116, 117, -1, -1, -1, -1 },
     { NULL, "I", 0x0, -1, -1, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
@@ -1917,129 +2207,147 @@ J2OBJC_IGNORE_DESIGNATED_END
   methods[0].selector = @selector(exceptionLabel);
   methods[1].selector = @selector(initChildrenHelper);
   methods[2].selector = @selector(initAdapterManager);
-  methods[3].selector = @selector(setAdapterWithADXRecyclerView_Adapter:);
-  methods[4].selector = @selector(removeAndRecycleViews);
-  methods[5].selector = @selector(setAdapterInternalWithADXRecyclerView_Adapter:withBoolean:withBoolean:);
-  methods[6].selector = @selector(getAdapter);
-  methods[7].selector = @selector(setLayoutManagerWithADXRecyclerView_LayoutManager:);
-  methods[8].selector = @selector(addAnimatingViewWithADXRecyclerView_ViewHolder:);
-  methods[9].selector = @selector(getLayoutManager);
-  methods[10].selector = @selector(getRecycledViewPool);
-  methods[11].selector = @selector(getScrollState);
-  methods[12].selector = @selector(addItemDecorationWithADXRecyclerView_ItemDecoration:withInt:);
-  methods[13].selector = @selector(addItemDecorationWithADXRecyclerView_ItemDecoration:);
-  methods[14].selector = @selector(setOnScrollListenerWithADXRecyclerView_OnScrollListener:);
-  methods[15].selector = @selector(scrollToPositionWithInt:);
-  methods[16].selector = @selector(scrollByWithInt:withInt:);
-  methods[17].selector = @selector(scrollStepWithInt:withInt:withIntArray:);
-  methods[18].selector = @selector(consumePendingUpdateOperations);
-  methods[19].selector = @selector(hasUpdatedView);
-  methods[20].selector = @selector(scrollByInternalWithInt:withInt:withADMotionEvent:withInt:);
-  methods[21].selector = @selector(computeHorizontalScrollOffset);
-  methods[22].selector = @selector(computeHorizontalScrollExtent);
-  methods[23].selector = @selector(computeHorizontalScrollRange);
-  methods[24].selector = @selector(computeVerticalScrollOffset);
-  methods[25].selector = @selector(computeVerticalScrollExtent);
-  methods[26].selector = @selector(computeVerticalScrollRange);
-  methods[27].selector = @selector(startInterceptRequestLayout);
-  methods[28].selector = @selector(stopInterceptRequestLayoutWithBoolean:);
-  methods[29].selector = @selector(suppressLayoutWithBoolean:);
-  methods[30].selector = @selector(setLayoutFrozenWithBoolean:);
-  methods[31].selector = @selector(assertInLayoutOrScrollWithNSString:);
-  methods[32].selector = @selector(assertNotInLayoutOrScrollWithNSString:);
-  methods[33].selector = @selector(onMeasureWithInt:withInt:);
-  methods[34].selector = @selector(defaultOnMeasureWithInt:withInt:);
-  methods[35].selector = @selector(onEnterLayoutOrScroll);
-  methods[36].selector = @selector(onExitLayoutOrScroll);
-  methods[37].selector = @selector(onExitLayoutOrScrollWithBoolean:);
-  methods[38].selector = @selector(isComputingLayout);
-  methods[39].selector = @selector(processAdapterUpdatesAndSetAnimationFlags);
-  methods[40].selector = @selector(dispatchLayout);
-  methods[41].selector = @selector(dispatchLayoutStep1);
-  methods[42].selector = @selector(dispatchLayoutStep2);
-  methods[43].selector = @selector(dispatchLayoutStep3);
-  methods[44].selector = @selector(handleMissingPreInfoForChangeErrorWithLong:withADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:);
-  methods[45].selector = @selector(recordAnimationInfoIfBouncedHiddenViewWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
-  methods[46].selector = @selector(findMinMaxChildLayoutPositionsWithIntArray:);
-  methods[47].selector = @selector(didChildRangeChangeWithInt:withInt:);
-  methods[48].selector = @selector(removeDetachedViewWithADView:withBoolean:);
-  methods[49].selector = @selector(getChangedHolderKeyWithADXRecyclerView_ViewHolder:);
-  methods[50].selector = @selector(animateAppearanceWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
-  methods[51].selector = @selector(animateDisappearanceWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
-  methods[52].selector = @selector(animateChangeWithADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withBoolean:withBoolean:);
-  methods[53].selector = @selector(onLayoutWithBoolean:withInt:withInt:withInt:withInt:);
-  methods[54].selector = @selector(markItemDecorInsetsDirty);
-  methods[55].selector = @selector(saveOldPositions);
-  methods[56].selector = @selector(clearOldPositions);
-  methods[57].selector = @selector(offsetPositionRecordsForMoveWithInt:withInt:);
-  methods[58].selector = @selector(offsetPositionRecordsForInsertWithInt:withInt:);
-  methods[59].selector = @selector(offsetPositionRecordsForRemoveWithInt:withInt:withBoolean:);
-  methods[60].selector = @selector(viewRangeUpdateWithInt:withInt:withId:);
-  methods[61].selector = @selector(canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:);
-  methods[62].selector = @selector(processDataSetCompletelyChangedWithBoolean:);
-  methods[63].selector = @selector(markKnownViewsInvalid);
-  methods[64].selector = @selector(getChildViewHolderWithADView:);
-  methods[65].selector = @selector(findContainingItemViewWithADView:);
-  methods[66].selector = @selector(getChildViewHolderIntWithADView:);
-  methods[67].selector = @selector(findViewHolderForPositionWithInt:);
-  methods[68].selector = @selector(findViewHolderForPositionWithInt:withBoolean:);
-  methods[69].selector = @selector(offsetChildrenVerticalWithInt:);
-  methods[70].selector = @selector(onChildAttachedToWindowWithADView:);
-  methods[71].selector = @selector(onChildDetachedFromWindowWithADView:);
-  methods[72].selector = @selector(offsetChildrenHorizontalWithInt:);
-  methods[73].selector = @selector(getDecoratedBoundsWithMarginsIntWithADView:withADRect:);
-  methods[74].selector = @selector(getItemDecorInsetsForChildWithADView:);
-  methods[75].selector = @selector(dispatchOnScrolledWithInt:withInt:);
-  methods[76].selector = @selector(hasPendingAdapterUpdates);
-  methods[77].selector = @selector(repositionShadowingViews);
-  methods[78].selector = @selector(findNestedRecyclerViewWithADView:);
-  methods[79].selector = @selector(clearNestedRecyclerViewIfNotNestedWithADXRecyclerView_ViewHolder:);
-  methods[80].selector = @selector(getNanoTime);
-  methods[81].selector = @selector(dispatchChildDetachedWithADView:);
-  methods[82].selector = @selector(dispatchChildAttachedWithADView:);
-  methods[83].selector = @selector(getAdapterPositionInRecyclerViewWithADXRecyclerView_ViewHolder:);
-  methods[84].selector = @selector(setNestedScrollingEnabledWithBoolean:);
-  methods[85].selector = @selector(isNestedScrollingEnabled);
-  methods[86].selector = @selector(startNestedScrollWithInt:);
-  methods[87].selector = @selector(startNestedScrollWithInt:withInt:);
-  methods[88].selector = @selector(stopNestedScroll);
-  methods[89].selector = @selector(stopNestedScrollWithInt:);
-  methods[90].selector = @selector(hasNestedScrollingParent);
-  methods[91].selector = @selector(hasNestedScrollingParentWithInt:);
-  methods[92].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:);
-  methods[93].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:withInt:);
-  methods[94].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:withInt:withIntArray:);
-  methods[95].selector = @selector(dispatchNestedPreScrollWithInt:withInt:withIntArray:withIntArray:);
-  methods[96].selector = @selector(dispatchNestedPreScrollWithInt:withInt:withIntArray:withIntArray:withInt:);
-  methods[97].selector = @selector(dispatchNestedFlingWithFloat:withFloat:withBoolean:);
-  methods[98].selector = @selector(dispatchNestedPreFlingWithFloat:withFloat:);
-  methods[99].selector = @selector(getScrollingChildHelper);
-  methods[100].selector = @selector(startNestedScroll);
-  methods[101].selector = @selector(init);
-  methods[102].selector = @selector(dispatchPendingImportantForAccessibilityChanges);
-  methods[103].selector = @selector(dispatchContentChangedIfNecessary);
-  methods[104].selector = @selector(predictiveItemAnimationsEnabled);
-  methods[105].selector = @selector(saveFocusInfo);
-  methods[106].selector = @selector(postAnimationRunner);
-  methods[107].selector = @selector(recoverFocusFromState);
-  methods[108].selector = @selector(resetFocusInfo);
-  methods[109].selector = @selector(getScrollY);
-  methods[110].selector = @selector(getScrollX);
-  methods[111].selector = @selector(onScrollChangedWithInt:withInt:withInt:withInt:);
-  methods[112].selector = @selector(onScrolledWithInt:withInt:);
-  methods[113].selector = @selector(fillRemainingScrollValuesWithADXRecyclerView_State:);
-  methods[114].selector = @selector(isAccessibilityEnabled);
-  methods[115].selector = @selector(getDrawingTime);
-  methods[116].selector = @selector(stopScroll);
-  methods[117].selector = @selector(dispatchNestedPreScrollWithInt:);
-  methods[118].selector = @selector(registerObserverWithADXRecyclerView_AdapterDataObserver:);
-  methods[119].selector = @selector(awakenScrollBars);
-  methods[120].selector = @selector(considerReleasingGlowsOnScrollWithInt:withInt:);
-  methods[121].selector = @selector(pullGlowsWithFloat:withFloat:withFloat:withFloat:);
-  methods[122].selector = @selector(getOverScrollMode);
+  methods[3].selector = @selector(setHasFixedSizeWithBoolean:);
+  methods[4].selector = @selector(setAdapterWithADXRecyclerView_Adapter:);
+  methods[5].selector = @selector(removeAndRecycleViews);
+  methods[6].selector = @selector(setAdapterInternalWithADXRecyclerView_Adapter:withBoolean:withBoolean:);
+  methods[7].selector = @selector(getAdapter);
+  methods[8].selector = @selector(addOnChildAttachStateChangeListenerWithADXRecyclerView_OnChildAttachStateChangeListener:);
+  methods[9].selector = @selector(removeOnChildAttachStateChangeListenerWithADXRecyclerView_OnChildAttachStateChangeListener:);
+  methods[10].selector = @selector(setLayoutManagerWithADXRecyclerView_LayoutManager:);
+  methods[11].selector = @selector(addAnimatingViewWithADXRecyclerView_ViewHolder:);
+  methods[12].selector = @selector(removeAnimatingViewWithADView:);
+  methods[13].selector = @selector(getLayoutManager);
+  methods[14].selector = @selector(getRecycledViewPool);
+  methods[15].selector = @selector(getScrollState);
+  methods[16].selector = @selector(addItemDecorationWithADXRecyclerView_ItemDecoration:withInt:);
+  methods[17].selector = @selector(addItemDecorationWithADXRecyclerView_ItemDecoration:);
+  methods[18].selector = @selector(removeItemDecorationWithADXRecyclerView_ItemDecoration:);
+  methods[19].selector = @selector(setOnScrollListenerWithADXRecyclerView_OnScrollListener:);
+  methods[20].selector = @selector(scrollToPositionWithInt:);
+  methods[21].selector = @selector(scrollByWithInt:withInt:);
+  methods[22].selector = @selector(scrollStepWithInt:withInt:withIntArray:);
+  methods[23].selector = @selector(consumePendingUpdateOperations);
+  methods[24].selector = @selector(hasUpdatedView);
+  methods[25].selector = @selector(scrollByInternalWithInt:withInt:withADMotionEvent:withInt:);
+  methods[26].selector = @selector(computeHorizontalScrollOffset);
+  methods[27].selector = @selector(computeHorizontalScrollExtent);
+  methods[28].selector = @selector(computeHorizontalScrollRange);
+  methods[29].selector = @selector(computeVerticalScrollOffset);
+  methods[30].selector = @selector(computeVerticalScrollExtent);
+  methods[31].selector = @selector(computeVerticalScrollRange);
+  methods[32].selector = @selector(startInterceptRequestLayout);
+  methods[33].selector = @selector(stopInterceptRequestLayoutWithBoolean:);
+  methods[34].selector = @selector(suppressLayoutWithBoolean:);
+  methods[35].selector = @selector(setLayoutFrozenWithBoolean:);
+  methods[36].selector = @selector(onAttachedToWindow);
+  methods[37].selector = @selector(onDetachedFromWindow);
+  methods[38].selector = @selector(assertInLayoutOrScrollWithNSString:);
+  methods[39].selector = @selector(assertNotInLayoutOrScrollWithNSString:);
+  methods[40].selector = @selector(addOnItemTouchListenerWithADXRecyclerView_OnItemTouchListener:);
+  methods[41].selector = @selector(removeOnItemTouchListenerWithADXRecyclerView_OnItemTouchListener:);
+  methods[42].selector = @selector(dispatchToOnItemTouchListenersWithADMotionEvent:);
+  methods[43].selector = @selector(findInterceptingOnItemTouchListenerWithADMotionEvent:);
+  methods[44].selector = @selector(requestDisallowInterceptTouchEventWithBoolean:);
+  methods[45].selector = @selector(onMeasureWithInt:withInt:);
+  methods[46].selector = @selector(defaultOnMeasureWithInt:withInt:);
+  methods[47].selector = @selector(setItemAnimatorWithADXRecyclerView_ItemAnimator:);
+  methods[48].selector = @selector(onEnterLayoutOrScroll);
+  methods[49].selector = @selector(onExitLayoutOrScroll);
+  methods[50].selector = @selector(onExitLayoutOrScrollWithBoolean:);
+  methods[51].selector = @selector(isComputingLayout);
+  methods[52].selector = @selector(getItemAnimator);
+  methods[53].selector = @selector(postAnimationRunner);
+  methods[54].selector = @selector(predictiveItemAnimationsEnabled);
+  methods[55].selector = @selector(processAdapterUpdatesAndSetAnimationFlags);
+  methods[56].selector = @selector(dispatchLayout);
+  methods[57].selector = @selector(dispatchLayoutStep1);
+  methods[58].selector = @selector(dispatchLayoutStep2);
+  methods[59].selector = @selector(dispatchLayoutStep3);
+  methods[60].selector = @selector(handleMissingPreInfoForChangeErrorWithLong:withADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:);
+  methods[61].selector = @selector(recordAnimationInfoIfBouncedHiddenViewWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
+  methods[62].selector = @selector(findMinMaxChildLayoutPositionsWithIntArray:);
+  methods[63].selector = @selector(didChildRangeChangeWithInt:withInt:);
+  methods[64].selector = @selector(removeDetachedViewWithADView:withBoolean:);
+  methods[65].selector = @selector(getChangedHolderKeyWithADXRecyclerView_ViewHolder:);
+  methods[66].selector = @selector(animateAppearanceWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
+  methods[67].selector = @selector(animateDisappearanceWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
+  methods[68].selector = @selector(animateChangeWithADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withBoolean:withBoolean:);
+  methods[69].selector = @selector(onLayoutWithBoolean:withInt:withInt:withInt:withInt:);
+  methods[70].selector = @selector(markItemDecorInsetsDirty);
+  methods[71].selector = @selector(saveOldPositions);
+  methods[72].selector = @selector(clearOldPositions);
+  methods[73].selector = @selector(offsetPositionRecordsForMoveWithInt:withInt:);
+  methods[74].selector = @selector(offsetPositionRecordsForInsertWithInt:withInt:);
+  methods[75].selector = @selector(offsetPositionRecordsForRemoveWithInt:withInt:withBoolean:);
+  methods[76].selector = @selector(viewRangeUpdateWithInt:withInt:withId:);
+  methods[77].selector = @selector(canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:);
+  methods[78].selector = @selector(processDataSetCompletelyChangedWithBoolean:);
+  methods[79].selector = @selector(markKnownViewsInvalid);
+  methods[80].selector = @selector(getChildViewHolderWithADView:);
+  methods[81].selector = @selector(findContainingItemViewWithADView:);
+  methods[82].selector = @selector(getChildViewHolderIntWithADView:);
+  methods[83].selector = @selector(findViewHolderForPositionWithInt:);
+  methods[84].selector = @selector(findViewHolderForPositionWithInt:withBoolean:);
+  methods[85].selector = @selector(findChildViewUnderWithFloat:withFloat:);
+  methods[86].selector = @selector(offsetChildrenVerticalWithInt:);
+  methods[87].selector = @selector(onChildAttachedToWindowWithADView:);
+  methods[88].selector = @selector(onChildDetachedFromWindowWithADView:);
+  methods[89].selector = @selector(offsetChildrenHorizontalWithInt:);
+  methods[90].selector = @selector(getDecoratedBoundsWithMarginsIntWithADView:withADRect:);
+  methods[91].selector = @selector(getItemDecorInsetsForChildWithADView:);
+  methods[92].selector = @selector(dispatchOnScrolledWithInt:withInt:);
+  methods[93].selector = @selector(hasPendingAdapterUpdates);
+  methods[94].selector = @selector(repositionShadowingViews);
+  methods[95].selector = @selector(findNestedRecyclerViewWithADView:);
+  methods[96].selector = @selector(clearNestedRecyclerViewIfNotNestedWithADXRecyclerView_ViewHolder:);
+  methods[97].selector = @selector(getNanoTime);
+  methods[98].selector = @selector(dispatchChildDetachedWithADView:);
+  methods[99].selector = @selector(dispatchChildAttachedWithADView:);
+  methods[100].selector = @selector(getAdapterPositionInRecyclerViewWithADXRecyclerView_ViewHolder:);
+  methods[101].selector = @selector(setNestedScrollingEnabledWithBoolean:);
+  methods[102].selector = @selector(isNestedScrollingEnabled);
+  methods[103].selector = @selector(startNestedScrollWithInt:);
+  methods[104].selector = @selector(startNestedScrollWithInt:withInt:);
+  methods[105].selector = @selector(stopNestedScroll);
+  methods[106].selector = @selector(stopNestedScrollWithInt:);
+  methods[107].selector = @selector(hasNestedScrollingParent);
+  methods[108].selector = @selector(hasNestedScrollingParentWithInt:);
+  methods[109].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:);
+  methods[110].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:withInt:);
+  methods[111].selector = @selector(dispatchNestedScrollWithInt:withInt:withInt:withInt:withIntArray:withInt:withIntArray:);
+  methods[112].selector = @selector(dispatchNestedPreScrollWithInt:withInt:withIntArray:withIntArray:);
+  methods[113].selector = @selector(dispatchNestedPreScrollWithInt:withInt:withIntArray:withIntArray:withInt:);
+  methods[114].selector = @selector(dispatchNestedFlingWithFloat:withFloat:withBoolean:);
+  methods[115].selector = @selector(dispatchNestedPreFlingWithFloat:withFloat:);
+  methods[116].selector = @selector(getScrollingChildHelper);
+  methods[117].selector = @selector(onTouchEventWithADMotionEvent:);
+  methods[118].selector = @selector(onInterceptTouchEventWithADMotionEvent:);
+  methods[119].selector = @selector(cancelScroll);
+  methods[120].selector = @selector(startNestedScroll);
+  methods[121].selector = @selector(init);
+  methods[122].selector = @selector(dispatchPendingImportantForAccessibilityChanges);
+  methods[123].selector = @selector(dispatchContentChangedIfNecessary);
+  methods[124].selector = @selector(saveFocusInfo);
+  methods[125].selector = @selector(recoverFocusFromState);
+  methods[126].selector = @selector(resetFocusInfo);
+  methods[127].selector = @selector(getScrollY);
+  methods[128].selector = @selector(getScrollX);
+  methods[129].selector = @selector(onScrollChangedWithInt:withInt:withInt:withInt:);
+  methods[130].selector = @selector(onScrolledWithInt:withInt:);
+  methods[131].selector = @selector(fillRemainingScrollValuesWithADXRecyclerView_State:);
+  methods[132].selector = @selector(isAccessibilityEnabled);
+  methods[133].selector = @selector(getDrawingTime);
+  methods[134].selector = @selector(stopScroll);
+  methods[135].selector = @selector(dispatchNestedPreScrollWithInt:);
+  methods[136].selector = @selector(registerObserverWithADXRecyclerView_AdapterDataObserver:);
+  methods[137].selector = @selector(awakenScrollBars);
+  methods[138].selector = @selector(considerReleasingGlowsOnScrollWithInt:withInt:);
+  methods[139].selector = @selector(pullGlowsWithFloat:withFloat:withFloat:withFloat:);
+  methods[140].selector = @selector(getOverScrollMode);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
-    { "TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 100, -1, -1 },
+    { "TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 118, -1, -1 },
     { "DEBUG", "Z", .constantValue.asBOOL = ADXRecyclerView_DEBUG, 0x18, -1, -1, -1, -1 },
     { "VERBOSE_TRACING", "Z", .constantValue.asBOOL = ADXRecyclerView_VERBOSE_TRACING, 0x18, -1, -1, -1, -1 },
     { "FORCE_INVALIDATE_DISPLAY_LIST", "Z", .constantValue.asBOOL = ADXRecyclerView_FORCE_INVALIDATE_DISPLAY_LIST, 0x18, -1, -1, -1, -1 },
@@ -2058,27 +2366,30 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "TOUCH_SLOP_PAGING", "I", .constantValue.asInt = ADXRecyclerView_TOUCH_SLOP_PAGING, 0x19, -1, -1, -1, -1 },
     { "UNDEFINED_DURATION", "I", .constantValue.asInt = ADXRecyclerView_UNDEFINED_DURATION, 0x19, -1, -1, -1, -1 },
     { "MAX_SCROLL_DURATION", "I", .constantValue.asInt = ADXRecyclerView_MAX_SCROLL_DURATION, 0x18, -1, -1, -1, -1 },
-    { "TRACE_SCROLL_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 101, -1, -1 },
-    { "TRACE_ON_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 102, -1, -1 },
-    { "TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 103, -1, -1 },
-    { "TRACE_HANDLE_ADAPTER_UPDATES_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 104, -1, -1 },
-    { "TRACE_BIND_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 105, -1, -1 },
-    { "TRACE_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 106, -1, -1 },
-    { "TRACE_NESTED_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 107, -1, -1 },
-    { "TRACE_CREATE_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 108, -1, -1 },
+    { "TRACE_SCROLL_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 119, -1, -1 },
+    { "TRACE_ON_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 120, -1, -1 },
+    { "TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 121, -1, -1 },
+    { "TRACE_HANDLE_ADAPTER_UPDATES_TAG", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 122, -1, -1 },
+    { "TRACE_BIND_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 123, -1, -1 },
+    { "TRACE_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 124, -1, -1 },
+    { "TRACE_NESTED_PREFETCH_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 125, -1, -1 },
+    { "TRACE_CREATE_VIEW_TAG", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 126, -1, -1 },
     { "mObserver_", "LADXRecyclerView_RecyclerViewDataObserver;", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mRecycler_", "LADXRecyclerView_Recycler;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
     { "mAdapterHelper_", "LADXAdapterHelper;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mChildHelper_", "LADXChildHelper;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mViewInfoStore_", "LADXViewInfoStore;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
     { "mClipToPadding_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mUpdateChildViewsRunnable_", "LJavaLangRunnable;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
     { "mTempRect_", "LADRect;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
     { "mTempRectF_", "LADRectF;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
     { "mAdapter_", "LADXRecyclerView_Adapter;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mLayout_", "LADXRecyclerView_LayoutManager;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mRecyclerListener_", "LADXRecyclerView_RecyclerListener;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
-    { "mRecyclerListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x10, -1, -1, 109, -1 },
-    { "mItemDecorations_", "LJavaUtilArrayList;", .constantValue.asLong = 0, 0x10, -1, -1, 110, -1 },
+    { "mRecyclerListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x10, -1, -1, 127, -1 },
+    { "mItemDecorations_", "LJavaUtilArrayList;", .constantValue.asLong = 0, 0x10, -1, -1, 128, -1 },
+    { "mOnItemTouchListeners_", "LJavaUtilArrayList;", .constantValue.asLong = 0, 0x12, -1, -1, 129, -1 },
+    { "mInterceptingOnItemTouchListener_", "LADXRecyclerView_OnItemTouchListener;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mIsAttached_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mHasFixedSize_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mEnableFastScroller_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
@@ -2089,11 +2400,12 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "mIgnoreMotionEventTillDown_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mEatenAccessibilityChangeFlags_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mAdapterUpdateDuringMeasure_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
-    { "mOnChildAttachStateListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 111, -1 },
+    { "mOnChildAttachStateListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 130, -1 },
     { "mDataSetHasChangedAfterLayout_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mDispatchItemsChangedEvent_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mLayoutOrScrollCounter_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mDispatchScrollCounter_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mItemAnimator_", "LADXRecyclerView_ItemAnimator;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "INVALID_POINTER", "I", .constantValue.asInt = ADXRecyclerView_INVALID_POINTER, 0x1a, -1, -1, -1, -1 },
     { "SCROLL_STATE_IDLE", "I", .constantValue.asInt = ADXRecyclerView_SCROLL_STATE_IDLE, 0x19, -1, -1, -1, -1 },
     { "SCROLL_STATE_DRAGGING", "I", .constantValue.asInt = ADXRecyclerView_SCROLL_STATE_DRAGGING, 0x19, -1, -1, -1, -1 },
@@ -2105,22 +2417,25 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "mInitialTouchY_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mLastTouchX_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mLastTouchY_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "mTouchSlop_RecyclerView_", "I", .constantValue.asLong = 0, 0x2, 112, -1, -1, -1 },
+    { "mTouchSlop_RecyclerView_", "I", .constantValue.asLong = 0, 0x2, 131, -1, -1, -1 },
     { "mMinFlingVelocity_", "I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mMaxFlingVelocity_", "I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mPreserveFocusAfterLayout_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mGapWorker_", "LADXGapWorker;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mPrefetchRegistry_", "LADXGapWorker_LayoutPrefetchRegistryImpl;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mState_", "LADXRecyclerView_State;", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
     { "mScrollListener_", "LADXRecyclerView_OnScrollListener;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "mScrollListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 113, -1 },
+    { "mScrollListeners_", "LJavaUtilList;", .constantValue.asLong = 0, 0x2, -1, -1, 132, -1 },
     { "mItemsAddedOrRemoved_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mItemsChanged_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
+    { "mItemAnimatorListener_", "LADXRecyclerView_ItemAnimator_ItemAnimatorListener;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mPostedAnimatorRunner_", "Z", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "mMinMaxLayoutPositions_", "[I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mScrollingChildHelper_", "LADXNestedScrollingChildHelper;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mScrollOffset_", "[I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mNestedOffsets_", "[I", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mReusableIntPair_", "[I", .constantValue.asLong = 0, 0x10, -1, -1, -1, -1 },
+    { "mPendingAccessibilityImportanceChange_", "LJavaUtilList;", .constantValue.asLong = 0, 0x10, -1, -1, 133, -1 },
     { "mItemAnimatorRunner_", "LJavaLangRunnable;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mLastAutoMeasureSkippedDueToExact_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mLastAutoMeasureNonExactMeasuredWidth_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -2128,17 +2443,16 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "mViewInfoProcessCallback_", "LADXViewInfoStore_ProcessCallback;", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "mPendingSavedState_", "LADXRecyclerView_SavedState;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "TYPE_TOUCH", "I", .constantValue.asInt = ADXRecyclerView_TYPE_TOUCH, 0x19, -1, -1, -1, -1 },
-    { "mItemAnimator_", "LADXRecyclerView_ItemAnimator;", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "setAdapter", "LADXRecyclerView_Adapter;", "setAdapterInternal", "LADXRecyclerView_Adapter;ZZ", "setLayoutManager", "LADXRecyclerView_LayoutManager;", "addAnimatingView", "LADXRecyclerView_ViewHolder;", "addItemDecoration", "LADXRecyclerView_ItemDecoration;I", "LADXRecyclerView_ItemDecoration;", "setOnScrollListener", "LADXRecyclerView_OnScrollListener;", "scrollToPosition", "I", "scrollBy", "II", "scrollStep", "II[I", "scrollByInternal", "IILADMotionEvent;I", "stopInterceptRequestLayout", "Z", "suppressLayout", "setLayoutFrozen", "assertInLayoutOrScroll", "LNSString;", "assertNotInLayoutOrScroll", "onMeasure", "defaultOnMeasure", "onExitLayoutOrScroll", "handleMissingPreInfoForChangeError", "JLADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "recordAnimationInfoIfBouncedHiddenView", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "findMinMaxChildLayoutPositions", "[I", "didChildRangeChange", "removeDetachedView", "LADView;Z", "getChangedHolderKey", "animateAppearance", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "animateDisappearance", "animateChange", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;ZZ", "onLayout", "ZIIII", "offsetPositionRecordsForMove", "offsetPositionRecordsForInsert", "offsetPositionRecordsForRemove", "IIZ", "viewRangeUpdate", "IILNSObject;", "canReuseUpdatedViewHolder", "processDataSetCompletelyChanged", "getChildViewHolder", "LADView;", "findContainingItemView", "getChildViewHolderInt", "findViewHolderForPosition", "IZ", "offsetChildrenVertical", "onChildAttachedToWindow", "onChildDetachedFromWindow", "offsetChildrenHorizontal", "getDecoratedBoundsWithMarginsInt", "LADView;LADRect;", "getItemDecorInsetsForChild", "dispatchOnScrolled", "findNestedRecyclerView", "clearNestedRecyclerViewIfNotNested", "dispatchChildDetached", "dispatchChildAttached", "getAdapterPositionInRecyclerView", "setNestedScrollingEnabled", "startNestedScroll", "stopNestedScroll", "hasNestedScrollingParent", "dispatchNestedScroll", "IIII[I", "IIII[II", "IIII[II[I", "dispatchNestedPreScroll", "II[I[I", "II[I[II", "dispatchNestedFling", "FFZ", "dispatchNestedPreFling", "FF", "onScrollChanged", "IIII", "onScrolled", "fillRemainingScrollValues", "LADXRecyclerView_State;", "registerObserver", "LADXRecyclerView_AdapterDataObserver;", "considerReleasingGlowsOnScroll", "pullGlows", "FFFF", &ADXRecyclerView_TAG, &ADXRecyclerView_TRACE_SCROLL_TAG, &ADXRecyclerView_TRACE_ON_LAYOUT_TAG, &ADXRecyclerView_TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG, &ADXRecyclerView_TRACE_HANDLE_ADAPTER_UPDATES_TAG, &ADXRecyclerView_TRACE_BIND_VIEW_TAG, &ADXRecyclerView_TRACE_PREFETCH_TAG, &ADXRecyclerView_TRACE_NESTED_PREFETCH_TAG, &ADXRecyclerView_TRACE_CREATE_VIEW_TAG, "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$RecyclerListener;>;", "Ljava/util/ArrayList<Landroidx/recyclerview/widget/RecyclerView$ItemDecoration;>;", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnChildAttachStateChangeListener;>;", "mTouchSlop", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnScrollListener;>;", "LADXRecyclerView_RecyclerViewDataObserver;LADXRecyclerView_RecycledViewPool;LADXRecyclerView_Recycler;LADXRecyclerView_ViewCacheExtension;LADXRecyclerView_Adapter;LADXRecyclerView_LayoutManager;LADXRecyclerView_ItemDecoration;LADXRecyclerView_OnScrollListener;LADXRecyclerView_RecyclerListener;LADXRecyclerView_OnChildAttachStateChangeListener;LADXRecyclerView_ViewHolder;LADXRecyclerView_LayoutParams;LADXRecyclerView_AdapterDataObserver;LADXRecyclerView_AdapterDataObservable;LADXRecyclerView_State;LADXRecyclerView_ItemAnimator;LADXRecyclerView_SavedState;LADXRecyclerView_Observable;LADXRecyclerView_MotionEventCompat;LADXRecyclerView_InputDevice;" };
-  static const J2ObjcClassInfo _ADXRecyclerView = { "RecyclerView", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 123, 90, -1, 114, -1, -1, -1 };
+  static const void *ptrTable[] = { "setHasFixedSize", "Z", "setAdapter", "LADXRecyclerView_Adapter;", "setAdapterInternal", "LADXRecyclerView_Adapter;ZZ", "addOnChildAttachStateChangeListener", "LADXRecyclerView_OnChildAttachStateChangeListener;", "removeOnChildAttachStateChangeListener", "setLayoutManager", "LADXRecyclerView_LayoutManager;", "addAnimatingView", "LADXRecyclerView_ViewHolder;", "removeAnimatingView", "LADView;", "addItemDecoration", "LADXRecyclerView_ItemDecoration;I", "LADXRecyclerView_ItemDecoration;", "removeItemDecoration", "setOnScrollListener", "LADXRecyclerView_OnScrollListener;", "scrollToPosition", "I", "scrollBy", "II", "scrollStep", "II[I", "scrollByInternal", "IILADMotionEvent;I", "stopInterceptRequestLayout", "suppressLayout", "setLayoutFrozen", "assertInLayoutOrScroll", "LNSString;", "assertNotInLayoutOrScroll", "addOnItemTouchListener", "LADXRecyclerView_OnItemTouchListener;", "removeOnItemTouchListener", "dispatchToOnItemTouchListeners", "LADMotionEvent;", "findInterceptingOnItemTouchListener", "requestDisallowInterceptTouchEvent", "onMeasure", "defaultOnMeasure", "setItemAnimator", "LADXRecyclerView_ItemAnimator;", "onExitLayoutOrScroll", "handleMissingPreInfoForChangeError", "JLADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "recordAnimationInfoIfBouncedHiddenView", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "findMinMaxChildLayoutPositions", "[I", "didChildRangeChange", "removeDetachedView", "LADView;Z", "getChangedHolderKey", "animateAppearance", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "animateDisappearance", "animateChange", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;ZZ", "onLayout", "ZIIII", "offsetPositionRecordsForMove", "offsetPositionRecordsForInsert", "offsetPositionRecordsForRemove", "IIZ", "viewRangeUpdate", "IILNSObject;", "canReuseUpdatedViewHolder", "processDataSetCompletelyChanged", "getChildViewHolder", "findContainingItemView", "getChildViewHolderInt", "findViewHolderForPosition", "IZ", "findChildViewUnder", "FF", "offsetChildrenVertical", "onChildAttachedToWindow", "onChildDetachedFromWindow", "offsetChildrenHorizontal", "getDecoratedBoundsWithMarginsInt", "LADView;LADRect;", "getItemDecorInsetsForChild", "dispatchOnScrolled", "findNestedRecyclerView", "clearNestedRecyclerViewIfNotNested", "dispatchChildDetached", "dispatchChildAttached", "getAdapterPositionInRecyclerView", "setNestedScrollingEnabled", "startNestedScroll", "stopNestedScroll", "hasNestedScrollingParent", "dispatchNestedScroll", "IIII[I", "IIII[II", "IIII[II[I", "dispatchNestedPreScroll", "II[I[I", "II[I[II", "dispatchNestedFling", "FFZ", "dispatchNestedPreFling", "onTouchEvent", "onInterceptTouchEvent", "onScrollChanged", "IIII", "onScrolled", "fillRemainingScrollValues", "LADXRecyclerView_State;", "registerObserver", "LADXRecyclerView_AdapterDataObserver;", "considerReleasingGlowsOnScroll", "pullGlows", "FFFF", &ADXRecyclerView_TAG, &ADXRecyclerView_TRACE_SCROLL_TAG, &ADXRecyclerView_TRACE_ON_LAYOUT_TAG, &ADXRecyclerView_TRACE_ON_DATA_SET_CHANGE_LAYOUT_TAG, &ADXRecyclerView_TRACE_HANDLE_ADAPTER_UPDATES_TAG, &ADXRecyclerView_TRACE_BIND_VIEW_TAG, &ADXRecyclerView_TRACE_PREFETCH_TAG, &ADXRecyclerView_TRACE_NESTED_PREFETCH_TAG, &ADXRecyclerView_TRACE_CREATE_VIEW_TAG, "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$RecyclerListener;>;", "Ljava/util/ArrayList<Landroidx/recyclerview/widget/RecyclerView$ItemDecoration;>;", "Ljava/util/ArrayList<Landroidx/recyclerview/widget/RecyclerView$OnItemTouchListener;>;", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnChildAttachStateChangeListener;>;", "mTouchSlop", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$OnScrollListener;>;", "Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$ViewHolder;>;", "LADXRecyclerView_RecyclerViewDataObserver;LADXRecyclerView_RecycledViewPool;LADXRecyclerView_Recycler;LADXRecyclerView_ViewCacheExtension;LADXRecyclerView_Adapter;LADXRecyclerView_LayoutManager;LADXRecyclerView_ItemDecoration;LADXRecyclerView_OnItemTouchListener;LADXRecyclerView_OnScrollListener;LADXRecyclerView_RecyclerListener;LADXRecyclerView_OnChildAttachStateChangeListener;LADXRecyclerView_ViewHolder;LADXRecyclerView_LayoutParams;LADXRecyclerView_AdapterDataObserver;LADXRecyclerView_AdapterDataObservable;LADXRecyclerView_State;LADXRecyclerView_ItemAnimatorRestoreListener;LADXRecyclerView_ItemAnimator;LADXRecyclerView_SavedState;LADXRecyclerView_Observable;LADXRecyclerView_MotionEventCompat;LADXRecyclerView_InputDevice;LADXRecyclerView_SmoothScroller;LADXRecyclerView_Display;" };
+  static const J2ObjcClassInfo _ADXRecyclerView = { "RecyclerView", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x1, 141, 96, -1, 134, -1, -1, -1 };
   return &_ADXRecyclerView;
 }
 
 @end
 
 void ADXRecyclerView_initChildrenHelper(ADXRecyclerView *self) {
-  JreStrongAssignAndConsume(&self->mChildHelper_, new_ADXChildHelper_initPackagePrivateWithADXChildHelper_Callback_(create_ADXRecyclerView_3_initWithADXRecyclerView_(self)));
+  JreStrongAssignAndConsume(&self->mChildHelper_, new_ADXChildHelper_initPackagePrivateWithADXChildHelper_Callback_(create_ADXRecyclerView_4_initWithADXRecyclerView_(self)));
 }
 
 void ADXRecyclerView_setAdapterInternalWithADXRecyclerView_Adapter_withBoolean_withBoolean_(ADXRecyclerView *self, ADXRecyclerView_Adapter *adapter, bool compatibleWithPrevious, bool removeAndRecycleViews) {
@@ -2203,11 +2517,48 @@ void ADXRecyclerView_suppressLayoutWithBoolean_(ADXRecyclerView *self, bool supp
       self->mLayoutWasDefered_ = false;
     }
     else {
+      int64_t now = ADSystemClock_uptimeMillis();
+      ADMotionEvent *cancelEvent = ADMotionEvent_obtainWithLong_withLong_withInt_withFloat_withFloat_withInt_(now, now, ADMotionEvent_ACTION_CANCEL, 0.0f, 0.0f, 0);
+      [self onTouchEventWithADMotionEvent:cancelEvent];
       self->mLayoutSuppressed_ = true;
       self->mIgnoreMotionEventTillDown_ = true;
       [self stopScroll];
     }
   }
+}
+
+bool ADXRecyclerView_dispatchToOnItemTouchListenersWithADMotionEvent_(ADXRecyclerView *self, ADMotionEvent *e) {
+  if (self->mInterceptingOnItemTouchListener_ == nil) {
+    if ([((ADMotionEvent *) nil_chk(e)) getAction] == ADMotionEvent_ACTION_DOWN) {
+      return false;
+    }
+    return ADXRecyclerView_findInterceptingOnItemTouchListenerWithADMotionEvent_(self, e);
+  }
+  else {
+    [self->mInterceptingOnItemTouchListener_ onTouchEventWithADXRecyclerView:self withADMotionEvent:e];
+    int32_t action = [((ADMotionEvent *) nil_chk(e)) getAction];
+    if (action == ADMotionEvent_ACTION_CANCEL || action == ADMotionEvent_ACTION_UP) {
+      JreStrongAssign(&self->mInterceptingOnItemTouchListener_, nil);
+    }
+    return true;
+  }
+}
+
+bool ADXRecyclerView_findInterceptingOnItemTouchListenerWithADMotionEvent_(ADXRecyclerView *self, ADMotionEvent *e) {
+  int32_t action = [((ADMotionEvent *) nil_chk(e)) getAction];
+  int32_t listenerCount = [((JavaUtilArrayList *) nil_chk(self->mOnItemTouchListeners_)) size];
+  for (int32_t i = 0; i < listenerCount; i++) {
+    id<ADXRecyclerView_OnItemTouchListener> listener = [self->mOnItemTouchListeners_ getWithInt:i];
+    if ([((id<ADXRecyclerView_OnItemTouchListener>) nil_chk(listener)) onInterceptTouchEventWithADXRecyclerView:self withADMotionEvent:e] && action != ADMotionEvent_ACTION_CANCEL) {
+      JreStrongAssign(&self->mInterceptingOnItemTouchListener_, listener);
+      return true;
+    }
+  }
+  return false;
+}
+
+bool ADXRecyclerView_predictiveItemAnimationsEnabled(ADXRecyclerView *self) {
+  return (self->mItemAnimator_ != nil && [((ADXRecyclerView_LayoutManager *) nil_chk(self->mLayout_)) supportsPredictiveItemAnimations]);
 }
 
 void ADXRecyclerView_processAdapterUpdatesAndSetAnimationFlags(ADXRecyclerView *self) {
@@ -2517,15 +2868,18 @@ void ADXRecyclerView_init(ADXRecyclerView *self) {
   JreStrongAssignAndConsume(&self->mObserver_, new_ADXRecyclerView_RecyclerViewDataObserver_initWithADXRecyclerView_(self));
   JreStrongAssignAndConsume(&self->mRecycler_, new_ADXRecyclerView_Recycler_initWithADXRecyclerView_(self));
   JreStrongAssignAndConsume(&self->mViewInfoStore_, new_ADXViewInfoStore_initPackagePrivate());
+  JreStrongAssignAndConsume(&self->mUpdateChildViewsRunnable_, new_ADXRecyclerView_1_initWithADXRecyclerView_(self));
   JreStrongAssignAndConsume(&self->mTempRect_, new_ADRect_init());
   JreStrongAssignAndConsume(&self->mTempRectF_, new_ADRectF_init());
   JreStrongAssignAndConsume(&self->mRecyclerListeners_, new_JavaUtilArrayList_init());
   JreStrongAssignAndConsume(&self->mItemDecorations_, new_JavaUtilArrayList_init());
+  JreStrongAssignAndConsume(&self->mOnItemTouchListeners_, new_JavaUtilArrayList_init());
   self->mInterceptRequestLayoutDepth_ = 0;
   self->mDataSetHasChangedAfterLayout_ = false;
   self->mDispatchItemsChangedEvent_ = false;
   self->mLayoutOrScrollCounter_ = 0;
   self->mDispatchScrollCounter_ = 0;
+  JreStrongAssignAndConsume(&self->mItemAnimator_, new_ADXDefaultItemAnimator_init());
   self->mScrollState_ = ADXRecyclerView_SCROLL_STATE_IDLE;
   self->mScrollPointerId_ = ADXRecyclerView_INVALID_POINTER;
   self->mPreserveFocusAfterLayout_ = true;
@@ -2533,20 +2887,23 @@ void ADXRecyclerView_init(ADXRecyclerView *self) {
   JreStrongAssignAndConsume(&self->mState_, new_ADXRecyclerView_State_init());
   self->mItemsAddedOrRemoved_ = false;
   self->mItemsChanged_ = false;
+  JreStrongAssignAndConsume(&self->mItemAnimatorListener_, new_ADXRecyclerView_ItemAnimatorRestoreListener_initWithADXRecyclerView_(self));
   self->mPostedAnimatorRunner_ = false;
   JreStrongAssignAndConsume(&self->mMinMaxLayoutPositions_, [IOSIntArray newArrayWithLength:2]);
   JreStrongAssignAndConsume(&self->mScrollOffset_, [IOSIntArray newArrayWithLength:2]);
   JreStrongAssignAndConsume(&self->mNestedOffsets_, [IOSIntArray newArrayWithLength:2]);
   JreStrongAssignAndConsume(&self->mReusableIntPair_, [IOSIntArray newArrayWithLength:2]);
-  JreStrongAssignAndConsume(&self->mItemAnimatorRunner_, new_ADXRecyclerView_1_initWithADXRecyclerView_(self));
+  JreStrongAssignAndConsume(&self->mPendingAccessibilityImportanceChange_, new_JavaUtilArrayList_init());
+  JreStrongAssignAndConsume(&self->mItemAnimatorRunner_, new_ADXRecyclerView_2_initWithADXRecyclerView_(self));
   self->mLastAutoMeasureNonExactMeasuredWidth_ = 0;
   self->mLastAutoMeasureNonExactMeasuredHeight_ = 0;
-  JreStrongAssignAndConsume(&self->mViewInfoProcessCallback_, new_ADXRecyclerView_2_initWithADXRecyclerView_(self));
+  JreStrongAssignAndConsume(&self->mViewInfoProcessCallback_, new_ADXRecyclerView_3_initWithADXRecyclerView_(self));
   self->mMaxFlingVelocity_ = 0;
   self->mMinFlingVelocity_ = 0;
   [self initAdapterManager];
   ADXRecyclerView_initChildrenHelper(self);
   [self setNestedScrollingEnabledWithBoolean:true];
+  [((ADXRecyclerView_ItemAnimator *) nil_chk(self->mItemAnimator_)) setListenerWithADXRecyclerView_ItemAnimator_ItemAnimatorListener:self->mItemAnimatorListener_];
 }
 
 ADXRecyclerView *new_ADXRecyclerView_init() {
@@ -2558,10 +2915,6 @@ ADXRecyclerView *create_ADXRecyclerView_init() {
 }
 
 void ADXRecyclerView_dispatchContentChangedIfNecessary(ADXRecyclerView *self) {
-}
-
-bool ADXRecyclerView_predictiveItemAnimationsEnabled(ADXRecyclerView *self) {
-  return false;
 }
 
 void ADXRecyclerView_saveFocusInfo(ADXRecyclerView *self) {
@@ -2597,10 +2950,18 @@ J2OBJC_NAME_MAPPING(ADXRecyclerView, "androidx.recyclerview.widget", "ADX")
 }
 
 - (void)run {
-  if (this$0_->mItemAnimator_ != nil) {
-    [this$0_->mItemAnimator_ runPendingAnimations];
+  if (!this$0_->mFirstLayoutComplete_ || [this$0_ isLayoutRequested]) {
+    return;
   }
-  this$0_->mPostedAnimatorRunner_ = false;
+  if (!this$0_->mIsAttached_) {
+    [this$0_ requestLayout];
+    return;
+  }
+  if (this$0_->mLayoutSuppressed_) {
+    this$0_->mLayoutWasDefered_ = true;
+    return;
+  }
+  [this$0_ consumePendingUpdateOperations];
 }
 
 - (void)dealloc {
@@ -2646,6 +3007,59 @@ ADXRecyclerView_1 *create_ADXRecyclerView_1_initWithADXRecyclerView_(ADXRecycler
 
 - (instancetype)initWithADXRecyclerView:(ADXRecyclerView *)outer$ {
   ADXRecyclerView_2_initWithADXRecyclerView_(self, outer$);
+  return self;
+}
+
+- (void)run {
+  if (this$0_->mItemAnimator_ != nil) {
+    [this$0_->mItemAnimator_ runPendingAnimations];
+  }
+  this$0_->mPostedAnimatorRunner_ = false;
+}
+
+- (void)dealloc {
+  RELEASE_(this$0_);
+  [super dealloc];
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, 0, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, -1, -1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(initWithADXRecyclerView:);
+  methods[1].selector = @selector(run);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "this$0_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LADXRecyclerView;" };
+  static const J2ObjcClassInfo _ADXRecyclerView_2 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 2, 1, 0, -1, -1, -1, -1 };
+  return &_ADXRecyclerView_2;
+}
+
+@end
+
+void ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView_2 *self, ADXRecyclerView *outer$) {
+  JreStrongAssign(&self->this$0_, outer$);
+  NSObject_init(self);
+}
+
+ADXRecyclerView_2 *new_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_NEW_IMPL(ADXRecyclerView_2, initWithADXRecyclerView_, outer$)
+}
+
+ADXRecyclerView_2 *create_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_CREATE_IMPL(ADXRecyclerView_2, initWithADXRecyclerView_, outer$)
+}
+
+@implementation ADXRecyclerView_3
+
+- (instancetype)initWithADXRecyclerView:(ADXRecyclerView *)outer$ {
+  ADXRecyclerView_3_initWithADXRecyclerView_(self, outer$);
   return self;
 }
 
@@ -2706,29 +3120,29 @@ ADXRecyclerView_1 *create_ADXRecyclerView_1_initWithADXRecyclerView_(ADXRecycler
     { "this$0_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXRecyclerView;", "processDisappeared", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "processAppeared", "processPersistent", "unused", "LADXRecyclerView_ViewHolder;" };
-  static const J2ObjcClassInfo _ADXRecyclerView_2 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 5, 1, 0, -1, -1, -1, -1 };
-  return &_ADXRecyclerView_2;
+  static const J2ObjcClassInfo _ADXRecyclerView_3 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 5, 1, 0, -1, -1, -1, -1 };
+  return &_ADXRecyclerView_3;
 }
 
 @end
 
-void ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView_2 *self, ADXRecyclerView *outer$) {
+void ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView_3 *self, ADXRecyclerView *outer$) {
   JreStrongAssign(&self->this$0_, outer$);
   NSObject_init(self);
 }
 
-ADXRecyclerView_2 *new_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
-  J2OBJC_NEW_IMPL(ADXRecyclerView_2, initWithADXRecyclerView_, outer$)
+ADXRecyclerView_3 *new_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_NEW_IMPL(ADXRecyclerView_3, initWithADXRecyclerView_, outer$)
 }
 
-ADXRecyclerView_2 *create_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
-  J2OBJC_CREATE_IMPL(ADXRecyclerView_2, initWithADXRecyclerView_, outer$)
+ADXRecyclerView_3 *create_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_CREATE_IMPL(ADXRecyclerView_3, initWithADXRecyclerView_, outer$)
 }
 
-@implementation ADXRecyclerView_3
+@implementation ADXRecyclerView_4
 
 - (instancetype)initWithADXRecyclerView:(ADXRecyclerView *)outer$ {
-  ADXRecyclerView_3_initWithADXRecyclerView_(self, outer$);
+  ADXRecyclerView_4_initWithADXRecyclerView_(self, outer$);
   return self;
 }
 
@@ -2852,29 +3266,29 @@ ADXRecyclerView_2 *create_ADXRecyclerView_2_initWithADXRecyclerView_(ADXRecycler
     { "this$0_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXRecyclerView;", "addView", "LADView;I", "indexOfChild", "LADView;", "removeViewAt", "I", "getChildAt", "getChildViewHolder", "attachViewToParent", "LADView;ILADViewGroup_LayoutParams;", "detachViewFromParent", "onEnteredHiddenState", "onLeftHiddenState", "initChildrenHelper" };
-  static const J2ObjcClassInfo _ADXRecyclerView_3 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 12, 1, 0, -1, 14, -1, -1 };
-  return &_ADXRecyclerView_3;
+  static const J2ObjcClassInfo _ADXRecyclerView_4 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 12, 1, 0, -1, 14, -1, -1 };
+  return &_ADXRecyclerView_4;
 }
 
 @end
 
-void ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView_3 *self, ADXRecyclerView *outer$) {
+void ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView_4 *self, ADXRecyclerView *outer$) {
   JreStrongAssign(&self->this$0_, outer$);
   NSObject_init(self);
 }
 
-ADXRecyclerView_3 *new_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
-  J2OBJC_NEW_IMPL(ADXRecyclerView_3, initWithADXRecyclerView_, outer$)
+ADXRecyclerView_4 *new_ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_NEW_IMPL(ADXRecyclerView_4, initWithADXRecyclerView_, outer$)
 }
 
-ADXRecyclerView_3 *create_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
-  J2OBJC_CREATE_IMPL(ADXRecyclerView_3, initWithADXRecyclerView_, outer$)
+ADXRecyclerView_4 *create_ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_CREATE_IMPL(ADXRecyclerView_4, initWithADXRecyclerView_, outer$)
 }
 
-@implementation ADXRecyclerView_4
+@implementation ADXRecyclerView_5
 
 - (instancetype)initWithADXRecyclerView:(ADXRecyclerView *)outer$ {
-  ADXRecyclerView_4_initWithADXRecyclerView_(self, outer$);
+  ADXRecyclerView_5_initWithADXRecyclerView_(self, outer$);
   return self;
 }
 
@@ -2982,23 +3396,23 @@ ADXRecyclerView_3 *create_ADXRecyclerView_3_initWithADXRecyclerView_(ADXRecycler
     { "this$0_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
   };
   static const void *ptrTable[] = { "LADXRecyclerView;", "findViewHolder", "I", "offsetPositionsForRemovingInvisible", "II", "offsetPositionsForRemovingLaidOutOrNewView", "markViewHoldersUpdated", "IILNSObject;", "onDispatchFirstPass", "LADXAdapterHelper_UpdateOp;", "dispatchUpdate", "onDispatchSecondPass", "offsetPositionsForAdd", "offsetPositionsForMove", "initAdapterManager" };
-  static const J2ObjcClassInfo _ADXRecyclerView_4 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 10, 1, 0, -1, 14, -1, -1 };
-  return &_ADXRecyclerView_4;
+  static const J2ObjcClassInfo _ADXRecyclerView_5 = { "", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x8000, 10, 1, 0, -1, 14, -1, -1 };
+  return &_ADXRecyclerView_5;
 }
 
 @end
 
-void ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView_4 *self, ADXRecyclerView *outer$) {
+void ADXRecyclerView_5_initWithADXRecyclerView_(ADXRecyclerView_5 *self, ADXRecyclerView *outer$) {
   JreStrongAssign(&self->this$0_, outer$);
   NSObject_init(self);
 }
 
-ADXRecyclerView_4 *new_ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
-  J2OBJC_NEW_IMPL(ADXRecyclerView_4, initWithADXRecyclerView_, outer$)
+ADXRecyclerView_5 *new_ADXRecyclerView_5_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_NEW_IMPL(ADXRecyclerView_5, initWithADXRecyclerView_, outer$)
 }
 
-ADXRecyclerView_4 *create_ADXRecyclerView_4_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
-  J2OBJC_CREATE_IMPL(ADXRecyclerView_4, initWithADXRecyclerView_, outer$)
+ADXRecyclerView_5 *create_ADXRecyclerView_5_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_CREATE_IMPL(ADXRecyclerView_5, initWithADXRecyclerView_, outer$)
 }
 
 @implementation ADXRecyclerView_AdapterDataObserver
@@ -3127,6 +3541,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_AdapterDataObserver)
 
 - (void)triggerUpdateProcessor {
   if (this$0_->mHasFixedSize_ && this$0_->mIsAttached_) {
+    ADXViewCompat_postOnAnimationWithADView_withJavaLangRunnable_(this$0_, this$0_->mUpdateChildViewsRunnable_);
   }
   else {
     this$0_->mAdapterUpdateDuringMeasure_ = true;
@@ -4868,11 +5283,13 @@ withADXRecyclerView_LayoutManager_LayoutPrefetchRegistry:(id<ADXRecyclerView_Lay
 
 - (void)postOnAnimationWithJavaLangRunnable:(id<JavaLangRunnable>)action {
   if (mRecyclerView_ != nil) {
+    ADXViewCompat_postOnAnimationWithADView_withJavaLangRunnable_(mRecyclerView_, action);
   }
 }
 
 - (bool)removeCallbacksWithJavaLangRunnable:(id<JavaLangRunnable>)action {
   if (mRecyclerView_ != nil) {
+    return [mRecyclerView_ removeCallbacksWithJavaLangRunnable:action];
   }
   return false;
 }
@@ -6285,6 +6702,30 @@ void ADXRecyclerView_ItemDecoration_init(ADXRecyclerView_ItemDecoration *self) {
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_ItemDecoration)
 
+@implementation ADXRecyclerView_OnItemTouchListener
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, "Z", 0x401, 0, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x401, 2, 1, -1, -1, -1, -1 },
+    { NULL, "V", 0x401, 3, 4, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(onInterceptTouchEventWithADXRecyclerView:withADMotionEvent:);
+  methods[1].selector = @selector(onTouchEventWithADXRecyclerView:withADMotionEvent:);
+  methods[2].selector = @selector(onRequestDisallowInterceptTouchEventWithBoolean:);
+  #pragma clang diagnostic pop
+  static const void *ptrTable[] = { "onInterceptTouchEvent", "LADXRecyclerView;LADMotionEvent;", "onTouchEvent", "onRequestDisallowInterceptTouchEvent", "Z", "LADXRecyclerView;" };
+  static const J2ObjcClassInfo _ADXRecyclerView_OnItemTouchListener = { "OnItemTouchListener", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x609, 3, 0, 5, -1, -1, -1, -1 };
+  return &_ADXRecyclerView_OnItemTouchListener;
+}
+
+@end
+
+J2OBJC_INTERFACE_TYPE_LITERAL_SOURCE(ADXRecyclerView_OnItemTouchListener)
+
 @implementation ADXRecyclerView_OnScrollListener
 
 J2OBJC_IGNORE_DESIGNATED_BEGIN
@@ -7351,6 +7792,87 @@ ADXRecyclerView_State *create_ADXRecyclerView_State_init() {
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_State)
 
+@implementation ADXRecyclerView_ItemAnimator_ItemAnimatorListener
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, "V", 0x401, 0, 1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(onAnimationFinishedWithADXRecyclerView_ViewHolder:);
+  #pragma clang diagnostic pop
+  static const void *ptrTable[] = { "onAnimationFinished", "LADXRecyclerView_ViewHolder;", "LADXRecyclerView_ItemAnimator;" };
+  static const J2ObjcClassInfo _ADXRecyclerView_ItemAnimator_ItemAnimatorListener = { "ItemAnimatorListener", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x608, 1, 0, 2, -1, -1, -1, -1 };
+  return &_ADXRecyclerView_ItemAnimator_ItemAnimatorListener;
+}
+
+@end
+
+J2OBJC_INTERFACE_TYPE_LITERAL_SOURCE(ADXRecyclerView_ItemAnimator_ItemAnimatorListener)
+
+@implementation ADXRecyclerView_ItemAnimatorRestoreListener
+
+- (instancetype)initWithADXRecyclerView:(ADXRecyclerView *)outer$ {
+  ADXRecyclerView_ItemAnimatorRestoreListener_initWithADXRecyclerView_(self, outer$);
+  return self;
+}
+
+- (void)onAnimationFinishedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)item {
+  ADXRecyclerView_ViewHolder_setIsRecyclableWithBoolean_(nil_chk(item), true);
+  if (item->mShadowedHolder_ != nil && item->mShadowingHolder_ == nil) {
+    JreStrongAssign(&item->mShadowedHolder_, nil);
+  }
+  JreStrongAssign(&item->mShadowingHolder_, nil);
+  if (![item shouldBeKeptAsChild]) {
+    if (![this$0_ removeAnimatingViewWithADView:item->itemView_] && [item isTmpDetached]) {
+      [this$0_ removeDetachedViewWithADView:item->itemView_ withBoolean:false];
+    }
+  }
+}
+
+- (void)dealloc {
+  RELEASE_(this$0_);
+  [super dealloc];
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, 0, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 1, 2, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(initWithADXRecyclerView:);
+  methods[1].selector = @selector(onAnimationFinishedWithADXRecyclerView_ViewHolder:);
+  #pragma clang diagnostic pop
+  static const J2ObjcFieldInfo fields[] = {
+    { "this$0_", "LADXRecyclerView;", .constantValue.asLong = 0, 0x1012, -1, -1, -1, -1 },
+  };
+  static const void *ptrTable[] = { "LADXRecyclerView;", "onAnimationFinished", "LADXRecyclerView_ViewHolder;" };
+  static const J2ObjcClassInfo _ADXRecyclerView_ItemAnimatorRestoreListener = { "ItemAnimatorRestoreListener", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x2, 2, 1, 0, -1, -1, -1, -1 };
+  return &_ADXRecyclerView_ItemAnimatorRestoreListener;
+}
+
+@end
+
+void ADXRecyclerView_ItemAnimatorRestoreListener_initWithADXRecyclerView_(ADXRecyclerView_ItemAnimatorRestoreListener *self, ADXRecyclerView *outer$) {
+  JreStrongAssign(&self->this$0_, outer$);
+  NSObject_init(self);
+}
+
+ADXRecyclerView_ItemAnimatorRestoreListener *new_ADXRecyclerView_ItemAnimatorRestoreListener_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_NEW_IMPL(ADXRecyclerView_ItemAnimatorRestoreListener, initWithADXRecyclerView_, outer$)
+}
+
+ADXRecyclerView_ItemAnimatorRestoreListener *create_ADXRecyclerView_ItemAnimatorRestoreListener_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_CREATE_IMPL(ADXRecyclerView_ItemAnimatorRestoreListener, initWithADXRecyclerView_, outer$)
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_ItemAnimatorRestoreListener)
+
 @implementation ADXRecyclerView_ItemAnimator
 
 J2OBJC_IGNORE_DESIGNATED_BEGIN
@@ -7390,6 +7912,10 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 - (void)setChangeDurationWithLong:(int64_t)changeDuration {
   mChangeDuration_ = changeDuration;
+}
+
+- (void)setListenerWithADXRecyclerView_ItemAnimator_ItemAnimatorListener:(id<ADXRecyclerView_ItemAnimator_ItemAnimatorListener>)listener {
+  JreStrongAssign(&mListener_, listener);
 }
 
 - (ADXRecyclerView_ItemAnimator_ItemHolderInfo *)recordPreLayoutInformationWithADXRecyclerView_State:(ADXRecyclerView_State *)state
@@ -7456,10 +7982,40 @@ J2OBJC_IGNORE_DESIGNATED_END
   [self doesNotRecognizeSelector:_cmd];
 }
 
+- (bool)isRunning {
+  // can't call an abstract method
+  [self doesNotRecognizeSelector:_cmd];
+  return 0;
+}
+
+- (void)dispatchAnimationFinishedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  [self onAnimationFinishedWithADXRecyclerView_ViewHolder:viewHolder];
+  if (mListener_ != nil) {
+    [mListener_ onAnimationFinishedWithADXRecyclerView_ViewHolder:viewHolder];
+  }
+}
+
 - (void)onAnimationFinishedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
 }
 
+- (void)dispatchAnimationStartedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+  [self onAnimationStartedWithADXRecyclerView_ViewHolder:viewHolder];
+}
+
 - (void)onAnimationStartedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
+}
+
+- (bool)isRunningWithADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener:(id<ADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener>)listener {
+  bool running = [self isRunning];
+  if (listener != nil) {
+    if (!running) {
+      [listener onAnimationsFinished];
+    }
+    else {
+      [((JavaUtilArrayList *) nil_chk(mFinishedListeners_)) addWithId:listener];
+    }
+  }
+  return running;
 }
 
 - (bool)canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder {
@@ -7471,8 +8027,22 @@ J2OBJC_IGNORE_DESIGNATED_END
   return [self canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:viewHolder];
 }
 
+- (void)dispatchAnimationsFinished {
+  int32_t count = [((JavaUtilArrayList *) nil_chk(mFinishedListeners_)) size];
+  for (int32_t i = 0; i < count; ++i) {
+    [((id<ADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener>) nil_chk([((JavaUtilArrayList *) nil_chk(mFinishedListeners_)) getWithInt:i])) onAnimationsFinished];
+  }
+  [((JavaUtilArrayList *) nil_chk(mFinishedListeners_)) clear];
+}
+
 - (ADXRecyclerView_ItemAnimator_ItemHolderInfo *)obtainHolderInfo {
   return create_ADXRecyclerView_ItemAnimator_ItemHolderInfo_init();
+}
+
+- (void)dealloc {
+  RELEASE_(mListener_);
+  RELEASE_(mFinishedListeners_);
+  [super dealloc];
 }
 
 + (const J2ObjcClassInfo *)__metadata {
@@ -7486,20 +8056,26 @@ J2OBJC_IGNORE_DESIGNATED_END
     { NULL, "V", 0x1, 3, 1, -1, -1, -1, -1 },
     { NULL, "J", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 4, 1, -1, -1, -1, -1 },
-    { NULL, "LADXRecyclerView_ItemAnimator_ItemHolderInfo;", 0x1, 5, 6, -1, 7, -1, -1 },
-    { NULL, "LADXRecyclerView_ItemAnimator_ItemHolderInfo;", 0x1, 8, 9, -1, -1, -1, -1 },
-    { NULL, "Z", 0x401, 10, 11, -1, -1, -1, -1 },
-    { NULL, "Z", 0x401, 12, 11, -1, -1, -1, -1 },
-    { NULL, "Z", 0x401, 13, 11, -1, -1, -1, -1 },
-    { NULL, "Z", 0x401, 14, 15, -1, -1, -1, -1 },
-    { NULL, "I", 0x8, 16, 17, -1, -1, -1, -1 },
+    { NULL, "V", 0x0, 5, 6, -1, -1, -1, -1 },
+    { NULL, "LADXRecyclerView_ItemAnimator_ItemHolderInfo;", 0x1, 7, 8, -1, 9, -1, -1 },
+    { NULL, "LADXRecyclerView_ItemAnimator_ItemHolderInfo;", 0x1, 10, 11, -1, -1, -1, -1 },
+    { NULL, "Z", 0x401, 12, 13, -1, -1, -1, -1 },
+    { NULL, "Z", 0x401, 14, 13, -1, -1, -1, -1 },
+    { NULL, "Z", 0x401, 15, 13, -1, -1, -1, -1 },
+    { NULL, "Z", 0x401, 16, 17, -1, -1, -1, -1 },
+    { NULL, "I", 0x8, 18, 19, -1, -1, -1, -1 },
     { NULL, "V", 0x401, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x401, 18, 17, -1, -1, -1, -1 },
+    { NULL, "V", 0x401, 20, 19, -1, -1, -1, -1 },
     { NULL, "V", 0x401, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 19, 17, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 20, 17, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 21, 17, -1, -1, -1, -1 },
-    { NULL, "Z", 0x1, 21, 22, -1, 23, -1, -1 },
+    { NULL, "Z", 0x401, -1, -1, -1, -1, -1, -1 },
+    { NULL, "V", 0x11, 21, 19, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 22, 19, -1, -1, -1, -1 },
+    { NULL, "V", 0x11, 23, 19, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 24, 19, -1, -1, -1, -1 },
+    { NULL, "Z", 0x11, 25, 26, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 27, 19, -1, -1, -1, -1 },
+    { NULL, "Z", 0x1, 27, 28, -1, 29, -1, -1 },
+    { NULL, "V", 0x11, -1, -1, -1, -1, -1, -1 },
     { NULL, "LADXRecyclerView_ItemAnimator_ItemHolderInfo;", 0x1, -1, -1, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
@@ -7514,21 +8090,27 @@ J2OBJC_IGNORE_DESIGNATED_END
   methods[6].selector = @selector(setRemoveDurationWithLong:);
   methods[7].selector = @selector(getChangeDuration);
   methods[8].selector = @selector(setChangeDurationWithLong:);
-  methods[9].selector = @selector(recordPreLayoutInformationWithADXRecyclerView_State:withADXRecyclerView_ViewHolder:withInt:withJavaUtilList:);
-  methods[10].selector = @selector(recordPostLayoutInformationWithADXRecyclerView_State:withADXRecyclerView_ViewHolder:);
-  methods[11].selector = @selector(animateDisappearanceWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
-  methods[12].selector = @selector(animateAppearanceWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
-  methods[13].selector = @selector(animatePersistenceWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
-  methods[14].selector = @selector(animateChangeWithADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
-  methods[15].selector = @selector(buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder:);
-  methods[16].selector = @selector(runPendingAnimations);
-  methods[17].selector = @selector(endAnimationWithADXRecyclerView_ViewHolder:);
-  methods[18].selector = @selector(endAnimations);
-  methods[19].selector = @selector(onAnimationFinishedWithADXRecyclerView_ViewHolder:);
-  methods[20].selector = @selector(onAnimationStartedWithADXRecyclerView_ViewHolder:);
-  methods[21].selector = @selector(canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:);
-  methods[22].selector = @selector(canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:withJavaUtilList:);
-  methods[23].selector = @selector(obtainHolderInfo);
+  methods[9].selector = @selector(setListenerWithADXRecyclerView_ItemAnimator_ItemAnimatorListener:);
+  methods[10].selector = @selector(recordPreLayoutInformationWithADXRecyclerView_State:withADXRecyclerView_ViewHolder:withInt:withJavaUtilList:);
+  methods[11].selector = @selector(recordPostLayoutInformationWithADXRecyclerView_State:withADXRecyclerView_ViewHolder:);
+  methods[12].selector = @selector(animateDisappearanceWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
+  methods[13].selector = @selector(animateAppearanceWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
+  methods[14].selector = @selector(animatePersistenceWithADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
+  methods[15].selector = @selector(animateChangeWithADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:withADXRecyclerView_ItemAnimator_ItemHolderInfo:withADXRecyclerView_ItemAnimator_ItemHolderInfo:);
+  methods[16].selector = @selector(buildAdapterChangeFlagsForAnimationsWithADXRecyclerView_ViewHolder:);
+  methods[17].selector = @selector(runPendingAnimations);
+  methods[18].selector = @selector(endAnimationWithADXRecyclerView_ViewHolder:);
+  methods[19].selector = @selector(endAnimations);
+  methods[20].selector = @selector(isRunning);
+  methods[21].selector = @selector(dispatchAnimationFinishedWithADXRecyclerView_ViewHolder:);
+  methods[22].selector = @selector(onAnimationFinishedWithADXRecyclerView_ViewHolder:);
+  methods[23].selector = @selector(dispatchAnimationStartedWithADXRecyclerView_ViewHolder:);
+  methods[24].selector = @selector(onAnimationStartedWithADXRecyclerView_ViewHolder:);
+  methods[25].selector = @selector(isRunningWithADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener:);
+  methods[26].selector = @selector(canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:);
+  methods[27].selector = @selector(canReuseUpdatedViewHolderWithADXRecyclerView_ViewHolder:withJavaUtilList:);
+  methods[28].selector = @selector(dispatchAnimationsFinished);
+  methods[29].selector = @selector(obtainHolderInfo);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
     { "FLAG_CHANGED", "I", .constantValue.asInt = ADXRecyclerView_ItemAnimator_FLAG_CHANGED, 0x19, -1, -1, -1, -1 },
@@ -7536,13 +8118,15 @@ J2OBJC_IGNORE_DESIGNATED_END
     { "FLAG_INVALIDATED", "I", .constantValue.asInt = ADXRecyclerView_ItemAnimator_FLAG_INVALIDATED, 0x19, -1, -1, -1, -1 },
     { "FLAG_MOVED", "I", .constantValue.asInt = ADXRecyclerView_ItemAnimator_FLAG_MOVED, 0x19, -1, -1, -1, -1 },
     { "FLAG_APPEARED_IN_PRE_LAYOUT", "I", .constantValue.asInt = ADXRecyclerView_ItemAnimator_FLAG_APPEARED_IN_PRE_LAYOUT, 0x19, -1, -1, -1, -1 },
+    { "mListener_", "LADXRecyclerView_ItemAnimator_ItemAnimatorListener;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
+    { "mFinishedListeners_", "LJavaUtilArrayList;", .constantValue.asLong = 0, 0x2, -1, -1, 30, -1 },
     { "mAddDuration_", "J", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mRemoveDuration_", "J", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mMoveDuration_", "J", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mChangeDuration_", "J", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "setMoveDuration", "J", "setAddDuration", "setRemoveDuration", "setChangeDuration", "recordPreLayoutInformation", "LADXRecyclerView_State;LADXRecyclerView_ViewHolder;ILJavaUtilList;", "(Landroidx/recyclerview/widget/RecyclerView$State;Landroidx/recyclerview/widget/RecyclerView$ViewHolder;ILjava/util/List<Ljava/lang/Object;>;)Landroidx/recyclerview/widget/RecyclerView$ItemAnimator$ItemHolderInfo;", "recordPostLayoutInformation", "LADXRecyclerView_State;LADXRecyclerView_ViewHolder;", "animateDisappearance", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "animateAppearance", "animatePersistence", "animateChange", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "buildAdapterChangeFlagsForAnimations", "LADXRecyclerView_ViewHolder;", "endAnimation", "onAnimationFinished", "onAnimationStarted", "canReuseUpdatedViewHolder", "LADXRecyclerView_ViewHolder;LJavaUtilList;", "(Landroidx/recyclerview/widget/RecyclerView$ViewHolder;Ljava/util/List<Ljava/lang/Object;>;)Z", "LADXRecyclerView;", "LADXRecyclerView_ItemAnimator_ItemHolderInfo;" };
-  static const J2ObjcClassInfo _ADXRecyclerView_ItemAnimator = { "ItemAnimator", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x409, 24, 9, 24, 25, -1, -1, -1 };
+  static const void *ptrTable[] = { "setMoveDuration", "J", "setAddDuration", "setRemoveDuration", "setChangeDuration", "setListener", "LADXRecyclerView_ItemAnimator_ItemAnimatorListener;", "recordPreLayoutInformation", "LADXRecyclerView_State;LADXRecyclerView_ViewHolder;ILJavaUtilList;", "(Landroidx/recyclerview/widget/RecyclerView$State;Landroidx/recyclerview/widget/RecyclerView$ViewHolder;ILjava/util/List<Ljava/lang/Object;>;)Landroidx/recyclerview/widget/RecyclerView$ItemAnimator$ItemHolderInfo;", "recordPostLayoutInformation", "LADXRecyclerView_State;LADXRecyclerView_ViewHolder;", "animateDisappearance", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "animateAppearance", "animatePersistence", "animateChange", "LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;LADXRecyclerView_ItemAnimator_ItemHolderInfo;LADXRecyclerView_ItemAnimator_ItemHolderInfo;", "buildAdapterChangeFlagsForAnimations", "LADXRecyclerView_ViewHolder;", "endAnimation", "dispatchAnimationFinished", "onAnimationFinished", "dispatchAnimationStarted", "onAnimationStarted", "isRunning", "LADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener;", "canReuseUpdatedViewHolder", "LADXRecyclerView_ViewHolder;LJavaUtilList;", "(Landroidx/recyclerview/widget/RecyclerView$ViewHolder;Ljava/util/List<Ljava/lang/Object;>;)Z", "Ljava/util/ArrayList<Landroidx/recyclerview/widget/RecyclerView$ItemAnimator$ItemAnimatorFinishedListener;>;", "LADXRecyclerView;", "LADXRecyclerView_ItemAnimator_ItemAnimatorListener;LADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener;LADXRecyclerView_ItemAnimator_ItemHolderInfo;" };
+  static const J2ObjcClassInfo _ADXRecyclerView_ItemAnimator = { "ItemAnimator", "androidx.recyclerview.widget", ptrTable, methods, fields, 7, 0x409, 30, 11, 31, 32, -1, -1, -1 };
   return &_ADXRecyclerView_ItemAnimator;
 }
 
@@ -7550,6 +8134,8 @@ J2OBJC_IGNORE_DESIGNATED_END
 
 void ADXRecyclerView_ItemAnimator_init(ADXRecyclerView_ItemAnimator *self) {
   NSObject_init(self);
+  JreStrongAssign(&self->mListener_, nil);
+  JreStrongAssignAndConsume(&self->mFinishedListeners_, new_JavaUtilArrayList_init());
   self->mAddDuration_ = 120;
   self->mRemoveDuration_ = 120;
   self->mMoveDuration_ = 250;
@@ -7573,6 +8159,26 @@ int32_t ADXRecyclerView_ItemAnimator_buildAdapterChangeFlagsForAnimationsWithADX
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_ItemAnimator)
+
+@implementation ADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, "V", 0x401, -1, -1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(onAnimationsFinished);
+  #pragma clang diagnostic pop
+  static const void *ptrTable[] = { "LADXRecyclerView_ItemAnimator;" };
+  static const J2ObjcClassInfo _ADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener = { "ItemAnimatorFinishedListener", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x609, 1, 0, 0, -1, -1, -1, -1 };
+  return &_ADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener;
+}
+
+@end
+
+J2OBJC_INTERFACE_TYPE_LITERAL_SOURCE(ADXRecyclerView_ItemAnimator_ItemAnimatorFinishedListener)
 
 @implementation ADXRecyclerView_ItemAnimator_ItemHolderInfo
 
@@ -7777,3 +8383,70 @@ ADXRecyclerView_InputDevice *create_ADXRecyclerView_InputDevice_init() {
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_InputDevice)
+
+@implementation ADXRecyclerView_SmoothScroller
+
++ (const J2ObjcClassInfo *)__metadata {
+  static const void *ptrTable[] = { "LADXRecyclerView;", "LADXRecyclerView_SmoothScroller_ScrollVectorProvider;" };
+  static const J2ObjcClassInfo _ADXRecyclerView_SmoothScroller = { "SmoothScroller", "androidx.recyclerview.widget", ptrTable, NULL, NULL, 7, 0x608, 0, 0, 0, 1, -1, -1, -1 };
+  return &_ADXRecyclerView_SmoothScroller;
+}
+
+@end
+
+J2OBJC_INTERFACE_TYPE_LITERAL_SOURCE(ADXRecyclerView_SmoothScroller)
+
+@implementation ADXRecyclerView_SmoothScroller_ScrollVectorProvider
+
++ (const J2ObjcClassInfo *)__metadata {
+  static const void *ptrTable[] = { "LADXRecyclerView_SmoothScroller;" };
+  static const J2ObjcClassInfo _ADXRecyclerView_SmoothScroller_ScrollVectorProvider = { "ScrollVectorProvider", "androidx.recyclerview.widget", ptrTable, NULL, NULL, 7, 0x609, 0, 0, 0, -1, -1, -1, -1 };
+  return &_ADXRecyclerView_SmoothScroller_ScrollVectorProvider;
+}
+
+@end
+
+J2OBJC_INTERFACE_TYPE_LITERAL_SOURCE(ADXRecyclerView_SmoothScroller_ScrollVectorProvider)
+
+@implementation ADXRecyclerView_Display
+
+- (instancetype)initWithADXRecyclerView:(ADXRecyclerView *)outer$ {
+  ADXRecyclerView_Display_initWithADXRecyclerView_(self, outer$);
+  return self;
+}
+
+- (float)getRefreshRate {
+  return 0;
+}
+
++ (const J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { NULL, NULL, 0x0, -1, 0, -1, -1, -1, -1 },
+    { NULL, "F", 0x1, -1, -1, -1, -1, -1, -1 },
+  };
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
+  methods[0].selector = @selector(initWithADXRecyclerView:);
+  methods[1].selector = @selector(getRefreshRate);
+  #pragma clang diagnostic pop
+  static const void *ptrTable[] = { "LADXRecyclerView;" };
+  static const J2ObjcClassInfo _ADXRecyclerView_Display = { "Display", "androidx.recyclerview.widget", ptrTable, methods, NULL, 7, 0x0, 2, 0, 0, -1, -1, -1, -1 };
+  return &_ADXRecyclerView_Display;
+}
+
+@end
+
+void ADXRecyclerView_Display_initWithADXRecyclerView_(ADXRecyclerView_Display *self, ADXRecyclerView *outer$) {
+  NSObject_init(self);
+}
+
+ADXRecyclerView_Display *new_ADXRecyclerView_Display_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_NEW_IMPL(ADXRecyclerView_Display, initWithADXRecyclerView_, outer$)
+}
+
+ADXRecyclerView_Display *create_ADXRecyclerView_Display_initWithADXRecyclerView_(ADXRecyclerView *outer$) {
+  J2OBJC_CREATE_IMPL(ADXRecyclerView_Display, initWithADXRecyclerView_, outer$)
+}
+
+J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ADXRecyclerView_Display)

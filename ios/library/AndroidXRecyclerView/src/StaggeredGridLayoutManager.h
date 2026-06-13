@@ -27,6 +27,10 @@
 #define INCLUDE_ADXRecyclerView_LayoutManager 1
 #include "RecyclerView.h"
 
+#define RESTRICT_RecyclerView 1
+#define INCLUDE_ADXRecyclerView_SmoothScroller_ScrollVectorProvider 1
+#include "RecyclerView.h"
+
 @class ADRect;
 @class ADView;
 @class ADXOrientationHelper;
@@ -53,7 +57,7 @@
   StaggeredGridLayoutManager can offset spans independently or move items between spans. You can
   control this behavior via <code>setGapStrategy(int)</code>.
  */
-@interface ADXStaggeredGridLayoutManager : ADXRecyclerView_LayoutManager {
+@interface ADXStaggeredGridLayoutManager : ADXRecyclerView_LayoutManager < ADXRecyclerView_SmoothScroller_ScrollVectorProvider > {
  @public
   IOSObjectArray *mSpans_;
   /*!

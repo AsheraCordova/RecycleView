@@ -20,7 +20,11 @@
 	<framework src="core.gradle" custom="true" type="gradleReference" />
    	 <!-- start src -->
      <source-file src="src/com/ashera/recycleview/CordovaRecycleViewPlugin.java" target-dir="src/com/ashera/recycleview"/>
+     <source-file src="src/com/ashera/recycleview/FixedGridViewManager.java" target-dir="src/com/ashera/recycleview"/>
+     <source-file src="src/com/ashera/recycleview/GenericTouchHelperSimpleCallback.java" target-dir="src/com/ashera/recycleview"/>
      <source-file src="src/com/ashera/recycleview/InsetItemDecoration.java" target-dir="src/com/ashera/recycleview"/>
+     <source-file src="src/com/ashera/recycleview/ItemActionHandler.java" target-dir="src/com/ashera/recycleview"/>
+     <source-file src="src/com/ashera/recycleview/MyItemTouchHelper.java" target-dir="src/com/ashera/recycleview"/>
      <source-file src="src/com/ashera/recycleview/RecyclerViewImpl.java" target-dir="src/com/ashera/recycleview"/>
      <source-file src="src/com/ashera/recycleview/RecycleViewPlugin.java" target-dir="src/com/ashera/recycleview"/>
      <source-file src="src/com/xwray/groupie/AsyncDiffUtil.java" target-dir="src/com/xwray/groupie"/>
