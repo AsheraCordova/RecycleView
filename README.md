@@ -236,8 +236,8 @@ swipeSwapMode         |  Can be one of these when ListAdapter is used:notifyItem
 
 To enable/disable drag and drop in groupie adapter for header, footer and item, swipeDirs/dragDirs/dragAcrossSections has been add to the xml.
 
-## Recycler View as GridView.
-Recycler view can be configured as grid view with no scroll.
+## RecyclerView as GridView
+Recycler view can be configured as grid view with no scroll with layout manager as "com.ashera.recycleview.FixedGridViewManager".
 
 Name                	| Description
 -------------       	| -------------
