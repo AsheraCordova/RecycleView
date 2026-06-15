@@ -38,6 +38,8 @@ filterItemPath 	 	  |	Mandatory for filter to work. The path on the model object
 filterSectionPath     | Applicable only for groupie adapters. The path on the model object on which filter will be applied to section header items. 	 	 	 	 	 	 	 	 	 	 	 	 	 
 filterQueryGetPath 	  |	Applicable only for groupie adapters. Groupie adapter can have child recycler views. The query of the filter will be passed to the child recycler views using filterQueryGetPath and filterQuerySetPath.   	 	 	 	 	 	 	 	 	 	 	 	 	 	 
 filterQueryStorePath  |	Applicable only for groupie adapters. Groupie adapter can have child recycler views. The query of the filter will be passed to the child recycler views using filterQueryGetPath and filterQuerySetPath. 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 
+disableItemAnimator   | Disables ItemAnimator by calling recyclerView.setItemAnimator(null);
+hasFixedSize          | Signifies that recycler view items have fixed size. Setting this to true will improve the performance of recycler view.
 
 ## Configuring Recycler View
 The Recycler View in android requires an adpater being configured with view holder pattern being core of its implementation. Ashera provides a generic implementation of the view holder pattern. Hence recycler view can be written by configuring a few attributes.
@@ -206,3 +208,40 @@ xml/recyclerview_groupie.xml
 </layout>
 ``` 
 The groupie adapter consists of sections which can contain another section, item, header and footer. This type of configuration helps to create complex layout using recycler view.
+
+## Drag and Drop
+The following attributes enable drag and drop.
+
+Name                	| Description
+-------------       	| -------------
+dragDirs              | Direction of drag e.g none|up|down|left|right
+dragDropMode          | Can be one of these: swaponhighlight (Swap widgets when highlighted), swapwhendropped (Swap widgets on drop)
+dragResetHighlightAttributes | Style attributes that needs to be applied to Target/source item when unselected.Style attributes that needs to be applied to Target/source item when unselected.
+dragSelectHighlightAttributes | Style attributes that needs to be applied to Target/source item when unselected.Style attributes that needs to be applied to Target/source item when selected.
+dragStartMode        | Can be one of these: onclick (Start drag on click) longpress (Start drag on long press)
+dragSwapMode         | Can be one of these when ListAdapter is used:notifyItemMoved (Call notifyItemMoved on drop) notifyDataSetChanged (Call notifyDataSetChanged on drop). 
+onMove 	             | Call back to javascript when onMove is called.
+onMoved 	           | Call back to javascript when onMoved is called. 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 
+onSelectedChanged 	 | Call back to javascript when onSelectedChanged is called.
+
+## Swipe
+The following attributes enable swipe.
+
+Name                	| Description
+-------------       	| -------------
+swipeDirs             | Direction of swipe e.g none|up|down|left|right
+onSwiped 	            | Call back to javascript when onSwiped is called. 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	  	 
+deleteOnSwipe         | Enable delete on swipe.
+swipeSwapMode         |  Can be one of these when ListAdapter is used:notifyItemRemoved (Call notifyItemRemoved on drop) notifyDataSetChanged (Call notifyDataSetChanged on drop)
+
+To enable/disable drag and drop in groupie adapter for header, footer and item, swipeDirs/dragDirs/dragAcrossSections has been add to the xml.
+
+## RecyclerView as GridView
+Recycler view can be configured as grid view with no scroll with layout manager as "com.ashera.recycleview.FixedGridViewManager".
+
+Name                	| Description
+-------------       	| -------------
+fixedgrid_columnCount | Column count
+fixedgrid_rowCount 	 	| Row count
+fixedgrid_tileHeight 	| Tile size height of grid view. e.g 300 (Say you displaying 200X300 image in grid view)
+fixedgrid_tileWidth   | Tile size of height of grid view. e.g 200 (Say you displaying 200X300 image in grid view)
