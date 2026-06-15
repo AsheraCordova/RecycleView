@@ -24,8 +24,7 @@ public interface MyItemTouchHelper {
 
 		boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target);
 
-		void onMoved(RecyclerView recyclerView, ViewHolder viewHolder, int fromPos, ViewHolder target, int toPos, int x,
-				int y);
+		void onMoved(RecyclerView recyclerView, int fromPos, int toPos);
 
 		void onSelectedChanged(ViewHolder viewHolder, int actionState);
 	}

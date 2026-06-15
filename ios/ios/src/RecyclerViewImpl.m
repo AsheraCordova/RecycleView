@@ -80,7 +80,6 @@
 #include "java/lang/System.h"
 #include "java/lang/UnsupportedOperationException.h"
 #include "java/util/ArrayList.h"
-#include "java/util/Collections.h"
 #include "java/util/HashMap.h"
 #include "java/util/List.h"
 #include "java/util/Map.h"
@@ -959,20 +958,12 @@ J2OBJC_TYPE_LITERAL_HEADER(ASRecyclerViewImpl_GenericExpandableItem_ExpandableCl
                          withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target;
 
 - (void)onMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
                            withInt:(int32_t)fromPos
-    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
-                           withInt:(int32_t)toPos
-                           withInt:(int32_t)x
-                           withInt:(int32_t)y;
+                           withInt:(int32_t)toPos;
 
 - (id<JavaUtilMap>)getOnMovedEventObjWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                          withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
                                                  withInt:(int32_t)fromPos
-                          withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
-                                                 withInt:(int32_t)toPos
-                                                 withInt:(int32_t)x
-                                                 withInt:(int32_t)y;
+                                                 withInt:(int32_t)toPos;
 
 - (void)onSelectedChangedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
                                                 withInt:(int32_t)actionState;
@@ -5193,8 +5184,13 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
              withNSString:(NSString *)mode {
   int32_t fromItem = ASRecyclerViewImpl_ListAdapter_adapterPositionToItemIndexWithInt_(self, fromPosition);
   int32_t toItem = ASRecyclerViewImpl_ListAdapter_adapterPositionToItemIndexWithInt_(self, toPosition);
-  JavaUtilCollections_swapWithJavaUtilList_withInt_withInt_(this$0_->dataList_, fromItem, toItem);
-  JavaUtilCollections_swapWithJavaUtilList_withInt_withInt_(this$0_->ids_, fromItem, toItem);
+  @try {
+    this$0_->disableUpdate_ = true;
+    [this$0_ swapModelByIndexWithInt:fromItem withInt:toItem];
+  }
+  @finally {
+    this$0_->disableUpdate_ = false;
+  }
   if (mode != nil) {
     switch (JreIndexOfStr(mode, (id[]){ @"notifyDataSetChanged", @"notifyItemMoved" }, 2)) {
       case 0:
@@ -5216,8 +5212,13 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_ScrollProviderType)
 - (void)onItemRemoveWithInt:(int32_t)position
                withNSString:(NSString *)mode {
   int32_t itemIndex = ASRecyclerViewImpl_ListAdapter_adapterPositionToItemIndexWithInt_(self, position);
-  (void) [((id<JavaUtilList>) nil_chk(this$0_->ids_)) removeWithInt:itemIndex];
-  (void) [((id<JavaUtilList>) nil_chk(this$0_->dataList_)) removeWithInt:itemIndex];
+  @try {
+    this$0_->disableUpdate_ = true;
+    [this$0_ removeModelAtIndexWithInt:itemIndex];
+  }
+  @finally {
+    this$0_->disableUpdate_ = false;
+  }
   if (mode != nil) {
     switch (JreIndexOfStr(mode, (id[]){ @"notifyDataSetChanged", @"notifyItemRemoved" }, 2)) {
       case 0:
@@ -6266,21 +6267,17 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
 }
 
 - (void)onMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
                            withInt:(int32_t)fromPos
-    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
-                           withInt:(int32_t)toPos
-                           withInt:(int32_t)x
-                           withInt:(int32_t)y {
+                           withInt:(int32_t)toPos {
   if (action_ == nil || [action_ isEqual:@"onMoved"]) {
     [((id<ASIWidget>) nil_chk(w_)) syncModelFromUiToPojoWithNSString:@"onMoved"];
-    id<JavaUtilMap> obj = [self getOnMovedEventObjWithADXRecyclerView:recyclerView withADXRecyclerView_ViewHolder:viewHolder withInt:fromPos withADXRecyclerView_ViewHolder:target withInt:toPos withInt:x withInt:y];
+    id<JavaUtilMap> obj = [self getOnMovedEventObjWithADXRecyclerView:recyclerView withInt:fromPos withInt:toPos];
     NSString *commandName = (NSString *) cast_chk([((id<JavaUtilMap>) nil_chk(obj)) getWithId:ASEventExpressionParser_KEY_COMMAND_NAME], [NSString class]);
     NSString *commandType = (NSString *) cast_chk([obj getWithId:ASEventExpressionParser_KEY_COMMAND_TYPE], [NSString class]);
     switch (JreIndexOfStr(commandType, (id[]){ @"+" }, 1)) {
       case 0:
       if (ASEventCommandFactory_hasCommandWithNSString_(commandName)) {
-        (void) [((id<ASEventCommand>) nil_chk(ASEventCommandFactory_getCommandWithNSString_(commandName))) executeCommandWithASIWidget:w_ withJavaUtilMap:obj withNSObjectArray:[IOSObjectArray newArrayWithObjects:(id[]){ recyclerView, viewHolder, JavaLangInteger_valueOfWithInt_(fromPos), target, JavaLangInteger_valueOfWithInt_(toPos), JavaLangInteger_valueOfWithInt_(x), JavaLangInteger_valueOfWithInt_(y) } count:7 type:NSObject_class_()]];
+        (void) [((id<ASEventCommand>) nil_chk(ASEventCommandFactory_getCommandWithNSString_(commandName))) executeCommandWithASIWidget:w_ withJavaUtilMap:obj withNSObjectArray:[IOSObjectArray newArrayWithObjects:(id[]){ recyclerView, JavaLangInteger_valueOfWithInt_(fromPos), JavaLangInteger_valueOfWithInt_(toPos) } count:3 type:NSObject_class_()]];
       }
       break;
       default:
@@ -6304,12 +6301,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
 }
 
 - (id<JavaUtilMap>)getOnMovedEventObjWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-                          withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
                                                  withInt:(int32_t)fromPos
-                          withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
-                                                 withInt:(int32_t)toPos
-                                                 withInt:(int32_t)x
-                                                 withInt:(int32_t)y {
+                                                 withInt:(int32_t)toPos {
   id<JavaUtilMap> obj = ASPluginInvoker_getJSONCompatMap();
   (void) [((id<JavaUtilMap>) nil_chk(obj)) putWithId:@"action" withId:@"action"];
   (void) [obj putWithId:@"eventType" withId:@"moved"];
@@ -6320,12 +6313,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
     (void) [obj putWithId:@"componentId" withId:[((id<ASIWidget>) nil_chk(w_)) getComponentId]];
   }
   ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"id", [((id<ASIWidget>) nil_chk(w_)) getId]);
-  ASRecyclerViewImpl_addEventInfoViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(obj, viewHolder);
   ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"fromPos", JavaLangInteger_valueOfWithInt_(fromPos));
-  ASRecyclerViewImpl_addEventInfoTargetViewHolderWithJavaUtilMap_withADXRecyclerView_ViewHolder_(obj, target);
   ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"toPos", JavaLangInteger_valueOfWithInt_(toPos));
-  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"x", JavaLangInteger_valueOfWithInt_(x));
-  ASPluginInvoker_putJSONSafeObjectIntoMapWithJavaUtilMap_withNSString_withId_(obj, @"y", JavaLangInteger_valueOfWithInt_(y));
   (void) ASEventExpressionParser_parseEventExpressionWithNSString_withJavaUtilMap_(strValue_, obj);
   [((id<ASIWidget>) nil_chk(w_)) updateModelToEventMapWithJavaUtilMap:obj withNSString:@"onMoved" withNSString:(NSString *) cast_chk([obj getWithId:ASEventExpressionParser_KEY_EVENT_ARGS], [NSString class])];
   return obj;
@@ -6407,8 +6396,8 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
   methods[4].selector = @selector(getOnSwipedEventObjWithADXRecyclerView_ViewHolder:withInt:);
   methods[5].selector = @selector(onMoveWithADXRecyclerView:withADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:);
   methods[6].selector = @selector(getOnMoveEventObjWithADXRecyclerView:withADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:);
-  methods[7].selector = @selector(onMovedWithADXRecyclerView:withADXRecyclerView_ViewHolder:withInt:withADXRecyclerView_ViewHolder:withInt:withInt:withInt:);
-  methods[8].selector = @selector(getOnMovedEventObjWithADXRecyclerView:withADXRecyclerView_ViewHolder:withInt:withADXRecyclerView_ViewHolder:withInt:withInt:withInt:);
+  methods[7].selector = @selector(onMovedWithADXRecyclerView:withInt:withInt:);
+  methods[8].selector = @selector(getOnMovedEventObjWithADXRecyclerView:withInt:withInt:);
   methods[9].selector = @selector(onSelectedChangedWithADXRecyclerView_ViewHolder:withInt:);
   methods[10].selector = @selector(getOnSelectedChangedEventObjWithADXRecyclerView_ViewHolder:withInt:);
   #pragma clang diagnostic pop
@@ -6418,7 +6407,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ASRecyclerViewImpl_GroupieViewHolder)
     { "strValue_", "LNSString;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "action_", "LNSString;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "LASIWidget;LNSString;", "LASIWidget;LNSString;LNSString;", "onSwiped", "LADXRecyclerView_ViewHolder;I", "getOnSwipedEventObj", "(Landroidx/recyclerview/widget/RecyclerView$ViewHolder;I)Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "onMove", "LADXRecyclerView;LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "getOnMoveEventObj", "(Landroidx/recyclerview/widget/RecyclerView;Landroidx/recyclerview/widget/RecyclerView$ViewHolder;Landroidx/recyclerview/widget/RecyclerView$ViewHolder;)Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "onMoved", "LADXRecyclerView;LADXRecyclerView_ViewHolder;ILADXRecyclerView_ViewHolder;III", "getOnMovedEventObj", "(Landroidx/recyclerview/widget/RecyclerView;Landroidx/recyclerview/widget/RecyclerView$ViewHolder;ILandroidx/recyclerview/widget/RecyclerView$ViewHolder;III)Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "onSelectedChanged", "getOnSelectedChangedEventObj", "LASRecyclerViewImpl;" };
+  static const void *ptrTable[] = { "LASIWidget;LNSString;", "LASIWidget;LNSString;LNSString;", "onSwiped", "LADXRecyclerView_ViewHolder;I", "getOnSwipedEventObj", "(Landroidx/recyclerview/widget/RecyclerView$ViewHolder;I)Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "onMove", "LADXRecyclerView;LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "getOnMoveEventObj", "(Landroidx/recyclerview/widget/RecyclerView;Landroidx/recyclerview/widget/RecyclerView$ViewHolder;Landroidx/recyclerview/widget/RecyclerView$ViewHolder;)Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "onMoved", "LADXRecyclerView;II", "getOnMovedEventObj", "(Landroidx/recyclerview/widget/RecyclerView;II)Ljava/util/Map<Ljava/lang/String;Ljava/lang/Object;>;", "onSelectedChanged", "getOnSelectedChangedEventObj", "LASRecyclerViewImpl;" };
   static const J2ObjcClassInfo _ASRecyclerViewImpl_MyCallback = { "MyCallback", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0xa, 11, 4, 16, -1, -1, -1, -1 };
   return &_ASRecyclerViewImpl_MyCallback;
 }

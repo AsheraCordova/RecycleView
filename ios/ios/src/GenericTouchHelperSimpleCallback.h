@@ -85,14 +85,6 @@
    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target;
 
-- (void)onMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-                           withInt:(int32_t)fromPos
-    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
-                           withInt:(int32_t)toPos
-                           withInt:(int32_t)x
-                           withInt:(int32_t)y;
-
 - (void)onSelectedChangedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
                                                 withInt:(int32_t)actionState;
 

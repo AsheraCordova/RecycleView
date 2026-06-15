@@ -1175,14 +1175,8 @@ export interface OnMoveEvent extends Event{
 export interface OnMovedEvent extends Event{
         //recyclerView:RecyclerView;
 
-        //viewHolder:ViewHolder;
-
 	        fromPos:number;
-        //target:ViewHolder;
-
 	        toPos:number;
-	        x:number;
-	        y:number;
 
 }
 export interface OnSelectedChangedEvent extends Event{
@@ -1209,14 +1203,8 @@ export interface OnMoveEvent extends Event{
 export interface OnMovedEvent extends Event{
         //recyclerView:RecyclerView;
 
-        //viewHolder:ViewHolder;
-
 	        fromPos:number;
-        //target:ViewHolder;
-
 	        toPos:number;
-	        x:number;
-	        y:number;
 
 }
 export interface OnSelectedChangedEvent extends Event{
@@ -1243,14 +1231,8 @@ export interface OnMoveEvent extends Event{
 export interface OnMovedEvent extends Event{
         //recyclerView:RecyclerView;
 
-        //viewHolder:ViewHolder;
-
 	        fromPos:number;
-        //target:ViewHolder;
-
 	        toPos:number;
-	        x:number;
-	        y:number;
 
 }
 export interface OnSelectedChangedEvent extends Event{
@@ -1277,14 +1259,8 @@ export interface OnMoveEvent extends Event{
 export interface OnMovedEvent extends Event{
         //recyclerView:RecyclerView;
 
-        //viewHolder:ViewHolder;
-
 	        fromPos:number;
-        //target:ViewHolder;
-
 	        toPos:number;
-	        x:number;
-	        y:number;
 
 }
 export interface OnSelectedChangedEvent extends Event{

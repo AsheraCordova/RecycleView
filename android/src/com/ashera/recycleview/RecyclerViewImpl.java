@@ -1647,12 +1647,12 @@ public java.util.Map<String, Object> getOnMoveEventObj(RecyclerView recyclerView
     // update model data into map
     w.updateModelToEventMap(obj, "onMove", (String)obj.get(EventExpressionParser.KEY_EVENT_ARGS));
     return obj;
-}public void onMoved(RecyclerView recyclerView, ViewHolder viewHolder, int fromPos, ViewHolder target, int toPos, int x, int y){
+}public void onMoved(RecyclerView recyclerView, int fromPos, int toPos){
     
 	if (action == null || action.equals("onMoved")) {
 		// populate the data from ui to pojo
 		w.syncModelFromUiToPojo("onMoved");
-	    java.util.Map<String, Object> obj = getOnMovedEventObj(recyclerView,viewHolder,fromPos,target,toPos,x,y);
+	    java.util.Map<String, Object> obj = getOnMovedEventObj(recyclerView,fromPos,toPos);
 	    String commandName =  (String) obj.get(EventExpressionParser.KEY_COMMAND_NAME);
 	    
 	    // execute command based on command type
@@ -1660,7 +1660,7 @@ public java.util.Map<String, Object> getOnMoveEventObj(RecyclerView recyclerView
 		switch (commandType) {
 		case "+":
 		    if (EventCommandFactory.hasCommand(commandName)) {
-		    	 EventCommandFactory.getCommand(commandName).executeCommand(w, obj, recyclerView,viewHolder,fromPos,target,toPos,x,y);
+		    	 EventCommandFactory.getCommand(commandName).executeCommand(w, obj, recyclerView,fromPos,toPos);
 		    }
 
 			break;
@@ -1685,7 +1685,7 @@ public java.util.Map<String, Object> getOnMoveEventObj(RecyclerView recyclerView
     return;
 }//#####
 
-public java.util.Map<String, Object> getOnMovedEventObj(RecyclerView recyclerView,ViewHolder viewHolder,int fromPos,ViewHolder target,int toPos,int x,int y) {
+public java.util.Map<String, Object> getOnMovedEventObj(RecyclerView recyclerView,int fromPos,int toPos) {
 	java.util.Map<String, Object> obj = com.ashera.widget.PluginInvoker.getJSONCompatMap();
     obj.put("action", "action");
     obj.put("eventType", "moved");
@@ -1699,12 +1699,8 @@ public java.util.Map<String, Object> getOnMovedEventObj(RecyclerView recyclerVie
     
     PluginInvoker.putJSONSafeObjectIntoMap(obj, "id", w.getId());
      
-        RecyclerViewImpl.addEventInfoViewHolder(obj, viewHolder);
         PluginInvoker.putJSONSafeObjectIntoMap(obj, "fromPos", fromPos);
-        RecyclerViewImpl.addEventInfoTargetViewHolder(obj, target);
         PluginInvoker.putJSONSafeObjectIntoMap(obj, "toPos", toPos);
-        PluginInvoker.putJSONSafeObjectIntoMap(obj, "x", x);
-        PluginInvoker.putJSONSafeObjectIntoMap(obj, "y", y);
     
     // parse event info into the map
     EventExpressionParser.parseEventExpression(strValue, obj);
@@ -1811,8 +1807,12 @@ public java.util.Map<String, Object> getOnSelectedChangedEventObj(ViewHolder vie
 		public void onItemMove(int fromPosition, int toPosition, String mode) {
 			int fromItem = adapterPositionToItemIndex(fromPosition);
 			int toItem = adapterPositionToItemIndex(toPosition);
-			Collections.swap(dataList, fromItem, toItem);
-			Collections.swap(ids, fromItem, toItem);
+			try {
+				disableUpdate = true;
+				swapModelByIndex(fromItem, toItem);
+			} finally {
+				disableUpdate = false;
+			}
 			
 			if (mode != null) {
 				switch (mode) {
@@ -1840,8 +1840,12 @@ public java.util.Map<String, Object> getOnSelectedChangedEventObj(ViewHolder vie
 		@Override
 		public void onItemRemove(int position, String mode) {
 			int itemIndex = adapterPositionToItemIndex(position);
-            ids.remove(itemIndex);
-            dataList.remove(itemIndex);
+			try {
+				disableUpdate = true;
+				removeModelAtIndex(itemIndex);
+			} finally {
+				disableUpdate = false;
+			}
             
             if (mode != null) {
 	            switch (mode) {

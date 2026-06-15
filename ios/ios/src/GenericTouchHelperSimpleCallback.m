@@ -230,24 +230,14 @@ __attribute__((unused)) static void ASGenericTouchHelperSimpleCallback_onItemMov
   toPosition_ = [target getAdapterPosition];
   if (dragmode_ != nil && [dragmode_ isEqual:@"swaponhighlight"]) {
     ASGenericTouchHelperSimpleCallback_onItemMoveWithInt_withInt_(self, fromPosition_, toPosition_);
+    if (onMovedListener_ != nil) {
+      [onMovedListener_ onMovedWithADXRecyclerView:recyclerView withInt:fromPosition_ withInt:toPosition_];
+    }
   }
   if (onMoveListener_ != nil) {
     [onMoveListener_ onMoveWithADXRecyclerView:recyclerView withADXRecyclerView_ViewHolder:viewHolder withADXRecyclerView_ViewHolder:target];
   }
   return true;
-}
-
-- (void)onMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
-                           withInt:(int32_t)fromPos
-    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
-                           withInt:(int32_t)toPos
-                           withInt:(int32_t)x
-                           withInt:(int32_t)y {
-  [super onMovedWithADXRecyclerView:recyclerView withADXRecyclerView_ViewHolder:viewHolder withInt:fromPos withADXRecyclerView_ViewHolder:target withInt:toPos withInt:x withInt:y];
-  if (onMovedListener_ != nil) {
-    [onMovedListener_ onMovedWithADXRecyclerView:recyclerView withADXRecyclerView_ViewHolder:viewHolder withInt:fromPos withADXRecyclerView_ViewHolder:target withInt:toPos withInt:x withInt:y];
-  }
 }
 
 - (void)onSwipedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
@@ -277,13 +267,16 @@ __attribute__((unused)) static void ASGenericTouchHelperSimpleCallback_onItemMov
   ASGenericTouchHelperSimpleCallback_resetViewWithADXRecyclerView_ViewHolder_(self, viewHolder);
   if (currentTarget_ != nil) {
     ASGenericTouchHelperSimpleCallback_resetViewWithADXRecyclerView_ViewHolder_(self, currentTarget_);
-    currentTarget_ = nil;
   }
   if (fromPosition_ != -1 && toPosition_ != -1 && fromPosition_ != toPosition_) {
     if (dragmode_ != nil && [dragmode_ isEqual:@"swapwhendropped"]) {
       ASGenericTouchHelperSimpleCallback_onItemMoveWithInt_withInt_(self, fromPosition_, toPosition_);
+      if (onMovedListener_ != nil) {
+        [onMovedListener_ onMovedWithADXRecyclerView:recyclerView withInt:fromPosition_ withInt:toPosition_];
+      }
     }
   }
+  currentTarget_ = nil;
   fromPosition_ = -1;
   toPosition_ = -1;
 }
@@ -362,17 +355,16 @@ __attribute__((unused)) static void ASGenericTouchHelperSimpleCallback_onItemMov
     { NULL, "V", 0x2, 22, 19, -1, -1, -1, -1 },
     { NULL, "V", 0x1, 23, 24, -1, -1, -1, -1 },
     { NULL, "Z", 0x1, 25, 26, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 27, 28, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 29, 24, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 27, 24, -1, -1, -1, -1 },
     { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
     { NULL, "Z", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 30, 31, -1, -1, -1, -1 },
-    { NULL, "V", 0x2, 32, 33, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 28, 29, -1, -1, -1, -1 },
+    { NULL, "V", 0x2, 30, 31, -1, -1, -1, -1 },
     { NULL, "LNSString;", 0x1, -1, -1, -1, -1, -1, -1 },
-    { NULL, "V", 0x1, 34, 1, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 35, 31, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 36, 31, -1, -1, -1, -1 },
-    { NULL, "I", 0x1, 37, 31, -1, -1, -1, -1 },
+    { NULL, "V", 0x1, 32, 1, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 33, 29, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 34, 29, -1, -1, -1, -1 },
+    { NULL, "I", 0x1, 35, 29, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
@@ -404,17 +396,16 @@ __attribute__((unused)) static void ASGenericTouchHelperSimpleCallback_onItemMov
   methods[24].selector = @selector(resetViewWithADXRecyclerView_ViewHolder:);
   methods[25].selector = @selector(onSelectedChangedWithADXRecyclerView_ViewHolder:withInt:);
   methods[26].selector = @selector(onMoveWithADXRecyclerView:withADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:);
-  methods[27].selector = @selector(onMovedWithADXRecyclerView:withADXRecyclerView_ViewHolder:withInt:withADXRecyclerView_ViewHolder:withInt:withInt:withInt:);
-  methods[28].selector = @selector(onSwipedWithADXRecyclerView_ViewHolder:withInt:);
-  methods[29].selector = @selector(isLongPressDragEnabled);
-  methods[30].selector = @selector(isDownPressDragEnabled);
-  methods[31].selector = @selector(clearViewWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
-  methods[32].selector = @selector(onItemMoveWithInt:withInt:);
-  methods[33].selector = @selector(getDragmode);
-  methods[34].selector = @selector(setDragmodeWithNSString:);
-  methods[35].selector = @selector(getMovementFlagsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
-  methods[36].selector = @selector(getSwipeDirsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
-  methods[37].selector = @selector(getDragDirsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[27].selector = @selector(onSwipedWithADXRecyclerView_ViewHolder:withInt:);
+  methods[28].selector = @selector(isLongPressDragEnabled);
+  methods[29].selector = @selector(isDownPressDragEnabled);
+  methods[30].selector = @selector(clearViewWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[31].selector = @selector(onItemMoveWithInt:withInt:);
+  methods[32].selector = @selector(getDragmode);
+  methods[33].selector = @selector(setDragmodeWithNSString:);
+  methods[34].selector = @selector(getMovementFlagsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[35].selector = @selector(getSwipeDirsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
+  methods[36].selector = @selector(getDragDirsWithADXRecyclerView:withADXRecyclerView_ViewHolder:);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
     { "swipeListener_", "LASMyItemTouchHelper_MyCallback;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -423,7 +414,7 @@ __attribute__((unused)) static void ASGenericTouchHelperSimpleCallback_onItemMov
     { "onSelectedChangedListener_", "LASMyItemTouchHelper_MyCallback;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "deleteOnSwipe_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "swipeSwapMode_", "LNSString;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "adapter_", "LADXRecyclerView_Adapter;", .constantValue.asLong = 0, 0x12, -1, -1, 38, -1 },
+    { "adapter_", "LADXRecyclerView_Adapter;", .constantValue.asLong = 0, 0x12, -1, -1, 36, -1 },
     { "fromPosition_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "toPosition_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "currentTarget_", "LADXRecyclerView_ViewHolder;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -433,8 +424,8 @@ __attribute__((unused)) static void ASGenericTouchHelperSimpleCallback_onItemMov
     { "selectHighlightAttributes_", "LNSString;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "resetHighlightAttributes_", "LNSString;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "setSelectHighlightAttributes", "LNSString;", "setDragStartMode", "setResetHighlightAttributes", "setSwapMode", "setSwipeSwapMode", "setDeleteOnSwipe", "Z", "setSwipeListener", "LASMyItemTouchHelper_MyCallback;", "setOnMoveListener", "setOnMovedListener", "setOnSelectedChangedListener", "LADXRecyclerView_Adapter;II", "(Landroidx/recyclerview/widget/RecyclerView$Adapter<*>;II)V", "chooseDropTarget", "LADXRecyclerView_ViewHolder;LJavaUtilList;II", "(Landroidx/recyclerview/widget/RecyclerView$ViewHolder;Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$ViewHolder;>;II)Landroidx/recyclerview/widget/RecyclerView$ViewHolder;", "selectView", "LADXRecyclerView_ViewHolder;", "applyStyle", "LADView;LNSString;", "resetView", "onSelectedChanged", "LADXRecyclerView_ViewHolder;I", "onMove", "LADXRecyclerView;LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "onMoved", "LADXRecyclerView;LADXRecyclerView_ViewHolder;ILADXRecyclerView_ViewHolder;III", "onSwiped", "clearView", "LADXRecyclerView;LADXRecyclerView_ViewHolder;", "onItemMove", "II", "setDragmode", "getMovementFlags", "getSwipeDirs", "getDragDirs", "Landroidx/recyclerview/widget/RecyclerView$Adapter<*>;" };
-  static const J2ObjcClassInfo _ASGenericTouchHelperSimpleCallback = { "GenericTouchHelperSimpleCallback", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 38, 15, -1, -1, -1, -1, -1 };
+  static const void *ptrTable[] = { "setSelectHighlightAttributes", "LNSString;", "setDragStartMode", "setResetHighlightAttributes", "setSwapMode", "setSwipeSwapMode", "setDeleteOnSwipe", "Z", "setSwipeListener", "LASMyItemTouchHelper_MyCallback;", "setOnMoveListener", "setOnMovedListener", "setOnSelectedChangedListener", "LADXRecyclerView_Adapter;II", "(Landroidx/recyclerview/widget/RecyclerView$Adapter<*>;II)V", "chooseDropTarget", "LADXRecyclerView_ViewHolder;LJavaUtilList;II", "(Landroidx/recyclerview/widget/RecyclerView$ViewHolder;Ljava/util/List<Landroidx/recyclerview/widget/RecyclerView$ViewHolder;>;II)Landroidx/recyclerview/widget/RecyclerView$ViewHolder;", "selectView", "LADXRecyclerView_ViewHolder;", "applyStyle", "LADView;LNSString;", "resetView", "onSelectedChanged", "LADXRecyclerView_ViewHolder;I", "onMove", "LADXRecyclerView;LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "onSwiped", "clearView", "LADXRecyclerView;LADXRecyclerView_ViewHolder;", "onItemMove", "II", "setDragmode", "getMovementFlags", "getSwipeDirs", "getDragDirs", "Landroidx/recyclerview/widget/RecyclerView$Adapter<*>;" };
+  static const J2ObjcClassInfo _ASGenericTouchHelperSimpleCallback = { "GenericTouchHelperSimpleCallback", "com.ashera.recycleview", ptrTable, methods, fields, 7, 0x1, 37, 15, -1, -1, -1, -1, -1 };
   return &_ASGenericTouchHelperSimpleCallback;
 }
 

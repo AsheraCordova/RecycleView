@@ -48,12 +48,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ASMyItemTouchHelper)
    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target;
 
 - (void)onMovedWithADXRecyclerView:(ADXRecyclerView *)recyclerView
-    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
                            withInt:(int32_t)fromPos
-    withADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)target
-                           withInt:(int32_t)toPos
-                           withInt:(int32_t)x
-                           withInt:(int32_t)y;
+                           withInt:(int32_t)toPos;
 
 - (void)onSelectedChangedWithADXRecyclerView_ViewHolder:(ADXRecyclerView_ViewHolder *)viewHolder
                                                 withInt:(int32_t)actionState;

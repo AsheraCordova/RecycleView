@@ -54,10 +54,10 @@ J2OBJC_NAME_MAPPING(ASMyItemTouchHelper, "com.ashera.recycleview", "AS")
   #pragma clang diagnostic ignored "-Wundeclared-selector"
   methods[0].selector = @selector(onSwipedWithADXRecyclerView_ViewHolder:withInt:);
   methods[1].selector = @selector(onMoveWithADXRecyclerView:withADXRecyclerView_ViewHolder:withADXRecyclerView_ViewHolder:);
-  methods[2].selector = @selector(onMovedWithADXRecyclerView:withADXRecyclerView_ViewHolder:withInt:withADXRecyclerView_ViewHolder:withInt:withInt:withInt:);
+  methods[2].selector = @selector(onMovedWithADXRecyclerView:withInt:withInt:);
   methods[3].selector = @selector(onSelectedChangedWithADXRecyclerView_ViewHolder:withInt:);
   #pragma clang diagnostic pop
-  static const void *ptrTable[] = { "onSwiped", "LADXRecyclerView_ViewHolder;I", "onMove", "LADXRecyclerView;LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "onMoved", "LADXRecyclerView;LADXRecyclerView_ViewHolder;ILADXRecyclerView_ViewHolder;III", "onSelectedChanged", "LASMyItemTouchHelper;" };
+  static const void *ptrTable[] = { "onSwiped", "LADXRecyclerView_ViewHolder;I", "onMove", "LADXRecyclerView;LADXRecyclerView_ViewHolder;LADXRecyclerView_ViewHolder;", "onMoved", "LADXRecyclerView;II", "onSelectedChanged", "LASMyItemTouchHelper;" };
   static const J2ObjcClassInfo _ASMyItemTouchHelper_MyCallback = { "MyCallback", "com.ashera.recycleview", ptrTable, methods, NULL, 7, 0x609, 4, 0, 7, -1, -1, -1, -1 };
   return &_ASMyItemTouchHelper_MyCallback;
 }

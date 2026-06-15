@@ -212,23 +212,17 @@ public class GenericTouchHelperSimpleCallback extends ItemTouchHelper.SimpleCall
 		toPosition = target.getAdapterPosition();
 		if (dragmode != null && dragmode.equals("swaponhighlight")) {
 			onItemMove(fromPosition, toPosition);
+			
+			
+			if (onMovedListener != null) {
+				onMovedListener.onMoved(recyclerView, fromPosition, toPosition);
+			}
 		}
 		
 		if (onMoveListener != null) {
 			onMoveListener.onMove(recyclerView, viewHolder, target);
 		}
 		return true;
-	}
-	
-	@Override
-	public void onMoved(androidx.recyclerview.widget.RecyclerView recyclerView,
-			androidx.recyclerview.widget.RecyclerView.ViewHolder viewHolder, int fromPos,
-			androidx.recyclerview.widget.RecyclerView.ViewHolder target, int toPos, int x, int y) {
-		super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
-		
-		if (onMovedListener != null) {
-			onMovedListener.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
-		}
 	}
 	
 	@Override
@@ -266,15 +260,19 @@ public class GenericTouchHelperSimpleCallback extends ItemTouchHelper.SimpleCall
 
 		if (currentTarget != null) {
 			resetView(currentTarget);
-			currentTarget = null;
 		}
 
 		if (fromPosition != -1 && toPosition != -1 && fromPosition != toPosition) {
 			if (dragmode != null && dragmode.equals("swapwhendropped")) {
 				onItemMove(fromPosition, toPosition);
+				
+				if (onMovedListener != null) {
+					onMovedListener.onMoved(recyclerView, fromPosition, toPosition);
+				}
 			}
 		}
-
+		
+		currentTarget = null;
 		fromPosition = -1;
 		toPosition = -1;
 	}
